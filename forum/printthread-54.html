@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Installing Valgrind on WSL - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=2">Installing Valgrind on WSL</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Installing Valgrind on WSL (<em>/showthread.php?tid=2</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>Installing Valgrind on WSL</strong> - daweil -  <strong>08-20-2018</strong>
+<br />
+<br />
+If you are using the Windows Subsystem for Linux (For Mac users, please see the other thread), and install valgrind using apt-get, you are likely to run into this potential issue when you run valgrind with no input:<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>daweil@Weil-PC:~&#36; valgrind<br />
+-1: ANON 0038000000-00383d5fff 4022272 r-x-- SmFixed d=0x000 i=25365   o=0       (0) m=0 /usr/lib/valgrind/memcheck-amd64-linux<br />
+Valgrind: FATAL: aspacem assertion failed:<br />
+segment_is_sane<br />
+at m_aspacemgr/aspacemgr-linux.c:1502 (add_segment)<br />
+Exiting now.</code></div></div><br />
+When you should be getting the following when you run it with no input:<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>daweil@Weil-PC:~&#36; valgrind<br />
+valgrind: no program specified<br />
+valgrind: Use --help for more information.</code></div></div><br />
+<br />
+The short answer: You have a bad install because WSL doesn't have every Linux kernel service implemented.<br />
+<br />
+The work around: A manual installation (compiling the source code) to adjust for the lack of services.<br />
+<br />
+The steps:<br />
+<br />
+<ol type="1" class="mycode_list"><li>Uninstall valgrind if you installed it via apt-get<br />
+</li>
+<li>Get the source: "wget <a href="http://ftp.sourceware.org/pub/valgrind/valgrind-3.13.0.tar.bz2" target="_blank" rel="noopener" class="mycode_url">ftp.sourceware.org/pub/valgrind/valgrind-3.13.0.tar.bz2</a>" (Or just download it to your desktop/download, and copy-paste it into the WSL).<br />
+</li>
+<li>Extract it: "tar -xvjf valgrind-3.13.0.tar.bz2"<br />
+</li>
+<li>Configure it: Change directory into the extracted folder (cd valgrind-3.13.0) and then launch "./configure" <br />
+</li>
+<li>Make: Same folder, just launch "make".<br />
+</li>
+<li>Check your dependencies by typing "make check"<br />
+</li>
+<li>Install it: type "sudo make install"<br />
+</li>
+</ol>
+It will take some time to configure, make, checking the dependencies, and to install it. Let the WSL process. If "make check" bounces back stating you're missing dependencies like g++, you will need to install it via apt-get install g++.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Installing Valgrind on WSL (And Mac)</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>08-22-2018</strong>
+<br />
+<br />
+If you are have trouble installing valgrind, the College of Engineering has scheduled six 4-hour help sessions for students needing assistance installing software on their laptops.  All sessions will be in Hardaway 256.<br />
+ <br />
+Here is the schedule:<br />
+This week: Wednesday-Friday 10-2<br />
+Next week: Mon, Wed, Friday 10-2<br />
+<br />
+There is a webpage for COE software: <a href="http://ites.eng.ua.edu/software/" target="_blank" rel="noopener" class="mycode_url">http://ites.eng.ua.edu/software/</a>
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Installing Valgrind on WSL (And Mac)</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>08-22-2018</strong>
+<br />
+<br />
+Also, Mac people should make sure gdb is also installed.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Installing Valgrind on WSL</strong> - daweil -  <strong>08-25-2018</strong>
+<br />
+<br />
+URL for the wget was slightly incorrect. Fixed.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Installing Valgrind on WSL</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=24">bdgerszewski</a> -  <strong>08-25-2018</strong>
+<br />
+<br />
+Make sure you're current with Windows updates.  I wasn't and had problems with valgrind installed via the package manager as well as built from source (3.14.0.SVN, 3.14.0.GIT, 3.13.0, and 3.12.0). After updating windows, I was able to install it via the package manager (sudo apt-get install valgrind) and it worked just fine .
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Installing Valgrind on WSL</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=30">jmlawson</a> -  <strong>08-27-2018</strong>
+<br />
+<br />
+I ran into this problem because I had Ubuntu version 14.04 installed. After upgrading to Ubuntu 16.04 valgrind installed with no problems. You can use the following two commands to check your version and upgrade to 16.04. Then sudo apt-get install valgrind should work.<br />
+<br />
+lsb_release -a <br />
+<br />
+<span style="color: #000000;" class="mycode_color">sudo do-release-upgrade </span>
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

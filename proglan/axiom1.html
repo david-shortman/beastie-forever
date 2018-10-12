@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>axiom1</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Axiomatic Semantics (part 1)
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="axiom1.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Axiomatic semantics
+<br/>
+</h2><!-- section ENDED -->
+
+Axiomatic semantics can be thought of as a formal treatment
+of the
+<a href="http://beastie.cs.ua.edu/proglan/invar.html">
+preconditions and postconditions (or invariants)
+</a>
+However, this system is intended for proving a program correct
+rather than checking invariants at run time in order to detect a program
+running amok. In general, given a set of preconditions, a program, and a
+set of postconditions, a proof of correctness consists of showing that given
+the set of preconditions, executing the program code will not violate any
+of the postconditions. One of the simplest meaningful proofs one can
+perform deals with a basic assignment statement.
+<br/>
+<!-- subsection -->
+<h3> Assignments
+<br/>
+</h3><!-- subsection ENDED -->
+
+Consider this program, complete with precondition and postcondition:
+<br/>
+
+<pre>
+    &lt;&lt;requires: x &gt; 1&gt;&gt; x = x - 1 &lt;&lt;ensures: x &gt; 0&gt;&gt;
+</pre>
+
+Note that a precondition <i>requires</i> certain facts to be true at the
+beginning while a postcondition <i>ensures</i> that other facts are true
+after the interstitial code has be executed.
+<br/>
+<br/>
+In the example above, the
+pre- and post-conditions are enclosed in
+angle brackets and the program code resides between the conditions.
+From inspection, it can be deduced that this simple
+program is correct.
+The formal method for
+proving correctness is to &ldquo;push back&rdquo; the postcondition through the statement
+to see if the precondition can be generated. To push back a condition, one
+replaces occurrences of the LHS of the program statement in the condition
+with the RHS. For example,
+
+<code>x &gt; 0</code> becomes
+
+<code>x - 1 &gt; 0</code> which is equivalent to
+
+<code>x &gt; 1</code> by algebraic manipulation.
+Note
+that we have recovered the precondition, so we have proved our program correct.
+<br/>
+<br/>
+In the above example, the pushed-backed post-condition was algebraically
+equivalent to the precondition. Not all correct programs will have this
+property.
+Consider a similar program
+<br/>
+
+<pre>
+    &lt;&lt;requires: x = 100&gt;&gt; x = x - 1 &lt;&lt;ensures: x &gt; 0&gt;&gt;
+</pre>
+
+Surely this program is correct, yet the precondition
+does not match the result of pushing the postcondition back through the program
+code. All is not lost, however, since the pushed back condition does not
+need to
+match the precondition exactly. The precondition need only <i>imply</i> the pushed
+back postcondition. In this case,
+
+<code>x = 100</code> implies 
+<code>x &gt; 0</code>.
+The formal notation of the proof rule for simple
+assignment statements is:
+<br/>
+<center>
+
+
+<code>&lt;&lt;requires: P&gt;&gt; x = e &lt;&lt;ensures: Q&gt;&gt;</code> : <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>P</mi>	<mo>&rarr;</mo>	<mi>Q</mi>	<mspace width="0.167em" />	<mi>x</mi>	<mspace width="0.167em" /></mrow></math>\<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mspace width="0.167em" />	<mi>e</mi></mrow></math>
+</center>
+
+<br/>
+where
+<i>P</i> is the precondition,
+<i>x = e</i> is the assignment statement in question,
+<i>Q</i> is the postcondition,
+<i>Q</i>\<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mspace width="0.167em" />	<mi>e</mi></mrow></math> is the postcondition
+with each occurrence of <i>x</i> replaced
+by the expression <i>e</i>, and
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo>&rarr;</mo></mrow></math> is a logical operator which
+means <i>implies</i>.
+<br/>
+<br/>
+In general, we can prove the correctness of any statement <i>S</i>. The
+proof rule for statements is:
+<br/>
+<center>
+
+
+<code>&lt;&lt;requires: P&gt;&gt; S &lt;&lt;ensures: Q&gt;&gt;</code> : <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>P</mi>	<mo>&rarr;</mo>	<mi>Q</mi>	<mo>&otimes;</mo>	<mi>S</mi></mrow></math>
+</center>
+
+<br/>
+where <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Q</mi>	<mo>&otimes;</mo>	<mi>S</mi></mrow></math> is read as &ldquo;<i>Q</i> pushed back through <i>S</i>&rdquo;.
+<br/>
+<br/>
+<!-- subsection -->
+<h3> Conditionals
+<br/>
+</h3><!-- subsection ENDED -->
+
+<br/>
+Proving conditionals correct is a bit trickier.
+Consider this program:
+<br/>
+
+<pre>
+    &lt;&lt;requires: true&gt;&gt;                 // P, the precondition
+    if (x &gt;= y)                        // E, the test expression
+        max = x;                       // S, the if-true branch
+    else 
+        max = y;                       // T, the if-false branch
+    &lt;&lt;ensures: (max == x &amp;&amp; x &gt;= y)
+            || (max == y &amp;&amp; x &lt; y)&gt;&gt;   // Q, the postcondition
+</pre>
+
+The proof rule for conditionals whose test has no side effects is:
+<br/>
+<center>
+
+
+<code>&lt;&lt;requires: P&gt;&gt; if (E) S else T &lt;&lt;ensures: Q&gt;&gt;</code>
+: <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>P</mi>	<mo>&and;</mo>	<mi>E</mi>	<mo>&rarr;</mo>	<mi>Q</mi>	<mo>&otimes;</mo>	<mspace width="0.167em" />	<mi>S</mi></mrow></math>
+<i>and</i> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>P</mi>	<mo>&and;</mo>	<mo>&not;</mo>	<mi>E</mi>	<mo>&rarr;</mo>	<mi>Q</mi>	<mo>&otimes;</mo>	<mspace width="0.167em" />	<mi>T</mi></mrow></math>
+</center>
+
+<br/>
+where
+<i>and</i> separates the parts of the rule that must be proved individually
+and
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo>&otimes;</mo></mrow></math>
+is the &ldquo;push-back&rdquo; operator and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo>&not;</mo></mrow></math>
+is logical negation.
+In the example,
+our proof starts by showing the <b>if-true</b>
+branch is correct. We begin by letting:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mi>Q</mi>	<mo>&otimes;</mo>	<mspace width="0.167em" />	<mi>S</mi></mrow></math>
+</span>
+
+<br/>
+which yields:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>x</mi>		<mo>&equiv;</mo>		<mi>x</mi>		<mo>&and;</mo>		<mi>x</mi>		<mo>&ge;</mo>		<mi>y</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&or;</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>x</mi>		<mo>&equiv;</mo>		<mi>y</mi>		<mo>&and;</mo>		<mi>x</mi>		<mo>&lt;</mo>		<mi>y</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+<br/>
+or:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mi>x</mi>	<mo>&ge;</mo>	<mi>y</mi>	<mo>&or;</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>x</mi>		<mo>&equiv;</mo>		<mi>y</mi>		<mo>&and;</mo>		<mi>x</mi>		<mo>&lt;</mo>		<mi>y</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+<br/>
+or (since
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mi>y</mi>	<mo>&and;</mo>	<mi>x</mi>	<mo>&lt;</mo>	<mi>y</mi></mrow></math>
+is a contradiction),
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mi>x</mi>	<mo>&ge;</mo>	<mi>y</mi></mrow></math>
+</span>
+
+<br/>
+To complete this half of the proof, we need to determine,
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>P</mi>	<mo>&and;</mo>	<mi>E</mi></mrow></math>,
+which is:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>r</mi>	<mi>u</mi>	<mi>e</mi>	<mo>&and;</mo>	<mi>x</mi>	<mo>&ge;</mo>	<mi>y</mi></mrow></math>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<mi>y</mi></mrow></math>
+</span>
+
+<br/>
+Since:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<mi>y</mi>	<mo>&rarr;</mo>	<mi>Z</mi></mrow></math>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<mi>y</mi>	<mo>&rarr;</mo>	<mi>x</mi>	<mo>&ge;</mo>	<mi>y</mi></mrow></math> 
+<code>      </code> #obvious
+</span>
+
+<br/>
+the first half of the proof is complete. The second
+half is similar; we prove the <b>if-false</b> branch:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mi>Q</mi>	<mo>&otimes;</mo>	<mspace width="0.167em" />	<mi>T</mi></mrow></math>
+</span>
+
+<br/>
+which yields:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mi>x</mi>		<mo>&and;</mo>		<mi>x</mi>		<mo>&ge;</mo>		<mi>y</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&or;</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mi>y</mi>		<mo>&and;</mo>		<mi>x</mi>		<mo>&lt;</mo>		<mi>y</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+<br/>
+or:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mi>x</mi>		<mo>&and;</mo>		<mi>x</mi>		<mo>&ge;</mo>		<mi>y</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&or;</mo>	<mi>x</mi>	<mo>&lt;</mo>	<mi>y</mi></mrow></math>
+</span>
+
+<br/>
+or (since
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mi>y</mi>	<mo>&and;</mo>	<mi>x</mi>	<mo>&ge;</mo>	<mi>y</mi></mrow></math>
+can
+only be true if <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mi>y</mi></mrow></math>):
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mi>y</mi>	<mo>&equiv;</mo>	<mi>x</mi>	<mo>&or;</mo>	<mi>x</mi>	<mo>&lt;</mo>	<mi>y</mi></mrow></math>
+</span>
+
+<br/>
+To complete this half of the proof, we need to determine,
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>P</mi>	<mo>&and;</mo>	<mo>&not;</mo>	<mi>E</mi></mrow></math>,
+which is
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&lt;</mo>	<mi>y</mi></mrow></math>.
+Since <i>Z</i> is equivalent to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&le;</mo>	<mi>y</mi></mrow></math>,
+it is easy to see that:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&lt;</mo>	<mi>y</mi>	<mo>&rarr;</mo>	<mi>Z</mi></mrow></math>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&lt;</mo>	<mi>y</mi>	<mo>&rarr;</mo>	<mi>x</mi>	<mo>&le;</mo>	<mi>y</mi></mrow></math> 
+<code>//LHS is consistent/more restrictive</code>
+</span>
+
+<br/>
+The proof is complete (whew!).
+<br/>
+<!-- subsection -->
+<h3> The weakest precondition
+<br/>
+</h3><!-- subsection ENDED -->
+
+Often, we wish to have the <i>weakest</i> precondition in our code
+that guarantees the code is correct.
+There is a way for us to determine if the given precondition is the
+weakest possible; the weakest precondition of a conditional is given by:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mo form="prefix">(</mo>		<mi>Q</mi>		<mo>&otimes;</mo>		<mspace width="0.167em" />		<mi>S</mi>		<mo form="postfix">)</mo>		<mo>&and;</mo>		<mi>E</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&or;</mo>	<mrow>		<mo form="prefix">(</mo>		<mo form="prefix">(</mo>		<mi>Q</mi>		<mo>&otimes;</mo>		<mspace width="0.167em" />		<mi>T</mi>		<mo form="postfix">)</mo>		<mo>&and;</mo>		<mo>&not;</mo>		<mi>E</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+<br/>
+which is:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>x</mi>		<mo>&le;</mo>		<mi>y</mi>		<mo>&and;</mo>		<mi>x</mi>		<mo>&le;</mo>		<mi>y</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&or;</mo>	<mrow>		<mo form="prefix">(</mo>		<mo form="prefix">(</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mi>x</mi>		<mo>&or;</mo>		<mi>x</mi>		<mo>&lt;</mo>		<mi>y</mi>		<mo form="postfix">)</mo>		<mo>&and;</mo>		<mi>x</mi>		<mo>&lt;</mo>		<mi>y</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+<br/>
+This simplifies to:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&le;</mo>	<mi>y</mi>	<mo>&or;</mo>	<mrow>		<mo form="prefix">(</mo>		<mo form="prefix">(</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mi>x</mi>		<mo>&or;</mo>		<mi>x</mi>		<mo>&lt;</mo>		<mi>y</mi>		<mo form="postfix">)</mo>		<mo>&and;</mo>		<mi>x</mi>		<mo>&lt;</mo>		<mi>y</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&le;</mo>	<mi>y</mi>	<mo>&or;</mo>	<mi>x</mi>	<mo>&lt;</mo>	<mi>y</mi></mrow></math>
+<br/>
+true
+</span>
+
+<br/>
+Thus, the given precondition is the weakest, as one
+would suspect.
+<br/>
+<br/>
+Generating the weakest precondition for assignments is even simpler.
+One merely pushes the postcondition back through the assignment to
+generate the weakest precondition.
+<br/>
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

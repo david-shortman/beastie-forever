@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Preliminary Test Code</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Preliminary Test Code</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=19">Preliminary Test Code</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=19">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></h2></div><div class="dateline">08-28-2018, 05:55 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite>Quote:</cite>Here is part of preliminary test code in <span style="color: #222222;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: Arial, Helvetica, sans-serif;" class="mycode_font">da-0-0.c</span></span></span>:<img src="https://image.ibb.co/iCb1sp/TIM_20180828125056.png" alt="[Image: TIM_20180828125056.png]" class="mycode_img" /></blockquote>
+debugDA(p, 1) should print something before "items: "<br />
+<br />
+<br />
+<br />
+But expected result shows nothing:<br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><span style="color: #222222;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: Arial, Helvetica, sans-serif;" class="mycode_font">INTEGER test of DA, simple</span></span></span><br />
+<br />
+<span style="color: #222222;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: Arial, Helvetica, sans-serif;" class="mycode_font">items: [[1]]</span></span></span></blockquote>
+<br />
+Same as <span style="color: #222222;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: Arial, Helvetica, sans-serif;" class="mycode_font">cda-0-0.c.</span></span></span><br />
+<hr class="mycode_hr" />
+stack-0-0.c<br />
+<br />
+<br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><span style="font-style: italic;" class="mycode_i"><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">debugSTACK</span></span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"> - This if the debug level is set to one, the display method uses the underlying data structure's display method. If the debug method is set to two, the display method uses the underlying data structure's debugged display method.</span></span></span></blockquote>
+<img src="https://image.ibb.co/ehyNXp/TIM_20180828130735.png" alt="[Image: TIM_20180828130735.png]" class="mycode_img" /><br />
+<br />
+If the debug level is 0, should I do nothing?<br />
+<br />
+There is some debug info printed in expected result:<br />
+<span style="color: #222222;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: Arial, Helvetica, sans-serif;" class="mycode_font">items: [3,2,4,1,3,2,4,1,3,2,4,1,[4]]</span></span></span><br />
+<hr class="mycode_hr" />
+queue-0-0.c<br />
+<br />
+Similar problem<br />
+<br />
+Also, <br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><span style="font-style: italic;" class="mycode_i"><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">displayQUEUE</span></span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"> - This display method prints the items stored in the queue. If the integers 5, 6, 2, 9, and 1 are enqueued in the order given, the method would generate this output:</span></span></span><br />
+<br />
+<span style="color: #115555;" class="mycode_color"><span style="font-size: x-small;" class="mycode_size">    &lt;5,6,2,9,1&gt;</span></span></blockquote>
+expected result shows curly brackets instead of angle brackets:<br />
+<span style="color: #222222;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: Arial, Helvetica, sans-serif;" class="mycode_font">items: {3,2,4,1}</span></span></span></div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-28-2018, 07:26 PM</div>
+</div>
+<div class="message">First item: debugXXX does not print anything; it just sets a flag.<br />
+<br />
+Second item: debugXXX with a value of zero means an unmodified display.<br />
+<br />
+Third item: the stack's debug flag has been set to 2 prior to the display that shows the remaining capacity of the underlying data structure.<br />
+<br />
+Fourth item: You are correct; the queue bracketing should use angle brackets.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></h2></div><div class="dateline">08-28-2018, 08:27 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-28-2018, 07:26 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=100#pid100">[ -> ]</a></cite>First item: debugXXX does not print anything; it just sets a flag.<br />
+<br />
+Second item: debugXXX with a value of zero means an unmodified display.<br />
+<br />
+Third item: the stack's debug flag has been set to 2 prior to the display that shows the remaining capacity of the underlying data structure.<br />
+<br />
+Fourth item: You are correct; the queue bracketing should use angle brackets.</blockquote>Thanks! I misread the description.<br />
+<hr class="mycode_hr" />
+<img src="https://image.ibb.co/mSrt59/TIM_20180828152055.png" alt="[Image: TIM_20180828152055.png]" class="mycode_img" /><br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><span style="font-style: italic;" class="mycode_i"><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">displayQUEUE</span></span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"> - This display method prints the items stored in the queue. If the integers 5, 6, 2, 9, and 1 are enqueued in the order given, the method would generate this output: </span></span></span><br />
+<br />
+<span style="color: #115555;" class="mycode_color"><span style="font-size: x-small;" class="mycode_size">   &lt;5,6,2,9,1&gt;</span></span></blockquote>
+<br />
+I thought Queue is FIFO, is the expected result LIFO?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-29-2018, 12:53 PM</div>
+</div>
+<div class="message">You are correct. <br />
+<br />
+This is why copying code is dangerous. I copied over my stack module to make my queue module. Then I substituted:<br />
+<br />
+queue for stack<br />
+QUEUE for STACK<br />
+CDA for DA<br />
+enqueue for push<br />
+dequeue for pop<br />
+<br />
+and thought I was done.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></h2></div><div class="dateline">08-30-2018, 09:53 AM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-29-2018, 12:53 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=103#pid103">[ -> ]</a></cite>You are correct. <br />
+<br />
+This is why copying code is dangerous. I copied over my stack module to make my queue module. Then I substituted:<br />
+<br />
+queue for stack<br />
+QUEUE for STACK<br />
+CDA for DA<br />
+enqueue for push<br />
+dequeue for pop<br />
+<br />
+and thought I was done.</blockquote><br />
+Same here, copied cd to cda, debugging for hours, but still better than writing duplicated code :D</div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Preliminary Test Code</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

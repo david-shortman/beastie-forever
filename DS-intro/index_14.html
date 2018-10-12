@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Aug 18 09:08:15 2014 -->
+<head>
+<title>An Encyclop&aelig;dia of Elementary Data Structures -- Queues</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_13.html">
+  <img border="0" alt="Stacks" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_15.html">
+  <img border="0" alt="Priority Queues" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Queues</h1>
+
+<h2><a name="id1">Synopsis</a></h2><p>
+A queue is an <i>ordered</i> data structure in that the order
+of items are added to the structure affect the
+order in which those items are removed.
+In particular, a queue enforces <i>FIFO</i> ordering,
+where <i>FIFO</i> stands for <i>First-In-First-Out</i>. 
+For example, suppose the values 5, 13, and 7 were
+added to a queue in the order given. Then the
+first item removed from the queue would be 5,
+the second 13, and the last 7.
+</p>
+<p>Queues can either be <i>bounded</i> or <i>unbounded</i>.
+A bounded queue can only store a fixed number
+of values while an unbounded queue can store
+an unlimited number of values, subject to memory constraints.
+</p>
+
+<h2><a name="QueuesStructure">Structure</a></h2>
+<p>A typical queue has one component, plus operations:
+</p>
+<pre>
+    class queue
+        {
+        var store = ?;
+        //operations
+        ...
+        }
+</pre>
+<p>The <i>store</i> can be set to a circular array, a dynamic
+circular array or a linked-list.
+If a circular array is used as the store, a
+capacity is typically given as an argument to the constructor;
+this capacity is used to allocate the array.
+</p>
+
+<h2><a name="id3">Vocabulary</a></h2><p>
+The terms used in describing a queue are:
+</p>
+<dl><dt>enqueue</dt><dd> The name of the operation that adds a value to a queue.
+Analagous to the push operation of stacks.
+</dd><dt>dequeue</dt><dd> The name of the operation that removes a value from a queue.
+Usually, the value removed is returned by the <i>dequeue</i> operation.
+The <i>dequeue</i> operation returns the least recent value enqueued
+that has not already been dequeued. Analagous to the pop operation
+of a stack.
+</dd><dt>peek</dt><dd> Like <i>dequeue</i>, but 
+the value is not removed
+from the queue. Consecutive peeks, with no
+intervening enqueues or dequeues, always return the same value.
+Sometimes, <i>peek</i> is named <i>front</i>.
+</dd><dt>front of the queue</dt><dd> The least recently enqueued item that
+has not been dequeued.
+</dd><dt>back of the queue</dt><dd> The most recently enqueued item that
+has not been dequeued.
+</dd></dl>
+
+<h2><a name="id4">Supports</a></h2><p>
+A queue is a top-level data structure that is used
+in various algorithms.
+</p>
+
+<h2><a name="id5">Dependencies</a></h2><p>
+A bounded queue can be implemented with a
+<a href="index_7.html">circular array</a>,
+while an unbounded queue can be built from either a 
+<a href="index_9.html">dynamic circular array</a>
+or a 
+<a href="index_11.html">singly linked-list</a> that
+holds a tail pointer.
+</p>
+<p>A queue can also be built using two <a href="index_13.html">stacks</a>.
+</p>
+
+<h2><a name="id6">Operations</a></h2>
+
+<h3><a name="id7">enqueue</a></h3><p>
+This operation adds a given <i>value</i> to the end of
+the queue. If the queue is implemented with a circular array
+(dynamic or otherwise) or a singly linked-list as its store,
+the <i>enqueue</i> operation translates to
+the store's <i>add-to-back</i> operation.
+</p>
+<p>Enqueuing a value is expected to take <i>&#920;(1)</i> time.
+</p>
+
+<h3><a name="id8">dequeue</a></h3><p>
+This operation removes (and returns) the <i>value</i> at the beginning of
+the queue. If the queue's store is a circular array
+(dynamic or otherwise) or singly-linked list,
+the <i>dequeue</i> operation translates to
+the store's <i>remove-from-front</i> operation.
+</p>
+<p>Removing a value from a queue is expected to take <i>&#920;(1)</i> time.
+</p>
+
+<h3><a name="id9">peek</a></h3><p>
+This operation returns the value that is to be dequeued next,
+without modifying the state of the queue.
+Unlike a
+<a href="index_13.html">stack</a>,
+a <i>peek</i> operation cannot be implemented
+by a <i>dequeue</i> followed by an <i>enqueue</i>. Thus the implementation
+of this operator must use an appropriate operation of the store.
+</p>
+
+<h3><a name="id10">is-empty</a></h3><p>
+This operation returns true if all pushed values have been popped,
+false otherwise.
+This can be done simply by incrementing a counter (initialized
+to zero) every time
+a push is performed and decrementing the counter every time
+a pop is performed. At points in time when the counter is zero,
+the queue is empty.
+</p>
+<p>It would be an error, of course, if the counter was ever less than
+zero, indicating there were more pops than pushes.
+</p>
+<p>The <i>is-empty</i> operation is expected to take <i>&#920;(1)</i> time.
+</p>
+
+<h3><a name="id11">is-full</a></h3><p>
+This operation returns true if the store is full, but
+only needs to be implemented for bounded queues.
+</p>
+
+<h2><a name="id12">Traversals</a></h2><p>
+Queues, in general, do not support traversals.
+</p>
+
+<h2><a name="id13">Concept Inventory</a></h2>
+<div align="center">
+</div>
+<ol>&nbsp;
+<li>These values are enqueued onto a queue in the order given: 3, 8, 1. A dequeue operation would return which value?
+<ol><li>
+1
+</li><li>
+3
+</li><li>
+8
+</li><li>
+3 and 1
+</li><li>
+3 and 8
+</li></ol>
+&nbsp;
+</li><li>Consider a queue based upon a regular array with enqueues onto the back of the array. What is the best one can do in terms of worst case behavior for <i>enqueue</i> and <i>dequeue</i>, respectively?
+<ol><li>
+constant and constant
+</li><li>
+constant and linear
+</li><li>
+linear and linear
+</li><li>
+linear and constant
+</li></ol>
+&nbsp;
+</li><li>Consider a queue based upon a circular array with enqueues onto the back of the array. What is the best one can do in terms of worst case behavior for <i>enqueue</i> and <i>dequeue</i>, respectively?
+<ol><li>
+constant and constant
+</li><li>
+constant and linear
+</li><li>
+linear and linear
+</li><li>
+linear and constant
+</li></ol>
+&nbsp;
+</li><li>Consider a queue based upon a singly-linked list without a tail pointer with enqueues onto the front of the list. What is the best one can do in terms of worst case behavior for <i>enqueue</i> and <i>dequeue</i>, respectively?
+<ol><li>
+constant and constant
+</li><li>
+constant and linear
+</li><li>
+linear and linear
+</li><li>
+linear and constant
+</li></ol>
+&nbsp;
+</li><li>Consider a queue based upon a singly-linked list with a tail pointer with enqueues onto the back of the list. What is the best one can do in terms of worst case behavior for <i>enqueue</i> and <i>dequeue</i>, respectively?
+<ol><li>
+constant and constant
+</li><li>
+constant and linear
+</li><li>
+linear and linear
+</li><li>
+linear and constant
+</li></ol>
+&nbsp;
+</li><li>Consider a queue based upon a doubly-linked list with a tail pointer with enqueues onto the front of the list. What is the best one can do in terms of worst case behavior for <i>enqueue</i> and <i>dequeue</i>, respectively?
+<ol><li>
+constant and constant
+</li><li>
+constant and linear
+</li><li>
+linear and linear
+</li><li>
+linear and constant
+</li></ol>
+</li></ol>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_13.html">
+  <img border="0" alt="Stacks" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_15.html">
+  <img border="0" alt="Priority Queues" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

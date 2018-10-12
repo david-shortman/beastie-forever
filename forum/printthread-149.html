@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Same pointer at multiple indices - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=56">Same pointer at multiple indices</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Same pointer at multiple indices (<em>/showthread.php?tid=56</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>Same pointer at multiple indices</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=7">andrasveto</a> -  <strong>09-10-2018</strong>
+<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>INTEGER *insert = newINTEGER(1);<br />
+insertDA(first, 0, insert);<br />
+insertDA(second, 0, insert);<br />
+unionDA(first, second);<br />
+freeDA(first);</code></div></div><br />
+In the above code, both DA first and DA second have one element pointing to insert. When they are unioned, first has two elements which are both pointers to the same value. If our free function simply goes through and frees all values, the program will throw an exception once it gets to freeing first[1] because insert was already freed when first[0] was freed.<br />
+<br />
+Is this a valid situation that our code should be able to handle, or can we assume that all pointers in a DA that would need to be freed are unique?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Same pointer at multiple indices</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-10-2018</strong>
+<br />
+<br />
+The latter. You do not need to handle situations like you describe. It would make the linear amortized run time into omega(n) if you were to handle that. It is up to the user to not to call union in situations like this,<br />
+<br />
+If one were to write a manual for the DA (and CDA) library, this would be an important example of something not to do.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

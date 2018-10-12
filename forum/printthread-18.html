@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Queue Valgrind Errors - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=137">Queue Valgrind Errors</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 1 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=7</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Queue Valgrind Errors (<em>/showthread.php?tid=137</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>Queue Valgrind Errors</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=3">amjohnson36</a> -  <strong>10-03-2018</strong>
+<br />
+<br />
+When solving the maze, I'm successfully freeing the queue used and not getting any memory leaks and the logic is working correctly. For some reason I am getting many valgrind errors that say "Invalid read of size 8" and "Address is 0 bytes after a block of size 0 alloc'd". Anyone else getting the same error? It confuses me as my queue passed all the assign0 tests.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Queue Valgrind Errors</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a> -  <strong>10-03-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (10-03-2018, 12:13 AM)</span>amjohnson36 Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=554#pid554" class="quick_jump"></a></cite>When solving the maze, I'm successfully freeing the queue used and not getting any memory leaks and the logic is working correctly. For some reason I am getting many valgrind errors that say "Invalid read of size 8" and "Address is 0 bytes after a block of size 0 alloc'd". Anyone else getting the same error? It confuses me as my queue passed all the assign0 tests.</blockquote><br />
+It could be that you're freeing the queue, but then you're trying to access a value from that freed data. Had the same problem, it's most likely one line of code giving the error.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Queue Valgrind Errors</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=3">amjohnson36</a> -  <strong>10-04-2018</strong>
+<br />
+<br />
+Dr. Lusth helped me figure it out, problem was with my cda class. Every time cda-&gt;size shrank to zero (often) I was allocating a new array of size zero.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

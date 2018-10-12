@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: voiceLeading.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Tue Feb  7 15:50:15 2017 -->
+<head>
+<title>Songlib: automatic voice leading</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: automatic voice leading<br /></h1>
+<h2 class="maketitle">written by: Song Li Buser</h2>
+<h3 class="maketitle">Revision Date: February 7, 2017</h3>
+</p>
+
+<h3><a name="id1"><a href="voiceLeading.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Voice leading</a></h1><p>
+The <i><b>songlib</b></i>&#32;system can automatically choose inversions
+of a chord so that the travel of the notes from the previous
+chord to the new chord are minimized.
+Voice leading is under the control of the
+the <i>setVoiceLeading</i> and <i>getVoiceLeading</i> functions:
+</p>
+<pre>
+    int setVoiceLeading(int mode);
+    int getVoiceLeading(void);
+</pre>
+<p>The <i>setVoiceLeading</i> function sets the voice leading mode and returns the
+previous setting.  Currently there is only one mode (more are planned), so
+to turn on voice leading, pass a 1 to <i>setVoiceLeading</i>.
+The <i>getVoiceLeading</i> function returns the current voice leading mode.
+</p>
+<p>Voice leading works for all chord functions, including modal chords.
+However, there are some limitations. Inversions are chosen only if the
+number of notes in the previous chord equals the number of notes in
+the new chord. Moreover, in figuring minimal distances, the lowest note
+of the previous chord is compared to the first note of the new chord,
+the second lowest note of the previous chord is compared to the second note of
+the new chord, and so on. If the
+new chord's notes are arranged from
+high to low, then travel will be minimized between the low note of
+the previous chord and the high note of the new chord, and so on.
+</p>
+<p>In choosing inversions, the first note is only allowed to move up an
+octave, while the last note is only allowed to move down an octave.
+Notes in between are allowed to move up or down an octave in order
+to minimize note travel.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

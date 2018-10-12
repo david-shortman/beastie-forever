@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>npc</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+An Introduction to NP-Completeness
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="npc.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Introduction
+<br/>
+</h2><!-- section ENDED -->
+
+We know that some problems seem to take a long time to solve while others
+can be solved rather quickly. Does this have to be so? Perhaps, if we were
+clever enough, we could come up with a way to solve a problem much more
+quickly than has been done previously. As you know, even an efficient sort
+like heapsort or mergesort takes a while on very large data sets. As these
+sorts are <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>,
+maybe we can come up with an
+asymptotically faster sort, say an
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<msup>			<mi>log</mi>			<mo>*</mo>		</msup>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+or even
+an <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math> sort. Well, as long as we stick with sorts that rearrange
+values based upon comparisons between the items to be sorted, it turns
+out that we cannot. It has been shown that any sort that works in this
+fashion must take
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+time for arbitrary
+input and in the worst case. So if
+we try to find a better comparison sort, asymptotically speaking, we are
+just wasting our time. The &ldquo;science&rdquo; in Computer Science tells us not to
+bother.
+<br/>
+<br/>
+What about some problems that seem to take an exponential amount of
+time to run? An example of this problem is deciding if one graph is a subgraph
+of another graph, which is known as the <i>subgraph isomorphism</i> problem
+(<b><i>SUB</i></b>).
+No one has come up with an algorithm that runs in less than <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mn>2</mn>			<mi>n</mi>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+time,
+where <i>n</i> relates to the size of the graphs,
+when run on two arbitrary graphs. Like comparison sorts, has anybody
+proved that you can't do better? The answer is no. So should we spend all
+our time trying to come up with a faster version of <b><i>SUB</i></b>? Probably not.
+In the first case, some very clever folks have worked on this very idea
+and haven't come up with a better algorithm. Secondly, some very, very
+clever folks have shown that if you could come up with a quick solution
+for <b><i>SUB</i></b>, you could use that algorithm to quickly
+solve a vast number of problems
+for which no quick solution is known.
+So not only
+do you have the experience of the very clever folks who worked on <b><i>SUB</i></b> telling
+you not to bother trying to come up with a faster algorithm, you have the
+experience of a large number of other clever folks who failed finding faster
+algorithms for all those other problems whose solutions best solutions
+are as
+slow as <b><i>SUB</i></b>'s
+telling you the same thing as well. My experience is, when a large number
+of smart people are telling you the same thing, you might want to listen
+to them.
+<br/>
+<br/>
+We need to tighten up our definitions of
+the words <i>quick</i> and <i>slow</i>.
+The words do not refer to how fast one can come up
+with a solution, but how fast the solution can be generated.
+Usually, quick means polynomial or better time algorithms
+for generating solutions
+and slow means exponential time or worse algorithms.
+A problem is <i>intractable</i> if it has been
+proven that all algorithms for generating solutions must be slow.
+For example, enumerating all permutations of a list
+is intractable, since it is easy to show it can't be done in
+polynomial time. In fact, it must take at least
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo>!</mo>		<mo form="postfix">)</mo>	</mrow></mrow></math> time,
+The term <i>efficient</i> is sometimes used for quick
+and the term <i>inefficient</i> is sometimes used
+for slow.
+<br/>
+<br/>
+For the rest of this discussion, we will say a
+problem solution is efficient if it has
+an algorithm
+for solving the problem that runs in sub-exponential time.
+We will say a problem is intractable
+if it has been proven
+that no algorithm that runs
+in sub-exponential time is possible.
+<br/>
+<!-- section -->
+<h2> The classes <b>P</b> and <b>NP</b>
+<br/>
+</h2><!-- section ENDED -->
+
+Let's explore the idea that an efficient algorithm for <b><i>SUB</i></b> would necessarily
+mean an efficient solution for all problems in <b>NP</b>.
+We need to dive into
+a bit of theory to do this, however.
+Let's devise a way to categorize problems in
+terms of efficient and intractable. Let's say problems with efficient algorithms
+belong to class <b>P</b>.
+The letter <b>P</b> stands for <i>Polynomial Time</i>,
+meaning that these problems can be solved in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mi>n</mi>			<mi>k</mi>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+time, with <i>k</i> being a constant (<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mi>k</mi>	</msup></mrow></math> is a polynomial,
+hence the class name).
+Intractable problems, those problems whose solutions
+take at least exponential time, are in the class <b>I</b>.
+There is another important set of problems, those whose solutions can
+be solved on a <i>non-deterministic</i> computer in polynomial time.
+This class of problems is
+denoted <b>NP</b>,
+which stands for <i>Non-deterministic Polynomial time</i>.
+<i>Note: beginners have a tendency to say</i> <b>NP</b> <i>means non-polynomial, but that
+is incorrect.</i>
+A non-deterministic computer is far more powerful than a deterministic, or
+conventional, computer.
+Problems in <b>P</b>, those that can be solved in polynomial time
+on a conventional computer, surely can be solved in polynomial time on
+a non-deterministic computer.
+Therefore,
+the class <b>P</b> belongs
+to the class <b>NP</b>. The main question is: are there problems
+in <b>I</b> that are also in <b>NP</b>?
+<br/>
+<br/>
+A non-deterministic computer, when given an alternative, always makes
+the right choice (wish I had one of those!). For example, a non-deterministic
+computer can solve the <b><i>SUB</i></b> problem in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mi>n</mi>			<mi>k</mi>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+time, where <i>n</i> relates to the sizes of the graphs involved,
+and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>k</mi></mrow></math> is a small constant that takes care of looking up vertices and
+edges in the graph.
+Assume the non-deterministic computer
+tries to see if the first graph is a subgraph of the second.
+Assume further that the first graph is indeed a subgraph of the second.
+Our computer
+would take a vertex in the first graph and align it with one of the vertices
+in the second. Which one? It would guess and it would guess correctly.
+Then it would attempt to align the second vertex in the first graph and
+would guess correctly again. Eventually all <i>n</i> vertices would be aligned.
+This obviously would take <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mi>n</mi>			<mi>k</mi>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math> time for
+the <i>n</i> guesses our computer would have to make.
+<br/>
+<br/>
+Alternatively, the class <b>NP</b> can
+be thought of as encompassing those problems for which a solution can be
+<i>verified</i> in polynomial time. It seems to be much easier to verify a solution
+than to come up with one, so this interpretation of the class <b>NP</b>
+still allows for <b>P</b> being a subset of <b>NP</b> and the possibility of some
+problems in <b>I</b> also belonging to <b>NP</b> as well.
+Of particular interest is that no known intractable problems
+can be solved on a non-deterministic computer in polynomial time
+or verified in polynomial time on a deterministic computer
+(think about verifying the output of a permutation program).
+Thus, at the moment, no intractable problems are known to
+be in <b>NP</b>.
+<br/>
+<br/>
+Logically, two scenarios exist. Either all problems in <b>NP</b> will
+end up in <b>P</b> (someone discovers an efficient algorithm for
+solving each problem) or the problems in <i>NP</i> will be split between
+those in <b>P</b> and and those in <b>I</b> (someone proves no efficient
+algorithm for some problems exist).
+The latter scenario would be mean the existence
+of at least one
+problem that
+can be solved with a non-deterministic computer in polynomial time
+but cannot be solved with a deterministic computer in polynomial time.
+Let's informally call this subset class <b>INP</b>,
+for &ldquo;Intractable within <b>NP</b>&rdquo;,
+or, in other words,
+&ldquo;in <b>NP</b> but known not to have a polynomial time solution
+on a deterministic
+computer&rdquo;. Right now, nobody
+knows if the subset <b>INP</b> has any problems in it.
+<br/>
+<!-- section -->
+<h2> The relationship between <b>P</b> and <b>NP</b>
+<br/>
+</h2><!-- section ENDED -->
+
+What is known about the relationship between problems
+with efficient algorithms in the class <b>P</b> and the remaining
+problems in the
+class <b>NP</b>?
+As stated earlier, every problem in <b>P</b>
+is also in <b>NP</b>. This can be demonstrated
+by looking at the formal definition of <b>NP</b>.
+Surely, if a deterministic computer (unfortunately, the only kind I have!)
+can solve a problem in polynomial time, a non-deterministic computer can
+solve it in polynomial time as well. Alternatively, if a solution can be
+devised in polynomial time, it must be the case that the solution can be
+verified in polynomial time as well since verification is built in to devising
+a solution.
+Formally, then, the class <b>P</b>
+is a subset of the class <b>NP</b>. Furthermore
+the class <b>P</b> is disjoint from the class
+<b>INP</b>,
+by definition. Finally, all <b>NP</b> problems must be in <b>P</b> or <b>INP</b>,
+<br/>
+<br/>
+Earlier, it was stated
+that it wasn't really known whether some of the problems
+in <b>NP</b> that appear intractable are indeed intractable.
+Suppose you figure out
+that a particular problem in <b>NP</b>,
+which currently has no efficient algorithm,
+definitely belongs in either <b>P</b> or <b>INP</b>.
+In two scenarios,
+you will become rich and famous (famous among computer scientists, at least).
+In the third scenario, not so much.
+<br/>
+<!-- subsection -->
+<h3> Scenario 1
+<br/>
+</h3><!-- subsection ENDED -->
+
+In this scenario, you find
+a polynomial time solution for a problem like <b><i>SUB</i></b>
+(<b><i>SUB</i></b> is a problem in the class of
+problems called <b>NP</b>-<i>complete</i> -
+more on this class of problems in the next section).
+This means that all <b>NP</b>
+problems will have efficient algorithms for their solutions.
+In this case, <b>P</b>
+will be an improper subset of <b>NP</b>, or
+more simply, <b>P</b> = <b>NP</b>,
+and the class <b>INP</b> will be known to be empty.
+Riches and fame ensue.
+<br/>
+<!-- subsection -->
+<h3> Scenario 2
+<br/>
+</h3><!-- subsection ENDED -->
+
+In this second scenario, you prove
+that a problem in <b>NP</b> (it doesn't matter what kind,
+only that it is in <b>NP</b>)
+can only be solved in super-polynomial time. In this case,
+it and all the hard problems like <b><i>SUB</i></b> will immediately
+become members of class <b>INP</b>. In this case, <b>P</b>
+will be a proper subset of <b>NP</b>, or more
+simply <b>P</b> != <b>NP</b>.
+As in Scenario 1, riches and fame ensue.
+<br/>
+<!-- subsection -->
+<h3> Scenario 3
+<br/>
+</h3><!-- subsection ENDED -->
+
+Here, you discover a polynomial-time algorithm for
+solving a
+problem in <b>NP</b> that currently has no known efficient algorithm.
+Unfortunately, this problem is not special like <b><i>SUB</i></b>
+is special. In such a case, we cannot make any grand claims about
+whether <b>P</b> = <b>NP</b> or not (though you may get rich if your
+polynomial time solution is much better than any previously
+known algorithm <i>and</i> the problem is of commercial interest).
+<br/>
+<br/>
+Whether <b>P</b> = <b>NP</b>
+or not, or equivalently, whether
+<b>INP</b> is empty or not,
+is the greatest unanswered question in theoretical computer science.
+<br/>
+<!-- section -->
+<h2> The class <b>NP</b>-complete
+<br/>
+</h2><!-- section ENDED -->
+
+<b><i>SUB</i></b> was claimed to be a <i>special</i> problem in that a
+polynomial time solution
+for it would imply all <b>NP</b> problems have efficient algorithms.
+Alternatively, if it were shown that any particular problem in <b>NP</b>
+could not be solved in polynomial time,
+<b><i>SUB</i></b> and all other <i>special</i> <b>NP</b> problems would
+immediately move into <b>INP</b>. Not all hard problems are known to be
+special in this way. Two
+examples are
+the <i>graph isomorphism</i> problem, which answers the question
+if two graphs are identical to each other, modulo vertex names,
+and <i>integer factorization</i>, which answers the question, does a
+composite number <i>N</i> have a factor greater than 1 and less than <i>M</i>?
+At this point in time, the best (exact) algorithms for
+these problems are sub-exponential but super-polynomial.
+If someone found a polynomial
+time algorithm for graph isomorphism
+or factoring
+(
+<code>&lt;PARANOIA&gt;</code>I believe the NSA
+has just such an algorithm
+<code>&lt;/PARANOIA&gt;</code>),
+all it would mean is that the problem
+would belong to the class <b>P</b>, with no other implications
+as to whether <b>P</b> = <b>NP</b>.
+<br/>
+<br/>
+Special problems, like <b><i>SUB</i></b>,
+are thus closely linked. Once any problem, special or not,
+becomes <b>INP</b>, at a minimum all
+special problems will become <b>INP</b> as well.
+Alternatively, in the case of a special problem
+becoming <b>P</b>, all <b>NP</b> problems, special
+or not, will belong in <b>P</b>. These special problems have their own class,
+called <b>NP</b>-complete. The <i>complete</i>
+comes from the fact
+that any one of these special problems completely covers <b>NP</b>;
+if a fast solution is found for one, <b>NP</b>
+completely becomes <b>P</b>.
+<br/>
+<br/>
+To show that a problem, <i>q</i>, is <b>NP</b>-complete,
+one first shows that the problem <i>q</i> belongs to the class <b>NP</b>.
+This is typically rather easy to do since it is usually obvious how to verify
+a solution in polynomial time. The second step is not quite as simple.
+One needs to show that every instance of every problem in <b>NP</b> can be converted,
+in polynomial time, to an instance of <i>q</i>.
+<br/>
+<br/>
+Now all problems become easy once a fast algorithm for
+solving <i>q</i>
+is found. Given an instance of an arbitrary problem, <i>i</i>,
+one simply converts <i>i</i>
+into an instance of <i>q</i>
+and feeds it to the fast algorithm. The answer the algorithm gives is then
+directly converted to the answer to the original problem instance. This
+conversion is made rather obvious by restricting the class <b>NP</b>
+to decision problems. That is, the answer to an instance of an <b>NP</b>
+problem will be either <i>yes</i> or <i>no</i>. For example, the graph
+isomorphism problem can either be viewed either as a decision problem (is
+graph <i>G</i>
+isomorphic to graph <i>H</i>?) or as a problem that generates much more detail
+(what is the mapping of vertices in <i>G</i> to <i>H</i> should <i>G</i>
+be isomorphic to <i>H</i>?). Intuitively speaking, if a decision problem
+is hard to answer, surely the non-decision problem is also hard to answer,
+so the class
+<b>NP</b>
+can be thought of as representing more than just decision problems. In
+addition, an algorithm to solve a decision problem can often be used by
+a non-decision algorithm to generate the details in polynomial time
+beyond the time used by the decision algorithm.
+<br/>
+<br/>
+Still, this second task seems to be all but impossible. How does one
+show that all problems in <b>NP</b> can be converted, even problems that haven't
+been thought up yet!? Fortunately, a rather clever person named Cook showed
+that the satisfiability problem (<b><i>SAT</i></b>), which asks
+&ldquo;is there an assignment
+of truth values to boolean variables such that an arbitrary logical expression
+of those variables resolves to true?&rdquo; is <b>NP</b>-complete.
+Since that time, the task of showing some problem <i>q</i> is <b>NP</b>-complete
+has become much simpler. Rather than showing that every instance of every
+<b>NP</b> problem can be converted, in polynomial time, to an instance of <i>q</i>,
+we just show that every instance of the satisfiability problem (or some
+other <b>NP</b>-complete problem) can be converted,
+in polynomial time, to an instance of <i>q</i>. Why is this equivalent?
+Well, we can convert every instance of every hard problem to an instance
+of <b><i>SAT</i></b> in polynomial time (because it is <b>NP</b>-complete).
+Then we can convert the resulting instance
+of <b><i>SAT</i></b> to an instance of <i>q</i> in polynomial time as well. The time
+it takes to do the two conversions is additive, so the overall conversion
+takes polynomial time.
+So an efficient algorithm for <i>q</i> implies an efficient
+algorithm for all <b>NP</b> problems!
+<br/>
+<!-- section -->
+<h2> The future of <b>NP</b>-completeness
+<br/>
+</h2><!-- section ENDED -->
+
+While it might be nice to dream of a fast algorithm for <b><i>SUB</i></b>, it is likely
+to be a fruitless task. There are a vast number of hard problems which
+a lot of people have spent a lot of time searching for fast algorithms,
+to no avail. Personally, I used to believe that <b>P</b>
+did indeed equal <b>NP</b> and I got my inspiration
+from the fact that it was believed that soap bubbles always contract and
+arrange themselves to minimize their surface energy. They do this feat
+very quickly. So all one would have to do is cast an <b>NP</b>-complete
+problem as a soap bubble system and allow the system to find its minimum
+energy. That final configuration would reflect the answer to the original
+problem. Recently however, someone showed that for a certain type of multiple
+bubble systems, the minimum energy configuration is not reached naturally,
+which implies that a soap bubble system representing an instance of an
+<b>NP</b>-complete
+problem might not find the correct answer.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

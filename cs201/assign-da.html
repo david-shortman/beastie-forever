@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign-da</title>
+<link rel=stylesheet
+    href="201.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+A Dynamic Array Class
+<br/>
+<span class="smaller">Version 1b</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller"><a href="assign-da.pdf">Printable Version</a></span></span>
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> The <i>DA</i> class
+<br/>
+</h2><!-- section ENDED -->
+
+For your dynamic array class, the header file, <i>da.h</i>, should look
+like:
+<br/>
+
+<pre>
+    #ifndef __DA_INCLUDED__
+    #define __DA_INCLUDED__
+
+    #include &lt;stdio.h&gt;
+
+    typedef struct da DA;
+
+    extern DA   *newDA(void);
+    extern void  setDAdisplay(DA *,void (*)(void *,FILE *));
+    extern void  setDAfree(DA *,void (*)(void *));
+    extern void  insertDA(DA *items,int index,void *value);
+    extern void *removeDA(DA *items,int index);
+    extern void  unionDA(DA *recipient,DA *donor);
+    extern void *getDA(DA *items,int index);
+    extern void *setDA(DA *items,int index,void *value);
+    extern int   sizeDA(DA *items);
+    extern void  displayDA(DA *items,FILE *fp);
+    extern int   debugDA(DA *items,int level);
+    extern void  freeDA(DA *items);
+
+    #define insertDAback(items,value) insertDA(items,sizeDA(items),value)
+    #define removeDAback(items)       removeDA(items,sizeDA(items)-1)
+    #endif
+</pre>
+
+The header file contains the function signatures of your public
+methods while the code module, <i>da.c</i>, contains their implementations.
+<br/>
+<br/>
+The only local include that <i>da.c</i> should have is <i>da.h</i>.
+<br/>
+<!-- subsection -->
+<h3> Method behavior
+<br/>
+</h3><!-- subsection ENDED -->
+
+Here are some of the behaviors your methods should have. This listing
+is not exhaustive; you are expected, as a computer scientist, to
+complete the implementation in the best possible and most logical manner.
+The dynamic array uses zero-based indexing.
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newDA</i> -
+The constructor returns an initialized <i>DA</i> object.
+<br/>
+</li>
+
+<li>
+
+ <i>setDAdisplay</i> -
+This method is passed a function that knows how to
+display the generic value stored in an array slot.
+<br/>
+</li>
+
+<li>
+
+ <i>setDAfree</i> -
+This method is passed a function that knows how to
+free the generic value stored in an array slot.
+<br/>
+</li>
+
+<li>
+
+ <i>insertDA</i> -
+The insert method places the given item at the slot named by
+given index.
+The previous item at that slot shifts to the next higher slot (and so on).
+If there is no room for the insertion, the array grows by doubling.
+It should run in amortized constant time when inserting an item a constant
+distance from the back and in linear time otherwise.
+<br/>
+</li>
+
+<li>
+
+ <i>removeDA</i> -
+The remove method removes the item at the given
+index.
+The item at the next higher slot shifts to that slot (and so on).
+The method returns the removed item.
+If the ratio of the size to the capacity drops below 25%,
+the array shrinks by half. The array should never shrink below
+a capacity of one.
+Also, an empty array should always have a capacity of one.
+It should run in amortized constant time when removing an item a constant
+distance from the back and in linear time otherwise.
+<br/>
+</li>
+
+<li>
+
+ <i>unionDA</i> -
+The union method takes two array and moves all the items in the
+donor array to the recipient array. If the recipient array has the
+items 
+<code>[3,4,5]</code> and the donor array has the items 
+<code>[1,2]</code>,
+then, after the union, the donor array will be empty and recipient
+array will have the items 
+<code>[3,4,5,1,2]</code>.
+It should run in amortized linear time
+with respect to the size of the donor array.
+<br/>
+</li>
+
+<li>
+
+ <i>getDA</i> -
+The get method returns the value at the given index.
+It should run in constant time.
+<br/>
+</li>
+
+<li>
+
+ <i>setDA</i> -
+If the given index is equal to the size, the value is inserted via
+the insert method.
+The method returns the replaced value or the null pointer
+if no value was replaced.
+It should run in constant or amortized constant time (in the case
+of the insert method being called).
+<br/>
+</li>
+
+<li>
+
+ <i>sizeDA</i> -
+The size method returns the number of items stored in the array.
+It should run in amortized constant time.
+<br/>
+</li>
+
+<li>
+
+ <i>displayDA</i> -
+This visualizing method prints out the filled region, enclosed in brackets and
+separated by commas.
+If the
+integers 5, 6, 2, 9, and 1 are stored in the array (listed from
+index 0 upwards) and the debug level is zero (see <i>debugDA</i>),
+the method would generate this output:
+
+<pre>
+    [5,6,2,9,1]
+</pre>
+
+with no preceding or following whitespace.
+If no display method is set (see <i>setDAdisplay</i>),
+the address of each item is printed
+(using 
+<code>%p</code>). Each address is preceded by an @ sign.
+<br/>
+</li>
+
+<li>
+
+ <i>debugDA</i> -
+The debug method sets an internal flag in the object to the given value.
+If the flag is greater than zero, the display method adds a comma (if needed)
+and the number
+of empty slots (in brackets) immediately after the last element.
+If the above array had a capacity of 8, the display would be 
+<code>[5,6,2,9,1,[3]]</code>.
+An empty array with capacity 1
+displays as 
+<code>[[1]]</code>.
+The method returns the previous debug value.
+<br/>
+</li>
+
+<li>
+
+ <i>freeDA</i> -
+If no free method is set, the individual items are not freed.
+In any case, the array and its supporting allocations are freed.
+</li>
+
+</ul>
+
+
+<!-- subsection -->
+<h3> Constraints
+<br/>
+</h3><!-- subsection ENDED -->
+
+The array should never have a capacity of 0;
+An empty array should have a capacity of 1.
+<br/>
+<br/>
+If there is no room for an insertion,
+the array grows by doubling.
+<br/>
+<br/>
+If the ratio of the size (i.e. the number of items in the array)
+to the capacity drops below 25%,
+the array shrinks by half.
+<br/>
+<!-- subsection -->
+<h3> Assertions
+<br/>
+</h3><!-- subsection ENDED -->
+
+Include the following assertions in your methods:
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newDA</i> -
+The memory allocated shall not be zero.
+<br/>
+</li>
+
+<li>
+
+ <i>insertDA</i> -
+The memory allocated shall not be zero.
+<br/>
+</li>
+
+<li>
+
+ <i>removeDA</i> -
+The size shall be greater than zero.
+<br/>
+</li>
+
+<li>
+
+ <i>getDA</i> -
+The index shall be greater than or equal to zero and less than the size.
+<br/>
+</li>
+
+<li>
+
+ <i>setDA</i> -
+The index shall be greater than or equal to zero and less than or
+equal to the size.
+</li>
+
+</ul>
+
+
+<!-- subsection -->
+<h3> Testing your DA class
+<br/>
+</h3><!-- subsection ENDED -->
+
+Here is a sample testing program that uses the <i>displayINTEGER</i> function
+found in the <i>integer</i> class. Note how it is passed to the <i>newDA</i>
+constructor.
+<br/>
+
+<pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include &quot;integer.h&quot;
+    #include &quot;da.h&quot;
+
+    static void showItems(DA *items);
+
+    int
+    main(void)
+        {
+        srandom(1);
+        DA *items = newDA();
+        setDAfree(items,freeINTEGER);
+        showItems(items);
+        insertDA(items,0,newINTEGER(3));                 //insert at front
+        insertDA(items,sizeDA(items),newINTEGER(2));     //insert at back
+        insertDA(items,1,newINTEGER(1));                 //insert at middle
+        showItems(items);
+        printf(&quot;The value &quot;);
+        INTEGER *i = removeDA(items,0);                  //remove from front
+        displayINTEGER(i,stdout);
+        printf(&quot; was removed.\n&quot;);
+        freeINTEGER(i);
+        showItems(items);
+        int x = getINTEGER((INTEGER *) getDA(items,0));  //get the first item
+        printf(&quot;The first item is %d.\n&quot;,x);
+        printf(&quot;Freeing the list.\n&quot;);
+        freeDA(items);
+        return 0;
+        }
+
+    static void
+    showItems(DA *items)
+        {
+        int old;
+        setDAdisplay(items,displayINTEGER);
+        printf(&quot;The items are &quot;);
+        displayDA(items,stdout);
+        printf(&quot;.\n&quot;);
+        printf(&quot;The items (debugged) are &quot;);
+        old = debugDA(items,1);
+        setDAdisplay(items,0);
+        displayDA(items,stdout);
+        printf(&quot;.\n&quot;);
+        debugDA(items,old);
+        }
+</pre>
+
+The output of this program should be:
+<br/>
+
+<pre>
+    The items are [].
+    The items (debugged) are [[1]].
+    The items are [3,1,2].
+    The items (debugged) are [@0x420c4d8,@0x420c580,@0x420c510,[1]].
+    The value 3 was removed.
+    The items are [1,2].
+    The items (debugged) are [@0x420c580,@0x420c510,[2]].
+    The first item is 1.
+    Freeing the list.
+</pre>
+
+You may download the integer class with these commands:
+<br/>
+
+<pre>
+    wget beastie.cs.ua.edu/cs201/testing/integer.c
+    wget beastie.cs.ua.edu/cs201/testing/integer.h
+    wget beastie.cs.ua.edu/cs201/testing/makefile
+    wget beastie.cs.ua.edu/cs201/testing/test-integer.c
+</pre>
+
+The last command retrieves a program for testing the integer class.
+Compile and run this program with the commands:
+<br/>
+
+<pre>
+    make test
+</pre>
+
+You should model all your classes and makefiles after the
+the integer class.
+<br/>
+<br/>
+The superior student will test his or her dynamic array class
+with other data types besides <i>INTEGER</i>s by implementing such classes
+as <i>REAL</i> and <i>STRING</i>.
+<br/>
+<!-- subsection -->
+<h3> Change log
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<code>     1b    </code> fixed erroneous calls to sizeCDA in the .h macros
+<br/>
+
+<code>     1a    </code> clarified the explanation of <i>displayDA</i>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

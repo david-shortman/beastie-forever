@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Valgrind Error</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Valgrind Error</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=18">Valgrind Error</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=18">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">08-27-2018, 08:09 PM</div>
+</div>
+<div class="message">When using insertDA, I get the error "Conditional jump or move depends on uninitialised values" on valgrind.<br />
+<br />
+Should I ignore this error, since we're not supposed to initialize the indexes in the array when we create them?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></h2></div><div class="dateline">08-27-2018, 08:16 PM</div>
+</div>
+<div class="message">I haven't had this kind of error when I run valgrind, looks like you are using uninitialized value instead of just creating it.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">08-27-2018, 08:24 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-27-2018, 08:16 PM)</span>sbcarp Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=79#pid79">[ -> ]</a></cite>I haven't had this kind of error when I run valgrind, looks like you are using uninitialized value instead of just creating it.</blockquote><br />
+Once the array is doubled, the value is inserted. Am I doing it wrong?<br />
+<br />
+EDIT: My first method was initializing every value to null after the array was reallocated.<br />
+<br />
+After I took that method out, I started getting those errors on valgrind.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></h2></div><div class="dateline">08-27-2018, 08:31 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-27-2018, 08:24 PM)</span>jdtubbs3 Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=81#pid81">[ -> ]</a></cite><blockquote class="mycode_quote"><cite><span> (08-27-2018, 08:16 PM)</span>sbcarp Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=79#pid79">[ -> ]</a></cite>I haven't had this kind of error when I run valgrind, looks like you are using uninitialized value instead of just creating it.</blockquote><br />
+Once the array is doubled, the value is inserted. Am I doing it wrong?</blockquote><br />
+Which line of code did valgrind report has error?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">08-27-2018, 08:50 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-27-2018, 08:31 PM)</span>sbcarp Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=82#pid82">[ -> ]</a></cite><blockquote class="mycode_quote"><cite><span> (08-27-2018, 08:24 PM)</span>jdtubbs3 Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=81#pid81">[ -> ]</a></cite><blockquote class="mycode_quote"><cite><span> (08-27-2018, 08:16 PM)</span>sbcarp Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=79#pid79">[ -> ]</a></cite>I haven't had this kind of error when I run valgrind, looks like you are using uninitialized value instead of just creating it.</blockquote><br />
+Once the array is doubled, the value is inserted. Am I doing it wrong?</blockquote><br />
+Which line of code did valgrind report has error?</blockquote><br />
+<br />
+Figured it out. It was coming from my method for shifting items. That method was checking whether the value at an index was NULL before shifting. I forgot to change that method after realizing the filled portion was contiguous, which removed the need to check for an empty, or NULL index). When I stopped initializing the values, that caused a bad interaction. <br />
+<br />
+TLDR: Code wasn't "synchronized". Fixed it.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></h2></div><div class="dateline">08-27-2018, 10:06 PM</div>
+</div>
+<div class="message">Great</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-28-2018, 03:45 PM</div>
+</div>
+<div class="message">Yes, you should never be checking for NULL slots in your arrays.<br />
+<br />
+Besides, what if I wanted to put nulls in my dynamic arrays?</div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Valgrind Error</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

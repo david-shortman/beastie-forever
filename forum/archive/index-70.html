@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Valgrind bytes lost in newInteger?</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Valgrind bytes lost in newInteger?</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=85">Valgrind bytes lost in newInteger?</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=85">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=133">RussianBot</a></h2></div><div class="dateline">09-16-2018, 06:51 PM</div>
+</div>
+<div class="message">So I'm trying to find out where memory leaks are located in my cda.c file. I modified test cda of test0 so that the only the very first insert into the empty array is occurring. It isn't even printing anything. And in trying to find where it could have happened I nulled out my entire insertCDA, so that it just returns. Even still: I end up with this report:<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>==34== 4 bytes in 1 blocks are definitely lost in loss record 1 of 1<br />
+==34==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)<br />
+==34==    by 0x4009E8: newINTEGER (integer.c:15)<br />
+==34==    by 0x4009AC: main (testCDA.c:53)</code></div></div><br />
+The setup for my newCDA is the same as my newDA, which runs with no leaks, so I don't think that's the issue. And with literally nothing in my insertCDA, is there really some kind of issue with integer.c?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=133">RussianBot</a></h2></div><div class="dateline">09-17-2018, 12:02 AM</div>
+</div>
+<div class="message">Looking at my valgrind leaks, I noticed that my cda, stack and queue all have the same leak, centering around the newINTEGER function in the very first insert of the program. My da doesn't have this issue though, even though the tests look similar to each other...</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">09-17-2018, 02:39 PM</div>
+</div>
+<div class="message">If you do a remove, you need to free the removed object.<br />
+<br />
+When freeCDA is called, you need to free the objects stored in the array if you've been given access to their freeing function.</div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Valgrind bytes lost in newInteger?</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

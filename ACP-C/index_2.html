@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:15 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Starting Out</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_1.html">
+  <img border="0" alt="Contents" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_3.html">
+  <img border="0" alt="The C Framework" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Starting Out</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Starting Out</h1>
+<p>A word of warning: The C programming language has a fearsome reputation
+as a difficult language to learn and correctly program. This reputation
+is rather undeserved. C is one of the easiest languages in which to program;
+the areas that give some hackers and newbies fits are easily mastered by 
+following a few simple rules.
+The purpose of this text is to elucidate those rules.
+</p>
+<p>Most mortals cannot learn how to program by reading books.
+The same is true for riding a bike or playing the piano.
+They learn how to program (or ride a bike or play the piano) by practicing.
+Assuming you are like most mortals, you will need to practice programming as well.
+Therefore, to start, you will need to install a C compiler and an editor. 
+</p>
+<p>We will assume that you are using the editor and C compiler on one of three
+basic types of systems, a Windows-based system that has Cygwin installed, a
+Mac system, or a Debian-based system such as Ubuntu (a Unix system).
+Instructions for ensuring you have an editor and C compiler installed on each
+of these three types of systems can be found at
+<code>http://troll.cs.ua.edu/cs100/install.html</code>
+</p>
+<p>Once the installation process completes,
+type the command:
+</p>
+<pre>
+    gcc --help
+</pre>
+<p>and press the <code>&lt;Enter&gt;</code> key.
+You should be rewarded with lots of information
+on how to use gcc.  This will also confirm that your system is configured 
+properly and you are able to compile C programs.
+</p>
+
+<h2><a name="id1">The edit-compile-test cycle</a></h2><p>
+Writing computer programs involves three tasks, identified below.
+</p>
+<ol><li>The developer (you) enters what is called <i>source code</i> into a file on the system.
+Source code is a text version of a computer program that is readable (hopefully) by humans.
+The program that you use to enter the source code text into a file is called 
+an <i>editor</i>.
+</li><li>A <i>compiler</i> then turns the human readable version of a program into
+a form that is readable by the computer.
+The computer readable form is called an <i>executable</i>.
+The compiler is simply another program that exists
+on the computer.  Each programming language (e.g., C, C++, 
+Python, Java, Pascal, FORTRAN) has its own compiler (program) to convert source code into
+an executable.
+</li><li>Once the compiler has created the executable, you must ensure that the code
+that you entered actually performs the required task.  You ask the computer to run 
+the program to ensure that it is functioning properly.
+</li></ol>
+<p>At this point, you should realize that things can go wrong during the second and third
+steps.  If you made mistakes when entering the source code, the compiler will discover
+these errors (during step two).
+When this happens, the compiler prints some ominous messages and quits.
+These errors are known as compilation or <i>syntax</i> errors.
+Misspellings, errors in spacing, and missing symbols at specific locations are just a 
+few of the possible <i>syntax</i> errors that a compiler will identify.
+Upon seeing the error messages produced by a compiler, the program writer (you)
+must go back to editing the source code to remedy the situation.
+</p>
+<p>Once the compiler is able to successfully translate your source code into an executable
+(no syntax errors exist), the program can be run and tested.
+Sometimes errors occur at this stage.
+For example, the program might crash, loop forever, freeze, or produce an incorrect output.
+These kinds of errors are known as <i>run-time</i> or <i>logic</i> errors.
+These errors are due to the fact that the set of instructions (statements) that you
+entered in your program (the source code) are not logically coherent.  Think of this as
+giving the wrong directions to someone trying to find Bryant-Denny Stadium.
+Where they end up is not what you intended.
+Again, the program writer (you) must go back to editing the source code
+to fix the problems.
+</p>
+<p>Often, in the course
+of fixing syntax errors, the program writer introduces logic errors. Just as often,
+attempts to fix logic errors introduce syntax errors. And so it goes. If you are not a 
+patient person and are easily frustrated, learning how to program will have some
+very unpleasant moments. On the other hand, impatience and intolerance of setbacks
+are not widely admired traits; sticking with programming will most assuredly cure
+you of these personality defects.
+</p>
+<p>If all is copacetic at this point, you are ready to proceed to next chapter.
+</p>
+
+<h2><a name="id2">Activities</a></h2><p>
+Note: all activities in assume a Unix-style system, either Linux, Mac OSX, or Cygwin on Windows.
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="left">
+<i>name</i> </td><td colspan="1" align="left"> <i>purpose</i> </td></tr>
+<tr><td colspan="1" align="left">
+<a href="activities/vim-activity.html">vim</a> </td><td colspan="1" align="left">
+editing with <i>vim</i> </td></tr>
+<tr><td colspan="1" align="left">
+<a href="activities/directories-activity.html">directories</a> </td><td colspan="1" align="left">
+creating and using directories</td></tr>
+<tr><td colspan="1" align="left">
+<a href="activities/paths-activity.html">absolute and relative paths</a> </td><td colspan="1" align="left">
+moving around a Unix-like system</td></tr>
+<tr><td colspan="1" align="left">
+</td></tr></tbody></table>
+</p>
+</div>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_1.html">
+  <img border="0" alt="Contents" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_3.html">
+  <img border="0" alt="The C Framework" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Starting Out</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: tab.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Tue Jan  8 10:48:30 2013 -->
+<head>
+<title>Songlib: tabs</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">The <i><b>Songlib</b></i>&#32;Tab Processor<br /></h1>
+<h2 class="maketitle">written by: Brandon Bonds</h2>
+<h3 class="maketitle">Revision Date: January 8, 2013</h3>
+</p>
+
+<h3><a name="id1"><a href="tab.pdf">Printable Version</a></a></h3><p><hr />The <i><b>songlib</b></i>&#32;Tab Processor, <i>processtab</i>, parses a <i>tab</i> file into
+<i><b>songlib</b></i>-based source code.  You can run <i>processtab</i> as follows:
+</p>
+<pre>
+    processtab [filename].tab
+</pre>
+<p>This produces a C file, [<i>filename</i>].<i>c</i>, that builds against <i><b>songlib</b></i>,
+and a <i>makefile</i>.  (View more options by using the <code>-h</code> switch.)
+Running:
+</p>
+<pre>
+    make
+</pre>
+<p>will compile [<i>filename</i>].<i>c</i> into a binary (simply named
+[filename] with no extension).  The makefile will then run the binary
+to produce [filename].rra.  By default, make will immediately play the
+RRA file.
+</p>
+
+<h1><a name="id2">Tab Format Overview</a></h1><p>
+A <i>tab</i> file is text.  To start, let's define a very simple tablature:
+</p>
+<pre>
+    |SN|o-o-|oooo|
+    |  |1234|1234|
+</pre>
+<p>This is a single <i>stave</i> of tablature containing two measures of snare drum 
+beats.  The first measure has notes at beats 1 and 3 and rests at beats 2 and 4.
+The second measure has notes at all four beats.
+</p>
+<p>However, this file is not quite complete.  <i>processtab</i> does not natively
+understand what "SN" represents.  We must define it using an <i>attribute</i>.
+The following is a complete tab file which contains a definition for
+"SN" using the <code>voice</code> attribute:
+</p>
+<pre>
+    # Voices
+
+    voice:
+    {
+        "name": "SN",
+        "instrumentPath": "/usr/local/share/samples/drums/",
+        "instrumentBaseName": "hera_",
+        "notes":
+        [
+            {
+                "name": "o",
+                "offset": 57
+            }
+        ]
+    }
+
+    # Tab
+
+    |SN|o-o-|oooo|
+    |  |1234|1234|
+</pre>
+<p>For now, it is sufficient to understand that a voice is defined by a name
+("voice"), followed by a colon (:), followed by JSON-formatted details inside
+curly braces.
+</p>
+<p>In addition to staves and attributes, tab files may also contain comments
+which are not parsed.  A comment begins with the hash character (&#35;) and lasts
+until the end of the line.
+</p>
+
+<h1><a name="id3">Tab Defaults</a></h1><p>
+By default, the following values are used:
+</p>
+<ul><li>[stride] 0.05
+</li><li>[sustain] 0.99995
+</li><li>[primary emphasis] 1 (no emphasis)
+</li><li>[secondary emphasis] 1 (no emphasis)
+</li><li>[tempo] 80
+</li><li>[time signature] 4/4
+</li><li>[use random sampling] true
+</li></ul>
+
+<h1><a name="id4">More on Staves</a></h1><p>
+A tab contains one or more <i>staves</i>.  Staves define the notes to be
+played.  The example above contains a single stave defining notes for voice
+"SN".
+</p>
+<p>Each stave ends with a single line called the <i>timing course</i>.  This line
+defines the beat.  In the example, both measures have a basic four-beat timing
+course.  More complex timing courses are possible.  The example could have been
+written as either of the following:
+</p>
+<pre>
+    |SN|o---o---|o-o-o-o-|
+    |  |1&amp;2&amp;3&amp;4&amp;|1&amp;2&amp;3&amp;4&amp;|
+    
+    |SN|o-------o-------|o---o---o---o---|
+    |  |1e&amp;a2e&amp;a3e&amp;a4e&amp;a|1e&amp;a2e&amp;a3e&amp;a4e&amp;a|
+</pre>
+<p>The first stave subdivides the timing into eighth notes, and the second stave
+subdivides the timing into sixteenth notes.  Numbers indicate down beats,
+ampersands (<code>&amp;</code>) represent upbeats, and "e" and "a" represent sixteenth
+divisions.  This makes more intricate rhythms possible, such as the following:
+</p>
+<pre>
+    |SN|o--oo---|o-o-o-o-oo-oo-o-|
+    |  |1&amp;2&amp;3&amp;4&amp;|1e&amp;a2e&amp;a3e&amp;a4e&amp;a|
+</pre>
+<p>You may mix timings, even in the same measure:
+</p>
+<pre>
+    |SN|o--oo-oooo|
+    |  |1&amp;2&amp;3&amp;4e&amp;a|
+</pre>
+<p>You may insert dots (.) in the timing course to subdivide into triplets or
+practically any other possible timing (such as sextuplets, quintuplets, etc.):
+</p>
+<pre>
+    |SN|o--o--oooo--|o--o--ooooooo--|
+    |  |1..2..3..4..|1..2..3.....4..|
+</pre>
+<p>Each beat is subdivided into triplets, except beat three of the second measure,
+which is subdivided into sextuplets.
+</p>
+<p>Multiple voice lines (voice courses) may exist for each stave.  Everything
+should line up vertically.  Spaces are optional around the name, and may be
+useful for lining up courses whose names are different lengths.  Notes that are
+played at the same time must line up vertically.  All pipe characters (|) must
+line up vertically.
+</p>
+<p>For instance, the following stave must include an extra space for the "B"
+voice to make it line up with the "SN" voice:
+</p>
+<pre>
+    |SN|--o---o-|o-o-o-o-oo-oo-o-|
+    |B |o--oo---|o---o---o---o---|
+    |  |1&amp;2&amp;3&amp;4&amp;|1e&amp;a2e&amp;a3e&amp;a4e&amp;a|
+</pre>
+
+<h2><a name="id5">Notes and Rests</a></h2><p>
+Inside a measure, a dash character (-) indicates a rest and a space indicates
+that the previous note is held out during that duration.  The following two
+measures have the same rhythm, but differ in how long each note is held out:
+</p>
+<pre>
+    |SN|o o o o |o-o-o-o-|
+    |  |1&amp;2&amp;3&amp;4&amp;|1&amp;2&amp;3&amp;4&amp;|
+</pre>
+<p>In the first measure, each note holds out a quarter-note length.  In the second
+measure, each note holds out an eighth-note length, followed by an eighth-note
+rest.
+</p>
+<p>"o" has been used to indicate playing a note in each of these examples.
+Any character other than space or dash may be used to represent a note, and is
+defined by the voice attribute.  In the next example, we will use "x" to
+represent a closed hi-hat, "o" to represent and open hi-hat, and "@" to
+represent a rim click:
+</p>
+<pre>
+    |HH|XxxxXxxo|XxxxXxxo|
+    |SN|--@---@-|--@---@-|
+    |  |1&amp;2&amp;3&amp;4&amp;|1&amp;2&amp;3&amp;4&amp;|
+</pre>
+<p>Capitalized characters typically represent accents.
+</p>
+
+<h1><a name="id6">More on Attributes</a></h1><p>
+An attribute is defined on one or more lines.  It lists the name of the
+attribute (such as <code>voice</code>), followed by a colon character (:), followed
+by details in JSON (JavaScript Object Notation) format.  JSON is a common
+hierarchical text format like XML, but with less bloat.
+</p>
+<p>There are three built-in attribute types:  <code>voice</code>, <code>tempo</code>,
+and <code>amplitude</code>.  <i>processtab</i> also supports user-defined
+attribute processors.
+</p>
+
+<h2><a name="id7">Voice</a></h2><p>
+The voice processor defines each voice, or instrument, that can play
+notes in the tab.  It configures the voice according to the
+following attributes:
+</p>
+<dl><dt>name</dt><dd> (string):
+This is the unique name that also appears in the first column
+of a voice course, before measure and note definitions.  In the above
+examples, "SN" was defined for a snare drum.
+</dd><dt>instrumentPath</dt><dd> (string): 
+This is the directory (folder) on disk which contains the samples.
+See the first argument for <i>readScale</i> in <i><b>songlib</b></i>.
+</dd><dt>instrumentBaseName</dt><dd> (string):
+This is the base name for each sample.  See the second argument
+for <i>readScale</i> in <i><b>songlib</b></i>.
+</dd><dt>amplitudeMultiplier</dt><dd> (float):
+This sets the base amplitude for all notes in this instrument.
+See <i>setAmplitude</i> in <i><b>songlib</b></i>.  Note that the final amplitude
+for a note may be adjusted by other parameters, and may be adjusted by other
+processors such as <i>amplitude</i>.
+</dd><dt>instrumentCount</dt><dd> (integer):
+When set higher than one, <i><b>songlib</b></i>will simulate multiple
+instrumentalists by playing the note on top of itself several times.
+This is affected by the values of <i>amplitudeDeviation</i>, <i>pitchDeviation</i>, and <i>timingDeviation</i>.  The amplitude of each
+individual instrument in this set is divided by instrumentCount.
+</dd><dt>amplitudeDeviation</dt><dd> (float):
+Sets the randomization of the amplitude.  Higher values help
+simulate instrument players with less skill.  The entire song will be
+amplitude-adjusted, up or down, at a randomized value between 1 and
+<i>amplitudeDeviation</i>.  When <i>instrumentCount</i> is greater than
+one, each individual instrument has a separate randomized amplitude
+throughout the song.
+</dd><dt>pitchDeviation</dt><dd> (float):
+Sets the randomization of the pitch.  Higher values can simulate the
+natural difference in the pitch of percussion instruments, or help
+simulate tuned instrument players with less skill.  The entire song
+will be pitch-adjusted, up or down, at a randomized value between
+1 and <i>pitchDeviation</i>.  When <i>instrumentCount</i> is greater
+than one, each individual instrument has a separate randomized pitch
+throughout the song.
+</dd><dt>timingDeviation</dt><dd> (float):
+Sets the randomization of timing.  Higher values can simulate mud
+or slop.  Each individual note will be offset by up to timingDeviation
+beats from its intended location.
+</dd><dt>notes</dt><dd> (array):
+Contains several individual note definitions, each with the following
+attributes:
+<dl><dt>name</dt><dd> (character):
+A single character used to define notes in the <i>tab</i>.
+In the examples above, the "o" note is defined.
+</dd><dt>offset</dt><dd> (integer):
+A value indicating the offset used to play the note.  See the
+third parameter for <i>nplay</i> in <i><b>songlib</b></i>.
+</dd><dt>accent</dt><dd> (boolean):
+If "true", this note will always be played at double the
+amplitude of a normal note.  (Typically, the <i>name</i> is capitalized
+for accented notes.)
+</dd><dt>delay</dt><dd> (integer):
+The number of samples to delay the note.  Typically this value is
+negative, causing the note to begin early.  This is useful for aligning
+the attack of a note.
+</dd></dl>
+</dd></dl>
+<p>The following is a full example of a voice attribute with two notes defined:
+</p>
+<pre>
+	voice:
+	{
+		"name": "SN",
+		"instrumentPath": "/usr/local/share/samples/drums-snare/",
+		"instrumentBaseName": "pearlFF_",
+		"amplitudeMultiplier": 16.0,
+		"instrumentCount": 4,
+		"amplitudeDeviation": 1.5,
+		"pitchDeviation": 4.0,
+		"timingDeviation": 0.125,
+		"notes":
+		[
+		    {"name": "o", "offset": 57, "delay": -1234},
+		    {"name": "O", "offset": 57, "delay": -1234, "accent": true}
+		]
+	}
+</pre>
+<p>This voice defines a "pearlFF" snare drum from the "drums-snare" sample
+pack.  The overall amplitude is adjusted louder by a factor of 16.  Each note is
+played 4 times simultaneously (due to <i>instrumentCount</i>).  Each individually
+played note has a randomly adjusted amplitude, pitch, and timings to simulate 4
+real players.
+</p>
+<p>Two notes are defined:  lowercase "o" plays sample 57 (note A4) with a delay
+of -1234 samples (which makes it start playing a bit early), and uppercase "O"
+plays the same note with an accent.
+</p>
+
+<h2><a name="id8">Tempo</a></h2><p>
+Tempo is a simple processor that defines the tempo beginning at that location
+in the tab.  Tempo may be redefined multiple times throughout a song as
+required.
+</p>
+<pre>
+    # Tempo example
+    tempo: { "": 164 }
+</pre>
+<p>This will set the music tempo to 164 beats per minute.  See <i>setTempo</i> in
+<i><b>songlib</b></i>.
+</p>
+
+<h2><a name="id9">Amplitude</a></h2><p>
+Amplitude is a simple processor that defines the base amplitude for all voices
+and notes beginning at that location in the tab.  This value multiplies against
+the explicit values defined by voice attributes.  Amplitude may be redefined
+multiple times throughout a song as required.
+</p>
+<pre>
+    # Amplitude example
+    amplitude: { "": 0.015 }
+</pre>
+<p>This will set the base amplitude for all instruments to 0.015.  The "voice"
+attribute will then multiply this value by any other amplitude variations it
+sets.  See <i>setAmplitude</i> in <i><b>songlib</b></i>.
+</p>
+
+<h2><a name="id10">Custom processors</a></h2><p>
+Custom processors are an advanced way to alter the output of <i>processtab</i>.
+Custom processors are written in C and are used like built-in processors.
+</p>
+
+<h3><a name="id11">Writing custom processors</a></h3><p>
+We will create an example custom processor that calls the <i><b>songlib</b></i>function <i>setSkipSeconds</i>.  We will name this processor <code>skipseconds</code>.
+</p>
+<p>Each custom processor must define a <i>.c</i> file and a <i>.h</i> file.  These
+files must be named the same as the processor name.  These files must define a
+minimum of the following five <i>hooks</i> (replace <i>XYZ</i> with your processor
+name):
+</p>
+<ul><li><code>void setupProcessor_</code><i>XYZ</i><code>(int, int, json_value *)</code>
+</li><li><code>void preProcess_</code><i>XYZ</i><code>(int, Part *)</code>
+</li><li><code>void postProcess_</code><i>XYZ</i><code>(int, Part *)</code>
+</li><li><code>void preRenderNote_</code><i>XYZ</i><code>(int, Part *, int)</code>
+</li><li><code>void renderNote_</code><i>XYZ</i><code>(int, Part *, int)</code>
+</li></ul>
+<p><i>Hooks</i> are functions called by other code.  In our case, these hooks are
+called by the output of <i>processtab</i>.
+</p>
+<p>This is our <i>skipseconds.h</i> file:
+</p>
+<pre>
+	#ifndef INCLUDED_SKIPSECONDS_H
+	#define INCLUDED_SKIPSECONDS_H
+
+	/*
+	 * Defines a skip seconds processor
+	 */
+
+	#include &lt;tab/tabproc.h&gt;
+
+	extern void setupProcessor_skipseconds(int, int, json_value *);
+
+	/* Pre- and post- processing */
+
+	extern void preProcess_skipseconds(int, Part *);
+	extern void postProcess_skipseconds(int, Part *);
+		
+	/* Note rendering */
+		
+	extern void preRenderNote_skipseconds(int, Part *, int);
+	extern void renderNote_skipseconds(int, Part *, int);
+
+	#endif /* INCLUDED_SKIPSECONDS_H */
+</pre>
+<p>All of these functions must be implemented in the <i>.c</i> file, but any hook
+that is not needed may contain an empty implementation.
+</p>
+<p>In the case of <code>skipseconds</code>, we will only implement <code>setupProcessor</code>.
+This is our <i>skipseconds.c</i> file, including the functions that have an empty
+implementation:
+</p>
+<pre>
+	/*
+	 * Defines a skip seconds processor
+	 */
+
+	#include "skipseconds.h"
+
+	/* Processor setup */
+
+	void
+	setupProcessor_skipseconds(int parameterIndex, int sectionNumber, json_value *parameter)
+		{
+		if (getSkipSeconds() != 0.0)
+			{
+			Fatal("skipseconds may only be set once\n");
+			return;
+			}
+		double seconds = get_json_double(parameter, "", 0);
+		setSkipSeconds(seconds);
+		}
+
+	/* Pre- and post- processing */
+
+	void
+	preProcess_skipseconds(int parameterIndex, Part *part)
+		{
+		}
+
+	void
+	postProcess_skipseconds(int parameterIndex, Part *part)
+		{
+		}
+	 
+	/* Note rendering */
+		
+	void
+	preRenderNote_skipseconds(int parameterIndex, Part *part, int noteNumber)
+		{
+		}
+		
+	void
+	renderNote_skipseconds(int parameterIndex, Part *part, int noteNumber)
+		{
+		}
+</pre>
+<p><code>setupProcessor</code> will extract the number of seconds, as a <code>double</code>,
+from the JSON-formatted attribute (using the <i>get&#95;json&#95;double</i> function).
+It will then pass that value into the <i><b>songlib</b></i>function <i>setSkipSeconds</i>.
+And we will add a check using <i><b>songlib</b></i>function <i>getSkipSeconds</i> to ensure
+that the value is only set once.
+</p>
+
+<h3><a name="id12">Using custom processors</a></h3><p>
+Custom processors are used just like any built-in processor, by adding an
+attribute at the appropriate location in your tab file.  The <i>skipseconds</i>
+processor may be invoked as follows:
+</p>
+<pre>
+	skipseconds: { "" : 120 }
+</pre>
+<p><i>processtab</i> automatically recognizes when a tab uses custom processors (any
+attribute name other than <code>voice</code>, <code>tempo</code>, and <code>amplitude</code>), and
+outputs a makefile that references the <i>.c</i> and <i>.h</i> you create for your
+custom processor.
+</p>
+
+<h3><a name="id13">More custom processing details</a></h3><p>
+This section explains, in detail, the five hooks that are used in custom
+attribute processing.
+</p>
+<p>(It may help to visualize this process as it is being described.  To do so, run
+<i>processtab</i> on a simple tablature, and read the <i>main()</i> function in
+the output <i>.c</i> file.  You can see each of these hooks being called as
+described below.)
+</p>
+
+<h4><a name="id14">setupProcessor</a></h4><p>
+<code>setupProcessor</code> is called first for each attribute.  This is called before
+<i>songInit</i>, before defaults are set, and before the <i>.rra</i> file is open
+for output.  <i>setupProcessor</i> is the only location that has access to the
+processed JSON information.
+</p>
+<p>Because of this, we may need to store any data for later use by the other four
+functions.  The first integer passed into <code>setupProcessor</code> is <i>parameterIndex</i>, which should be associated with that data.  That same integer
+is passed into the other hooks to reference that particular data.
+</p>
+<p>The second parameter is the section number.  This allows attributes to affect
+different areas of the song.  In this context, a <i>section</i> is equivalent to
+the stave number above which the attribute is defined.  All attributes defined
+before the first stave are in section 0, and after the first stave but before
+the second are in section 1, and so on.
+</p>
+<p>As you can see from the example <i>skipseconds</i> processor, it is possible to
+ignore these two values for very simple processors.
+</p>
+<p>The third parameter is the data contained within the attribute.  It is
+pre-parsed using the <i>json-parser</i> library (see
+https://github.com/udp/json-parser, and for more examples see the source code
+to the built-in attribute processors).  The data is passed in as a <i>json&#95;value</i> data structure.
+</p>
+
+<h4><a name="id15">Other functions</a></h4><p>
+The rest of the functions take an integer <i>parameterIndex</i>, which is used to
+reference data stored by <i>setupProcessor</i>.  They also take in a <i>Part</i>,
+which roughly represents a voice.
+</p>
+<p>But remember, <code>voice</code> is just another processor written the same way that
+a custom processor is written.  It is a complex processor that ultimately calls
+the <i><b>songlib</b></i><i>rplay</i> function.  You can write a custom processor and use that
+instead of <code>voice</code>, or you can copy and make changes to the <code>voice</code>
+processor to suit your needs.
+</p>
+<p>So, a <i>Part</i> represents the notes that are to be played by a certain
+instrument.  A part is defined by its name such as "SN" or "B".
+</p>
+<p>Each part is processed at once.  <code>preProcess</code> is called before processing
+the notes, and <code>postProcess</code> is called after processing all the notes.
+Between, each individual note is processed in order by first calling
+<code>preRenderNote</code> for every attribute, and then <code>renderNote</code> for every
+attribute.
+</p>
+<p><code>preRenderNote</code> and <code>renderNote</code> have a third paramter, <i>noteNumber</i>, which can be used to index into the <i>Part</i>.
+</p>
+
+<h1><a name="id16">Parser Limitations</a></h1><p>
+The <i>processtab</i> program currently requires 4/4 time signature for all tabs.
+It requires that no spaces come before or after stave courses, or else a parsing
+error will occur.  Also, you may come across some parsing bugs related to
+whitespace between staves or between voices, staves, and comments.
+</p>
+<p>All quarter note timings must be indicated.  This is partially due to the need
+to make the tab language unambiguous.  Otherwise, the following invalid tab
+could be interpreted multiple ways:
+</p>
+<pre>
+    # Invalid tab
+
+    |SN|oooooo|
+    |  |1&amp;3&amp;4&amp;|
+</pre>
+<p>Here, is the first <code>&amp;</code> the upbeat of beat one or the upbeat of beat two?
+</p>
+<p>If "e" and/or "a" are indicated, <code>&amp;</code> must also be indicated.  However,
+"e" may be indicated without "a", and "a" without "e", of the same beat.
+</p>
+<address><a href="mailto:BBonds@cs.ua.edu"><p>BBonds@cs.ua.edu</a></address><br />
+</body></html>

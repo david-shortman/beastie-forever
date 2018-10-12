@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: chords.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Thu Jan 22 09:51:15 2015 -->
+<head>
+<title>Songlib: chords</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: chords<br /></h1>
+<h2 class="maketitle">written by: Song Li Buser</h2>
+<h3 class="maketitle">Revision Date: January 22, 2015</h3>
+</p>
+
+<h3><a name="id1"><a href="chords.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Generating Chords</a></h1><p>
+In addition to the fundamental <a href="chord.html">chord</a> function,
+<i><b>songlib</b></i>&#32;provides some specialized chord generating
+functions. The most powerful and easiest to use 
+are the <i>modal</i> chords. Modal chords are explained in
+the <a href="keySignatures.html">key signatures</a>
+and <a href="modes.html">modes</a> documents.
+</p>
+<p>Although the use of modal chords is strongly encouraged, <i><b>songlib</b></i>&#10;provides for a number of chord functions outside of the modal
+system, described below.
+</p>
+
+<h1><a name="id3">Integer notation of pitches</a></h1><p>
+The classical naming of chords is based upon both
+subjective and objective measures and is inherently
+ambiguous. An alternate method of name chords is 
+strictly objective and unambiguous. For example,
+a <i>major</i> chord (regardless of key) is identified
+by the <i>integer notation</i>:
+</p>
+<pre>
+    {4,7}
+</pre>
+<p>meaning 
+the second note in the chord is four semitones up from the 
+base (or root) note, and the third note is seven
+semitones up from the root.
+</p>
+<p>The equivalent songlib chord using this notation
+is:
+</p>
+<pre>
+    void i47(double beats,int instrument,int octave,int pitch)
+</pre>
+<p>The root note of the chord is specified by the octave/pitch pair,
+while the name specifies the second and third notes are four
+and seven semitones above the root.
+The call:
+</p>
+<pre>
+    i47(beats,instrument,octave,pitch);
+</pre>
+<p>is therefore exactly equivalent to:
+</p>
+<pre>
+    chord(beats,instrument,octave,pitch,4,7,(int) 0);
+</pre>
+<p>The advantage of using the <i>i</i>-chord functions is 
+that they are only defined for nice-sounding chords,
+that is chords that are commonly used in composition.
+The other advantage is that it saves you a bit of typing.
+</p>
+<p>The defined <i>i</i>-chords are:
+</p>
+<div align="center">
+<i>i3</i>, <i>i4</i>, <i>i5</i>, <i>i6</i>, <i>i7</i>, <i>i8</i>, and <i>i9</i>
+</div>
+<div align="center">
+<i>i37</i>, <i>i38</i>, <i>i47</i>, <i>i49</i>, <i>i57</i>, and <i>i59</i>
+</div>
+<p>Each of these chords has a version suffixed by the
+letter 'p', which indicates an additional note, one
+octave above the root. Thus,
+</p>
+<pre>
+    i47p(beats,instrument,octave,pitch);
+</pre>
+<p>...is equivalent to:
+</p>
+<pre>
+    chord(beats,instrument,octave,pitch,4,7,12,(int) 0);
+</pre>
+<p>Keep in mind that music composed solely of nice sounding chords is often boring.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

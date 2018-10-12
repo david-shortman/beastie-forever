@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Valgrind possibly lost - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=24">Valgrind possibly lost</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Valgrind possibly lost (<em>/showthread.php?tid=24</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>Valgrind possibly lost</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=7">andrasveto</a> -  <strong>08-30-2018</strong>
+<br />
+<br />
+When running valgrind, I'm getting<br />
+<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>==56008== LEAK SUMMARY:<br />
+==56008==    definitely lost: 0 bytes in 0 blocks<br />
+==56008==    indirectly lost: 0 bytes in 0 blocks<br />
+==56008==      possibly lost: 72 bytes in 3 blocks<br />
+==56008==    still reachable: 200 bytes in 6 blocks<br />
+==56008==         suppressed: 22,299 bytes in 158 blocks</code></div></div><br />
+<br />
+<br />
+Should we have 0 bytes in 0 blocks for possibly lost as well as definitely/indirectly lost?<br />
+<br />
+<br />
+Edit:<br />
+<br />
+I just realized that these 72 bytes leak even on an empty program [i.e. int main() { return 0; }]. I'm running on High Sierra. Is it safe to just ignore these?<br />
+<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>==72683== 72 bytes in 3 blocks are possibly lost in loss record 26 of 42<br />
+==72683==    at 0x1000ABC32: calloc (in /usr/local/Cellar/valgrind/HEAD-fee5954/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)<br />
+==72683==    by 0x1007567E2: map_images_nolock (in /usr/lib/libobjc.A.dylib)<br />
+==72683==    by 0x1007697DA: objc_object::sidetable_retainCount() (in /usr/lib/libobjc.A.dylib)<br />
+==72683==    by 0x100006C64: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)<br />
+==72683==    by 0x100006E39: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)<br />
+==72683==    by 0x10022171D: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)<br />
+==72683==    by 0x100756075: _objc_init (in /usr/lib/libobjc.A.dylib)<br />
+==72683==    by 0x1001ABB34: _os_object_init (in /usr/lib/system/libdispatch.dylib)<br />
+==72683==    by 0x1001ABB1B: libdispatch_init (in /usr/lib/system/libdispatch.dylib)<br />
+==72683==    by 0x1000BA9C2: libSystem_initializer (in /usr/lib/libSystem.B.dylib)<br />
+==72683==    by 0x100018AC5: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&amp;) (in /usr/lib/dyld)<br />
+==72683==    by 0x100018CF5: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&amp;) (in /usr/lib/dyld)</code></div></div>
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Valgrind possibly lost</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a> -  <strong>08-30-2018</strong>
+<br />
+<br />
+Only correct output is: All heap blocks were freed -- no leaks are possible.<br />
+<br />
+Try test the program on another computer, and see if it's environment problem.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Valgrind possibly lost</strong> - daweil -  <strong>09-03-2018</strong>
+<br />
+<br />
+I've noticed some Mac users are experiencing some memory leak issues not caused by their program, but by Valgrind itself. High Sierra made some changes that are causing quirks with Valgrind. I've tested a few student's code on my Windows machine with WSL and my Debian Linux machine. Both turned out completely clean.<br />
+<br />
+If you want to be certain, I can run your code on my machine after class.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Valgrind possibly lost</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-03-2018</strong>
+<br />
+<br />
+Don't forget that the test0 dropbox will run a 'make test' command. You can place some valgrind tests under that to see if your programs are truly clean.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Valgrind possibly lost</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=7">andrasveto</a> -  <strong>09-03-2018</strong>
+<br />
+<br />
+Thanks. I ended up just testing on a linux vm instead and valgrind reported no leaks, so it was an osx issue.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Valgrind possibly lost</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>09-03-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-03-2018, 04:09 PM)</span>lusth Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=173#pid173" class="quick_jump"></a></cite>Don't forget that the test0 dropbox will run a 'make test' command. You can place some valgrind tests under that to see if your programs are truly clean.</blockquote><br />
+The test0 dropbox is still not sending out reports though.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Valgrind possibly lost</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-03-2018</strong>
+<br />
+<br />
+I think I may have found the problem... Let me know if you still aren't getting reports.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

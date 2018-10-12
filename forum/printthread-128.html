@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Which ends to connect in CDA? - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=28">Which ends to connect in CDA?</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Which ends to connect in CDA? (<em>/showthread.php?tid=28</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>Which ends to connect in CDA?</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>08-31-2018</strong>
+<br />
+<br />
+So I see two ways a CDA can be implemented:<br />
+<br />
+1. <span style="font-weight: bold;" class="mycode_b">index </span><span style="font-weight: bold;" class="mycode_b">0 is connected to size on the other end: </span>this way, the unfilled portion of the array always remains on the right, and only the filled portion actually becomes cyclic. Example with indices: |3|4|0|1|2| | |<br />
+<br />
+2. <span style="font-weight: bold;" class="mycode_b">index 0 is connected to capacity: </span>this way, the unfilled portion can be in the middle of the filled portion. The above example would be implemented as: |3|4| | |0|1|2|<br />
+<br />
+Which approach are we using for this project?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Which ends to connect in CDA?</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-01-2018</strong>
+<br />
+<br />
+That is unspecified. You just have to make sure time bounds are achieved. I would do whichever is easier to maintain.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

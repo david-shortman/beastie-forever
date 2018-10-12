@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: quick.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Fri Nov  4 09:59:13 2011 -->
+<head>
+<title>scam vs scheme</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">The Scam Programming Language<br />
+</h1>
+<h2 class="maketitle">written by: John C. Lusth</h2>
+<h3 class="maketitle">Revision Date: November 4, 2011</h3>
+</p>
+
+<h3><a name="id1"><a href="quick.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Scam vs Scheme</a></h1><p>
+Things to note for programmers who are trying Scam:
+</p>
+
+<h3><a name="id3">variable names</a></h3><p>
+Scam variable/function names are case-sensitive.
+</p>
+
+<h3><a name="id4">assignment</a></h3><p>
+The Scam version of <i>set!</i> has an additional mode, when compared to
+Scheme;
+the function takes an optional environment,
+where the predefined
+variable <i>this</i> always points to the current environment.
+Thus, the following
+two expressions are equivalent:
+</p>
+<pre>
+        (set! x 5)
+        (set! x 5 this)
+</pre>
+<p>There is a version of <i>set!</i> that evaluates all its arguments;
+to assign to a variable, one quotes the variable name:
+</p>
+<pre>
+         (set 'x 5)
+</pre>
+<p>The <i>set</i> function
+also takes an environment as an optional third argument.
+</p>
+
+<h3><a name="id5">variadic functions</a></h3><p>
+If the last formal parameter in a function definition is the
+symbol <i>@</i>, all remaining arguments not matched with 
+preceding formal parameters are bundled up into a list, with
+the variable <i>@</i> set to point to that list. Here is a redefinition
+of the built-in function <i>println</i> that has the same semantics:
+</p>
+<pre>
+        (define (println @)
+            (while (valid? @)
+                (print (car @))
+                (set! @ (cdr @))
+                )
+            (print "\n")
+            )
+</pre>
+
+<h3><a name="id6">special forms</a></h3><p>
+There are no special forms in Scam; all functions can be
+redefined, including <i>if</i>, <i>and</i>, <i>or</i>, and <i>define</i>.
+</p>
+
+<h3><a name="id7">objects</a></h3><p>
+Class and constructor are the same thing in Scam. Any function that
+returns the pre-defined variable <i>this</i> is considered a class
+definition and a constructor for that class. Here is an example
+<i>Node</i> class:
+</p>
+<pre>
+        (define (Node value next)
+            this
+            )
+</pre>
+<p>There are two methods for extracting object components, <i>dot</i> and
+<i>get</i>. The latter two expressions have identical semantics:
+</p>
+<pre>
+        (define n (Node 3 nil))
+        (dot n value)
+        (get 'value n)
+</pre>
+<p>The <i>dot</i> function does not evaluate its last argument.
+Like <i>set</i>, <i>get</i> evaluates all its arguments.
+</p>
+<p>Note that environments and objects are equivalent in Scam.
+</p>
+
+<h3><a name="id8">object methods</a></h3><p>
+Nested functions in a constructor are methods:
+</p>
+<pre>
+        (define (Node value next)
+            (define (toString)
+                (+ "Node(" (string value) "," (string next) ")")
+                )
+            this
+            )
+</pre>
+<p>Calling object methods proceeds as expected:
+</p>
+<pre>
+        (define n (Node 3 nil))
+        ((get 'toString n))
+</pre>
+
+<h3><a name="id9">inheritance</a></h3><p>
+Inheritance is not native to Scam, but is accomplished by 
+including the inheritance library:
+</p>
+<pre>
+        (include "inherit.lib")
+</pre>
+<p>Once included, the <i>new</i> function is used to perform
+inheritance:
+</p>
+<pre>
+        (define (A)
+            (define parent nil)
+            this
+            )
+
+        (define (B)
+            (define parent (A))
+            this
+            )
+    
+        (define obj (new (B)))
+</pre>
+<p>Note that constructors in an inheritance hierarchy must, by
+convention, define a <i>parent</i> variable.
+</p>
+<p>Inheritance is similar to Java; every method is virtual.
+Unlike Java, ancestor objects `inherit' the enclosing scope
+of the child object. In other words, if an ancestor method
+references a non-local variable, the non-local is resolved
+in the scope of the child object and, if not resolved there,
+in the child's enclosing scope.
+</p>
+<address><p>lusth@cs.ua.edu</address><br />
+</body></html>

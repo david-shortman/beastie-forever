@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>abstraction</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Abstractions
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="Abstractions.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ Data abstractions
+
+<br/>
+</h2><!-- section ENDED -->
+
+The ability to glue up primitive data into more complex structures
+allows us to place more complex meanings to data. A single number might
+represent the temperature or length or some other scalar quantity, but
+a pair of numbers may represent a rational number, a complex number,
+a rectangle and so on. Since the cons operation gives us an easy way to
+pair up numbers, let's use a cons object to represent a complex number.
+<br/>
+
+<pre>
+    (define c (cons 4 5))
+</pre>
+
+Assuming for the moment that we will represent complex numbers using
+the Cartesian coordinate system, the name c might refer to the complex
+number <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>4</mn>	<mo>+</mo>	<mn>5</mn>	<mi>i</mi></mrow></math>. We can abstract this idea of creating complex numbers
+using a function. Here is a function which creates complex numbers:
+<br/>
+
+<pre>
+    (define (Complex real imag)
+        (cons real imag)
+        )
+</pre>
+
+Now we can use our constructor to make a number of different complex
+numbers
+<br/>
+
+<pre>
+    (define c1 (Complex 3 4))
+    (define c2 (Complex 2 0))
+    (define c3 (Complex 2 1))
+</pre>
+
+With this abstraction, we are now free to change the representation of a
+complex number. For example, we could use a list representation instead,
+as in
+<br/>
+
+<pre>
+    (define (Complex real imag)
+        (list real imag)
+        )
+</pre>
+
+without having to change the way we create such numbers (via calls
+to <i>Complex</i>).
+<br/>
+<br/>
+Generally, it is necessary to extract the individual data items from a
+data structure. For Complex objects and the cons object representation,
+we can extract the real part using car and the imaginary part using cadr.
+<br/>
+
+<pre>
+    (define r1 (car c1))
+    (define i1 (cadr c1))
+</pre>
+
+Of course, this method of access is directly tied to the representation
+of Complex objects. To overcome this limitation, we can abstract these
+access functions, as in:
+<br/>
+
+<pre>
+    (define (real cobj)
+        (car obj)
+        )
+
+    (define (imag cobj)
+        (cadr obj)
+        )
+</pre>
+
+Now our application code is insulated from the internal representation. If
+we change the representation of complex numbers, we only need to change
+the constructor and the access functions. We can use other functions
+which deal with complex numbers, such as printComplex:
+<br/>
+
+<pre>
+    (define (printComplex cobj)
+        (display (real cobj))
+        (display &quot; + &quot;)
+        (display (imag cobj))
+        (display &quot;i&quot;)
+        )
+</pre>
+
+Note that this &ldquo;higher level&rdquo; function,
+because it uses the primitive
+access functions, is not dependent upon the internal representation of
+a complex number.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

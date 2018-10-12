@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>parsing</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Programming Languages</span>
+<br/>
+<br/>
+Building Parse Trees
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="parsing.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Parse trees
+<br/>
+</h2><!-- section ENDED -->
+
+We have previously seen that most programming language grammars
+can be transformed into a <i>recognizer</i> via recursive descent.
+While a recognizer performs a useful task, detecting syntactic
+errors in the source code, its utility can be greatly enhanced
+by assembling matched lexemes into structures that abstract
+the original source. Such abstract structures are called <i>parse trees</i>.
+<br/>
+<br/>
+Consider the implementation of the following right recursive grammar
+as a recognizer:
+<br/>
+
+<pre>
+    expression : unary op expression | unary
+
+    op : PLUS | MINUS | TIMES | DIVIDE
+
+    unary : VARIABLE | NUMBER | OPAREN expression CPAREN | MINUS unary
+</pre>
+
+The function corresponding to <i>expression</i> becomes:
+<br/>
+
+<pre>
+    function expression()
+        {
+        unary();
+        if (opPending())
+            {
+            op();
+            expression();
+            }
+        }
+</pre>
+
+Note that while the <i>expression</i> function
+enforces the proper structure of an expression,
+it does not save the lexed source code;
+all the lexemes are thrown away. In order
+to save the lexemes and to combine into a structure representative of
+the input, we will now take advantage of the fact that <i>match</i>
+returns lexemes.
+We will convert all of the
+recursive descent functions to return the structure that function has
+recognized, in the form of a tree of lexemes.
+We also make sure
+the tree being built is tagged with the kind of structure that
+was recognized. We do this by using a special lexeme as the
+root of the tree.
+<br/>
+<br/>
+It is assumed the lexeme
+objects are outfitted with left and right pointers so that they can be
+assembled into binary trees. Here is the updated <i>expression</i> function.
+<br/>
+
+<pre>
+    function expression()
+        {
+        var u;
+
+        u = unary();
+        if (opPending()) //a binary expression
+            {
+            var tree = new Lexeme(BINARY); //this is the tag
+            tree.left = op();
+            tree.right = new Lexeme(GLUE); //an interior node
+            tree.right.left = u;
+            tree.right.right = expression();
+            return tree;
+            }
+        else //a unary expression
+            return u;
+        }
+</pre>
+
+Note that the calls to non-terminals and pending functions are preserved
+in exactly the same order as before.
+Now, however,
+the <i>expression</i> function returns a tree whose root, in the case of a
+complex expression, is a
+lexeme of type 
+<code>BINARY</code>
+and whose left and right subtrees hold
+the operator and the operands
+of the expression,
+respectively. In the case of a simple expression (<i>unary</i> only), the
+tree returned by the <i>unary</i> function is returned. The <i>op</i> and
+<i>unary</i> routines become:
+<br/>
+
+<pre>
+    function op()
+        {
+        var tree;
+        //the tree is the operator that was found
+        if (check(PLUS)) tree = advance();
+        else if (check(MINUS)) tree = advance();
+        ...
+        else if (check(ASSIGN)) tree = advance();
+        ...
+        else if (check(LESS_THAN)) tree = advance();
+        else tree = match(LESS_THAN_OR_EQUAL);
+
+        return tree;
+        }
+</pre>
+
+
+<pre>
+    function unary() 
+        {
+        var tree;
+
+        if (check(VARIABLE)) tree = advance();
+        else if (check(INTEGER)) tree = advance();
+        else if (check(OPAREN))
+            {
+            tree = match(OPAREN); //tree is tagged OPAREN
+            tree.left = null;
+            tree.right = expression();
+            }
+        else //unary minus
+            {
+            match(MINUS);
+            tree = new Lexeme(UMINUS); //tag the tree
+            tree.left = null;
+            tree.right = unary();
+            }
+
+        return tree;
+        }
+</pre>
+
+Note that the lexeme type in the unary minus case was renamed to reflect
+that the binary MINUS sign was overloaded at the lexical level.
+In general, a parsing function has the flow-of-control as the associated
+recognizing function, but returns a parse tree assembled from
+the <i>good stuff</i> in the source code. Usually, the <i>good</i> stuff is
+the minimal set of lexemes needed to reconstruct the source. For example,
+consider a function definition:
+<br/>
+
+<pre>
+    functionDef : FUNCTION VARIABLE OPEN_PAREN parameterList CLOSE_PAREN block
+</pre>
+
+As a parsing function, a reasonable implementation of <i>functionDef</i>
+would be:
+<br/>
+
+<pre>
+    function functionDef()
+        {
+        var tree;
+        tree = match(FUNCTION);             //tag the tree
+        tree.left = match(VARIABLE);
+        match(OPEN_PAREN);                  //no need to save
+        tree.right = new Lexeme(GLUE);
+        tree.right.left = optParameterList();
+        match(CLOSE_PAREN);                 //no need to save
+        tree.right.right = block();
+        return tree;
+        }
+</pre>
+
+Note that the parentheses enclosing the parameter list were not saved
+in the tree that was returned. This is because the original definition
+in the source code can be recreated with the parts that were saved.
+Punctuation is usually not preserved in parse trees.
+<br/>
+<br/>
+Once the recognizer is completely converted to a parser, the top-level
+rule (the first rule called) returns a parse tree that represents the
+entire source code program. This is not the only way to handle parse
+trees, but it is the simplest way.
+<br/>
+<br/>
+One converts a recognizer to a parser by ensuring
+every recursive descent function returns a parse tree. The shape of
+the parse tree is irrelevant, as long as the important lexemes are
+stored in the tree.
+It is important for a function that builds a parse tree to
+tag the tree it returns with some indication of what the
+tree represents.
+<br/>
+<br/>
+Sometimes, however, a recursive descent function
+merely returns a tree that was assembled by a different function.
+The function <i>optParameterList</i> is an example of this:
+<br/>
+
+<pre>
+    function optParameterList()
+        {
+        if (parameterListPending())
+            return parameterList();
+        else
+            return null; //NULL signifies an empty list
+        }
+</pre>
+
+If one uses 
+<code>null</code> as a sentinel value for <i>empty</i>, then there
+is no need for <i>optParameterList</i> to build its own tagged parse tree.
+<br/>
+<!-- section -->
+<h2> Building a pretty printer
+<br/>
+</h2><!-- section ENDED -->
+
+Speaking of recreating the source code from parse trees,
+a program known as a
+<i>pretty printer</i> does just that.
+Recall that lexemes are objects that can hold any
+kind of value in the language and that the component <i>ival</i> stores the
+value of integer lexemes and that the component <i>sval</i> stores the value
+of variable and string lexemes. One possible way of implementing the
+pretty printer is through a switch statement that steps through all the
+possible lexeme types:
+<br/>
+
+<pre>
+    function prettyPrint(tree)
+        {
+        switch (tree.type)
+            {
+            case INTEGER  { print(tree.ival);}
+            case VARIABLE { print(tree.sval); }
+            case STRING   { print(&#39;\&quot;&#39;, tree.sval, &#39;\&quot;&#39;); }
+            case OPAREN
+                {
+                print(&quot;(&quot;);
+                prettyPrint(tree.right);
+                print(&quot;)&quot;);
+                }
+            case UMINUS
+                {
+                print(&quot;-&quot;);
+                print(tree.right);
+                }
+            case BINARY
+                {
+                prettyPrint(tree.right.left);  //the left operand
+                print(tree.left);              //the operator
+                prettyPrint(tree.right.right); //the right operand
+                }
+            ...
+            else { fatal(&quot;bad expression!&quot;); }
+            }
+        }
+</pre>
+
+This pretty printer is pretty basic and not very pretty. In fact,
+it prints an entire expression on a single line, regardless of its
+size.
+The pretty printing code for a function definition might look like:
+<br/>
+
+<pre>
+    case FUNCTION
+        {
+        print(&quot;function &quot;);
+        prettyPrint(tree.left);
+        print(&quot;(&quot;);
+        prettyPrint(tree.right.left);
+        print(&quot;) { &quot;);
+        prettyPrint(tree.right.right);
+        println(&quot;}&quot;);
+        }
+</pre>
+
+More sophisticated pretty printers have additional arguments, the
+most useful of which is an indentation level. However, getting a pretty
+printer to print out beautiful looking code is a rather tedious process,
+involving much trial and error.
+<br/>
+<br/>
+Even an ugly pretty printer is useful, as it can tell you whether your
+parse tree correctly represents the original source code. Moreover,
+it can be used to implement print statements in your language; if
+your pretty printer can handle every kind of parse tree in your
+language, a print function based upon your pretty printer will be
+able to do the same.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

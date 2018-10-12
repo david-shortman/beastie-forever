@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: noteNotations.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Fri Apr 15 15:00:29 2016 -->
+<head>
+<title>songlib: note notations</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: note notations<br /></h1>
+<h2 class="maketitle">written by: Song Li Buser</h2>
+<h3 class="maketitle">Revision Date: April 15, 2016</h3>
+</p>
+
+<h3><a name="id1"><a href="template.pdf">Printable Version</a></a></h3><p><hr />Songlib nominally uses a Western music scale with 12 notes (or semitones)
+per octave. The following note constants are defined:
+</p>
+<pre>
+    #define C     0
+    #define Cs    1
+    #define Db    1
+    #define D     2
+    #define Ds    3
+    #define Eb    3
+    #define E     4
+    #define F     5
+    #define Fs    6
+    #define Gb    6
+    #define G     7
+    #define Gs    8
+    #define Ab    8
+    #define A     9
+    #define As   10
+    #define Bb   10
+    #define B    11
+</pre>
+<p>Here, the "s" appelation denotes a sharp and "b" a flat.
+These constants are used in conjuction with an octave specification
+to specify which notes <a href="play.html">play</a>, <a href="chord.html">chord</a>, and others
+are to produce.
+</p>
+<p>There are also &nbsp;&nbsp;absolute&nbsp;&nbsp; constants defined as well:
+</p>
+<pre>
+    #define C0    0
+    #define Cs0   1
+    #define Db0   2
+    #define D0    2
+    ...
+    #define B0   11
+    #define C1   12
+    #define Cs1  13
+    #define Db1  13
+    #define D1   14
+    ...
+    ...
+    ...
+    #define B10  131
+</pre>
+<p>These constants are
+used with the
+<font color=red>notePlaying?</font> and <font color=red>filters?</font>
+commands,
+among others.
+</p>
+
+<h1><a name="id2">Percussion</a></h1><p>
+A special set of note constants is used for playing
+percussion. By songlib covention, the following notes
+correspond to the following percussion instruments:
+</p>
+<table><tbody><tr><td colspan="1" align="center">
+<p>&nbsp;&nbsp;note suffix&nbsp;&nbsp; </td><td colspan="1" align="left"> named constant&nbsp;&nbsp;&nbsp; </td><td colspan="1" align="left"> explanation</td></tr>
+<tr><td colspan="1" align="center">
+3 </td><td colspan="1" align="left"> BLOCK&#95;LOW </td><td colspan="1" align="left"> wood block, low</td></tr>
+<tr><td colspan="1" align="center">
+6 </td><td colspan="1" align="left"> BLOCK&#95;MIDDLE </td><td colspan="1" align="left"> wood block, middle</td></tr>
+<tr><td colspan="1" align="center">
+9 </td><td colspan="1" align="left"> BLOCK&#95;HIGH </td><td colspan="1" align="left"> wood block, high</td></tr>
+<tr><td colspan="1" align="center">
+12 </td><td colspan="1" align="left"> BASS&#95;LOW </td><td colspan="1" align="left"> bass drum, low</td></tr>
+<tr><td colspan="1" align="center">
+15 </td><td colspan="1" align="left"> BASS&#95;MIDDLE </td><td colspan="1" align="left"> bass drum, middle</td></tr>
+<tr><td colspan="1" align="center">
+18 </td><td colspan="1" align="left"> BASS&#95;HIGH </td><td colspan="1" align="left"> bass drum, high</td></tr>
+<tr><td colspan="1" align="center">
+21 </td><td colspan="1" align="left"> CLAP </td><td colspan="1" align="left"> hand clap</td></tr>
+<tr><td colspan="1" align="center">
+24 </td><td colspan="1" align="left"> COWBELL </td><td colspan="1" align="left"> cowbell</td></tr>
+<tr><td colspan="1" align="center">
+27 </td><td colspan="1" align="left"> CRASH </td><td colspan="1" align="left"> crash cymbal</td></tr>
+<tr><td colspan="1" align="center">
+30 </td><td colspan="1" align="left"> CRASH&#95;ALT </td><td colspan="1" align="left"> crash cymbal, alternate</td></tr>
+<tr><td colspan="1" align="center">
+33 </td><td colspan="1" align="left"> HAT&#95;CLOSED </td><td colspan="1" align="left"> high hat, closed</td></tr>
+<tr><td colspan="1" align="center">
+36 </td><td colspan="1" align="left"> HAT&#95;OPEN </td><td colspan="1" align="left"> high hat, open</td></tr>
+<tr><td colspan="1" align="center">
+39 </td><td colspan="1" align="left"> HAT&#95;PEDAL </td><td colspan="1" align="left"> high hat, pedal</td></tr>
+<tr><td colspan="1" align="center">
+42 </td><td colspan="1" align="left"> KICK </td><td colspan="1" align="left"> pedal drum</td></tr>
+<tr><td colspan="1" align="center">
+45 </td><td colspan="1" align="left"> KICK&#95;ALT </td><td colspan="1" align="left"> pedal drum, alternate</td></tr>
+<tr><td colspan="1" align="center">
+48 </td><td colspan="1" align="left"> RIDE&#95; </td><td colspan="1" align="left"> ride cymbal</td></tr>
+<tr><td colspan="1" align="center">
+51 </td><td colspan="1" align="left"> RIDE&#95;ALT </td><td colspan="1" align="left"> ride cymbal, alternate</td></tr>
+<tr><td colspan="1" align="center">
+54 </td><td colspan="1" align="left"> RIDE&#95;BELL </td><td colspan="1" align="left"> ride cymbal, bell</td></tr>
+<tr><td colspan="1" align="center">
+57 </td><td colspan="1" align="left"> SNARE </td><td colspan="1" align="left"> snare drum</td></tr>
+<tr><td colspan="1" align="center">
+60 </td><td colspan="1" align="left"> SNARE&#95;ALT </td><td colspan="1" align="left"> snare drum, alternate</td></tr>
+<tr><td colspan="1" align="center">
+63 </td><td colspan="1" align="left"> STICK </td><td colspan="1" align="left"> stick on rim</td></tr>
+<tr><td colspan="1" align="center">
+66 </td><td colspan="1" align="left"> STICKS </td><td colspan="1" align="left"> stick on stick</td></tr>
+<tr><td colspan="1" align="center">
+69 </td><td colspan="1" align="left"> TIM&#95;LOW </td><td colspan="1" align="left"> timbale, low</td></tr>
+<tr><td colspan="1" align="center">
+72 </td><td colspan="1" align="left"> TIM&#95;MIDDLE </td><td colspan="1" align="left"> timbale, middle</td></tr>
+<tr><td colspan="1" align="center">
+75 </td><td colspan="1" align="left"> TIM&#95;HIGH </td><td colspan="1" align="left"> timbale, high</td></tr>
+<tr><td colspan="1" align="center">
+78 </td><td colspan="1" align="left"> TOM&#95;LOW </td><td colspan="1" align="left"> tomtom, low</td></tr>
+<tr><td colspan="1" align="center">
+81 </td><td colspan="1" align="left"> TOM&#95;MIDDLE </td><td colspan="1" align="left"> tomtom, middle</td></tr>
+<tr><td colspan="1" align="center">
+84 </td><td colspan="1" align="left"> TOM&#95;HIGH </td><td colspan="1" align="left"> tomtom, high</td></tr>
+<tr><td colspan="1" align="center">
+87 </td><td colspan="1" align="left"> CRASH&#95;CHOKE </td><td colspan="1" align="left"> short crash</td></tr>
+<tr><td colspan="1" align="center">
+90 </td><td colspan="1" align="left"> BELL </td><td colspan="1" align="left"> bell</td></tr>
+<tr><td colspan="1" align="center">
+93 </td><td colspan="1" align="left"> CHINA </td><td colspan="1" align="left"> china cymbal</td></tr>
+<tr><td colspan="1" align="center">
+96 </td><td colspan="1" align="left"> SPLASH </td><td colspan="1" align="left"> splash cymbal</td></tr>
+<tr><td colspan="1" align="center">
+99 </td><td colspan="1" align="left"> TAMBOURINE </td><td colspan="1" align="left"> tambourine</td></tr>
+<tr><td colspan="1" align="center">
+102 </td><td colspan="1" align="left"> SHAKER </td><td colspan="1" align="left"> shaker</td></tr>
+<tr><td colspan="1" align="center">
+105 </td><td colspan="1" align="left"> RIMSHOT </td><td colspan="1" align="left"> rim shot</td></tr>
+<tr><td colspan="1" align="center">
+108 </td><td colspan="1" align="left"> PERC8 </td><td colspan="1" align="left"> percussion</td></tr>
+<tr><td colspan="1" align="center">
+111 </td><td colspan="1" align="left"> PERC9 </td><td colspan="1" align="left"> percussion</td></tr>
+<tr><td colspan="1" align="center">
+114 </td><td colspan="1" align="left"> PERC10 </td><td colspan="1" align="left"> percussion</td></tr>
+<tr><td colspan="1" align="center">
+117 </td><td colspan="1" align="left"> PERC11 </td><td colspan="1" align="left"> percussion</td></tr>
+<tr><td colspan="1" align="center">
+120 </td><td colspan="1" align="left"> PERC12 </td><td colspan="1" align="left"> percussion</td></tr>
+<tr><td colspan="1" align="center">
+123 </td><td colspan="1" align="left"> PERC13 </td><td colspan="1" align="left"> percussion</td></tr>
+<tr><td colspan="1" align="center">
+126 </td><td colspan="1" align="left"> PERC14 </td><td colspan="1" align="left"> percussion</td></tr>
+<tr><td colspan="1" align="center">
+129 </td><td colspan="1" align="left"> PERC15 </td><td colspan="1" align="left"> percussion</td></tr>
+<tr><td colspan="1" align="center">
+</td></tr></tbody></table>
+</p>
+<p>Assuming the notes have been set up properly, one would
+use these constants thusly:
+</p>
+<pre>
+    drumset = readScale("/usr/local/share/samples/drums/","hydrogen_");
+
+    snplay(Q,drumset,COWBELL);
+    snplay(I,drumset,CRASH);
+</pre>
+<p>Drums are usually played with the <i>snplay</i> playing function, since
+the entire note will play but the song will advance only the
+requested number of beats. There is a version of <i>snplay</i> that
+randomly introduces some slop into the amplitude, pitch and
+timing of the note:
+</p>
+<pre>
+    for (i = 0; i &lt; 4; ++i)
+	drum(I,drumset,TOM_MIDDLE)
+</pre>
+<p>This makes a repetitive series of beats sound less mechanical.
+You can set the slop with the functions:
+</p>
+<pre>
+    void setSlopTiming(double);
+    void setSlopAmplitude(double);
+    void setSlopPitch(double);
+</pre>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

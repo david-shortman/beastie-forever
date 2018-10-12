@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Sep  5 20:07:22 2016 -->
+<head>
+<title>The Scam Reference Manual -- The Main Library</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_18.html">
+  <img border="0" alt="Concurrency" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_20.html">
+  <img border="0" alt="Randomness" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>The Main Library</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>The Main Library</h1>
+<p>Scam's main library contains a mish-mash of useful functions.
+It is automatically included.
+</p>
+
+<h2><a name="id1">Assignment-type functions</a></h2>
+
+<h3><a name="id2"><tt>(+= var value)</tt></a></h3><p>
+The <i>+=</i> function is used to add the given value to the
+given variable.
+For example, suppose the variable <i>x</i> has the value 10.
+After evaluating
+the expression <code>(+= x 3)</code>,
+the value of <i>x</i> would be 13.
+The expression <code>(+= x n)</code>,
+is equivalent to the expression <code>(set</code> x (+ x n))!.
+The functions <i>-=</i>, <i>*=</i>, and <i>/=</i> are also defined
+with analogous semantics.
+</p>
+
+<h3><a name="id3"><tt>(++ var)</tt></a></h3><p>
+The <i>+=</i> function increments the given variable.
+For example, suppose the variable <i>x</i> has the value 10.
+After evaluating
+the expression <code>(++ x)</code>,
+the value of <i>x</i> would be 11.
+The expression <code>(+= x n)</code>,
+is equivalent to the expression <code>(set</code> x (+ x n))!.
+The functions <i>-=</i>, <i>*=</i>, and <i>/=</i> are also defined
+with analogous semantics.
+</p>
+
+<h2><a name="id4">Mathematical Functions</a></h2>
+
+<h3><a name="id5"><tt>randomMax()</tt></a></h3>
+<pre>
+(define __builtin __context)
+(define __main-lib this)
+(define nil? null?)
+(define (valid? x) (not (null? x)))
+(define (head x) (car x))
+(define (tail x) (cdr x))
+(define (join x y) (cons x y))
+(define ^ expt)
+(define ** expt)
+(define (set! # $x y @)
+    (define env (if (null? @) # (car @)))
+    (cond
+        ((dot? $x)
+            (define last (dot-assign-setup (eval (cadr $x) #) (cddr $x) #))
+            ;(inspect last)
+            (set (cadr last) y (car last))
+            )
+        (else
+            (set $x y env)
+            )
+        )
+    )
+(define assign set!)
+
+(define (for # init $test $increment $)
+    (while (eval $test #)
+        (evalList $ #)
+        (eval $increment #)
+        )
+    )
+
+(define (for-each2 # $indexVar items $)
+    (define result #f)
+    (while (!= items nil)
+        (set $indexVar (car items) #)
+        (set 'result (evalList $ #))
+        (set 'items (cdr items))
+        )
+    result
+    )
+
+(define (for-each f x)
+    (define (iter items)
+        (cond
+            ((null? items) nil)
+            (else (f (car items)) (iter (cdr items)))
+            )
+        )
+    (iter x)
+    )
+
+(define (+= # $v value) (set $v (+ (eval $v #) value) #))
+(define (-= # $v value) (set $v (- (eval $v #) value) #))
+(define (*= # $v value) (set $v (* (eval $v #) value) #))
+(define (/= # $v value) (set $v (/ (eval $v #) value) #))
+(define (++ # $v) (set $v (+ (eval $v #) 1) #))
+(define (-- # $v) (set $v (- (eval $v #) 1) #))
+
+; object-related functions
+
+(define __type type)
+
+(define (type x)
+    (if (and (eq? (__type x) 'CONS) (eq? (car x) 'object))
+        (get '__label x)
+        (__type x)
+        )
+    )
+
+(define (class x) (get '__label x))
+
+(define (dot-assign-setup obj fields env)
+    (while (valid? (cdr fields))
+        (define field (car fields))
+        (inspect field)
+        (if (pair? field)
+            (set 'obj (get (eval field env) obj))
+            (set 'obj (get field obj))
+            )
+        (set! fields (cdr fields))
+        )
+    (if (pair? (car fields))
+        (list obj (eval (car fields) env))
+        (cons obj fields)
+        )
+    )
+(define (dot obj $)
+    ;(inspect obj)
+    (while (valid? $)
+        ;(inspect (car $))
+        (set! obj (get (car $) obj))
+        (set! $ (cdr $))
+        )
+    ;(println "leaving dot")
+    ;(inspect obj)
+    obj
+    )
+
+(define (is? x y)
+    (cond
+        ((null? x) #f)
+        ((not (environment? x)) (eq? (type x) y))
+        ((and (environment? x) (or (eq? y 'environment) (eq? y 'object))) #t)
+        ((and (valid? (dot x __constructor)) (eq? (dot x __constructor name) y)) #t)
+        (else (and (local? 'parent x) (is? (dot x parent) y)))
+        )
+    )
+
+(define (object? x) (and (pair? x) (eq? (car x) 'object)))
+(define (closure? x) (and (object? x) (eq? (class x) 'closure)))
+(define (error? x) (and (object? x) (eq? (class x) 'error)))
+(define (environment? x) (and (object? x) (eq? (class x) 'environment)))
+
+
+(define (and # $)
+    (define (iter items)
+        (cond
+           ((null? items) #t)
+           ((eval (car items) #) (iter (cdr items)))
+           (else #f)
+           )
+        )
+    (iter $)
+    )
+(define (or # $)
+    (define (iter items)
+        (cond
+           ((null? items) #f)
+           ((eval (car items) #) #t)
+           (else (iter (cdr items)))
+           )
+        )
+    (iter $)
+    )
+(define (dec x) (- x 1))
+(define (inc x) (+ x 1))
+
+(define __display display)
+(define (print @)
+    (while (valid? @)
+        (display (car @))
+        (set! @ (cdr @))
+        )
+    'print-done
+    )
+
+(define (println @)
+    (apply print @)
+    (print "\n")
+    )
+
+(define (let # $inits $)
+    (define v nil)
+    (define e (scope this))
+    (set '__context # e)
+    (for-each2 v $inits
+        (addSymbol (car v) (eval (car (cdr v)) #) e)
+        ;(println "adding " (car v) " from " $inits)
+        ;(println "    its value is " (eval (car (cdr v)) #))
+        ;(inspect e)
+        )
+    (evalList $ e)
+    )
+
+(define (let* # $inits $)
+    (define v nil)
+    (define e (scope this))
+    (set '__context # e)
+    (for-each2 v $inits
+        (addSymbol (car v) (eval (car (cdr v)) e) e)
+        )
+    (evalList $ e)
+    )
+
+(define (evalList items env)
+    (while (valid? (cdr items)) ; for tail recursion
+         (eval (car items) env)
+         (set 'items (cdr items))
+         )
+    (eval (car items) env)
+    )
+
+(define (negative? n) (&lt; n 0))
+(define (positive? n) (&gt; n 0))
+
+(define (newline) (println))
+(define remainder %)
+(define (append a b)
+    (cond
+        ((null? a) b)
+        (else (cons (car a) (append (cdr a) b)))
+        )
+    )
+(define (last-pair x)
+    (cond
+        ((null? x) nil)
+        ((null? (cdr x)) x)
+        (else (last-pair (cdr x)))
+        )
+    )
+(define (reverse x)
+    (define (iter store rest)
+        (cond
+            ((null? rest) store)
+            (else (iter (cons (car rest) store) (cdr rest)))
+            )
+        )
+    (iter nil x)
+    )
+
+(define (map op @)
+    (define (map1 items)
+        (cond
+            ((null? items) nil)
+            (else (cons (op (car items)) (map1 (cdr items))))
+            )
+        )
+    (define (iter items)
+        (cond
+            ((null? (car items)) nil)
+            (else (cons (apply op (map car items)) (iter (map cdr items))))
+            )
+        )
+    (cond
+        ((= (length @) 1) (map1 (car @)))
+        (else (iter @))
+        )
+    )
+(define (abs x) (if (&lt; x 0) (- x) x))
+(define (even? n) (= (% n 2) 0))
+(define (odd? n) (= (% n 2) 1))
+(define (integer? x) (eq? (type x) 'INTEGER))
+(define (real? x) (eq? (type x) 'REAL))
+(define (number? x) (or (integer? x) (real? x)))
+(define (string? x) (eq? (type x) 'STRING))
+(define (symbol? x) (eq? (type x) 'SYMBOL))
+(define (array? x) (eq? (type x) 'ARRAY))
+(define (true? x) x)
+(define (false? x) (not x))
+(define (dot? x) (and (pair? x) (member? (car x) '(dot .))))
+(define (literal? x)
+    (or (null? x) (eq? x #t) (eq? x #f) (string? x) (array? x)
+        (integer? x) (real? x) (and (pair? x) (eq? (car x) 'quote))))
+(define (atom? x) (not (or (pair? x) (string? x) (array? x))))
+(define (car-cdr items @)
+    (while (valid? @)
+        (cond
+            ((= (car @) 0) (set 'items (car items)))
+            (else (set 'items (cdr items)))
+            )
+        (set '@ (cdr @))
+        )
+    items
+    )
+
+(define (caar x) (car-cdr x 0 0))
+(define (cadr x) (car-cdr x 1 0))
+(define (caddr x) (car-cdr x 1 1 0))
+(define (cadddr x) (car-cdr x 1 1 1 0))
+(define (caddddr x) (car-cdr x 1 1 1 1 0))
+(define (cadddddr x) (car-cdr x 1 1 1 1 1 0))
+
+(define (cddr x) (cdr (cdr x)))
+(define (cddr x) (car-cdr x 1 1))
+(define (cdddr x) (car-cdr x 1 1 1))
+(define (cddddr x) (car-cdr x 1 1 1 1))
+(define (cdddddr x) (car-cdr x 1 1 1 1 1))
+
+(define (equal? a b)
+    (cond
+        ((null? a)
+            ;(println "returning" (null? b))
+            (null? b))
+        ((pair? a)
+            ;(println "pair returning "
+            ;(and (pair? b) (equal? (car a) (car b)) (equal? (cdr a) (cdr b))))
+            (and (pair? b) (equal? (car a) (car b)) (equal? (cdr a) (cdr b))))
+        ((string? a)
+            (string-equal? a b))
+        ((array? a)
+            (array-equal? a b))
+        (else
+            ;(println "else returning "(eq? a b))
+            (eq? a b))
+        )
+    )
+
+(define (array-equal? a b)
+    (cond
+        ((null? a) (null? b))
+        ((null? b) #f)
+        (else (and (equal? (car a) (car b)) (array-equal? (cdr a) (cdr b))))
+        )
+    )
+
+(define (string-compare a b)
+    (cond
+        ((and (null? a) (null? b)) 0)
+        ((null? a) (- 0 (ascii (getElement b 0))))
+        ((null? b) (ascii (getElement a 0)))
+        (else
+            (if (== (ascii (getElement a 0)) (ascii (getElement b 0)))
+                (string-compare (cdr a) (cdr b))
+                (- (ascii (getElement a 0)) (ascii (getElement b 0)))
+                )
+            )
+        )
+    )
+
+(define (sqrt x) (expt x 0.5))
+
+(define (cons-stream # a $b)
+    (cons a (lambda () (eval $b #)))
+    )
+
+(define (stream-car s) (car s))
+(define (stream-cdr s) ((cdr s)))
+(define (stream-null? s) (null? s))
+
+(define (code $s) $s)
+
+(define (member? x items)
+    (valid? (member x items))
+    )
+
+(define (member x items)
+    (cond
+        ((null? items)
+            nil
+            )
+        ((eq? x (car items))
+            items
+            )
+        (else
+            (member x (cdr items))
+            )
+        )
+    )
+
+(define (nequal? a b) (not (equal? a b)))
+
+(define (getElement items @)
+    (define __getElement (get 'getElement (get '__context __context)))
+    (while (valid? @)
+        ;(inspect items)
+        (set 'items (__getElement items (car @)))
+        (set '@ (cdr @))
+        )
+    items
+    )
+
+(define __string+ string+)
+(define (string+ str @)
+    (while (valid? @)
+        (set 'str (__string+ str (string (car @))))
+        (set '@ (cdr @))
+        )
+    str
+    )
+
+(define __string string)
+(define (string x)
+    (cond
+        ((pair? x) (list-to-string x))
+        (else (__string x))
+        )
+    )
+(define (list-to-string x)
+    (define (iter z)
+        (cond
+            ((null? (cdr z))
+                (string+ (string (car z)) ")")
+                )
+            ((pair? (cdr z))
+                (string+ (string (car z)) " " (iter (cdr z)))
+                )
+            (else
+                (string+ (string (car z)) " . " (string (cdr z)) ")")
+                )
+            )
+        )
+    (cond
+        ((thunk? x) (string+ "&lt;thunk " (address x) "&gt;"))
+        ((closure? x) (string+ "&lt;closure " (address x) "&gt;"))
+        ((error? x) (string+ "&lt;error " (address x) "&gt;"))
+        ((environment? x) (string+ "&lt;environment " (address x) "&gt;"))
+        ((object? x) (string+ "&lt;object " (address x) "&gt;"))
+        (else (string+ "(" (iter x)))
+        )
+    )
+
+(define (thunk code environment) this)
+(define (thunk? item) (is? item 'thunk))
+(define (force item) (eval (dot item code) (dot item environment)))
+(define . dot)
+
+(define (assoc x y)
+    (cond
+        ((null? y) #f)
+        ((equal? x (caar y)) (car y))
+        (else (assoc x (cdr y)))
+        )
+    )
+
+(define (make-assoc xs ys)
+    (cond
+        ((null? xs) nil)
+        (else (cons (list (car xs) (car ys)) (make-assoc (cdr xs) (cdr ys))))
+        )
+    )
+
+(define (local? id env)
+    (member? id (localNames env))
+    )
+(define (localNames env)
+    (cadr env)
+    )
+(define (localValues env)
+    (caddr env)
+    )
+(define (defined? id env)
+    (not (error? (catch (eval id env))))
+    )
+
+</pre>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_18.html">
+  <img border="0" alt="Concurrency" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_20.html">
+  <img border="0" alt="Randomness" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>The Main Library</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

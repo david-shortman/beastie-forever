@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>dynamic</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+Dynamic Programming
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="dynamic.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Introduction
+<br/>
+</h2><!-- section ENDED -->
+
+Dynamic programming is simply the process of turning recursive
+calls in to table lookups. If a recursive function does redundant
+computations, the time complexity of the dynamic programming
+version of the algorithm can be greatly improved over the
+recursive version.
+<br/>
+<br/>
+To implement a dynamic programming solution to a problem,
+start out by writing a simple recursive implementation.
+Once completed and debugged, apply the following steps to convert
+the function:
+<br/>
+<br/>
+<span class="indent">
+(1) &nbsp;count how many formal parameters are changing in the recursive call -
+this is the dimensionality of your table
+<br/>
+<br/>
+(2) &nbsp;look at the range of the values sent to the recursive function -
+these ranges are the sizes of your table
+<br/>
+<br/>
+(3) &nbsp;build a table of the correct dimensionality and size
+<br/>
+<br/>
+(4) &nbsp;convert the recursion to table operations
+<br/>
+<br/>
+(5) &nbsp;fill out the table in the direction indicated by the recursive calls
+<br/>
+<br/>
+(6) &nbsp;move the base cases
+<br/>
+<br/>
+(7) &nbsp;retrieve the desired output from the table
+</span>
+
+<br/>
+<!-- section -->
+<h2> An Example
+<br/>
+</h2><!-- section ENDED -->
+
+Here is an example recursive function that makes redundant computations:
+<br/>
+
+<pre>
+    function fib(n)
+        {
+        if (n == 0) 
+            return 0;
+        else if (n == 1) 
+            return 1;
+        else
+            return fib(n-1) + fib(n-2);
+        }
+</pre>
+
+<!-- subsection -->
+<h3> Step 1: counting the changing parameters
+<br/>
+</h3><!-- subsection ENDED -->
+
+There is one formal parameter of <i>fib</i> and you can see that the value
+changes in the recursive calls. So we will need to build a one-dimensional
+table.
+<br/>
+<!-- subsection -->
+<h3> Step 2: finding the parameter ranges
+<br/>
+</h3><!-- subsection ENDED -->
+
+The range of the formal parameter is from 0 to <i>n</i>, meaning the table
+size has to be <i>n</i>+1.
+<br/>
+<!-- subsection -->
+<h3> Step 3: building the table
+<br/>
+</h3><!-- subsection ENDED -->
+
+Lets assume the table is built, with variable <i>t</i> pointing to the
+newly built table.
+<br/>
+<!-- subsection -->
+<h3> Step 4: converting the recursions
+<br/>
+</h3><!-- subsection ENDED -->
+
+Converting the recursive calls requires four things:
+changing the function being called to a call to a lookup
+function, removing those arguments that do not change,
+changing the formals that do change to loop variables,
+and changing the return to a table update.
+For example:
+<br/>
+
+<pre>
+    return fib(n-1) + fib(n-2);
+</pre>
+
+becomes:
+<br/>
+
+<pre>
+    t[i] = getTable(i-1) + getTable(i-2);
+</pre>
+
+Note (and this is important)
+that the changing from <i>n</i> to <i>i</i> happens
+everywhere in the function body, including the base cases.
+The table lookup function is initially defined as:
+<br/>
+
+<pre>
+    function getTable(i)
+        {
+        return t[i];
+        }
+</pre>
+
+<!-- subsection -->
+<h3> Step 5: filling the table
+<br/>
+</h3><!-- subsection ENDED -->
+
+In the recursive calls to <i>fib</i>, we note that the value of <i>n</i> being
+sent is smaller in both cases (this is not always true). So our loop
+for filling out the table needs to run from smaller <i>n</i> to larger <i>n</i>.
+<br/>
+<br/>
+We start our loop at the smallest value of <i>n</i> (which is zero) and
+end the loop after we reach the maximum value, which is the original
+value of <i>n</i>:
+<br/>
+
+<pre>
+    for (i = 0; i &lt;= n; ++i)  //note that n is included
+        ???
+</pre>
+
+The recursive calls that were converted to table operations now
+become the body of the loop:
+<br/>
+
+<pre>
+    for (i = 0; i &lt;= n; ++i)
+        t[i] = getTable([i-1) + getTable(i-2);
+</pre>
+
+<!-- subsection -->
+<h3> Step 6: moving the base cases
+<br/>
+</h3><!-- subsection ENDED -->
+
+The base cases in the original function now serve as base cases
+in the table lookup function:
+<br/>
+
+<pre>
+    function getTable(i)
+        {
+        if (i == 0) 
+            return 0;
+        else if (i == 1) 
+            return 1;
+        else
+            return t[i];
+        }
+</pre>
+
+<!-- subsection -->
+<h3> Step 7: retrieving the output
+<br/>
+</h3><!-- subsection ENDED -->
+
+In this case, the desired output resides at index <i>n</i> in the table.
+Usually, this location corresponds to the initial arguments to
+the recursive function.
+<br/>
+
+<pre>
+    return t[n];
+</pre>
+
+<!-- subsection -->
+<h3> The revised function
+<br/>
+</h3><!-- subsection ENDED -->
+
+Putting it all together yields:
+<br/>
+
+<pre>
+    function fib(n)
+        {
+        var t = makeTable(n+1);
+        for (var i = 0; i &lt;= n; ++i)
+            t[i] = getTable(n-1) + getTable(n-2);
+        return t[n];
+        }
+</pre>
+
+While the original <i>fib</i> function runs in exponential time and linear space,
+the dynamic programming version runs in linear time and constant space.
+<br/>
+<!-- section -->
+<h2> Another Example
+<br/>
+</h2><!-- section ENDED -->
+
+Consider determining how many possible ways you can make change using a set
+of coins. For example, if you need to give back 11 cents in change,
+there are four ways you can do this:
+<br/>
+
+<ul>
+
+<li>
+
+ one dime and one penny
+</li>
+
+<li>
+
+ two nickels and one penny
+</li>
+
+<li>
+
+ one nickel and six pennies
+</li>
+
+<li>
+
+ eleven pennies
+</li>
+
+</ul>
+
+
+Here is a function that does this. The first argument to the function
+is how much change you need to give back. The second argument is
+an index into the coin array; it signifies the coin you are going
+to use. The last argument is the array of coin values.
+<br/>
+
+<pre>
+    function makeChange(amount,index,coins)
+        {
+        if (amount == 0) return 1; //this is a legal solution
+        if (amount &lt; 0) return 0; //not a legal solution
+        if (index == coins.size) return 0; //not a legal solution
+
+        //find the number of combinations using the current coin
+        var with = makeChange(amount-coins[index],index,coins);
+
+        //find the number of combinations without using the current coin
+        var without = makeChange(amount,index+1,coins);
+
+        return with + without
+        }
+</pre>
+
+Like <i>fib</i>, this function also performs many redundant calculations.
+<br/>
+<!-- subsection -->
+<h3> Step 1: counting the changing parameters
+<br/>
+</h3><!-- subsection ENDED -->
+
+There are three formal parameters, two of which change in the recursive
+calls.
+So we will need to build a two-dimensional
+table.
+<br/>
+<!-- subsection -->
+<h3> Step 2: finding the parameter ranges
+<br/>
+</h3><!-- subsection ENDED -->
+
+The range of the formal parameter <i>amount</i> is from 0 to <i>amount</i>,
+meaning one dimension of the table
+has to be size <i>amount</i>+1.
+The range of the formal parameter <i>index</i> is from 0 to <i>coins.size</i>-1,
+yielding a dimension with magnitude <i>coins.size</i>.
+<br/>
+<!-- subsection -->
+<h3> Step 3: building the table
+<br/>
+</h3><!-- subsection ENDED -->
+
+Lets assume the table is built, with variable <i>t</i> pointing to the
+newly built table. We will use <i>amount</i> for the rows and <i>index</i> for
+the columns.
+<br/>
+
+<pre>
+    t = makeTable(amount+1,coins.size);
+</pre>
+
+<!-- subsection -->
+<h3> Step 4: converting the recursions
+<br/>
+</h3><!-- subsection ENDED -->
+
+Using just the parameters that change, we can rewrite this:
+<br/>
+
+<pre>
+    with = makeChange(amount-coins[index],index)
+    without = makeChange(amount,index+1)
+    return with + without;
+</pre>
+
+as this:
+<br/>
+
+<pre>
+    with = getTable(a-coins[i],i);
+    without = getTable(a,i+1);
+    t[a][i] = with + without;
+</pre>
+
+<!-- subsection -->
+<h3> Step 5: filling the table
+<br/>
+</h3><!-- subsection ENDED -->
+
+In the recursive calls to <i>makeChange</i>, we note that the value of <i>amount</i>
+being sent is the same or smaller in both cases. So our loop
+for filling out the rows of the table needs to run from smaller amounts
+to larger amounts. On the other hand, the value of index in the recursive
+class stays the same or becomes larger. Therefore, our loop
+over the columns of the table needs to run from larger indices to
+smaller indices.
+<br/>
+We start our outer loop at the smallest value larger than the base cases.
+We end
+the loop after we reach the maximum value, which is <i>amount</i>:
+<br/>
+
+<pre>
+    for (a = 1; a &lt;= amount; ++a)
+        ???
+</pre>
+
+We start the inner loop at the largest legal index and end it at the
+smallest legal index:
+<br/>
+
+<pre>
+    for (a = 1; a &lt;= amount; ++a)
+        for (i = coins.size-1; i &gt;= 0; --i)
+            ???
+</pre>
+
+As with <i>fib</i>, the body of our nested loops is the converted recurrence:
+<br/>
+
+<pre>
+    for (a = 1; a &lt;= amount; ++a)
+        for (i = coins.size-1; i &gt;= 0; --i)
+            {
+            with = getTable(a-coins[i],i);
+            without = getTable(amount,i+1);
+            t[a][i] = with + without;
+            }
+</pre>
+
+<!-- subsection -->
+<h3> Step 6: moving the base cases
+<br/>
+</h3><!-- subsection ENDED -->
+
+Moving the base cases to the table lookup function yields:
+<br/>
+
+<pre>
+    function getTable(a,i)
+        {
+        if (a == 0) return 1;          //this is a legal solution
+        if (a &lt; 0) return 0;           //not a legal solution
+        if (i == coins.size) return 0; //not a legal solution
+        return t[a][i];
+        }
+</pre>
+
+Note that we are referencing the coins array in the third base case,
+so we need to pass the coins array to <i>getTable</i>:
+<br/>
+
+<pre>
+    function getTable(a,i,coins)
+        {
+        if (a == 0) return 1;          //this is a legal solution
+        if (a &lt; 0) return 0;           //not a legal solution
+        if (i == coins.size) return 0; //not a legal solution
+        return t[a][i];
+        }
+</pre>
+
+We also need to update the calls to <i>getTable</i> to pass in this
+extra parameter.
+<br/>
+<!-- subsection -->
+<h3> Step 7: retrieving the output
+<br/>
+</h3><!-- subsection ENDED -->
+
+In this case, the desired output resides at row <i>amount</i> and column
+<i>index</i> in the table.
+<br/>
+
+<pre>
+    return t[amount][index];
+</pre>
+
+<!-- subsection -->
+<h3> The revised function
+<br/>
+</h3><!-- subsection ENDED -->
+
+Putting it all together yields:
+<br/>
+
+<pre>
+    function makeChange(amount,index,coins)
+        {
+        var a,i;
+
+        //build the table
+        var t = makeTable(amount+1,coins.size);
+
+        //fill out the table
+        for (a = 1; a &lt;= amount; ++a)
+            for (i = coins.size-1; i &gt;= 0; --i)
+                {
+                with = getTable(a-coins[i],i,coins);
+                without = getTable(amount,i+1,coins);
+                t[a][i] = with + without;
+                }
+
+        //return the desired result
+        return t[amount][index];
+        }
+</pre>
+
+The original <i>makeChange</i> function runs in exponential time
+and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>a</mi>		<mo>+</mo>		<mi>s</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math> space, where <i>a</i> is the maximum amount and
+<i>s</i> is the maximum number of coins.
+In contrast,
+the dynamic programming version of <i>makeChange</i> runs in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>a</mi>		<mi>s</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math> time
+and constant space.
+<br/>
+<!-- section -->
+<h2> Memoization
+<br/>
+</h2><!-- section ENDED -->
+
+Computing the minimal number of multiplications needed for a chain of
+matrix multiplications is one of those funny recursive routines in that
+we recur inside a loop (making permutations is another one of these funny
+routines). The basic idea is we find the optimal place to break a subchain
+of matrices to be multiplied, recurring on the left to find the minimal
+number of multiplications to process the left side of the break and
+then doing the same on the right side. For any break, we also have
+to calculate the number of multiplications for multiplying the resulting
+left-side matrix and the resulting right-side matrix:
+<br/>
+
+<pre>
+    function mm(rows,cols,lo, hi)
+        {
+        var i;
+        if (lo == hi-1) return 0;
+        var best = INFINITY;
+        for (i = lo+1; i &lt; hi; ++i) //try all split points
+            {
+            var left = mm(rows,cols,lo,i);
+            var right = mm(rows,cols,i,hi);
+            //calculate muls for left-side matrix times right-side matrix
+            var last = rows[lo]*cols[i-1]*cols[hi-1];
+            var total = left + right + last;
+            if (total &lt; best) best = total;
+            }
+        return best;
+        }
+</pre>
+
+Because of the interleaved looping and recursion,
+turning this recursive solution into a dynamic programming solution
+is a bit involved.
+A more straightforward approach is <i>memoization</i>.
+With memoization, we store subproblem solutions in a table.
+After the base case checks are performed,
+we simply look to see if we have solved this problem before. If so,
+we return the previous solution. Otherwise, we compute the solution
+and store it in the table for future use:
+<br/>
+
+<pre>
+    function mm2(rows,cols,lo,hi,table)
+        {
+        var i;
+        if (lo == hi-1) return 0;
+        if (table[lo][hi] != EMPTY) return table[lo][hi]; //memoized!
+        var best = INFINITY;
+        for (i = lo+1; i &lt; hi; ++i)
+            {
+            var left = mm2(rows,cols,lo,i,table);
+            var right = mm2(rows,cols,i,hi,table);
+            var last = rows[lo]*cols[i-1]*cols[hi-1];
+            var muls = left + right + last;
+            if (muls &lt; best) best = muls;
+            }
+        table[lo][hi] = best; //take a memo
+        return best;
+        }
+</pre>
+
+The table that is passed into the memoized version of the function
+is constructed in the same way as in dynamic programming: the
+dimensionality is the number of changing formal parameters and
+the extent of a dimension is the range of values for the corresponding
+formal.
+<br/>
+<br/>
+While the non-memoized solution takes exponential time, the memoized
+solution takes quadratic time. Since memoization is so simple to
+implement, it has supplanted dynamic programming as the <i>go to</i> method for
+dealing with redundant computations.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

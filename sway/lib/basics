@@ -1,0 +1,398 @@
+var built-in = context;
+
+function break(@)
+    {
+    if (@ == :null,throw(:break,:break),throw(:break,@[0]));
+    }
+
+function continue(@)
+    {
+    if (@ == :null,throw(:continue,:continue),throw(:continue,@[0]));
+    }
+
+/* while
+ * 
+ * - this version honors break and continue;
+ *
+ */
+
+function while($test,$body)
+    {
+    var while = built-in . while;
+    var result = :false;
+
+    while (force($test))
+        {
+        var ball;
+        var glove = 0;
+        // force($body) may purposefully return an ERROR object
+        // so need a trick to see if catch caught a THROW
+        result = catch(){ ball = force($body); glove = 1; ball; };
+        if (type(result) == :ERROR)
+            {
+            if (result . type == :break)
+                {
+                return result . value;
+                }
+            else if (result . type == :continue)
+                {
+                result = result . value;
+                }
+            else if (glove == 0)
+                {
+                throw(result);
+                }
+            }
+        }
+
+    result;
+    }
+
+function until($test,$body)
+    {
+    var result = :false;
+
+    while(not(force($test)))
+        {
+        force($body);
+        result = :true;
+        }
+    result;
+    }
+   
+function do-while($test,$body)
+    {
+    force($body);
+    while($test,$body);
+    }
+
+function do-until($test,$body)
+    {
+    force($body);
+    until($test,$body);
+    }
+   
+function for(init,$test,$update,$body)
+    {
+    var result = :false;
+    while(force($test))
+        {
+        result = force($body);
+        force($update);
+        }
+    result;
+    }
+   
+function for-each($s,items,$body)
+    {
+    var result;
+    while (items != :null)
+        {
+        $s = head(items);
+        result = force($body);
+        items = tail(items);
+        }
+    result;
+    }
+
+function +=($a,amt) { $a = force($a) + amt; }
+function *=($a,amt) { $a = force($a) * amt; }
+function -=($a,amt) { $a = force($a) - amt; }
+function /=($a,amt) { $a = force($a) / amt; }
+
+function range(a,@)
+    {
+    var start,limit,step;
+    var i,items,itemCount;
+    var adjust;
+    
+    if (@ == :null)
+        {
+        start = 0;
+        limit = a;
+        step = 1;
+        }
+    else if (cdr(@) == :null)
+        {
+        start = a;
+        limit = @ . 0;
+        step = 1;
+        }
+    else
+        {
+        start = a;
+        limit = @ . 0;
+        step = @ . 1;
+        }
+
+
+    adjust = if(step < 0,-1,1);
+    itemCount = limit - start  + step - adjust / step;
+    items = allocate(itemCount);
+
+    for (i = 0, i < itemCount, i = i + 1)
+        {
+        items[i] = start;
+        start += step;
+        }
+
+    items;
+    }
+
+function tail*(items,index)
+    {
+    if (items == :null || index == 0,items,tail*(tail(items),index - 1));
+    }
+
+function weave(a,b)
+    {
+    if (a == :null,:null,array(head(a),head(b)) join weave(tail(a),tail(b)));
+    }
+
+function map(f,items)
+    {
+    if (items == :null)
+        {
+        :null;
+        }
+    else
+        {
+        f(head(items)) join map(f,tail(items));
+        }
+    }
+
+function map*(f,@)
+    {
+    function helper(items)
+        {
+        if (head(items) == :null)
+            {
+            :null;
+            }
+        else
+            {
+            var first = map(head,items);
+            var rest = map(tail,items);
+            apply(f,first) join helper(rest);
+            }
+        }
+    helper(@);
+    }
+
+function
+select(test,items)
+    {
+    if (items == :null)
+        {
+        :null;
+        }
+    else if (test(head(items)))
+        {
+        head(items) join select(test,tail(items));
+        }
+    else
+        {
+        select(test,tail(items));
+        }
+    }
+
+function
+reject(test,items)
+    {
+    select(function (x) { not(test(x)); },items);
+    }
+
+function shadowed(item)
+    {
+    var . = $sway_original$(:.);
+    var if = $sway_original$(:if);
+    var + = $sway_original$(:+);
+    var = = $sway_original$(:=);
+    var == = $sway_original$(:==);
+    var x;
+    
+    if (type(item) != :SYMBOL)
+        {
+        throw(:typeError,"argument to shadowed was not a SYMBOL, but "
+            + type(item));
+        }
+
+    x = dynamicContext . (item);
+
+    inspect(type(x));
+    pp(x);
+    if (type(x) == :PRIMITIVE)
+        {
+        throw(:argumentError,"there is no shadowed implementation of " + x);
+        }
+
+    if (x . prior != :null)
+        {
+        x . prior;
+        }
+    else
+        {
+        x . context . context . (item);
+        }
+    }
+
+function case(operand,$action,$)
+    {
+    list(operand,$action,$);
+    }
+
+function switch(expr,$actions)
+    {
+    var result;
+    function caseFilter(spec)
+        {
+        var val;
+        if (expr == spec[0])
+            {
+            throw(:success,force(spec[1]));
+            }
+        else if (spec[2] != :null)
+            {
+            throw(:success,force(spec[2][0]));
+            }
+        }
+    case . filter = caseFilter;
+    result = catch(force($actions));
+    if (type(result) == :ERROR)
+        {
+        if(result . type == :success,result . value,throw(result));
+        }
+    else
+        {
+        :null;
+        }
+    }
+
+/*
+ * A try-catch construct
+ *
+ */
+
+function try($store,$code,$)
+    {
+    var result = catch(force($code));
+    if (type(result) == :ERROR)
+        {
+        $store = result;
+        if ($ != :null,force(car($)));
+        }
+    else
+        {
+        result;
+        }
+    }
+
+/*
+ * member?
+ * 
+ * - returns true if item is in list of items, false otherwise
+ *
+ */
+
+function member?(item,items)
+    {
+    while (items != :null)
+        {
+        if (item == car(items),return :true);
+        items = cdr(items);
+        }
+
+    :false;
+    }
+
+function allocateM(@)
+    {
+    var i = 0;
+    var mat;
+
+    if(head(@) != :null)
+        {
+        mat = allocate(head(@));
+        }
+    if(tail(@) != :null)
+        {
+        while(i < length(mat))
+            {
+            mat[i] = apply(allocateM,tail(@));
+            i = i + 1;
+            }
+        }
+
+    return mat;
+    }
+
+function ++($i) {$i = force($i) + 1;}
+function --($i) {$i = force($i) - 1;}
+
+function summation(f,xs,tot)
+    {
+    while(xs != :null)
+        {
+        tot += f(head(xs));
+        xs = tail(xs);
+        }
+    tot;
+    }
+
+function basicsFunctions()
+    {
+    print("
+functions
+---------
+
+member?(x,y)     returns true if x in list/array y, false otherwise
+shadowed(:x)     returns value of the shadowed variable :x or :null
+++(x)            increment x
+--(x)            de
+x
+
+loops
+-----
+
+while            with break(), break(value), continue(), and continue(value)
+until            like while but loop continues until condition is true
+do-while         like while, but body exectued at least once
+do-until         like until, but body executed at least once
+for              like C for loop, but commas separate, not semicolons
+for-each         as in: for-each(i,items) { inspect(i); }
+
+constructs
+----------
+
+        switch (item)
+            {
+            case(0) { println(\"zero\"); }
+            case(1) { println(\"one\");  }
+            case(2) { println(\"two\");  }
+            else    { printlb(\"big\");  }
+            }
+        var error;
+
+
+
+construct...
+
+        try (error)
+            {
+            r = a / b;
+            }
+        else if (error . type == :divideByZero)
+            {
+            r = 0;
+            }
+        else
+            {
+            throw(error);
+            }
+
+------------------------------------------------------------------
+");
+
+    :ok;
+    }
+sway();

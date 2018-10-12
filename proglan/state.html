@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>state</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on State
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="state.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ Changing the state of a variable
+
+<br/>
+</h2><!-- section ENDED -->
+
+Up until now, we have had no need to change the state of a variable. To
+give a variable a value, we used the <i>define</i> special form. However,
+for all we know, <i>define</i> just gives a name, or alias, to a value.
+For computing mathematical functions, <i>define</i> is sufficient. However,
+many real world problems require modeling the state of an object and simulating
+how that state changes over time. While it is possible to perform such
+modeling and simulation without state, the task becomes much easier if
+we are allowed to modify the value of a variable.
+<br/>
+<br/>
+Scheme allows us to change the state of a variable with the <i>set!</i>
+special form. For example:
+<br/>
+
+<pre>
+    (define balance 100)
+    (set! balance (- balance 10))
+</pre>
+
+causes <i>balance</i> to have a value of 90. Of course, we could have just
+redefined <i>balance</i>
+<br/>
+
+<pre>
+    (define balance 100)
+    (define balance (- balance 100))
+</pre>
+
+but if we desire to modify the value of <i>balance</i> with a procedure,
+such a strategy cannot work. Here is a function which modifies <i>balance</i>:
+<br/>
+
+<pre>
+    (define (decrement amt)
+        (set! balance (- balance amt))
+        balance
+        )
+</pre>
+
+Given an initial value of 100 for <i>balance</i>, the expression
+<br/>
+
+<pre>
+    (decrement 10)
+</pre>
+
+returns a value of 90, while a subsequent call:
+<br/>
+
+<pre>
+    (decrement 10)
+</pre>
+
+returns a value of 80.
+<br/>
+<br/>
+We can also modify local variables. Here is a message passing version
+of a bank account which stores the initial value as a local variable. In
+the example, a message-passing paradigm is used; the bank account object
+is a function which dispatches a message.
+<br/>
+
+<pre>
+    (define (newAccount balance)
+        (define (account msg . args)
+            (cond
+                ((eq? msg &#39;withdraw)
+                    (set! balance (- balance (car args)))
+                    balance)
+                ((eq? msg &#39;deposit)
+                    (set! balance (+ balance (car args)))
+                    balance)
+                ((eq? msg &#39;balance)
+                    balance)
+                (else
+                    (error &quot;bad message: &quot; msg))
+                )
+            )
+        account
+        )
+</pre>
+
+Because <i>balance</i> is free with respect to the returned lambda, <i>balance</i>
+retains its identity throughout the existence of the lambda. Let's use
+<i>newAccount</i> to create and manipulate a bank account.
+<br/>
+
+<pre>
+    (define myAccount (newAccount 100)) ;create a new account
+    (myAccount &#39;withdraw 10)            ;should evaluate to 90
+    (myAccount &#39;deposit 30)             ;should evaluate to 120
+    (myAccount &#39;balance)                ;should evaluate to 120
+</pre>
+
+Since <i>balance</i> is local, we can create as many different accounts
+as we wish and not one account will interfere with the others.
+<br/>
+<!-- section -->
+<h2>
+ Using objects as a repository for state
+<br/>
+</h2><!-- section ENDED -->
+
+We could also use Scam's object system to create a bank account:
+<br/>
+
+<pre>
+    (define (newAccount balance)
+        (define (withdraw amt)
+            (set! balance (- balance amt))
+            balance
+            )
+        (define (deposit amt)
+            (set! balance (+ balance amt))
+            balance
+            )
+        (define (balance)
+            balance
+            )
+        this
+        )
+</pre>
+
+The interaction analogous to the message-passing version of a bank account
+is:
+<br/>
+
+<pre>
+    (define myAccount (newAccount 100)) ;create a new account
+    ((myAccount&#39;withdraw) 10)           ;should evaluate to 90
+    ((myAccount &#39;deposit) 30)           ;should evaluate to 120
+    ((myAccount &#39;balance))              ;should evaluate to 120
+</pre>
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

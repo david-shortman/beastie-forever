@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: songlibQuickStart.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Thu Jan 22 09:36:18 2015 -->
+<head>
+<title>songlib: quickstart</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: quickstart<br /></h1>
+<h2 class="maketitle">Song Li Buser</h2>
+<h3 class="maketitle">Revision Date: January 22, 2015</h3>
+</p>
+
+<h3><a name="id1"><a href="songlibQuickStart.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Making your first song</a></h1><p>
+This page assumes you have properly
+installed <i><b>songlib</b></i>and the initial samples. 
+If you haven't yet,
+please follow the directions in <a href="install.html">install</a>.
+</p>
+<p>The easiest way to write a <i><b>songlib</b></i>program is to
+base it upon an existing program. Here is
+a working program that you can compile and,
+in the future, modify.
+These files are found in the quikstart directory
+but are repeated here:
+</p>
+<p>Name this file <i>quickstart.c</i>:
+</p>
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdarg.h&gt;
+#include &lt;songlib/util.h&gt;
+#include &lt;songlib/songlib.h&gt;
+
+#define dir "/usr/local/share/samples/mandolin/"
+#define base "sample_"
+
+/* change PROGRAM_NAME and PROGRAM_VERSION appropriately */
+
+char *PROGRAM_NAME = "quickstart";
+char *PROGRAM_VERSION = "0.01";
+
+static int last = 0;
+
+static void
+verse(int instrument,int octave)
+    {
+    startMeasure();
+
+    //line 1
+
+    chord(H,instrument,octave+1,C,-5,-12,(int) 0);
+    chord(Q,instrument,octave+1,C,2,-5,-12,(int) 0);
+    chord(Q,instrument,octave,C,7,14,(int) 0);
+
+    chord(Q,instrument,octave+1,E,-9,-16,(int) 0);
+    chord(H,instrument,octave,D,5,18,(int) 0);
+    chord(Q,instrument,octave+1,F,-8,-15,(int) 0);
+
+    chord(Q,instrument,octave+1,F,-8,-15,(int) 0);
+    chord(H,instrument,octave,D,7,18,(int) 0);
+    chord(Q,instrument,octave+1,F,-8,-15,(int) 0);
+
+    chord(Q,instrument,octave+1,E,-9,-16,(int) 0);
+    chord(Q,instrument,octave,D,5,-2,(int) 0);
+    chord(H,instrument,octave+1,C,-5,-12,(int) 0);
+
+    //line 2
+
+    play(Q,instrument,octave,C);
+    min(H,instrument,octave,G);
+    play(H,instrument,octave,G);
+    play(Q,instrument,octave,A);
+    play(Q,instrument,octave,G);
+    play(Q,instrument,octave,F);
+
+    play(Hd,instrument,octave,G);
+    chord(Q,instrument,octave+1,E,-9,-16,(int) 0);
+
+    chord(Q,instrument,octave,C,7,16,(int) 0);
+    chord(Q,instrument,octave+1,E,-9,-16,(int) 0);
+    chord(Q,instrument,octave,D,-2,(int) 0);
+    chord(Q,instrument,octave,C,7,12,(int) 0);
+
+    chord(H,instrument,octave+1,C,-8,-12,(int) 0); //first half of next measure
+
+    //line 3
+
+    play(H,instrument,octave,C); //last half of measure
+
+    play(Q,instrument,octave,G);
+    play(Q,instrument,octave,F);
+    play(H,instrument,octave,E);
+
+    play(H,instrument,octave,F);
+    chord(H,instrument,octave,G,-7,(int) 0);
+
+    chord(H,instrument,octave,D,7,(int) 0);
+    chord(Hd,instrument,octave,D,-3,(int) 0); //first quarter of next measure
+
+    //line 4
+
+    play(Q,instrument,octave,C); //last 3/4 of measure
+    play(Q,instrument,octave,C);
+    play(Q,instrument,octave,D);
+
+    play(Q,instrument,octave,E);
+    play(Q,instrument,octave,F);
+    play(Q,instrument,octave,E);
+    play(Q,instrument,octave,D);
+
+    play(Q,instrument,octave,C);
+    play(Q,instrument,1,A);
+    chord(H,instrument,octave,F,-3,-7,(int) 0);
+
+    chord(Q,instrument,octave,F,-3,-7,(int) 0);
+
+    if (last) setSustain(0.999999);
+
+    chord(Hd,instrument,octave,C,4,7,IX);
+
+    checkMeasure();
+    }
+
+int
+main()
+    {
+    int instrument;
+    int octave = 2;
+
+    songInit();
+
+    instrument = readScale(dir,base);
+
+    setTempo(250);
+    setTime(4,4);
+    setStride(0.05);
+    setSustain(0.99995);
+    setAmplitude(0.4);
+
+    openOutput("quickstart.rra",0,0);
+
+    verse(instrument,octave);
+    last = 1;
+    verse(instrument,octave);
+
+    closeOutput();
+
+    return 0;
+    }
+</pre>
+<p>Next, add a file named <i>makefile</i> to your working directory with the
+following content:
+</p>
+<pre>
+INCLUDE=/usr/local/include/songlib/
+LIB=/usr/local/lib/
+
+# Place the names of all your tracks here (as RRA filenames)
+
+RRAS = quickstart.rra
+
+all : $(RRAS)
+
+# comment out the rplay line if you don't want automatic playing
+
+%.rra   : %.x
+        ./$&lt;
+
+%.x     : %.c
+		gcc -Wall -g -o $@ -I$(INCLUDE) $&lt; -L$(LIB) -lsong -lm 
+
+play    : $(RRAS)
+        rrafastmixer -a0.5 $(RRAS) | rplay
+
+.PHONY : clean
+
+clean :
+        -rm -f $(RRAS)
+</pre>
+<p><b>IMPORTANT</b>:
+Make sure all indented lines in your makefile begin with a tab character
+and not spaces.
+</p>
+<p>Finally, type:
+</p>
+<pre>
+    make
+</pre>
+<p>and a <i><b>songlib</b></i>&#32;program should be built and run, resulting
+in an RRA audio file named:
+</p>
+<pre>
+    quickstart.rra
+</pre>
+<p>The RRA can be played with this command:
+</p>
+<pre>
+    rplay quickstart.rra
+</pre>
+<p>or this command:
+</p>
+<pre>
+    make play
+</pre>
+<p>The latter plays the audio file at a reduced volume.
+</p>
+
+<h1><a name="id3">Decomposing quickstart.c</a></h1><p>
+For this discussion, focus your attention on the <i>main</i> function of
+the <i>quickstart.c</i> file.
+</p>
+
+<h2><a name="id4">Initializing <i><b>songlib</b></i></a></h2><p>
+The <i>songInit</i> function readies the <i><b>songlib</b></i>&#32;system for audio production.
+It must be the first <i><b>songlib</b></i>&#32;library function called and
+is required.
+</p>
+
+<h2><a name="id5">Reading instrument notes</a></h2><p>
+The <i>readScale</i> function is used to read in a set of notes
+in a given directory.
+For example, the call:
+</p>
+<pre>
+    readScale("./","bright_");
+</pre>
+<p>would read in all the RRA files with prefix <i>bright&#95;</i> in the
+current directory. These RRA files are then attached to the instrument
+number that <i>readScale</i> returns.
+For more information on the naming of <i>RRA</i> files that can be
+read in with <i>readScale</i>,
+see <a href="install.html">installing samples</a>.
+For more information on <i>readScale</i> and other methods for reading 
+in RRA files, 
+see <a href="readingSamples.html">reading samples</a>.
+</p>
+
+<h2><a name="id6">Setting parameters</a></h2><p>
+Various settings of <i><b>songlib</b></i>&#32;are controlled with function such as:
+</p>
+<pre>
+    setTempo(250);
+    setTime(4,4);
+    setStride(0.05);
+    setSustain(0.99995);
+    setAmplitude(0.4);
+</pre>
+<p>For more information on these and other similar functions,
+see <a href="controlFunctions.html">controlling output</a>
+and <a href="keepingTime.html">keeping time</a>.
+</p>
+
+<h2><a name="id7">Designating the output</a></h2><p>
+<i><b>Songlib</b></i>&#32;is capable of working with multiple sample rates and sample
+sizes. Unless told otherwise, <i><b>songlib</b></i>, however, assumes a sample rate
+of 44100 samples per second and a sample size of 16 bits per sample.
+One changes the sample rate and size globally with the <i>openOutput</i>
+function. This ensures the output file will be written with the
+given sample rate and size. As a side effect, if <i><b>songlib</b></i>&#32;cannot
+figure out the sample rate and size for a particular operation,
+these given values will be used.
+</p>
+<p>If the call to <i>openOutput</i> is passed zeroes for the sample rate and
+size, as in:
+</p>
+<pre>
+    openOutput("track.rra",0,0);
+</pre>
+<p>then the default values of 44100 samples per second and 16 bits per
+sample are used. To set the output rra to 96000 samples per second
+and 32 bits per sample, for example, the call would be:
+</p>
+<pre>
+    openOutput("track.rra",96000,32);
+</pre>
+
+<h2><a name="id8">Playing notes</a></h2><p>
+Between the calls to <i>openOutput</i> and <i>closeOutput</i>,
+one makes calls to
+the various note playing functions in <i><b>songlib</b></i>. The example program
+seen previously makes a number of these calls, primarily to <i>play</i> and
+<i>chord</i>. For more information on these note playing functions,
+see 
+<a href="notePlaying.html">note playing</a>.
+</p>
+
+<h2><a name="id9">Writing the audio file</a></h2><p>
+The last <i><b>songlib</b></i>&#32;function to be called is <i>closeOuput</i>. This function
+does the actual writing of the RRA file specified in the call to
+<i>openOutput</i>. This function is required.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

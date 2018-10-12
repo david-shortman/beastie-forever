@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>heaps</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Elementary Data Structures and Algorithms
+<br/>
+<br/>
+<span class="bigger">Binary Heaps</span>
+<br/>
+
+<span class="smaller"><span class="smaller">
+<a href="all-heaps.pdf">Printable Version</a>
+</span></span>
+<br/>
+<br/>
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+If the heap is stored in an array, it is stored
+in the standard way.
+<br/>
+Arrays use zero-based indexing, unless otherwise indicated.
+<br/>
+Assume integer division.
+
+<br/>
+<!-- section -->
+<h2> <b>Concept:</b> <b>heap shapes</b>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ In a heap, the upper bound on the number of leaves is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ In a heap, the distance from the root to the furthest leaf is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ In a heap, let <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi>d</mi>		<mi>f</mi>	</msub></mrow></math> be the distance of the furthest leaf from the root
+and let <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi>d</mi>		<mi>c</mi>	</msub></mrow></math> be the analogous distance of the closest leaf. What is
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi>d</mi>		<mi>f</mi>	</msub>	<mo>-</mo>	<msub>		<mi>d</mi>		<mi>c</mi>	</msub></mrow></math>, at most?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>1
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ What is the most number of nodes in a heap
+with a single child?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ What is the fewest number of nodes in a heap
+with a single child?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> one per level
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>1
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ <b>T</b> or <b>F</b>:
+There can be two or more nodes in a heap with exactly one child.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ <b>T</b> or <b>F</b>:
+A heap can have no nodes with exactly one child.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ <b>T</b> or <b>F</b>:
+All heaps are perfect trees.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ <b>T</b> or <b>F</b>:
+No heaps are perfect trees.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ <b>T</b> or <b>F</b>:
+All heaps are complete trees.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ <b>T</b> or <b>F</b>:
+No heaps are complete trees.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ <b>T</b> or <b>F</b>:
+A binary tree with one node must be a heap.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ <b>T</b> or <b>F</b>:
+A binary tree with two nodes and with the root having
+the smallest value must be a min-heap.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ <b>T</b> or <b>F</b>:
+If a node in a heap is a right child and has two children,
+then its sibling must also have two children.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ <b>T</b> or <b>F</b>:
+If a node in a heap is a right child and has one child,
+then its sibling must also have one child.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <b>heap ordering</b>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ In a min-heap, what is the relationship between a parent
+and its left child?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the parent has a smaller value
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> there is no relationship between their values
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the parent has a larger value
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the parent has the same value
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ In a min-heap, what is the relationship between a left
+child and its sibling?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the right child has a larger value
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> both children cannot have the same value
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the left child has a smaller value
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>there is no relationship between their values
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ <b>T</b> or <b>F</b>:
+A binary tree with three nodes and with the root having
+the smallest value and two children must be a min heap.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ <b>T</b> or <b>F</b>:
+The largest value in a max-heap can be found
+at the root.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ <b>T</b> or <b>F</b>:
+The largest value in a min-heap can be found
+at the root.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+ <b>T</b> or <b>F</b>:
+The largest value in a min-heap can be found
+at a leaf.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <b>heaps stored in arrays</b>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+ How would this heap be stored in an array?
+
+
+<br/>
+<div class="ldraw">
+<image src="/concepts/cs/ds/heaps-img-0-0.png">
+</div>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>[2,4,5,10,11,12,13,15,21]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>[2,10,4,11,13,5,15,21,12]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>[21,11,12,10,13,2,5,4,15]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>[2,10,11,21,12,13,4,5,15]</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="23">
+<li>
+ Printing out the values in the array yield what kind of traversal of
+the heap?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>level-order
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> post-order
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> in-order
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> pre-order
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="24">
+<li>
+ Suppose the heap has <i>n</i> values. The root of the heap can be
+found at which index?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>n</i>-1
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="25">
+<li>
+ Suppose the heap has <i>n</i> values. The left child of the
+root can be found at which index?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>n</i>-1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>n</i>-2
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="26">
+<li>
+ Left children in a heap are stored at what kind of indices?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> all even but one
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> a roughly equal mix of odd and even
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> all odd but one
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>all odd
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> all even
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="27">
+<li>
+ Right children in a heap are stored at what kind of indices?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> all odd but one
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>all even
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> a roughly equal mix of odd and even
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> all odd
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> all even but one
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="28">
+<li>
+ The formula for finding the left child of a node stored at index <i>i</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn>	<mo>+</mo>	<mn>2</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn>	<mo>+</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="29">
+<li>
+ The formula for finding the right child of a node stored at index <i>i</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn>	<mo>+</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="30">
+<li>
+ The formula for finding the parent of a node stored at index <i>i</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>&sol;</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>+</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&sol;</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>-</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&sol;</mo>	<mn>2</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>+</mo>		<mn>2</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&sol;</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="31">
+<li>
+ If the array uses one-based indexing, the formula for finding
+the left child of a node stored at index <i>i</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn>	<mo>+</mo>	<mn>2</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn>	<mo>+</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="32">
+<li>
+ If the array uses one-based indexing, the formula for finding
+the right child of a node stored at index <i>i</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn>	<mo>+</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="33">
+<li>
+ If the array uses one-based indexing, the formula for finding
+the parent of a node stored at index <i>i</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>-</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&sol;</mo>	<mn>2</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>&sol;</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>+</mo>		<mn>2</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&sol;</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>+</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&sol;</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="34">
+<li>
+ Consider a trinary heap stored in
+an array.
+The formula for finding the left child of a node stored at index <i>i</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>	<mo>-</mo>	<mn>2</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>	<mo>+</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>		<mo>+</mo>		<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>		<mo>-</mo>		<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="35">
+<li>
+ Consider a trinary heap stored in
+an array.
+The formula for finding the middle child of a node stored at index <i>i</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>		<mn>3</mn>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>	<mo>+</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>		<mn>3</mn>	<mo>+</mo>	<mn>2</mn>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>	<mo>-</mo>	<mn>2</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>	<mo>+</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="36">
+<li>
+ Consider a trinary heap stored in
+an array.
+The formula for finding the right child of a node stored at index <i>i</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>	<mo>+</mo>		<mn>1</mn>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>	<mo>-</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn>	<mo>+</mo>		<mn>3</mn>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>*</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="37">
+<li>
+ Consider a trinary heap stored in
+an array.
+The formula for finding the parent of a node stored at index <i>i</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>&sol;</mo>	<mn>3</mn>	<mo>+</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>&sol;</mo>	<mn>3</mn>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>+</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&sol;</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>-</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&sol;</mo>	<mn>3</mn>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>-</mo>		<mn>2</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&sol;</mo>	<mn>3</mn>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>+</mo>		<mn>2</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&sol;</mo>	<mn>3</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>heap operations</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="38">
+<li>
+ In a max-heap with no knowledge of
+the minimum value, the minimum value can be found
+in time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="39">
+<li>
+ Suppose a min-heap with <i>n</i> values is stored in an array <i>a</i>. In the
+<i>extractMin</i> operation, which element immediatelyreplaces the root element
+(prior to this new root being sifted down).
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>a[n-1]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the minimum of 
+<code>a[1]</code> and 
+<code>a[2]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>a[2]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>a[1]</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="40">
+<li>
+ The <i>findMin</i> operation in a min-heap takes how much time?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="41">
+<li>
+ The <i>extractMin</i> operation in a min-heap takes how much time?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="42">
+<li>
+ Merging two heaps of size <i>n</i> and <i>m</i>, <i>m</i> < <i>n</i> takes
+how much time?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>log</mi>		<mi>n</mi>		<mo>+</mo>		<mi>log</mi>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo>*</mo>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>log</mi>		<mi>n</mi>		<mo>*</mo>		<mi>log</mi>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo>+</mo>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>m</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="43">
+<li>
+ The <i>insert</i> operation takes how much time?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="44">
+<li>
+ Turning an unordered array into a heap takes how much time?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="45">
+<li>
+ Suppose the
+values 21, 15, 14, 10, 8, 5, and 2
+are inserted, one after the other, into an empty <i>min</i>-heap. What does
+the resulting heap look like?
+Heap properties are maintained after every insertion.
+
+
+<br/>
+<div class="ldraw">
+<image src="/concepts/cs/ds/heaps-img-1-0.png">
+</div>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>y</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>w</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>z</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="46">
+<li>
+ Using the standard <i>buildHeap</i> operation to turn an unordered array
+into a <i>max</i>-heap, how many parent-child swaps are made if the
+initial unordered array
+is 
+<code>[5,21,8,15,25,3,9]</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 7
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 6
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Help debugging my neighbors array - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=150">Help debugging my neighbors array</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 1 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=7</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Help debugging my neighbors array (<em>/showthread.php?tid=150</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>Help debugging my neighbors array</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=105">cmtudor</a> -  <strong>10-10-2018</strong>
+<br />
+<br />
+Hi, could anyone help debug why the count of my neighbors array (the number of neighbors for any particular cell) is not being updated, even when it seemingly is?<br />
+<br />
+A picture of what my debugger output looks like is attached. You can see in my helper function "setCELLNeighbors" that each cell is being read into the function and has the correct number of neighbors (testing with a 3x3 matrix--I went through by hand and verified that each cell should have the number of neighbors that my program is outputting). However, when I want to find an eligible neighbor to remove its wall, my findNeighbor function is claiming that the CELL argument has a neighbor count of 0... the first cell to be passed to the findNeighbor function is the cell at (0, 0)-- which, in my setCELLNeighbors function, ostensibly has the correct number of neighbors (2). Any idea why this might be happening and where I should look to solve it?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

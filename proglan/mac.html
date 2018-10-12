@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>mac</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Installing the Submit System on a Mac
+<br/>
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+
+
+In your terminal window, run the following commands:
+<br/>
+
+<pre>
+    cd
+    curl -O beastie.cs.ua.edu/submit
+    curl -O beastie.cs.ua.edu/set.email
+    chmod +x set.email
+    chmod +x submit
+    mkdir bin
+    mv submit bin/
+</pre>
+
+In the 
+<code>-O</code>, that's a capital Oh, not a zero.
+Now run these commands PRECISELY as written:
+<br/>
+
+<pre>
+    curl -O beastie.cs.ua.edu/extra
+    cat extra &gt;&gt; .bashrc
+</pre>
+
+Make sure you use two greater-than symbols, not one.
+Now you need to set your email address by running the command
+(replacing your-crimson-email-name appropriately):
+<br/>
+
+<pre>
+    ./set.email your-crimson-email-name@crimson.ua.edu
+</pre>
+
+Now run one more command:
+<br/>
+
+<pre>
+    cat .bashrc &gt;&gt; .bash_profile
+</pre>
+
+Now close your terminal window and open up a new one. You should
+be good to go.
+</body>
+</html>

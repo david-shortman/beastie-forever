@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Same pointer at multiple indices</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Same pointer at multiple indices</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=56">Same pointer at multiple indices</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=56">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=7">andrasveto</a></h2></div><div class="dateline">09-10-2018, 05:47 PM</div>
+</div>
+<div class="message"><div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>INTEGER *insert = newINTEGER(1);<br />
+insertDA(first, 0, insert);<br />
+insertDA(second, 0, insert);<br />
+unionDA(first, second);<br />
+freeDA(first);</code></div></div><br />
+In the above code, both DA first and DA second have one element pointing to insert. When they are unioned, first has two elements which are both pointers to the same value. If our free function simply goes through and frees all values, the program will throw an exception once it gets to freeing first[1] because insert was already freed when first[0] was freed.<br />
+<br />
+Is this a valid situation that our code should be able to handle, or can we assume that all pointers in a DA that would need to be freed are unique?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">09-10-2018, 06:27 PM</div>
+</div>
+<div class="message">The latter. You do not need to handle situations like you describe. It would make the linear amortized run time into omega(n) if you were to handle that. It is up to the user to not to call union in situations like this,<br />
+<br />
+If one were to write a manual for the DA (and CDA) library, this would be an important example of something not to do.</div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Same pointer at multiple indices</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

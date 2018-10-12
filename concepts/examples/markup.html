@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>markup</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Quick Quiz Wiki Markup
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+Introduction
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+At its simplest,
+a quiz starts with a title and is followed by any number of questions.
+Each question is followed by any number of answers. Here is a simple quiz:
+<br/>
+
+<pre>
+    ~~
+    CS100 Quiz: Do you like me?
+
+    ?? Do you like your introductory CS class?
+        &amp;&amp;^ yes
+        &amp;&amp;  no, but it&#39;s not the classs, it&#39;s me
+        &amp;&amp;  maybe so
+        &amp;&amp;  wut? I&#39;m in a CS class?
+</pre>
+
+The 
+<code>~~</code> (two tildes) at the beginning of the first line signifies a title.
+All quizzes must start with a title.
+The 
+<code>??</code> (question marks) at the beginning of
+the third line signifies the start of a question.
+The subsequent lines starting with 
+<code>&amp;&amp;</code>
+(ampersands) signify possible answers to the previous question.
+This quiz might render as:
+<br/>
+<center>
+&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;</center>
+
+<br/>
+<center>
+
+CS100 Quiz: Do you like me?
+</center>
+
+<br/>
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Do you like your introductory CS class?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> maybe so
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> no, but it's not the classs, it's me
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> wut? I'm in a CS class?
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+
+<center>
+&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;</center>
+
+<br/>
+ Note that the answers have been randomized.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+Structure tags
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Tags are used to structure the parts of the quiz. Structural tags must
+be at the beginning of a line, not counting whitespace. For example,
+the tag ?? marks the beginning of a question. The text that follows the
+question marks is
+considered part of the question until some other structural tag is encountered.
+<br/>
+<br/>
+Here is a table of the character tags and their meanings when they
+begin a line:
+<br/>
+<span class="indent">
+<table>
+<tr>
+<td style="text-align:left";> <i>tag</i> </td><td style="text-align:left";> <i>meaning</i> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>~~</code> </td><td style="text-align:left";> title </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>%%</code> </td><td style="text-align:left";> section heading </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>**</code> </td><td style="text-align:left";> add some notes before a question or section </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>??</code> </td><td style="text-align:left";> start a question </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&amp;&amp;</code> </td><td style="text-align:left";> start an answer </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&amp;&amp;^</code> </td><td style="text-align:left";> start a correct answer </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>{{</code> </td><td style="text-align:left";> a sequence of related questions, one will be randomly selected </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>{{3</code> </td><td style="text-align:left";> like 
+<code>{{</code> but three questions will be randomly selected, for example </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>}}</code> </td><td style="text-align:left";> end of a sequence of related questions </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>::</code> </td><td style="text-align:left";> include a file (like 
+<code>::more.stuff</code>) </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>^^</code> </td><td style="text-align:left";> generic end tag </td>
+</tr>
+</table>
+
+
+</span>
+
+<br/>
+In addition to signifying the start of a structure, a structure tag also
+signifies the end of the previous structure. The generic end tag is
+used when you wish to end a structure, such as a question, before the
+next structural tag is encountered.
+<br/>
+<br/>
+Structure tags must begin
+a line; otherwise they are interpreted as text or formatting tags.
+To supress interpretation of a structure tag,
+escape the tag with a backslash
+For example, to start a line with what looks
+like a title tag, but not have it interpreted as a title tag,
+you would do something like this:
+<br/>
+
+<pre>
+    ?? Does
+    \??
+    start a question?
+        &amp;&amp; yes
+        &amp;&amp; no
+        &amp;&amp; maybe so
+</pre>
+
+This question would render as:
+<br/>
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Does
+??
+start a question?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> maybe so
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> no
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+Quick Quiz Grammar
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+A quiz takes three forms. The first we have seen, a title followed
+by one or more questions. Another form is a title followed by a
+one or more sections. Each section starts with a section header,
+as in:
+<br/>
+
+<pre>
+    ~~ Title
+
+    %% Section header 1
+
+    ?? Question 1
+
+    ?? Question 2
+
+    %% Section header 2
+
+    ?? Question 3
+
+    ?? Question 4
+</pre>
+
+Section headers appear in the HTML renderings of the quiz, but are removed
+from the PDF versions (which are intended to be assessment vehicles).
+The final form of a quiz is simply some marked up text, with no questions:
+<br/>
+
+<pre>
+    **
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tincidunt
+    turpis et quam ornare vestibulum. Proin et dolor sem. Integer metus
+    metus, bibendum vel iaculis a, pulvinar at dolor. Sed nulla lacus,
+    faucibus ut dolor et, auctor sollicitudin tortor.
+ 
+    Mauris mi nulla, lobortis fringilla cursus sit amet, volutpat sit amet
+    enim. Proin a lorem non tellus molestie vehicula et sed purus. Aenean
+    rutrum imperdiet viverra. Sed pharetra neque lectus, a sodales magna
+    hendrerit sit amet.
+</pre>
+
+You can also intersperse notes and questions. Notes appear in both the
+HTML and PDF renderings.
+<br/>
+
+<pre>
+    ~~ Title
+
+    %% Section header 1
+
+    ** Notes for this section
+
+    ?? Question 1
+
+    ?? Question 2
+
+    %% Section header 2
+
+    ** Notes for question 3
+
+    ?? Question 3
+
+    ** Notes for question 4
+
+    ?? Question 4
+</pre>
+
+Any where a question can go, you can place a sequence of questions
+from which some number of them will be randomly selected. For example:
+<br/>
+
+<pre>
+     {{2
+     ?? Question A
+
+     ?? Question B
+
+     ?? Question C
+     }}
+</pre>
+
+that two of the three questions would be selected when rendered as
+a PDF assessment tool. If the number following the opening braces
+is omitted, one questions will be randomly selected.
+<br/>
+You can include marked-up text from another file with the double colon
+structure tag. Here are some examples:
+<br/>
+
+<pre>
+    ::base.q                      !! base.q should be in the current directory
+    ::../intro.q                  !! intro.q should be in the parent directory
+    ::/home/me/concepts/header.q  !! header.q should be in the specified directory
+</pre>
+
+Note that an exclamation mark, except in verbatim sections is the comment
+character for the system.
+There should be no spaces between the :: and the start of the filename
+or path.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+Blank Lines
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Blank lines within a structure are (mostly) honored.
+The first blank in the mark up line causes a line feed. Two blank lines
+in
+a row is rendered as a single blank line. Three blank lines in a row
+in the markup
+render as two blank lines, and so on.
+If you wish to have a large number of blank lines,
+use the vertical space command (for example, 
+<code>;;9</code> at the
+beginning of a line for nine blank lines) instead.
+Note: blank lines are ignored between structure commands. Thus:
+<br/>
+
+<pre>
+    ~~ A Good Quiz
+    ?? Do you like this question?
+</pre>
+
+renders the same as:
+<br/>
+
+<pre>
+    ~~ A Good Quiz
+    ^^
+
+
+    ?? Do you like this question?
+</pre>
+
+whereas:
+<br/>
+
+<pre>
+    ~~ A Good Quiz
+
+
+    ?? Do you like this question?
+</pre>
+
+renders a blank line between the title and the question.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+Formatting tags
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Within a structure, one can use tags to markup text for formatting purposes:
+<br/>
+<span class="indent">
+<table>
+<tr>
+<td style="text-align:left";> <i>tag</i> </td><td style="text-align:left";> <i>meaning</i> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&#39;&#39;</code> </td><td style="text-align:left";> start (and end) italics </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&#39;&#39;&#39;</code> </td><td style="text-align:left";> start (and end) bold </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&#39;&#39;&#39;&#39;&#39;</code> </td><td style="text-align:left";> start (and end) bold italics </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>@@</code> </td><td style="text-align:left";> start (and end) verbatim monospaced (typewriter) font </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>,,</code> </td><td style="text-align:left";> suppress a space </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>;;</code> </td><td style="text-align:left";> add a blank line </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>;;3</code> </td><td style="text-align:left";> add three blank lines, for example </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>$</code> </td><td style="text-align:left";> start (and end) an equation </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>*</code> </td><td style="text-align:left";> signifies an unordered list item, when at the beginning of a line </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>#</code> </td><td style="text-align:left";> signifies an ordered list item, when at the beginning of a line </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>{{</code> </td><td style="text-align:left";> start a pick-list, when not at the beginning of a line </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>}}</code> </td><td style="text-align:left";> end a pick-list, when not at the beginning of a line </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>+++</code> </td><td style="text-align:left";> start (and end) a section that is processed by a drawing program </td>
+</tr>
+</table>
+
+
+</span>
+
+<br/>
+To place a word or phrase in italics/bold/bold-italics/typewriter font,
+do something like this:
+<br/>
+
+<pre>
+    &#39;&#39;I&#39;&#39; &#39;&#39;&#39;really&#39;&#39;&#39; &#39;&#39;&#39;&#39;&#39;like&#39;&#39;&#39;&#39;&#39; @@CS@@!
+</pre>
+
+which renders as:
+<i>I</i> <b>really</b> <b><i>like</i></b> 
+<code>CS</code>!
+<br/>
+<br/>
+The text between @@ tags is verbatim, with a couple of
+exceptions discussed below.
+If you want multiple lines of verbatim text,
+such when showing some program code,
+use @@ tags; the @@ tags should appear by themselves on a line,
+with no spaces prior or after.
+Here's an example code listing:
+<br/>
+
+<pre>
+    @@
+    (define (fact n)
+        (if (= n 0) 1 (* n (fact (- n 1))))
+        )
+    @@
+</pre>
+
+This renders as:
+<br/>
+
+<pre>
+    (define (fact n)
+        (if (= n 0) 1 (* n (fact (- n 1))))
+        )
+</pre>
+
+Verbatim text is <i>mostly</i> verbatim. To embed
+@@ within a verbatim section, which would otherwise
+end the verbatim section,
+escape it with a backslash: \@@. The two <i>at</i>
+symbols will show up in the verbatim section; the backslash
+won't.
+The other exception
+is a pick list, which is discussed in a later section.
+<br/>
+<br/>
+The Wiki system attempts to honor the spacing in your marked up
+text. However, mulitple spaces in a row are ignored (just like
+HTML and LaTeX). If the system omits a single space where it
+should not, you can add the space with the 
+<code>&lt;sp/&gt;</code> tag. If
+the system emits a space where it should not, you can remove
+the space with 
+<code>,,</code> markup.
+Here's an example:
+<br/>
+
+<pre>
+    Try &#39;&#39;&#39;bold&#39;&#39;&#39;,,&#39;&#39;italics&#39;&#39;!
+</pre>
+
+which renders as: Try <b>bold</b><i>italics</i>!
+You can force multiple spaces in
+a row by using blank spaces with 
+<code>@@</code> tags or by using
+the special character 
+<code>&amp;nbsp;</code>.
+<br/>
+<br/>
+You can add blank lines manually or you can create a bunch of them
+with the double semicoln. For example, the tag 
+<code>;;13</code>, which needs
+to be on a line by itself to work, generates 13 blank lines.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+Mathematical equations
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Mathematical equations are delineated by dollar signs and use
+LaTeX notation. The system uses the <i>MathToWeb</i> package
+to convert LaTeX mathematical notation to HTML5 notation.
+Here is an example of an question using an equation:
+<br/>
+
+<pre>
+    ?? &#39;&#39;&#39;T&#39;&#39;&#39; or &#39;&#39;&#39;F&#39;&#39;&#39;: The Pythagorean Equation has the form: 
+    $a^2 = b^2 + c^2$.
+</pre>
+
+This would render as:
+<br/>
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ <b>T</b> or <b>F</b>: The Pythagorean Equation has the form:
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>a</mi>		<mn>2</mn>	</msup>	<mo>=</mo>	<msup>		<mi>b</mi>		<mn>2</mn>	</msup>	<mo>+</mo>	<msup>		<mi>c</mi>		<mn>2</mn>	</msup></mrow></math>.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+
+Basic equations should work fine, but see the note about pick lists
+as exponents in the pick list section of this document.
+If you have other problems getting an
+equation to work,
+you can find the MathToWeb users guide at:
+<a href="http://www.mathtoweb.com/cgi-bin/mathtoweb_users_guide.pl" style="font-size:10px,font-family:'Lucida Console',monospace">http://www.mathtoweb.com/cgi-bin/mathtoweb_users_guide.pl</a>
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+Lists
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+To add an unordered (itemized) list, use asterisks, ending the
+list with a double circumflex:
+<br/>
+
+<pre>
+    ?? Which emotions do you feel most often when programming?
+        * frustration
+        * jubilation
+        * ennui
+        ^^
+    Choose two.
+        &amp;&amp;  frustration and jubilation
+        &amp;&amp;  frustration and ennui
+        &amp;&amp;  jubilation and ennui
+        &amp;&amp;  I refuse to choose!
+</pre>
+
+This would render as:
+<br/>
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Which emotions do you feel most often when programming?
+
+<ul>
+
+<li>
+
+ frustration
+</li>
+
+<li>
+
+ jubilation
+</li>
+
+<li>
+
+ ennui
+</li>
+
+</ul>
+
+
+Choose two.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> frustration and ennui
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> I refuse to choose!
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> jubilation and ennui
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> frustration and jubilation
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+
+To add an ordered (enumerated) list, use sharp signs, again ending the
+list with a double circumflex:
+<br/>
+
+<pre>
+    ?? Which emotions do you feel most often when programming?
+        # frustration
+        # jubilation
+        # ennui
+        ^^
+    Choose two.
+        &amp;&amp;  &#39;&#39;i&#39;&#39; and &#39;&#39;ii&#39;&#39;
+        &amp;&amp;  &#39;&#39;i&#39;&#39; and &#39;&#39;iii&#39;&#39;
+        &amp;&amp;  &#39;&#39;ii&#39;&#39; and &#39;&#39;iii&#39;&#39;
+        &amp;&amp;  I can&#39;t choose just two!
+</pre>
+
+This would render as:
+<br/>
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ Which emotions do you feel most often when programming?
+<ol type="i">
+
+<li>
+
+ frustration
+</li>
+
+<li>
+
+ jubilation
+</li>
+
+<li>
+
+ ennui
+</li>
+
+</ol>
+
+
+Choose two.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> I can't choose just two!
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>ii</i> and <i>iii</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> and <i>iii</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> and <i>ii</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+
+Ordered lists are rendered with lower-case roman numerals.
+Note, you cannot nest lists.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+Pick lists
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+A pick list is a method to add alternatives to a question. Consider
+the question:
+<br/>
+
+<pre>
+    ?? Is {{.red.green}} your favorite color?
+</pre>
+
+Here, the question has two versions, one which asks if red is
+your favorite color and one which green is queried. A pick list
+starts with {{, followed by the separation character. In the
+example, the separation character is a period (full stop).
+The separation character can be varied; choose a character that
+does not appear in any of the alternatives.
+As a default, the example would get rendered as:
+<br/>
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Is red your favorite color?
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+
+However, there is a switch that allows the alternative to be
+expressed. You can request that alternatives be generated when
+you render the quizzes into PDFs. You will be sent, by email,
+two version of the PDF, one with alternative changes highlighted
+and one suitable to be given as an assessment.
+If the pick list occurs in a verbatim listing, the entire listing
+will be highlighted. If the pick list occurs in an equation,
+the entire equation will be highlighted.
+Pick lists also work in drawings, but the changes are not
+highlighted as of this moment.
+<br/>
+<br/>
+You can place a pick list in verbatim text and in equations. If
+you wish to place a literal {{ or }} in those regions, you must
+escape the braces, as in:
+<br/>
+
+<pre>
+     @@
+     function f(x) { while (x &gt; 0) { print x; --x; \}}
+     @@
+</pre>
+
+or
+<br/>
+
+<pre>
+    $ \frac{1}{\sqrt{2\}} $
+</pre>
+
+Of course, the latter could be safely entered as:
+<br/>
+
+<pre>
+    $ \frac{1}{\sqrt{2} } $
+</pre>
+
+Both of these render as
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mn>1</mn>		<mrow>			<msqrt>				<mn>2</mn>			</msqrt>		</mrow>	</mfrac></mrow></math>.
+Do not place any formatting markup within the pick list. To
+italicize the alternatives, for example, do this:
+<br/>
+
+<pre>
+    ?? Is &#39;&#39;{{.red.green}}&#39;&#39; your favorite color?
+</pre>
+
+not this:
+<br/>
+
+<pre>
+    ?? Is {{.&#39;&#39;red&#39;&#39;.&#39;&#39;green&#39;&#39;}} your favorite color?
+</pre>
+
+It appears <i>MathToWeb</i> has at least one
+glitch: you cannot use a pick list as an exponent. Thus:
+<br/>
+
+<pre>
+    $n^{{.2.3}}$
+</pre>
+
+fails to render as <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mn>2</mn>	</msup></mrow></math> or <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mn>3</mn>	</msup></mrow></math>.
+A work-around is to use a set of braces to enclose the pick list:
+<br/>
+
+<pre>
+    $n^{ {{.2.3}} }$
+</pre>
+
+The space after the intial open brace and before the final closing
+brace is required. This correctly renders as:
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mi>			<mn>2</mn>					</mi>	</msup></mrow></math>
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+Drawings and Images
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Here is an example use of the drawing markup:
+<br/>
+
+<pre>
+    ?? How many volts drop across the resistor?
+    +++
+        (include &quot;drawEE.scm&quot;)
+        (battery up 12 volts polarity)
+        (wire right 3)
+        (resistor down 10 kiloohms)
+        (wire left 3)
+    +++
+</pre>
+
+What happens here is that the lines between the +++ markers
+specify a Scam program
+(<a href="http://beastie.cs.ua.edu/scam">
+Scam is a Scheme-like programming
+language</a>).
+This program is run, generating a PNG (for the HTML rendering) and
+a PIC (for the LaTeX/PDF) rendering. The drawing program is
+specified with the include:
+<br/>
+
+<pre>
+    (include &quot;drawEE.scm&quot;)
+</pre>
+
+This particular drawing program
+uses a turtle graphics style of drawing; the example renders as
+<br/>
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ How many volts drop across the resistor?
+
+
+<br/>
+<div class="ldraw">
+<image src="/concepts/examples/markup-img-0-0.png">
+</div>
+
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+
+There are
+other drawing programs available, include a CS package
+(email <a href="mailto:lusth@cs.ua.edu">lusth@cs.ua.edu for details</a>).
+<br/>
+<br/>
+To include an arbitrary image, use the 
+<code>&lt;image&gt;</code> tag. For example,
+the specification:
+<br/>
+
+<pre>
+    &lt;indent&gt;
+    &lt;image&gt;qq-small.jpg&lt;/image&gt;
+    &lt;/indent&gt;
+</pre>
+
+renders as:
+<br/>
+<br/>
+<span class="indent">
+<image src="/concepts/examples/qq-small.jpg">
+
+</span>
+
+<br/>
+<br/>
+You should not place images in-line.
+Instead, set them off as a separate paragraph.
+Only .jpg and .png images are supported.
+Scaling of images is not supported at this time.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+XML-style markup
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Here is a list of XML-style markup tags understood by the system:
+<br/>
+<span class="indent">
+<table>
+<tr>
+<td style="text-align:left";> <i>tag</i> </td><td style="text-align:left";> <i>meaning</i> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;line&gt;</code> </td><td style="text-align:left";> draw a horizontal line, end with 
+<code>&lt;/line&gt;</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;center&gt;</code> </td><td style="text-align:left";> center text and images, end with 
+<code>&lt;/center&gt;</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;indent&gt;</code> </td><td style="text-align:left";> indent text and images, end with 
+<code>&lt;/indent&gt;</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;bigger&gt;</code> </td><td style="text-align:left";> use a bigger font, end with 
+<code>&lt;/bigger&gt;</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;smaller&gt;</code> </td><td style="text-align:left";> use a smaller font, end with 
+<code>&lt;/smaller&gt;</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;only&gt;</code> </td><td style="text-align:left";> conditional content, end with 
+<code>&lt;/only&gt;</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;link&gt;</code> </td><td style="text-align:left";> add a verbatim hypertext link, end with 
+<code>&lt;/link&gt;</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;url&gt;</code> </td><td style="text-align:left";> add text linked to a url, end with 
+<code>&lt;/url&gt;</code> </td>
+</tr>
+</table>
+
+
+</span>
+
+<br/>
+Here are some examples of the above tags:
+<br/>
+
+<pre>
+    &lt;line&gt;100&lt;/line&gt;
+    &lt;center&gt;I feel like I&#39;m in the middle!&lt;/center&gt;
+    &lt;indent&gt;I feel like moving in a little.&lt;/indent&gt;
+    &lt;bigger&gt;I want to be big&lt;/bigger&gt;
+    &lt;bigger&gt;&lt;bigger&gt;I want to be huge&lt;/bigger&gt;&lt;/bigger&gt;
+    &lt;smaller&gt;I want to be smaller than normal&lt;/smaller&gt;
+    &lt;smaller&gt;&lt;bigger&gt;I want to be no different&lt;/bigger&gt;&lt;/smaller&gt;
+    &lt;only latex&gt;This will appear only in the PDF&lt;/only&gt; [missing text in html and forms]
+    &lt;only latex html form&gt;This will appear everywhere&lt;/only&gt;
+    &lt;link&gt;http://beastie.cs.ua.edu/concepts&lt;/link&gt;
+    &lt;url http://beastie.cs.ua.edu/concepts&gt;Concept Inventories!&lt;/url&gt;
+</pre>
+
+These render as:
+<br/>
+&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;
+<br/>
+<center>
+I feel like I'm in the middle!</center>
+
+<br/>
+<span class="indent">I feel like moving in a little.</span>
+
+<br/>
+<span class="bigger">I want to be big</span>
+<br/>
+<span class="bigger"><span class="bigger">I want to be huge</span></span>
+<br/>
+<span class="smaller">I want to be smaller than normal</span>
+<br/>
+<span class="smaller"><span class="bigger">I want to be no different</span></span>
+<br/>
+ [missing text in html and forms]
+<br/>
+This will appear everywhere
+<br/>
+<a href="http://beastie.cs.ua.edu/concepts" style="font-size:10px,font-family:'Lucida Console',monospace">http://beastie.cs.ua.edu/concepts</a>
+<br/>
+<a href="http://beastie.cs.ua.edu/concepts">Concept Inventories!</a>
+<br/>
+<br/>
+Note that the 
+<code>&lt;indent&gt;</code> tag generates space above and below,
+so is mostly suitable for whole paragraphs and tables.
+<br/>
+<br/>
+In addition, because some symbols have special meaning to both
+HTML renderers and LaTeX, you should use these XML tags instead of
+the raw characters in non-verbatim parts of a document:
+<br/>
+<span class="indent">
+<table>
+<tr>
+<td style="text-align:left";> <i>tag</i> </td><td style="text-align:center";> <i>character</i> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;sharp/&gt;</code> </td><td style="text-align:center";> 
+<code> # </code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;dollar/&gt;</code> </td><td style="text-align:center";> 
+<code> $ </code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;underscore/&gt;</code> </td><td style="text-align:center";> 
+<code> _ </code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;percent/&gt;</code> </td><td style="text-align:center";> 
+<code> % </code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;ampersand/&gt;</code> </td><td style="text-align:center";> 
+<code> &amp; </code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;tilde/&gt;</code> </td><td style="text-align:center";> 
+<code> ~ </code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;caret/&gt;</code> </td><td style="text-align:center";> 
+<code> ^ </code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;obrace/&gt;</code> </td><td style="text-align:center";> 
+<code> { </code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;cbrace/&gt;</code> </td><td style="text-align:center";> 
+<code> } </code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;backslash/&gt;</code> </td><td style="text-align:center";> 
+<code> \ </code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;lt/&gt;</code> </td><td style="text-align:center";> 
+<code> &lt; </code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;gt/&gt;</code> </td><td style="text-align:center";> 
+<code> &lt; </code> </td>
+</tr>
+</table>
+
+
+</span>
+
+<br/>
+Within a verbatim section, you should <b>not</b> use these tags, as
+they will appear literally.
+So, do this:
+<br/>
+
+<pre>
+    @@
+    make the font bigger with &lt;bigger&gt;...&lt;/bigger&gt;
+    @@
+</pre>
+
+not this:
+<br/>
+
+<pre>
+    @@
+    make the font bigger with &lt;lt/&gt;bigger&lt;gt/&gt;...&lt;lt/&gt;/bigger&lt;gt/&gt;
+    @@
+</pre>
+
+You can use some special HTML symbols, the named ones
+and the numeric (decimal) ones.
+For example, the Euro currency symbol 
+<code>&amp;euro;</code>
+renders as  &euro;, while the symbol 
+<code>&amp;#8251;</code>
+renders as  &#8251;.
+You can find a table of decimal HTML symbols at
+<a href="http://www.tamasoft.co.jp/en/general-info/unicode-decimal.html" style="font-size:10px,font-family:'Lucida Console',monospace">http://www.tamasoft.co.jp/en/general-info/unicode-decimal.html</a>.
+The wiki system adds characters in the vein of 
+<code>&amp;Abar;</code> and 
+<code>&amp;cbar;</code>
+which render as A&#773; and c&#773;, respectively.
+Note that the bars are at the same height regardless of case.
+<br/>
+<br/>
+Not every unicode symbol can currently be rendered in
+the PDF.
+Instead, you will see a box with a
+question mark inside (or maybe a penguin).
+Please check carefully when using numeric symbols.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+Tables
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+One starts and ends a table with the 
+<code>{|</code> and 
+<code>|}</code> tags, respectively.
+Within a table, one starts and ends a row with a vertical bar, separating
+the columns with a double vertical bar. If one wishes to underline a
+particular row, the 
+<code>--</code> tag, on a line
+by itself, indicates that the previous row is to be underlined.
+Note that this type of underlining only shows
+up in the PDF. All tables are set off by a line above the table and
+a line below.
+<br/>
+<br/>
+Here is an example of a centered two column table with an
+additional header row, set off in italics, and underlined in
+the PDF:
+<br/>
+
+<pre>
+&lt;center&gt;
+{| lc
+| &#39;&#39;symbol&#39;&#39; || &#39;&#39;rendering&#39;&#39; |
+--
+| @@&amp;ndash;@@ || &amp;ndash; |
+| @@&amp;mdash;@@ || &amp;mdash; |
+|}
+&lt;/center&gt;
+</pre>
+
+The 
+<code>lc</code> after the 
+<code>{|</code> indicates how the two columns are to be
+rendered. In that token,
+an <i>l</i> indicates left justification, a <i>c</i> indicates
+centered, and an <i>r</i> indicates right justification. The position
+of the letter indicates the column to be formatted.
+So, in the
+example, the first column is to be left justified, while the second
+is to be centered. If this
+token is missing, then left justification is assumed for all columns.
+<br/>
+<br/>
+The above specification
+renders as:
+<br/>
+<center>
+
+<table>
+<tr>
+<td style="text-align:left";> <i>symbol</i> </td><td style="text-align:center";> <i>rendering</i> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&amp;ndash;</code> </td><td style="text-align:center";> &ndash; </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>&amp;mdash;</code> </td><td style="text-align:center";> &mdash; </td>
+</tr>
+</table>
+
+
+</center>
+
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

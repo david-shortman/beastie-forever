@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>2-3</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Sample Questions: SICP Section 2.3
+<br/>
+<br/>
+Symbolic Data
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Quoting
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ What is the print value of the expression 
+<code>(list &#39;1 2 3)</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(&#39;1 2 3)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>(1 2 3)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(list (quote 1) 2 3)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(list 1 2 3)</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Assuming <i>a</i> and <i>b</i> have value 2 and 3, respectively,
+what is the print value of the expression 
+<code>(list &#39;a b)</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>((quote 2) 3)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>(a 3)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(list (quote a) 3)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(list a 3)</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Assuming <i>a</i> and <i>b</i> have value 2 and 3, respectively,
+what is the print value of the expression 
+<code>&#39;(list &#39;a b)</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>(list (quote a) b)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(list a b)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(list a 3)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>((quote a) b)</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Assuming <i>a</i> and <i>b</i> have value 2 and 3, respectively,
+what is the print value of the expression 
+<code>(&#39;list a b)</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>no value, an error occurs
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(list a b)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(list 2 3)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>((quote list) 2 3)</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ Assuming <i>a</i> and <i>b</i> have value 2 and 3, respectively,
+what is the print value of the expression 
+<code>&#39;(&#39;list a b)</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> no value, an error occurs
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>((quote list) a b)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(list a b)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>((quote list) 2 3)</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Assuming <i>a</i>, <i>b</i>, and <i>c</i> have value 2, 3, and 4, respectively,
+what is the print value of the expression 
+<code>(car (list &#39;a &#39;b &#39;c))</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>list</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>a</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(quote a)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>2</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Assuming <i>a</i>, <i>b</i>, and <i>c</i> have value 2, 3, and 4, respectively,
+what is the print value of the expression 
+<code>(car &#39;(list &#39;a &#39;b &#39;c))</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(quote a)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>a</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>list</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(quote list)</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ Assuming <i>a</i>, <i>b</i>, and <i>c</i> have value 2, 3, and 4, respectively,
+what is the print value of the expression 
+<code>(cdr (list &#39;a &#39;b &#39;c))</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(a b c)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>(b c)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(2 3 4)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(3 4)</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ What does the function bound to 
+<code>=</code> do?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> performs pointer equality
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> performs assignment
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> performs structural equality
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>performs numeric equaility
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ What does the function bound to <i>eq?</i> do?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> performs structural equality
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>performs pointer equality
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> performs numeric equaility
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> performs assignment
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ What does the function bound to <i>equal?</i> do?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> performs numeric equaility
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> performs pointer equality
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>performs structural equality
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> performs assignment
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ <b>T</b> or <b>F</b>:
+
+<code>(eq? &#39;(a b) &#39;(a b))</code>
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ <b>T</b> or <b>F</b>:
+
+<code>(equal? (list &#39;a &#39;b) &#39;(a b))</code>
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ <b>T</b> or <b>F</b>:
+
+<code>(equal? (list 2 &#39;b) &#39;(2 &#39;b))</code>
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> Symbolic differentiation
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ Consider adding exponentiation to the differentiation program with 
+<code>**</code>
+as the exponentiation operator. What would be a vaild implementation
+for <i>exponentiation?</i>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (exponentiation? p) (eq? (cadr p) &#39;**))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (exponentiation? p) (cons &#39;** (deriv p)))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (exponentiation? p) (cadr p))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (exponentiation? p) (eq? (car p) &#39;**))</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ Consider adding exponentiation to the differentiation program with 
+<code>**</code>
+as the exponentiation operator. What would be a vaild implementation
+for <i>base</i>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (base p) (if (= (exponent p) 0) 1))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (base p) (if (= (exponent p) 1) (base p)))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (base p) (car p))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (base p) (cadr p))</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ Consider adding exponentiation to the differentiation program with 
+<code>**</code>
+as the exponentiation operator. What would be a vaild implementation
+for <i>exponent</i>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (exponent p) (caddr p))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (exponent p) (if (= (base p) 1) (exponent p)))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (exponent p) (car p))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (exponent p) (if (= (exponent p) 0) 1))</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ Consider adding exponentiation to the differentiation program with 
+<code>**</code>
+as the exponentiation operator.
+Which of the following cases is correct
+for the <i>make-exponentiation</i> working on an expression <i>p</i>
+that has a base of zero? Assume the exponent is non-zero.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(make-product (make-product (exponent p) (make-exponentiation (base p) (- (exponent p) 1))) (derive (base p) var))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(make-product (exponent p) (make-exponentiation (base p) (- (exponent p) 1)))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>0
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ Consider modifying the <i>make-sum</i> function of the text's
+differentiation program to handle arity of
+2 or more operands. Which of the following cases is correct
+for the <i>addend</i> selector if a sum <i>s</i> has three or more operands?
+Note: the <i>addend</i> is the right-hand-side operand.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>(apply make-sum (cddr s))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(make-sum (caddr s) (make-sum (cadddr s))))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(make-sum (car s) (cadr s)))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(caddr s)</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ Consider modifying the <i>make-sum</i> function of the text's
+differentiation program to handle arity of
+one or more operands. Which of the following cases is correct
+for the addend selector if a sum <i>s</i> has exactly two operands?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(make-sum (caddr s) (make-sum (cadddr s))))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(apply make-sum (cddr s))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(make-sum (car s) (cadr s)))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>(caddr s)</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+ Consider modifying the <i>make-sum</i> function of the text's
+differentiation program to handle arity of
+1 or more operands. Which of the following cases is correct
+for the addend selector if a sum <i>s</i> has exactly one operands?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(make-sum (cadr s) (make-sum (caddr s))))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(apply make-sum (cddr s))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(caddr s)</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> Representing sets
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+ What is the time complexity of
+<i>adjoin</i>, <i>member</i>?, <i>union</i>, and <i>intersection</i> operations on
+sets if the sets are represented as unordered lists with no duplicates?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear, linear, quadratic, quadratic
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear, linear, linear, quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant, linear, linear, linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant, linear, quadratic, quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear, linear, linear, linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant, linear, linear, quadratic
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="23">
+<li>
+ What is the time complexity of
+<i>adjoin</i>, <i>member</i>?, <i>union</i>, and <i>intersection</i> operations on
+sets if the sets are represented as unordered lists with duplicates allowed?
+Assume there will never be more than <i>n</i> duplicates per element
+where <i>n</i> is the number of (unique) elements in the set.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant, quadratic, cubic, quartic
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear, linear, quadratic, cubic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant, quadratic, quadratic, quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear, linear, quadratic, quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant, quadratic, quartic, quartic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>constant, quadratic, cubic, cubic
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="24">
+<li>
+ Define the <i>adjoin</i> operation for unordered lists, both with and without
+duplicates.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="25">
+<li>
+ What is the time complexity of
+<i>adjoin</i>, <i>member</i>?, <i>union</i>, and <i>intersection</i> operations on
+sets if the sets are represented as ordered lists? Assume
+the sets are roughly equal in size.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> log, log, quadratic, quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear, linear, linear, quadratic
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> log, log, linear, linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log, linear, linear, linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear, linear, linear, linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="26">
+<li>
+ What is the time complexity of
+<i>adjoin</i>, <i>member</i>?, <i>union</i>, and <i>intersection</i> operations on
+sets if the sets are represented as ordered arrays? Assume
+the sets are roughly equal in size.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear, log, linear, linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> log, log, quadratic, quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> log, log, linear, linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log, linear, linear, linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear, linear, linear, quadratic
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="27">
+<li>
+ What is the time complexity of
+<i>adjoin</i>, <i>member</i>?, <i>union</i>, and <i>intersection</i> operations on
+sets if the sets are represented as ordinary binary search trees? Assume
+the sets are roughly equal in size.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> log, log, quadratic, quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear, linear, linear, quadratic
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> log, linear, linear, linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear, linear, linear, linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear, linear, quadratic, quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> log, log, linear, linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> Huffman encodings
+<br/>
+</h2><!-- section ENDED -->
+
+Expect questions in the same vein as the previous set.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

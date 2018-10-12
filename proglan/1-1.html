@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>1-1</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Sample Questions: SICP Section 1.1
+<br/>
+<span class="smaller">Revision date: 22 August</span>
+<br/>
+<br/>
+The Elements of Programming
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>programming languages</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ A <i>dynamically-typed</i> language
+has the following property:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> variables are declared with a type
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> once set, variables cannot change their values
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> once declared, variables cannot change their types
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>variable types are declared without a type
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ A <i>functional</i> programming language is characterized by:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the lack of assignment (and other side effects)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the lack of static typing
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the ability to define classes
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the ability to define functions
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ The three hallmarks of an object-oriented language are:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>encapsulation, inheritance, polymorphism
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> structures, objects, and modules
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> objects, loops, and functions
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> inheritance, modules, and interpretation
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ An imperative language is characterized by:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> conditionals
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> recursion
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> functions
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>side-effects
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ <b>T</b> or <b>F</b>:
+Purely functional languages are considered side-effect free.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ <b>T</b> or <b>F</b>:
+A language can be side-effect free <i>and</i> provide for assignment.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>expressions</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Which of the following is not a primitive expression?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> an integer
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> a variable
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> a real number
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a string
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ The simplest abstraction of a primitive expression is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>a variable
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> a procedure
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> a number
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a compound expression
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ Abstractions are made in Scheme using the keyword:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>abstract</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>include</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>define</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>var</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ In Scheme, the order in which the operator and operands of an
+expression are evaluated is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> from left to right
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the operator first, the operands unspecified
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> unspecified
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the operator last, the operands unspecified
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> from right to left
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> the operator first, the operands from right to left
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 0 -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ <b>T</b> or <b>F</b>:
+A compound expression is a combination of
+primitive and/or compound expressions.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ <b>T</b> or <b>F</b>:
+With regards to Scheme, statements and expressions are equivalent.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ <b>T</b> or <b>F</b>:
+In Scheme, a compound expression must involve at least one function call.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ A <i>primitive function</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function that is 'wrapped' by another function
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>a predefined function
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> a simple one-line function
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function that performs arithmetic operations
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ <b>T</b> or <b>F</b>:
+In Scheme, <i>operators</i> are considered distinct from <i>functions</i>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ <b>T</b> or <b>F</b>:
+Scheme operators have precedence (e.g. multiplications
+are performed before additions).
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ <b>T</b> or <b>F</b>:
+Scheme operators have associativity.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ If <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>5</mn>	<mo>-</mo>	<mn>2</mn>	<mo>-</mo>	<mn>1</mn></mrow></math> is 4, then the associativity of the subtraction
+operator is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> inward associative
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> outward associative
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> left associative
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>right associative
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ Scheme uses:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> postfix notation
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>prefix notation
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> level-order notation
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> infix notation
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> prefix notation for functions, infix for expressions
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ Unlike <i>SICP</i>, the world of programming languages sometimes
+makes a distinction
+between procedures and functions. What is this distinction?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> functions generally depend on side-effects to perform their task
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the return value of a function (if any) is generally ignored
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the return value of a procedure (if any) is generally ignored
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> functions encapsulate a series of steps to take rather than compute values
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+ A variadic function is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function that contains a conditional
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>a function that can take a variable number of arguments
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function that defines local variables
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function that returns various values given the same arguments.
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>names and environments</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+ Which of the following is an example of a variable definition in Scheme?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> (= (x) 1)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>(define x 1)
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> int x = 1;
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> (def x = 1)
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="23">
+<li>
+ A Scheme <i>environment</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> an IDE written in Scheme
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the arguments to a function call
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> an IDE for programming in Scheme
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>a repository of variables and their values
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="24">
+<li>
+ <b>T</b> or <b>F</b>:
+Syntactically speaking,
+any where a primitive value can be used in Scheme, a variable can be used.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="25">
+<li>
+ <b>T</b> or <b>F</b>:
+Syntactically speaking,
+any where a variable can be used in Scheme, the primitive value can be used.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="26">
+<li>
+ <b>T</b> or <b>F</b>:
+Variable definition is a form of <i>abstraction</i>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="27">
+<li>
+ <b>T</b> or <b>F</b>:
+Abstraction allows the programmer to focus on the details of a
+computational object.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>evaluating combinations</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 0 -->
+<!-- QA -->
+<ol type="1" start="28">
+<li>
+ <b>T</b> or <b>F</b>:
+In Scheme,
+it is possible for a compound expression to be a subexpression of a compound
+expression.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="29">
+<li>
+ <b>T</b> or <b>F</b>:
+In Scheme, the symbol 
+<code>+</code> is a variable.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="30">
+<li>
+ <b>T</b> or <b>F</b>:
+In Scheme, the symbol 
+<code>+</code> can be redefined.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="31">
+<li>
+ Evaluating a variable in an expression in functional Scheme yields:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the variable value
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the variable location in the source code
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the variable location in memory
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the variable name
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="32">
+<li>
+ Evaluating a numeral in functional Scheme yields:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> a symbol
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the variable that has that value
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the corresponding number
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> you can't evaluate a numeral; it is in its simplest form
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="33">
+<li>
+ When the expression 
+<code>(+ a b)</code> is evaluated, which subexpression
+is evaluated first?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> a
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> +
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> b
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>unknown (implementation dependent)
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>compound functions</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="34">
+<li>
+ What is wrong with the following Scheme function definition?
+
+<pre>
+    (def (square x) (* x x))
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> nothing, the function is syntactally correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> there is no return statement
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the formal parameters are not in a list
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the keyword is 
+<code>define</code>, not 
+<code>def</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="35">
+<li>
+ What is wrong with the following Scheme function definition?
+
+<pre>
+    (define square (x) (* x x))
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> there is no return statement
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the keyword is 
+<code>def</code>, not 
+<code>define</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> nothing, the function is syntactally correct
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the function name should be grouped with the formal parameters
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="36">
+<li>
+ <b>T</b> or <b>F</b>: Scheme does not have explicit returns.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="37">
+<li>
+ <b>T</b> or <b>F</b>: Scheme does not have implicit returns.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="38">
+<li>
+ In Scheme, suppose one attempted to define a function named <i>return</i> which
+implicitly returns its argument:
+
+<pre>
+    (define (return x) x)
+</pre>
+
+Suppose further that the body of the
+<i>square</i> function was written as:
+
+<pre>
+    (return (* x x))
+</pre>
+
+What would happen if 
+<code>(square 3)</code> is evaluated?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> undefined, since implicit returns are not allowed
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>9 is returned
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> an infinite resursive loop, when <i>return</i> returns
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> error, you cannot redefine the keyword 
+<code>return</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>substitution models</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="39">
+<li>
+ Given the definitions of <i>square</i> as found in the text,
+how many multiplications are performed if the following expression:
+
+<pre>
+    (square (square 3))
+</pre>
+
+is evaluated using applicative order?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>2
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="40">
+<li>
+ Given the definitions of <i>square</i> as found in the text,
+how many multiplications are performed if the following expression:
+
+<pre>
+    (square (square 3))
+</pre>
+
+is evaluated using normal order?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>3
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>conditionals</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="41">
+<li>
+ <b>T</b> or <b>F</b>: <i>Cond</i> expressions must have a default case.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="42">
+<li>
+ <b>T</b> or <b>F</b>: <i>Cond</i> expressions must two or more cases.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="43">
+<li>
+ <b>T</b> or <b>F</b>:
+The default case in a <i>cond</i> expression is signaled by the symbol
+
+<code>else</code>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 0 0 -->
+<!-- QA -->
+<ol type="1" start="44">
+<li>
+ <b>T</b> or <b>F</b>:
+<i>Cond</i> expressions exhibit short-circuiting
+(i.e., a subsequent case predicate
+is only evaluated if the previous predicates are false).
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="45">
+<li>
+ <b>T</b> or <b>F</b>:
+Scheme's <i>and</i> operator exhibits short-circuiting.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="46">
+<li>
+ <b>T</b> or <b>F</b>:
+Scheme's <i>or</i> operator exhibits short-circuiting.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="47">
+<li>
+ <b>T</b> or <b>F</b>:
+In Scheme, an operator that short-circuits must be a special form.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="48">
+<li>
+ Using DeMorgan's rules, simplify the following expression:
+
+<pre>
+    (not (or (not (and a b)) (or c (not d))))
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> (or (or (not a) (not b)) (or c (not d)))
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> (or a b c d)
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> (and (or a b) (or c d))
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>(and a b (not c) d)
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="49">
+<li>
+ <b>T</b> or <b>F</b>:
+In Scheme, a special form is introduced by a keyword.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="50">
+<li>
+ In Scheme, how would you determine programatically
+whether or not an 
+<code>and</code> expression
+is a special form?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> attempt to pass the expression to a function
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>attempt to pass 
+<code>and</code> itself to a function
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> attempt to nest two 
+<code>and</code> expressions
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> attempt to return the expression from a function
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>Local Names</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="51">
+<li>
+ Which is <i>not</i> an advantage of nesting functions:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> more freedom in naming
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> improved locality
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> reduced namespace pollution
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>both local and non-local access
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> variables in the outer function are accessible to the nested function
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="52">
+<li>
+ Consider the <i>println</i> expression in the nested function:
+
+<pre>
+    (define (f x)
+        (define (g y)
+            (println (+ x y))
+            )
+        (g (* x x))
+        )
+</pre>
+
+with an initial call of 
+<code>(f 3)</code>.
+What happens when the <i>x</i> in the println is accessed?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> a value of three is retrieved
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> a scope error occurs
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> Scheme will not allow this function to be defined
+<br/>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a value of nine is retrieved
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

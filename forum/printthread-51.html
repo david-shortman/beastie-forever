@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Insert - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=5">Insert</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Insert (<em>/showthread.php?tid=5</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>Insert</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=107">dmwever</a> -  <strong>08-23-2018</strong>
+<br />
+<br />
+So assuming I am trying to break my own code, <span style="font-style: italic;" class="mycode_i">obviously </span>one way to do it is to insertDA at a point that doesn't exist in the current array, or at a point that is separate from the rest of the code. In this case, should I<br />
+a) "autocorrect" the location to the back of the current array (or the front of the array if the array has 3 items and I send in insertDA(DA, sizeDA(DA)-5, x), which would put it at location -2)<br />
+b) place it in the specified spot, expanding the array as needed (say I have an array with the size of 8, and I send in insertDA(DA, 24, x), and expand my array twice to place it at position 24)<br />
+c) have a second assertion in my insertDA that makes sure that the array is placed within the appropriate bounds (so the previous example would have something like assert(sizeDA(DA) &gt; indexDA)) or<br />
+d) assume that no code or inputs will attempt to insertDA in a spot that is separate or non-existent.<br />
+<br />
+I am going to assume a, since there is no specifications, and I am supposed to test the limits of my program, but if b, c, or d is what is expected, or if there is a different expected solution entirely, that would be good to know.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Insert</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>08-23-2018</strong>
+<br />
+<br />
+Excellent question!<br />
+<br />
+What to do if a function receives bad input...<br />
+<br />
+a) and b) are particularly bad ideas in that you would be masking an error by the user of your library. The user must have calculated a bad index, so wouldn't it be nice if the function could inform the user of that?<br />
+<br />
+d) is the "C" approach: caveat emptor. It is up to the caller to make sure the input to a function is correct. This is what (in part) makes C so blindingly fast, no error checking.<br />
+<br />
+I would suggest c) as an approach you should take in this class. This is what I did in my solutions. Alternatives are returning an error code (zero is usually interpreted to mean zero errors) if the original function return type is void or setting a instance variable flag to indicate the computation failed, otherwise.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Insert</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=124">hashah</a> -  <strong>08-25-2018</strong>
+<br />
+<br />
+As mentioned above, the best approach is to add an assertion to make sure that user did not enter the bad index. <br />
+<br />
+So, instead of " assert(sizeDA &gt; indexDA)" ,  shouldn't it be " assert (sizeDA &gt;= indexDA)" since inserting at size is still possible by doubling the capacity?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Insert</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a> -  <strong>08-25-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (08-25-2018, 04:09 PM)</span>hashah Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=43#pid43" class="quick_jump"></a></cite>As mentioned above, the best approach is to add an assertion to make sure that user did not enter the bad index. <br />
+<br />
+So, instead of " assert(sizeDA &gt; indexDA)" ,  shouldn't it be " assert (sizeDA &gt;= indexDA)" since inserting at size is still possible by doubling the capacity?</blockquote><br />
+It should, <br />
+<blockquote class="mycode_quote"><cite>Quote:</cite>assert(index &gt;= 0 &amp;&amp; index &lt;= sizeDA);</blockquote>
+
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Insert</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=124">hashah</a> -  <strong>08-25-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (08-25-2018, 04:23 PM)</span>sbcarp Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=44#pid44" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (08-25-2018, 04:09 PM)</span>hashah Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=43#pid43" class="quick_jump"></a></cite>As mentioned above, the best approach is to add an assertion to make sure that user did not enter the bad index. <br />
+<br />
+So, instead of " assert(sizeDA &gt; indexDA)" ,  shouldn't it be " assert (sizeDA &gt;= indexDA)" since inserting at size is still possible by doubling the capacity?</blockquote><br />
+It should, <br />
+<blockquote class="mycode_quote"><cite>Quote:</cite>assert(index &gt;= 0 &amp;&amp; index &lt;= sizeDA);</blockquote></blockquote><br />
+That makes sense! :) <br />
+<br />
+Thank you!
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Insert</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=124">hashah</a> -  <strong>08-26-2018</strong>
+<br />
+<br />
+I am trying to test my insertDA function and I am still confused what could be considered the bad index?<br />
+So, <br />
+I do the following inserts while having assert like this "assert(index &gt;= 0 &amp;&amp; index &lt;= sizeDA)" :<br />
+<br />
+1.  insertDA( index = 0 , value = 999)                   ----&gt;                      arr = [999] , size = 1, capacity = 1;<br />
+<br />
+2.  insertDA ( index = 1 , value = 333) .                ----&gt;                      arr = [999,333] , size = 2 , cap = 2;<br />
+<br />
+3. insertDA (  index = 2 , value = 111) .                ----&gt;                      arr = [999,333, 111, _ ] , size = 3 , cap = 4;<br />
+<br />
+4. insertDA  (index = 3, value = 000)                     ---&gt;                 arr = [999,333,111, 000] , size = 4 , capacity = 4;<br />
+<br />
+5. insertDA  (index = 2, value = 888)                ---&gt;  arr = [ 999,333, 888, 111, 000 , _ , _, _] , size = 5 , cap = 8<br />
+<br />
+Now, If I want to insert a value at index 7 , then it is still valid index as I still have room for it in my array. Right?<br />
+But according to this assert " (index &gt;= 0 &amp;&amp; index &lt;= sizeDA)" , it would not be valid as 7 is not &lt;= size (5) ...<br />
+<br />
+So, the valid index could be " &gt;= 0 and &lt; capacity " ..???
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Insert</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a> -  <strong>08-26-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (08-26-2018, 08:19 PM)</span>hashah Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=58#pid58" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (08-25-2018, 04:36 PM)</span>hashah Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=45#pid45" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (08-25-2018, 04:23 PM)</span>sbcarp Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=44#pid44" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (08-25-2018, 04:09 PM)</span>hashah Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=43#pid43" class="quick_jump"></a></cite>As mentioned above, the best approach is to add an assertion to make sure that user did not enter the bad index. <br />
+<br />
+So, instead of " assert(sizeDA &gt; indexDA)" ,  shouldn't it be " assert (sizeDA &gt;= indexDA)" since inserting at size is still possible by doubling the capacity?</blockquote><br />
+It should, <br />
+<blockquote class="mycode_quote"><cite>Quote:</cite>assert(index &gt;= 0 &amp;&amp; index &lt;= sizeDA);</blockquote></blockquote><br />
+That makes sense! :) <br />
+<br />
+Thank you!</blockquote><br />
+I am trying to test my insertDA function and I am still confused what could be considered the bad index?<br />
+So, <br />
+I do the following inserts while having assert like this "assert(index &gt;= 0 &amp;&amp; index &lt;= sizeDA)" :<br />
+<br />
+1.  insertDA( index = 0 , value = 999)                   ----&gt;                      arr = [999] , size = 1, capacity = 1;<br />
+<br />
+2.  insertDA ( index = 1 , value = 333) .                ----&gt;                      arr = [999,333] , size = 2 , cap = 2;<br />
+<br />
+3. insertDA (  index = 2 , value = 111) .                ----&gt;                      arr = [999,333, 111, _ ] , size = 3 , cap = 4;<br />
+<br />
+4. insertDA  (index = 3, value = 000)                     ---&gt;                 arr = [999,333,111, 000] , size = 4 , capacity = 4;<br />
+<br />
+5. insertDA  (index = 2, value = 888)                ---&gt;  arr = [ 999,333, 888, 111, 000 , _ , _, _] , size = 5 , cap = 8<br />
+<br />
+Now, If I want to insert a value at index 7 , then it is still valid index as I still have room for it in my array. Right?<br />
+But according to this assert " (index &gt;= 0 &amp;&amp; index &lt;= sizeDA)" , it would not be valid as 7 is not &lt;= size (5) ...<br />
+<br />
+So, the valid index could be " &gt;= 0 and &lt; capacity " ..???</blockquote><br />
+<br />
+<blockquote class="mycode_quote"><cite>Quote:</cite>The filled portion is contiguous (literally for DA and virtually for CDA). -- Lusth</blockquote>
+[ 999,333, 888, 111, 000 , _ , 555, _] is not contiguous, I guess.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Insert</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=124">hashah</a> -  <strong>08-26-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (08-26-2018, 08:50 PM)</span> pid=\59' Wrote:</cite>I am trying to test my insertDA function and I am still confused what could be considered the bad index?<br />
+So, <br />
+I do the following inserts while having assert like this "assert(index &gt;= 0 &amp;&amp; index &lt;= sizeDA)" :<br />
+<br />
+1.  insertDA( index = 0 , value = 999)                   ----&gt;                      arr = [999] , size = 1, capacity = 1;<br />
+<br />
+2.  insertDA ( index = 1 , value = 333) .                ----&gt;                      arr = [999,333] , size = 2 , cap = 2;<br />
+<br />
+3. insertDA (  index = 2 , value = 111) .                ----&gt;                      arr = [999,333, 111, _ ] , size = 3 , cap = 4;<br />
+<br />
+4. insertDA  (index = 3, value = 000)                     ---&gt;                 arr = [999,333,111, 000] , size = 4 , capacity = 4;<br />
+<br />
+5. insertDA  (index = 2, value = 888)                ---&gt;  arr = [ 999,333, 888, 111, 000 , _ , _, _] , size = 5 , cap = 8<br />
+<br />
+Now, If I want to insert a value at index 7 , then it is still valid index as I still have room for it in my array. Right?<br />
+But according to this assert " (index &gt;= 0 &amp;&amp; index &lt;= sizeDA)" , it would not be valid as 7 is not &lt;= size (5) ...<br />
+<br />
+So, the valid index could be " &gt;= 0 and &lt; capacity " ..???</blockquote><br />
+So, it has to be index greater than 0 and  &lt;= size ?<br />
+<br />
+Right?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Insert</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a> -  <strong>08-26-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (08-26-2018, 09:05 PM)</span>hashah Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=60#pid60" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (08-26-2018, 08:50 PM)</span>sbcarp Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=59#pid59" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (08-26-2018, 08:19 PM)</span>hashah Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=58#pid58" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (08-25-2018, 04:36 PM)</span>hashah Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=45#pid45" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (08-25-2018, 04:23 PM)</span>sbcarp Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=44#pid44" class="quick_jump"></a></cite>It should, </blockquote><br />
+That makes sense! :) <br />
+<br />
+Thank you!</blockquote><br />
+I am trying to test my insertDA function and I am still confused what could be considered the bad index?<br />
+So, <br />
+I do the following inserts while having assert like this "assert(index &gt;= 0 &amp;&amp; index &lt;= sizeDA)" :<br />
+<br />
+1.  insertDA( index = 0 , value = 999)                   ----&gt;                      arr = [999] , size = 1, capacity = 1;<br />
+<br />
+2.  insertDA ( index = 1 , value = 333) .                ----&gt;                      arr = [999,333] , size = 2 , cap = 2;<br />
+<br />
+3. insertDA (  index = 2 , value = 111) .                ----&gt;                      arr = [999,333, 111, _ ] , size = 3 , cap = 4;<br />
+<br />
+4. insertDA  (index = 3, value = 000)                     ---&gt;                 arr = [999,333,111, 000] , size = 4 , capacity = 4;<br />
+<br />
+5. insertDA  (index = 2, value = 888)                ---&gt;  arr = [ 999,333, 888, 111, 000 , _ , _, _] , size = 5 , cap = 8<br />
+<br />
+Now, If I want to insert a value at index 7 , then it is still valid index as I still have room for it in my array. Right?<br />
+But according to this assert " (index &gt;= 0 &amp;&amp; index &lt;= sizeDA)" , it would not be valid as 7 is not &lt;= size (5) ...<br />
+<br />
+So, the valid index could be " &gt;= 0 and &lt; capacity " ..???</blockquote><br />
+<br />
+<blockquote class="mycode_quote"><cite>Quote:</cite>The filled portion is contiguous (literally for DA and virtually for CDA). -- Lusth</blockquote>
+[ 999,333, 888, 111, 000 , _ , 555, _] is not contiguous, I guess.</blockquote><br />
+<br />
+So, it has to be index greater than 0 and  &lt;= size ?<br />
+<br />
+Right?</blockquote><br />
+I think so, but not 100% sure.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Insert</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>08-26-2018</strong>
+<br />
+<br />
+First, edit your posts as to not have so much nesting (or just hit reply without quoting if you are replying to the last post).<br />
+<br />
+The only legal indices for inserting are from 0 to size, inclusive.<br />
+<br />
+The only legal indices for getting are from 0 to size - 1, inclusive.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

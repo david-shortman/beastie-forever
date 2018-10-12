@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>disjoint</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Analysis of Algorithms
+<br/>
+<br/>
+<span class="bigger">Disjoint Sets</span>
+<br/>
+
+<span class="smaller"><span class="smaller">
+<a href="disjoint.pdf">Printable Version</a>
+</span></span>
+<br/>
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+
+<br/>
+<!-- section -->
+<h2> <b>Concept:</b> <i>disjoint sets as linked lists</i>
+<br/>
+</h2><!-- section ENDED -->
+
+The following questions assume a linked-list implementation of a disjoint set.
+Assume each value has a pointer to
+its representative. Assume worst case behavior.
+<br/>
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ The <i>make-set</i> operation takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ The <i>find-set</i> operation takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Assuming no preference on which representative becomes
+the representative of the resulting set,
+the <i>union</i> operation takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Assuming the representative of the smaller set becomes
+the representative of the resulting set,
+the <i>union</i> operation takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ Assuming the representative of the larger set
+becomes
+the representative of the resulting set,
+the <i>union</i> operation takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Assuming no preference on which representative becomes
+the representative of the resulting set,
+the total work of a series of <i>m</i> disjoint set
+operations is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Assuming the representative of the smaller set becomes
+the representative of the resulting set,
+the total work of a series of <i>m</i> disjoint set
+operations is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ Assuming the representative of the larger set becomes
+the representative of the resulting set,
+the total work of a series of <i>m</i> disjoint set
+operations is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ Assuming the representative of the larger set becomes
+the representative of the resulting set,
+how many times can a value's representative be updated
+in a series of union operations?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ Assuming the representative of the smaller set becomes
+the representative of the resulting set,
+how many times can a value's representative be updated
+in a series of union operations?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ Assuming no preference on which representative becomes
+the representative of the resulting set,
+how many times can a value's representative be updated
+in a series of union operations?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>disjoint sets as trees</i>
+<br/>
+</h2><!-- section ENDED -->
+
+The following questions assume a tree implementation of a disjoint set.
+Assume each value has a pointer to its parent with the root of
+the tree serving as the
+representative of the set.
+Assume worst case behavior.
+<br/>
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+<b>T</b> or <b>F</b>:
+A <i>union</i> operation runs in constant time if representatives
+are passed as arguments.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+<b>T</b> or <b>F</b>:
+When the <i>union</i> operation is called, it always makes one
+of the arguments a child of the other.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+<b>T</b> or <b>F</b>:
+When the <i>find-set</i> operation is called with path compression,
+the parent pointers of all nodes in the tree are set to the root.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+<b>T</b> or <b>F</b>:
+When the <i>find-set</i> operation is called with path compression,
+the parent pointers of all nodes in the path from the node to the
+root are set to the root.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+<b>T</b> or <b>F</b>:
+When the <i>find-set</i> operation is called with path compression,
+at most one parent pointer is
+set to the root.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+How long does it take to perform <i>m</i> <i>make-set</i> operations?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>h</mi>	<mi>e</mi>	<mi>t</mi>	<mi>a</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>h</mi>	<mi>e</mi>	<mi>t</mi>	<mi>a</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mi>m</mi>			<mn>2</mn>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>h</mi>	<mi>e</mi>	<mi>t</mi>	<mi>a</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>h</mi>	<mi>e</mi>	<mi>t</mi>	<mi>a</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>m</mi>		<mi>log</mi>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+How long does it take to perform <i>m</i> <i>union</i> operations,
+assuming that representatives are passed as arguments?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>h</mi>	<mi>e</mi>	<mi>t</mi>	<mi>a</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>h</mi>	<mi>e</mi>	<mi>t</mi>	<mi>a</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>h</mi>	<mi>e</mi>	<mi>t</mi>	<mi>a</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>m</mi>		<mi>log</mi>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>h</mi>	<mi>e</mi>	<mi>t</mi>	<mi>a</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mi>m</mi>			<mn>2</mn>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+How long does it take to perform <i>m</i> <i>union</i> operations?
+Assume up-trees and union-by-rank.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>h</mi>	<mi>e</mi>	<mi>t</mi>	<mi>a</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>h</mi>	<mi>e</mi>	<mi>t</mi>	<mi>a</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mi>m</mi>			<mn>2</mn>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>h</mi>	<mi>e</mi>	<mi>t</mi>	<mi>a</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>m</mi>		<mi>log</mi>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>t</mi>	<mi>h</mi>	<mi>e</mi>	<mi>t</mi>	<mi>a</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+How many trees will there be after <i>m</i> <i>make-set</i> operations,
+starting with an empty disjoint set?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>m</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>m</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>m</mi>		<mn>2</mn>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mi>m</mi>	</msup></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+Suppose there are <i>n</i> trees of height zero in a disjoint set,
+what is the worst case height of the set if they are all unioned together?
+Do not assume union by rank.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>n</mi>		<mn>2</mn>	</mfrac></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>log</mi>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+Suppose there are <i>n</i> trees of height zero in a disjoint set,
+what is the worst case height of the set if they are all unioned together?
+Assume union by rank.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>n</mi>		<mn>2</mn>	</mfrac></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>log</mi>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="23">
+<li>
+ The <i>make-set</i> operation takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="24">
+<li>
+ The <i>find-set</i> operation (no path compression and no union by rank)
+takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="25">
+<li>
+ The <i>find-set</i> operation (with path compression but no union by rank) takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="26">
+<li>
+ The <i>find-set</i> operation (with no path compression but with union by rank) takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>logarithmic
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="27">
+<li>
+ Assuming no preference on which representative becomes
+the representative of the resulting set,
+the <i>union</i> operation takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="28">
+<li>
+ Assuming the representative whose tree has the smaller rank becomes
+the representative of the resulting set,
+the <i>union</i> operation takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="29">
+<li>
+ Assuming the representative whose tree has the larger rank becomes
+the representative of the resulting set,
+the <i>union</i> operation takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="30">
+<li>
+ Assuming no path compression and no union by rank,
+the total work of a series of <i>m</i> disjoint set
+operations is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="31">
+<li>
+ Assuming path compression but no union by rank,
+the total work of a series of <i>m</i> disjoint set
+operations is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="32">
+<li>
+ Assuming no path compression but union by rank,
+the total work of a series of <i>m</i> disjoint set
+operations is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="33">
+<li>
+ Assuming path compression and union by rank,
+the total work of a series of <i>m</i> disjoint set
+operations is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> logarithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="34">
+<li>
+ Path compression is used to speed up the average cost
+of which operation(s)?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> make-set
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>find-set
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> find-set and make-set
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> union and find-set
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> union and make-set
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 6 -->
+<!-- answer -->
+<!-- answer -->
+<li> union
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 7 -->
+<!-- answer -->
+<!-- answer -->
+<li> make-set, find-set, and union
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="35">
+<li>
+ Union by rank is used to speed up the average cost
+of which operation(s)?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> find-set
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>union
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> make-set
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> make-set, find-set, and union
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> find-set and make-set
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 6 -->
+<!-- answer -->
+<!-- answer -->
+<li> union and find-set
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 7 -->
+<!-- answer -->
+<!-- answer -->
+<li> union and make-set
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="36">
+<li>
+ <b>T</b> or <b>F</b>:
+A single find-set operation with path compression takes asymptotically longer
+than a single find-set operation without path compression, in the worst case.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="37">
+<li>
+
+Suppose there are initially <i>n</i> disjoint sets. If <i>m</i> union
+operations are performed, what is the fewest number of disjoint sets
+that remain? Assume <i>n</i> is a power of two and <i>n</i> > <i>m</i>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>m</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>-</mo>	<mi>m</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>-</mo>	<msup>		<mn>2</mn>		<mi>m</mi>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>-</mo>	<mn>2</mn>	<mi>m</mi></mrow></math>
+<br/>
+<br/>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="38">
+<li>
+ Path compression occurs in which operation?
+Assume an implementation of <i>union</i> that is always
+passed representatives, as in
+
+<code>union(find-set(a),find-set(b))</code>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>union</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>find-set</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>make-set</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="39">
+<li>
+ Union-by-rank occurs in which operation?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>union</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>find-set</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>make-set</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+
+For the following set of questions, consider the following set of operations:
+
+<pre>
+    for each i in 0..6 do make-set(i)
+    union(1,2)
+    union(3,4)
+    union(5,6)
+    union(6,2)
+    union(3,2)
+    find-set(3)
+</pre>
+
+assuming union-by-rank and <i>NO</i> path compression.
+When unioning two sets having the same rank,
+assume the root with the larger value becomes the root of the resulting set.
+<br/>
+<!-- QA -->
+<ol type="1" start="40">
+<li>
+After the 
+<code>union(6,2)</code>
+operation how many children does 6's representative have?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="41">
+<li>
+After the 
+<code>union(3,2)</code>
+operation how many children does 3's representative have?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="42">
+<li>
+After the 
+<code>find-set(3)</code>
+operation how many children does 3's representative have?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 6
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+
+Considering the previously provided list of operations on disjoint sets,
+assume there is union by rank AND path compression.
+When unioning two sets having the same rank,
+assume the root with the larger value becomes the root of the resulting set.
+<br/>
+<!-- QA -->
+<ol type="1" start="43">
+<li>
+After the 
+<code>union(6,2)</code>
+operation how many children does 6's representative have?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="44">
+<li>
+After the 
+<code>union(3,2)</code>
+operation how many children does 3's representative have?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="45">
+<li>
+After the 
+<code>find-set(3)</code>
+operation how many children does 3's representative have?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+
+For the following set of questions, consider the following set of
+operations:
+
+<pre>
+    for each i in 0..9 do make-set(i)
+    union(1,2);
+    union(3,4);
+    union(5,6);
+    union(7,8);
+    union(9,0);
+    union(4,1);
+    union(4,6);
+    union(7,9);
+    find-set(3);
+    find-set(1);
+</pre>
+
+assuming union by rank and path compression. When unioning two sets having the
+same rank, assume the root with the larger value becomes the root of the
+resulting set.
+<br/>
+<!-- QA -->
+<ol type="1" start="46">
+<li>
+ How many disjoint sets remain?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="47">
+<li>
+ How many values have a root as parent?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

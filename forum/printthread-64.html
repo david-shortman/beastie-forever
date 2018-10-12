@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Merging two heaps of size n and m, m &lt; n takes how much time? - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=39">Merging two heaps of size n and m, m &lt; n takes how much time?</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Prerequisite exam (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=2</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Merging two heaps of size n and m, m &lt; n takes how much time? (<em>/showthread.php?tid=39</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>Merging two heaps of size n and m, m &lt; n takes how much time?</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=16">IsabelHerrick</a> -  <strong>09-05-2018</strong>
+<br />
+<br />
+A. theta(n * m)<br />
+B. theta(n log m)<br />
+C. theta(log n + log m)<br />
+D. theta(n + m)<br />
+E. theta(log n * log m)<br />
+F. theta(m log n)<br />
+<br />
+I'm getting different answers depending on what sources I use. Most of them seem to say D (theta n+m) because you can simply make a new array out of the two arrays rather than merging each element individually. However building a heap has omicron n log n complexity. I'm very confused.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Merging two heaps of size n and m, m &lt; n takes how much time?</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>09-05-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-05-2018, 07:45 PM)</span>IsabelHerrick Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=198#pid198" class="quick_jump"></a></cite>A. theta(n * m)<br />
+B. theta(n log m)<br />
+C. theta(log n + log m)<br />
+D. theta(n + m)<br />
+E. theta(log n * log m)<br />
+F. theta(m log n)<br />
+<br />
+I'm getting different answers depending on what sources I use. Most of them seem to say D (theta n+m) because you can simply make a new array out of the two arrays rather than merging each element individually. However building a heap has omicron n log n complexity. I'm very confused.</blockquote><br />
+Building a heap actually has O(n) complexity (<a href="https://stackoverflow.com/questions/9755721/how-can-building-a-heap-be-on-time-complexity" target="_blank" rel="noopener" class="mycode_url">read here</a>). So the answer should just be Θ(n + m) as you could build a heap from all the elements together.<br />
+<br />
+However, this merge algorithm makes me wonder if it would be Θ(log(n)*log(k)): <a href="https://link.springer.com/article/10.1007%2FBF00264229" target="_blank" rel="noopener" class="mycode_url">https://link.springer.com/article/10.1007%2FBF00264229</a>. The question does not specify if we are using an array-based or pointer-based implementation.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Merging two heaps of size n and m, m &lt; n takes how much time?</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-06-2018</strong>
+<br />
+<br />
+The Springer reference separates data movement and comparisons. I assume that in the article, the sized-k heap is the larger. So that makes the overall amount of work theta(k).<br />
+<br />
+Making an array out of two heaps of size n and k and then building the heap takes theta(n + k) or theta(k) if k is the larger size.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

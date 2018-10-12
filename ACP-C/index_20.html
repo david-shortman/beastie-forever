@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:17 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Lists</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_19.html">
+  <img border="0" alt="Nodes" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_21.html">
+  <img border="0" alt="Lists and Loops" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Lists</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Lists</h1>
+<p>You can download the functions defined or used in this chapter with the
+following commands:
+</p>
+<pre>
+    wget troll.cs.ua.edu/ACP-C/ilist.c    //integer-valued nodes
+    wget troll.cs.ua.edu/ACP-C/ilist.h
+    wget troll.cs.ua.edu/ACP-C/rlist.c    //real-valued nodes
+    wget troll.cs.ua.edu/ACP-C/rlist.h
+    wget troll.cs.ua.edu/ACP-C/slist.c    //string-valued nodes
+    wget troll.cs.ua.edu/ACP-C/slist.h
+    wget troll.cs.ua.edu/ACP-C/olist.c    //'object'-valued nodes
+    wget troll.cs.ua.edu/ACP-C/olist.h
+    wget troll.cs.ua.edu/ACP-C/employeeList.c    //employee linked list demo
+</pre>
+<p>These files will help you run the test code listed in this chapter.
+You will also need to download the
+<i>list</i> module.
+</p>
+
+<h2><a name="id1">The List data structure</a></h2><p>
+We could stop at this point and just use nodes and their operations
+to make true lists. But just as constructors, accessors, and mutators
+free us from being concerned how nodes and records are structured,
+we can design some 
+list (sometimes called <i>linked list</i>)
+operators that free us from some of the details
+of the nodes themselves.
+If we do our design and implementation properly, a reader of
+our code will have few clues that lists are build from nodes.
+</p>
+<p>The first task is to decide what will represent an empty list.
+The null pointer will work well for this role.
+</p>
+<pre>
+    Node *
+    newEmptyList(void)
+        {
+        return 0;
+        }
+</pre>
+<p>Next, we define <i>join</i>,
+a function that 
+will be used to add a value to a list,
+returning the new list. We will use our integer-valued
+nodes from the previous chapter:
+</p>
+<pre>
+    Node *
+    join(int value,Node *items)
+        {
+        return newNode(value,items);
+        }
+</pre>
+<p>The <i>join</i> function takes a value and a list as arguments
+and returns a new node
+that glues the two arguments together. The result is a
+list one value larger than the list that is passed in.
+Note that join is non-destructive with regards to the original
+list; if we want to modify the original list, we must reassign
+the original list with the return value of <i>join</i>:
+</p>
+<pre>
+    items = join(value,items);
+</pre>
+<p>We can see from the definition of an empty list and from
+<i>join</i> that a list
+is either 0 (the null pointer) or a node.
+Two accessor functions are often defined
+for lists, <i>head</i> and <i>tail</i>. 
+The <i>head</i> function returns
+the value stored in the first
+node in the list, while the <i>tail</i> returns the chain of nodes
+that follows the first node:
+</p>
+<pre>
+    int head(Node *items) { return getNodeValue(items); }
+    Node *tail(Node *items) { return getNodeNext(items); }
+</pre>
+<p>Two mutator functions are also commonly defined:
+</p>
+<pre>
+    void setHead(Node *items,int v) { setNodeValue(items,v); }
+    void setTail(Node *items,Node *n) { setNodeNext(items,n); }
+</pre>
+<p>You may be wondering at this point why we bother to distinguish
+lists and nodes. One reason is we can improve lists by keeping
+some more information around; we will save that improvement 
+for later.
+Another reason is it is vitally important to practice the concept of
+abstraction. Modern software systems exhibit a large number of
+abstraction layers. With our lists, we can see for layers
+of abstractions: <i>variables</i>, which abstract locations in memory,
+<i>structures</i>, which abstract collections of variables,
+<i>nodes</i>, which abstract structures with two components,
+and <i>lists</i>,
+which abstracts a chain of <code>nodes</code>.
+Each level of abstraction frees us from thinking about the
+details of the underlying layers.
+We emphasize abstraction over and over, because it is so very important.
+</p>
+
+<h3><a name="id2">The <i>join</i> operator</a></h3><p>
+Let us now look at the <i>join</i> operation more closely.
+Here is
+a rewrite of <i>join</i> that uses a temporary variable, <i>n</i>, to hold
+the new node that will join the given value and list together:
+</p>
+<pre>
+    Node *
+    join(int v,Node *items)
+        {
+        Node *n = newEmptyNode();     //step 1
+        setNodeValue(n,v);            //step 2
+        setNodeNext(n,items);         //step 3
+        return n;
+        }
+
+</pre>
+<p>First, let us create an empty list to which we will join a value:
+</p>
+<pre>
+    a = newEmptyList();
+</pre>
+<p>Graphically, the situation looks like this:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list1.png"/>
+</div>
+<p>Now, we call <i>join</i> to join the value of 13 to the list <i>a</i>.
+</p>
+<pre>
+    a = join(13,a);
+</pre>
+<p>At the very start of the <i>join</i> function,
+the formal parameters <i>v</i> and <i>items</i> have been set to
+the value 13 and <i>a</i>, respectively.
+The situation looks like this:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list2.png"/>
+</div>
+<p>The variables <i>v</i> and <i>items</i>, since they are local to the function <i>join</i>,
+are shown in blue<sup><a href="index_26.html#footnote-35">35</a></sup>.
+After step 1, <code>n = newEmptyNode()</code>, we have:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list3.png"/>
+</div>
+<p>As with <i>items</i> and <i>v</i>, the variable <i>n</i> is shown in blue as
+it is a local variable.
+After step 2,
+<code>setNodeValue(v,None)</code>,
+the node <i>n</i> has its <i>value</i> set to <i>v</i>.
+the variable <i>n</i>. The situation changes to:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list4.png"/>
+</div>
+<p>After step 3,
+<code>setNodeNext(n,items)</code>,
+the <i>next</i> pointer of <i>n</i>, which is null,
+is changed to the value of items, which is
+also null. So the situation remains the same 
+as before.
+Finally, <i>n</i> is returned and the variable
+<i>a</i> is reassigned to have the value of <i>n</i>.
+The variables <i>v</i>, <i>items</i>, and
+<i>n</i> go out of scope and disappear, leaving:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list5.png"/>
+</div>
+<p>If we add a second value to the list <i>a</i>, as in:
+</p>
+<pre>
+    a = join(7,a);
+</pre>
+<p>at the start of the <i>join</i> function, we have:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list6.png"/>
+</div>
+<p>After creating node <i>n</i> (step 1) and setting its <i>value</i> pointer
+(step 2), we have:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list7.png"/>
+</div>
+<p>Setting <i>n</i>'s next pointer to <i>items</i> yields:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list8.png"/>
+</div>
+<p>At this point, we return the value of <i>n</i> and assign it to <i>a</i>:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list9.png"/>
+</div>
+<p>From this last drawing, we can see that list <i>a</i> now includes
+the value 7 at the front of the list, as intended.
+As before, at this point the variables local to <i>join</i>, 
+are no longer in scope.
+</p>
+
+<h3><a name="id3">Chaining calls to <i>join</i></a></h3><p>
+As seen in the previous section,
+the <i>join</i> function is used to build a list:
+</p>
+<pre>
+    a = 0;
+    a = join(13,a);
+    a = join(7,a);
+    a = join(42,a);
+</pre>
+<p>The above code builds the following list:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list10.png"/>
+</div>
+<p>An alternative way to build the exact same list is to chain together
+the series of calls to <i>join</i>:
+</p>
+<pre>
+    a = join(42,join(7,join(13,0)));
+</pre>
+<p>Both methods are rather tedious for larger arrays, so we will 
+make use of a list constructor that takes an array of integers and returns
+a list of those integers.
+This code:
+</p>
+<pre>
+    int numbers[] = {42,7,13};
+    Node *a = arrayToList(numbers,sizeof(numbers)/sizeof(int));
+</pre>
+<p>produces the same list.
+A first attempt at defining <i>arrayToList</i> might look like this:
+</p>
+<pre>
+    Node *
+    arrayToList(int *array,int size)
+        {
+        int i;
+        Node *items = 0; //start items as the empty list
+        for (i = 0; i &lt; size; ++i)
+            items = join(array[i],items);
+        return items;
+        }
+</pre>
+<p>Unfortunately, this produces a list whose values are found in the reverse
+order from that of the array. Why this is so is answered by the question,
+"What is the last value joined to the growing list and where did it end
+up in the list?". Obviously, the last value joined was the last value
+in the array and it ended up as the first value in the list, since
+<i>join</i> places its first argument at the head of the list.
+By a similar logic, the next-to-the-last value in the array ended
+up in the second position in the list, and so on.
+</p>
+<p>We can fix this deficiency by defining a function that creates
+a new list in the reverse order of a given
+list. The code mimics our <i>arrayToList</i> function:
+</p>
+<pre>
+    Node *
+    reverse(Node *a)
+        {
+        Node *items = 0;
+        while (a != 0)
+            {
+            items = join(head(a),items);
+            a = tail(a);
+            }
+        return items;
+        }
+</pre>
+<p>Again, the last value in the incoming list <i>a</i> is placed in the first
+position of the new list <i>items</i>.
+</p>
+<p>The <i>arrayToList</i> function becomes:
+</p>
+<pre>
+    Node *
+    arrayToList(int *array,int size)
+        {
+        int i;
+        Node *items = 0; //start items as the empty list
+        for (i = 0; i &lt; size; ++i)
+            {
+            items = join(array[i],items);
+            }
+        Node *rev = reverse(items);
+        freeList(items);
+        return rev;
+        }
+</pre>
+<p>This revised version of <i>arrayToList</i> is a bit inefficient in that the values
+to be placed in the list are traversed twice, once by accessing every
+value in 
+the array (the <i>for</i> loop) and once by accessing every value
+in 
+<i>reverse</i>'s incoming list.
+The <i>arrayToList</i> functions found in the list modules
+mentioned in the start of this chapter cleverly make a single traversal.
+See if you can figure out how they work.
+</p>
+
+<h3><a name="id4">Reading a list from a file</a></h3><p>
+Consider a file of integers that we wish to read into a list.
+As always, we use the <i>read</i> pattern:
+</p>
+<pre>
+    do the initial read
+    while (the read was good)
+        {
+        process the read
+        read again
+        }
+</pre>
+<p>Concretely, we have:
+</p>
+<pre>
+    Node *
+    readIntegers(FILE *fp)
+        {
+        int v;
+        Node *items;
+
+        items = 0;            //items points to an empty list
+        fscanf(fp,"%d",&amp;v);
+        while (!feof(fp))
+            {
+            items = join(v,items);  //update items
+            fscanf(fp,"%d",&amp;v);
+            }
+        return items;
+        }
+</pre>
+<p>Like the <i>arrayToList</i> function in the previous subsection,
+the <i>readIntegers</i> function also reverses the order of
+the integers as found in the file. If order must be maintained,
+one can reverse <i>items</i> before returning or use the same trick
+the version of <i>arrayToList</i> in the ilist module uses.
+</p>
+
+<h3><a name="id5">Displaying a list</a></h3><p>
+To display a list, we need to <i>walk</i> the list. A walk of a list
+is comprised of visiting every node in the list from front to back.
+Typically, a loop is used to implement a walk. Here is a display function
+for a list of integer-valued nodes:
+</p>
+<pre>
+    void
+    displayList(Node *items)
+        {
+        while (items != 0)
+            {
+            int v = head(items)
+            printf("{%d}",v);
+            items = tail(items); //take a step
+            }
+        printf("\n");
+        }
+</pre>
+<p>With this function in place, we can see if <i>join</i> is really working.
+Here is some code that tests both <i>join</i> and <i>display</i>:
+</p>
+<pre>
+    //test (compile with ilist.c)
+    #include "ilist.h"
+    int numbers[] = {42,7,13};
+    Node *a = arrayToList(numbers,sizeof(numbers)/sizeof(int));
+    displayList(a);
+</pre>
+<p>Running this code yields the following output, as expected:
+</p>
+<pre>
+    {42}{7}{13}
+</pre>
+
+<h2><a name="id6">Lists of other values</a></h2><p>
+We can make lists of any kind of value. The modules <i>rlist.c</i> and
+<i>slist.c</i> contain analogs to the functions in <i>ilist.c</i>, except
+they work with real numbers (<code>double</code>) and strings
+(<code>char *</code>), respectively.
+</p>
+<p>Another module, the <i>olist.c</i> module, allows for lists
+of pointers to arbitrary structures
+(or any pointers, other than function pointers).
+Consider the employee record structure from the
+<a href="index_18.html">chapter on structures</a>.
+One might read a file of employee records, storing them
+into a linked list, this way:
+</p>
+<pre>
+    #include "employee.h"
+    #include "olist.h"
+    ...
+    Node *
+    readEmployeeList(FILE *fp)
+        {
+        Node *employees = 0; //zero is the empty list
+        Employee *e = readEmployeeRecord(fp);
+        while (!feof(fp))
+            {
+            employees = join(e,Employees);
+            e = readEmployeeRecord(fp);
+            }
+        return employees;
+        }
+</pre>
+<p>A careful inspection of the <i>olist</i> module reveals that the value
+in a node has type <code>void *</code>. A variable of this type can
+store any pointer (except a function pointer) safely. However,
+once stored, the pointer loses any knowledge of the kind of
+thing to which it points (i.e. the kind of thing found at the address
+stored in the pointer). Another way to describe this loss of information
+is to say the pointer becomes <i>generic</i>.
+Once the pointer is genericized, it is up to the programmer
+to convert it back to the kind of pointer it once was.
+For example, this code fails:
+</p>
+<pre>
+    Node *emps = readEmployeeList(fp);
+    char *name = head(emps)-&gt;name;     //head(emps) is a generic pointer
+</pre>
+<p>because the code writer has not converted the generic pointer returned
+by <i>olist</i>'s <i>head</i> function into an <i>Employee</i> pointer.
+This code, on the other hand, succeeds:
+</p>
+<pre>
+    Node *emps = readEmployeeList(fp);
+    Employee *e = head(emps);  //generic pointer converted to Employee pointer
+    char *name = e-&gt;name;  
+</pre>
+<p>The latter two lines can be combined into a single line with a cast:
+</p>
+<pre>
+    Node *emps = readEmployeeList(fp);
+    char *name = ((Employee *) head(emps))-&gt;name;
+</pre>
+<p>One can also use the accessor function for the <i>name</i> field in
+the <i>Employee</i> structure:
+</p>
+<pre>
+    Node *emps = readEmployeeList(fp);
+    char *name = getEmployeeName(head(emps));
+</pre>
+<p>This gives the compiler the information that the generic pointer returned
+by <code>head(emps)</code> is really a pointer to an <i>Employee</i> structures,
+since <i>getEmployeeName</i> accepts <i>Employee</i> pointers.
+</p>
+<p>The file <i>employeeList.c</i> demonstrates using the <i>Employee</i>
+structure with the <i>olist</i> module.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_19.html">
+  <img border="0" alt="Nodes" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_21.html">
+  <img border="0" alt="Lists and Loops" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Lists</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

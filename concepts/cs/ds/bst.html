@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>bst</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Elementary Data Structures and Algorithms
+<br/>
+<br/>
+<span class="bigger">Binary and binary search trees</span>
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> <b>Concept</b>: <i>complexity</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Consider a worst-case binary search tree with <i>n</i> nodes. What is the
+average case time complexity for finding a value at a leaf?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> log <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msqrt>		<mi>n</mi>	</msqrt></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>n</i> log <i>n</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Consider a binary search tree with <i>n</i> nodes. What is the
+worst case time complexity for finding a value at a leaf?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>n</i> log <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msqrt>		<mi>n</mi>	</msqrt></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> log <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Consider a binary search tree with <i>n</i> nodes.
+What is the minimum and maximum height (using order notation)?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear and linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant and linear
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant and log <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log <i>n</i> and log <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>log <i>n</i> and linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2><b>Concept</b>: <i>balance</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Which ordering of input values builds the most unbalanced BST?
+Assume values are inserted from left to right.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4 3 1 6 2 8 7
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>1 2 3 4 5 7 6
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1 7 2 6 3 5 4
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ Which ordering of input values builds the most balanced BST?
+Assume values are inserted from left to right.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1 4 3 2 5 7 6
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1 2 7 6 0 3 8
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>4 3 1 6 2 8 7
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2><b>Concept</b>: <i>tree shapes</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ What is the best definition of a perfect binary tree?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> all leaves are equidistant from the root
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>all null children are equidistant from the root
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> all nodes have zero or two children
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> all leaves have zero children
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Suppose a binary tree has 10 leaves. How many nodes in the
+tree must have two children?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 8
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> no limit
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>9
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 7
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 10
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ Suppose a binary tree has 10 nodes. How many nodes are
+children of some other node in the tree?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 7
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>9
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 10
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 8
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> no limit
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 0 1 0 1 -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ Let P0, P1, and P2 refer to nodes that have zero, one or two children,
+respectively.
+Using the generally accepted definition,
+what is a <i>full</i> binary tree?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> all interior nodes P1, except the root
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> all interior nodes are P1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> all nodes are P2
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>all interior nodes are P2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> all interior nodes are P2; all leaves are equidistant from the root
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> all leaves are equidistant from the root
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ Let P0, P1, and P2 refer to nodes that have zero, one or two children,
+respectively.
+Using the generally accepted definition,
+what is a <i>perfect</i> binary tree?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> all interior nodes are P2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> all interior nodes P1, except the root
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> all interior nodes are P1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> all nodes are P0 or P2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>all interior nodes are P2; all leaves are equidistant from the root
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> all leaves are equidistant from the root
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ Let P0, P1, and P2 refer to nodes that have zero, one or two children,
+respectively.
+Using the generally accepted definition,
+what is a <i>degenerate</i> binary tree?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> all interior nodes are P2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>all interior nodes are P1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> all leaves are equidistant from the root
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> all interior nodes are P2; all leaves are equidistant from the root
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> all interior nodes P1, except the root
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> all nodes are P0 or P2
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ Let P0, P1, and P2 refer to nodes that have zero, one or two children,
+respectively.
+Using the generally accepted definition
+of a <i>complete</i> binary tree, which of the following actions
+can be used to make any complete tree?
+Assume the leftmost and rightmost sets may be empty.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> making the leftmost leaf of a <i>perfect</i> tree P1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> another name for a <i>perfect</i> tree
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>removing the rightmost leaves from a <i>perfect</i> tree
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> making the leftmost leaves of a <i>perfect</i> tree P1 or P2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> making the leftmost leaves of a <i>perfect</i> tree P2
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ <b>T</b> or <b>F</b>:
+All <i>perfect</i> trees are <i>full</i> trees.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ <b>T</b> or <b>F</b>:
+All <i>full</i> trees are <i>complete</i> trees.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ <b>T</b> or <b>F</b>:
+All <i>complete</i> trees are <i>perfect</i> trees.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ How many distinct binary search trees can be formed from exactly two nodes
+with values 1, 2, or 3 respectively (hint: think about how many permutations of values there are for each tree shape)?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>6
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ How many distinct binary tree shapes can be formed from exactly two nodes?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ Let <i>k</i> be the the number of steps from the root to a leaf in a
+perfect tree. What are the number of nodes
+in the tree?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mrow>			<mi>k</mi>			<mo>+</mo>			<mn>1</mn>		</mrow>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mrow>			<mi>k</mi>			<mo>-</mo>			<mn>1</mn>		</mrow>	</msup>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<msup>		<mn>2</mn>		<mrow>			<mi>k</mi>			<mo>+</mo>			<mn>1</mn>		</mrow>	</msup>	<mo>-</mo>	<mn>1</mn>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mrow>			<mi>k</mi>			<mo>-</mo>			<mn>1</mn>		</mrow>	</msup>	<mo>+</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<msup>		<mn>2</mn>		<mi>k</mi>	</msup>	<mo>-</mo>	<mn>1</mn>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ Let <i>k</i> be the the number of steps from the root to the furthest leaf in a
+binary tree. What would be the minimum number of nodes
+in such a tree? Assume <i>k</i> is a power of two.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> log <i>k</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mrow>			<mi>k</mi>			<mo>+</mo>			<mn>1</mn>		</mrow>	</msup>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> (log <i>k</i>) + 1
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mrow>			<mi>k</mi>			<mo>+</mo>			<mn>1</mn>		</mrow>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>k</i> + 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>k</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ Let <i>k</i> be the the number of steps from the root to the furthest leaf in a
+binary tree. What would be the maximum number of nodes
+in such a tree? Assume <i>k</i> is a power of two.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> log <i>k</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>k</i> + 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>k</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mrow>			<mi>k</mi>			<mo>+</mo>			<mn>1</mn>		</mrow>	</msup>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> (log <i>k</i>) + 1
+<br/>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mrow>			<mi>k</mi>			<mo>+</mo>			<mn>1</mn>		</mrow>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2><b>Concept</b>: <i>ordering in a BST</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+ For all child nodes in a BST, what relationship holds between the value
+of a left child node and the value of its parent?
+Assume unique values.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> there is no relationship
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> greater than 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>less than    
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+ For all sibling nodes in a BST, what relationship holds between the value
+of a left child node and the value of its sibling?
+Assume unique values.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> there is no relationship
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> less than    
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>  greater than 
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="23">
+<li>
+ Which statement is true about
+the <i>successor</i> of a node in a BST, if it exists?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>has no left child
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> has no right child
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is always a leaf node
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> it may be an ancestor
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is always an interior node
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="24">
+<li>
+ Consider a node which holds neither the smallest or the
+largest value in a BST.
+Which statement is true about the node which holds
+the next higher value of a node in a BST, if it exists?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is always an interior node
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>it may be an ancestor
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is always a leaf node
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> has no right child
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> has no left child
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2><b>Concept</b>: <i>traversals</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="25">
+<li>
+ Consider printing out the node values of
+a binary tree with 25 nodes to the left of the root
+and 38 nodes to the right. How many nodes are processed
+before the root's value is printed in a pre-order traversal?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 38
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 53
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 54
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 25
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>0
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="26">
+<li>
+ Consider printing out the node values of
+a binary tree with 25 nodes to the left of the root
+and 38 nodes to the right. How many nodes are processed
+before the root's value is printed in an in-order traversal?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>25
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 54
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 38
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 53
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="27">
+<li>
+ Consider printing out the node values of
+a binary tree with 25 nodes to the left of the root
+and 38 nodes to the right. How many nodes are processed
+before the root's value is printed in a post-order traversal?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>63
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 25
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 54
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 38
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="28">
+<li>
+ Consider a perfect BST with even values 0 through 12,
+to which the value 7 is then added.
+Which of the following is an in-order
+traversal of the resulting tree?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>  7 0 2 4 6 8 10 12 
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>  0 4 2 7 8 10 12 6 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>  6 2 10 0 4 8 12 7 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0 2 4 6 7 8 10 12 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>  0 2 4 6 8 10 12 7 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>  12 10 8 7 6 4 2 0 
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="29">
+<li>
+ Consider a perfect BST with even values 0 through 12,
+to which the value 7 is then added.
+Which of the following is a level-order
+traversal of the resulting tree?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 6 2 10 0 4 8 12 7 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>  0 4 2 7 8 10 12 6 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>  0 2 4 6 7 8 10 12 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>  12 10 8 7 6 4 2 0 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>  7 0 2 4 6 8 10 12 
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>  0 2 4 6 8 10 12 7 
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 1 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="30">
+<li>
+ Consider
+a level-order traversal
+of C B A D F E 
+and an in-order traversal
+of B C A F D E .
+Do these traversals generate a unique tree and, if so,
+what is that tree's
+pre-order traversal?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, C A D B E F 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, but the correct answer is not listed
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>yes, C B A D F E 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, C B A F D E 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> no
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="31">
+<li>
+ Consider
+an in-order traversal
+of B C A F D E 
+and a pre-order traversal
+of C B A D F E .
+Do these traversals generate a unique tree and, if so,
+what is that tree's
+post-order traversal?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, B F A E D C 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, but the correct answer is not listed
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>yes, B F E D A C 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, F A D B E C 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> no
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="32">
+<li>
+ Consider
+an in-order traversal
+of B C A F D E 
+and a post-order traversal
+of C B A D F E .
+Do these traversals generate a unique tree and, if so,
+what is that tree's
+level-order traversal?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> no
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, E A C F B D 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, E F C D B A 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>yes, E F A D B C 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, but the correct answer is not listed
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="33">
+<li>
+ Consider
+a level-order traversal
+of C F D E B A 
+and an pre-order traversal
+of C F E A D B .
+Do these traversals generate a unique tree and, if so,
+what is that tree's
+in-order traversal?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, but the correct answer is not listed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, F A E C B D 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, F E A C D B 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> yes, F A E C B D 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>no
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2><b>Concept</b>: <i>insertion and deletion</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="34">
+<li>
+ <b>T</b> or <b>F</b>:
+Suppose you are given an in-order traversal of
+an unbalanced BST.
+If you were to insert those values into an empty BST
+in the order given,
+would the result be a balanced tree?
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="35">
+<li>
+ <b>T</b> or <b>F</b>:
+Suppose you are given a pre-order traversal of
+an unbalanced BST.
+If you were to insert those values into an empty BST
+in the order given,
+would the result be a balanced tree?
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="36">
+<li>
+ <b>T</b> or <b>F</b>:
+Suppose you are given an in-order traversal of
+a balanced BST.
+If you were to insert those values into an empty BST
+in the order given,
+would the result be a balanced tree?
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="37">
+<li>
+ <b>T</b> or <b>F</b>:
+Suppose you are given a pre-order traversal of
+a balanced BST.
+If you were to insert those values into an empty BST
+in the order given,
+would the result be a balanced tree?
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="38">
+<li>
+ Suppose 10 values are inserted inserted into an empty BST.
+What is the minimum and maximum resulting heights of the tree?
+The height is the number of steps from the root to the furthest leaf.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>3 and 10
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3 and 9
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4 and 9
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5 and 10
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4 and 10
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5 and 9
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="39">
+<li>
+ Which, if any, of these deletion strategies for non-leaf nodes reliably preserve BST ordering?
+<ol type="i">
+
+<li>
+
+ Swap the values of the node to be deleted and the smallest leaf node with a larger value, then remove the leaf.
+</li>
+
+<li>
+
+ Swap the values of the node to be deleted with its predecessor or successor. If the predecessor or successor is a leaf, remove it. Otherwise, repeat the process.
+</li>
+
+<li>
+
+ If the node to be deleted does not have two children, simply connect the parent's child pointer to the node to the node's child pointer, otherwise, use a correct deletion strategy for nodes with two children.
+</li>
+
+</ol>
+
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>ii</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>iii</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> none
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>ii</i> and <i>iii</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> and <i>iii</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 6 -->
+<!-- answer -->
+<!-- answer -->
+<li> all
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 7 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> and <i>ii</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

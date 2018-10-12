@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:16 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Assignment</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_7.html">
+  <img border="0" alt="Operators" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_9.html">
+  <img border="0" alt="Arrays" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Assignment</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Assignment</h1>
+<p>Once a variable has been created, it is possible to change its value,
+or <i>binding</i>,
+using the assignment operator. Consider the following sequence of
+statements:
+</p>
+<pre>
+    //test
+    int BLACK = 1;                    //BLACK created, initialized to 1
+    int BROWN = 2;                    //BROWN created, initialized to 2
+    int GREEN = 3;                    //GREEN created, initialized to 3
+    int eyeColor = BLACK;             //eyeColor created, initialized to 1
+    //calculate!
+    printf("%d\n",eyeColor);          //should print 1
+    eyeColor = GREEN;                 //assignment! eyeColor becomes 3
+    printf("%d\n",eyeColor == BLACK); //equality, should false: 0
+    printf("%d\n",eyeColor == BROWN); //equality, should false: 0
+    printf("%d\n",eyeColor == GREEN); //equality, should true:  1
+</pre>
+<p>Recall that the <code>//</code> character sequence starts a comment in C;
+those two characters
+and any following characters on the line are ignored.
+</p>
+<p>The operator <tt>=</tt> (equals sign) is the <i>assignment</i> operator.
+The assignment operator, however, is not like the operators
+<tt>+</tt> and <tt>*</tt>.
+If one wants to add the variables:
+</p>
+<pre>
+    a + b
+</pre>
+<p>one would take the value of <i>a</i> and the value of <i>b</i> and add those two
+values together.
+In general, for the mathematical operators, both sides of the operator
+are evaluated.
+For <tt>=</tt>,
+the variable on the left 
+is not evaluated.
+If it were, the assignment:
+</p>
+<pre>
+    eyeColor = GREEN;
+</pre>
+<p>would attempt to assign the value of 3 (the current value of <i>GREEN</i>)
+to the value 1 (the current value of <i>eyeColor</i>).
+The last three expressions given in the code fragment above
+refer to the equality operator. The equality
+operator, <tt>==</tt>
+(often pronounced "double equals"), returns
+true if its operands refer to the same thing and false otherwise.
+</p>
+<p>In the above snippet of <i>C</i> code, we use the integers 1, 2,
+and 3 to represent the colors black, brown, and green. By abstracting 1,
+2, and 3 and giving them meaningful names (i.e., <b>BLACK</b>, <b>BROWN</b>,
+and <b>GREEN</b>) we find it easy to read code that
+assigns and tests eye color.
+We do this because it is difficult to remember which integer
+is assigned to which color. Without the variables <b>BLACK</b>, <b>BROWN</b>, and
+<b>GREEN</b>, we have to keep little notes somewhere to remind ourselves what's
+what. Here is an equivalent sequence of statements
+without
+the use of the variables <b>BLACK</b>, <b>GREEN</b>, and <b>BROWN</b>.
+</p>
+<pre>
+    //test
+    int eyeColor = 1;
+    //calculate!
+    printf("%d\n",eyeColor);                //should print: 1
+    eyeColor = 3;
+    printf("%d\n",eyeColor == 2);           //should print false: 0
+    printf("%d\n",eyeColor == 3);           //likely print true:  1
+</pre>
+<p>In this interaction, the meaning of <i>eyeColor</i>
+is not so obvious. We know it's a 3 at the end, but what eye color
+does 3 represent? When numbers appear directly in code,
+they are referred to as <i>magic numbers</i> because they
+obviously mean something and serve some purpose,
+but how they make the code work correctly
+is not always readily apparent,
+much like a magic trick.
+Magic numbers are to be avoided. Using well-named variables
+to hold these values
+is considered stylistically superior.
+</p>
+
+<h2><a name="id1">Lvalues vs. rvalues</a></h2><p>
+To distinguish when the value of a variable is extracted and when it is
+updated, Computer Scientists use the terms <i>rvalue</i> and <i>lvalue</i>.
+An <i>rvalue</i> refers to the value of a variable while an <i>lvalue</i>
+refers to a location in memory.
+In an assignment statement such as:
+</p>
+<pre>
+    x = y;          //update the value of x with the value of y
+</pre>
+<p>the variable <i>y</i> appears to the <i>right</i> of the assignment operator
+and is therefore an rvalue. We extract the value of <i>y</i> in this case.
+The variable <i>x</i>, on the other hand, appears to the <i>left</i> of the
+assignment operator and is therefore an lvalue. We update the value of
+<i>x</i>.
+</p>
+
+<h2><a name="id2">Variables versus constants</a></h2><p>
+Many programming languages have constructs similar to variables known as
+<i>constants</i>.
+A constant can be thought of as a variable that,
+once it gets a value, cannot be reassigned.
+Constants are used for values that never change,
+the value of <i>&#960;</i>, the square root of 2, and so on.
+The C programming language does not have these kinds of constants<sup><a href="index_26.html#footnote-15">15</a></sup>.
+So C programmers use variables as constants instead.
+In the previous section, you probably noticed
+that some variables were named
+using all capital letters:
+<b>BLACK</b>, <b>GREEN</b>, and <b>BROWN</b>.
+By convention, a variable named in (mostly) all-caps
+is not meant
+to change from its initial value.
+The use of caps emphasizes the constant nature of the variable.
+</p>
+<p>There is one type of constant C does have, the name of a statically
+allocated array. You will learn about statically allocated arrays
+in the next chapter.
+</p>
+
+<h2><a name="id3">Precedence and Associativity of Assignment</a></h2><p>
+The assignment operator is
+right associative. The right associativity allows for statements like
+</p>
+<pre>
+    a = b = c = d = 0;
+</pre>
+<p>which conveniently assigns a zero to four variables at once and,
+because of the right associative nature of the operator, is 
+equivalent to:
+</p>
+<pre>
+    (a = (b = (c = (d = 0))));
+</pre>
+<p>The resulting value of an assignment operation is the value assigned,
+so the assignment <tt>d = 0</tt> returns 0, which is,
+in turned,
+assigned to
+<i>c</i> and so on.
+</p>
+<p>Assignment has the lowest precedence among the binary operators. Thus,
+assignment is always performed last in any expression. For example:
+</p>
+<pre>
+    a = b = c * d
+</pre>
+<p>is equivalent to the fully parenthesized:
+</p>
+<pre>
+    (a = (b = (c * d)))
+</pre>
+<p>Note that expressions like:
+</p>
+<pre>
+    a = b = c * d = e
+</pre>
+<p>are nonsensical; the multiplication has to happen first and therefore the
+value of <i>e</i> would have to be assigned to a number, which is illegal.
+On the other hand: 
+</p>
+<pre>
+    a = b = c * (d = e)
+</pre>
+<p>is perfectly legal and has the effect of assigning to <i>d</i> the value of
+<i>e</i>
+and to <i>a</i> the value of <i>c * d</i>.
+</p>
+
+<h2><a name="id4">Assignment Patterns</a></h2><p>
+The art of writing programs lies in the ability to
+recognize and use patterns that have appeared since the
+very first programs were written. In this text, we take
+a pattern-based approach to teaching how to program. For the
+topic at hand, we will give a number of patterns that
+you should be able to recognize to use or avoid as
+the case may be.
+</p>
+
+<h3><a name="id5">The Transfer Pattern</a></h3><p>
+The <i>transfer</i> pattern is used to change the value of a
+variable based upon the value of another variable.
+Suppose we have a variable named <i>alpha</i> which is initialized
+to 3 and a variable <i>beta</i> which is initialized to 10:
+</p>
+<pre>
+    alpha = 3;
+    beta = 10;
+</pre>
+<p>Now consider the statement:
+</p>
+<pre>
+    alpha = beta;
+</pre>
+<p>This statement is read like this:
+make the new value of <i>alpha</i> equal to the value
+of <i>beta</i>, throwing away the old value of <i>alpha</i>.
+What is the value of <i>alpha</i> after that statement
+is executed?
+Highlight the following line to see the answer:
+</p>
+<div class="quote">
+The new value of <i>alpha</i> is
+<font color="#ffffff">10</font>.
+</div>
+<p>The <i>transfer</i> pattern tells us that value of <i>beta</i> is
+imprinted on <i>alpha</i> at the moment of assignment
+but in no case are <i>alpha</i> and <i>beta</i> conjoined in any way in
+the future. Think of it this way. Suppose your friend
+spray paints her bike neon green. You like the color
+so much you spray paint your bike neon green as well.
+This is like assignment: you made the value (color) of
+your bike the same value (color) as your friend's bike.
+Does this mean your bike and your friend's bike will
+always have the same color forever? Suppose your friend
+repaints her bike. Will your bike automatically become
+the new color as well? Or suppose you repaint your bike.
+Will your friend's bike automatically assume the color
+of your bike?
+</p>
+<p>Let's look at the transfer pattern graphically.
+For the assignments:
+</p>
+<pre>
+   alpha = 3;
+   beta = 7;
+</pre>
+<p>we would diagram the situation as:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-assign1.png"/>
+</div>
+<p>or more conveniently:
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="right">
+<i>alpha</i>: </td><td colspan="1" align="left"> 3</td></tr>
+<tr><td colspan="1" align="right">
+<i>beta</i>: </td><td colspan="1" align="left"> 7</td></tr>
+<tr><td colspan="1" align="right">
+</td></tr></tbody></table>
+</p>
+</div>
+<p>Now, when we assign <i>alpha</i> the value of <i>beta</i>:
+</p>
+<pre>
+    alpha = beta;
+</pre>
+<p>we replace the current value stored at the memory location identified
+by <i>alpha</i> with the value of <i>beta</i>:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-assign2.png"/>
+</div>
+<p>or:
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="right">
+<i>alpha</i>: </td><td colspan="1" align="left"> 7</td></tr>
+<tr><td colspan="1" align="right">
+<i>beta</i>: </td><td colspan="1" align="left"> 7</td></tr>
+<tr><td colspan="1" align="right">
+</td></tr></tbody></table>
+</p>
+</div>
+<p>We can see from the diagram that if we give a new value to <i>beta</i>,
+causing us to replace the value stored at <i>beta</i>,
+the value stored at <i>alpha</i> will be unaffected.
+</p>
+<p>To test your understanding, consider what happens if the following
+code is executed:
+</p>
+<pre>
+    alpha = 4;
+    beta = 13;
+    alpha = beta;
+    beta = 5;
+</pre>
+<p>What are the final values of <i>alpha</i>  and <i>beta</i>?
+Highlight the following line to see the answer:
+</p>
+<div class="quote">
+The value of <i>alpha</i> is <font color="#ffffff">13</font>
+and the value of <i>beta</i> is <font color="#ffffff">5</font>.
+</div>
+<p>Here, the variable diagram would look like:
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="right">
+<i>alpha</i>: </td><td colspan="1" align="left"> 4 </td><td colspan="1" align="center"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i> -&gt; </i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td><td colspan="1" align="right"> <i>alpha</i>: </td><td colspan="1" align="left"> 13 </td><td colspan="1" align="center"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i> -&gt; </i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td><td colspan="1" align="right"> <i>alpha</i>: </td><td colspan="1" align="left"> 13 </td></tr>
+<tr><td colspan="1" align="right">
+<i>beta</i>: </td><td colspan="1" align="left"> 13 </td><td colspan="1" align="center"> </td><td colspan="1" align="right"> <i>beta</i>: </td><td colspan="1" align="left"> 13 </td><td colspan="1" align="center"> </td><td colspan="1" align="right"> <i>beta</i>: </td><td colspan="1" align="left"> 5 </td></tr>
+<tr><td colspan="1" align="right">
+</td></tr></tbody></table>
+</p>
+</div>
+<p>where the diagram on the left illustrates what things look like after
+<i>alpha</i> and <i>beta</i> get their original values, the diagram in the middle
+after
+<i>alpha</i> gets <i>beta</i>'s value, and the diagram on the right after <i>beta</i> gets
+the value of 5.
+</p>
+<p>To further test your understanding, what happens if the following
+code is executed:
+</p>
+<pre>
+    alpha = 4;
+    beta = 13;
+    alpha = beta;
+    alpha = 42;
+</pre>
+<p>What are the final values of <i>alpha</i>  and <i>beta</i>?
+Highlight the following line to see the answer:
+</p>
+<div class="quote">
+The value of <i>alpha</i> is <font color="#ffffff">42</font>
+and the value of <i>beta</i> is <font color="#ffffff">13</font>.
+</div>
+<p>Here, the variable diagram would look like:
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="right">
+<i>alpha</i>: </td><td colspan="1" align="left"> 4 </td><td colspan="1" align="center"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i> -&gt; </i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td><td colspan="1" align="right"> <i>alpha</i>: </td><td colspan="1" align="left"> 13 </td><td colspan="1" align="center"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i> -&gt; </i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td><td colspan="1" align="right"> <i>alpha</i>: </td><td colspan="1" align="left"> 42 </td></tr>
+<tr><td colspan="1" align="right">
+<i>beta</i>: </td><td colspan="1" align="left"> 13 </td><td colspan="1" align="center"> </td><td colspan="1" align="right"> <i>beta</i>: </td><td colspan="1" align="left"> 13 </td><td colspan="1" align="center"> </td><td colspan="1" align="right"> <i>beta</i>: </td><td colspan="1" align="left"> 13 </td></tr>
+<tr><td colspan="1" align="right">
+</td></tr></tbody></table>
+</p>
+</div>
+<p>where the diagram on the left illustrates what things look like after
+<i>alpha</i> and <i>beta</i> get their original values, the diagram in the middle
+after
+<i>alpha</i> gets <i>beta</i>'s value,
+and the diagram on the right after <i>alpha</i> gets
+the value of 42.
+</p>
+
+<h3><a name="id6">The Update Pattern</a></h3><p>
+The <i>update</i> pattern is used to  change the value of a
+variable based upon the original value of the variable.
+Suppose we have a variable named <i>counter</i> which is initialized
+to zero:
+</p>
+<pre>
+    int counter = 0;
+</pre>
+<p>Now consider the statement:
+</p>
+<pre>
+    counter = counter + 1;
+</pre>
+<p>This statement is read like this:
+make the new value of counter equal to the old value
+of counter plus one. Since the old value is zero, the
+new value is one.
+Consider this sequence:
+</p>
+<pre>
+    //test
+    int counter = 0;
+    counter = counter + 1;
+    counter = counter + 1;
+    counter = counter + 1;
+    counter = counter + 1;
+    counter = counter + 1;
+    printf("%d\n",counter);
+</pre>
+<p>What is the value of <i>counter</i> after the following
+code is executed?
+Highlight the following line to see the answer:
+</p>
+<div class="quote">
+The value of <i>counter</i> is
+<font color="#ffffff">5</font>.
+</div>
+<p>There is another form of this update:
+</p>
+<pre>
+    counter = 0;
+    counter += 5;
+</pre>
+<p>The operator <code>+=</code> says to update the variable on the left by adding
+in the value on the right to the current value of the variable.
+</p>
+<p>The <i>update</i> pattern can be used to sum a number of
+variables. Suppose we wish to compute the sum of the
+variables <i>a</i>, <i>b</i>, <i>c</i>, <i>d</i>, and <i>e</i>.
+The obvious way to do this is with one statement:
+</p>
+<pre>
+    int sum = a + b + c + d + e;
+</pre>
+<p>However, we can use the <i>update</i> pattern as well:
+</p>
+<pre>
+    //test
+    int a = 1,b = 2,c = 3,d = 4,e = 5;
+    int sum = 0;
+    sum = sum + a;
+    sum = sum + b;
+    sum = sum + c;
+    sum = sum + d;
+    sum = sum + e;
+    printf("sum is %d\n",sum);
+</pre>
+<p>If <i>a</i> is 1, <i>b</i> is 2, <i>c</i> is 3, <i>d</i> is 4, and <i>e</i> is 5,
+then the value of <i>sum</i> in both cases is 15.
+Why would we ever want to use the <i>update</i> pattern for
+computing a sum when the
+first version is so much more compact and readable? The
+answer is...you'll have to wait until we cover a programming
+concept called a <i>loop</i>. With loops, the <i>update</i> pattern
+is almost always used to compute sums, products, etc.
+</p>
+
+<h3><a name="id7">The Throw-away Pattern</a></h3><p>
+The <i>throw-away</i> pattern is a mistaken attempt to use
+the <i>update</i> pattern. In the <i>update</i> pattern, we use
+the original value of the variable to compute the
+new value of the variable. Here again is the
+classic example of incrementing a counter:
+</p>
+<pre>
+    counter = counter + 1;
+</pre>
+<p>In the <i>throw-away</i> pattern, the new value is computed
+but it the variable is not reassigned, nor is the
+new value stored anywhere. Many novice programmers
+attempt to update a counter simply by computing
+the new value:
+</p>
+<pre>
+    counter + 1;       // the value counter + 1 is thrown away!
+</pre>
+<p><i>C</i> does all the work to compute the new value, but
+since the new value is not assigned to any variable;
+the new value is thrown away.
+</p>
+
+<h3><a name="id8">The Throw-away Pattern and Functions</a></h3><p>
+The <i>throw-away</i> pattern applies to function calls
+as well.
+We haven't discussed functions much, but the following
+example is easy enough to understand. First we define
+a function that computes some value:
+</p>
+<pre>
+    int
+    increment(int x)
+        {
+        return x + 1;
+        }
+</pre>
+<p>The function <i>increment</i>, when given an integer (stored in <i>x</i>), returns a 
+value one greater than the value of <i>x</i>.
+What the function actually does, however, is irrelevant
+to this discussion. but we want to start indoctrinating
+you on the use of functions. Repeat this ten times:
+</p>
+<div class="quote"> We always do four things with functions:
+<i>define them</i>,
+<i>call them</i>,
+<i>return something</i>, and
+<i>save the return value</i>.
+</div>
+<p>To call the function, we use the function name followed by
+a set of parentheses. Inside the parentheses, we place the
+value we wish to send to the function. Consider this code,
+which includes a call to the function <i>increment</i>:
+</p>
+<pre>
+    int y = 4;
+    y = increment(y);
+    printf("y is %d\n",y);
+</pre>
+<p>If we were to run this code, we would see the following 
+output:
+</p>
+<pre>
+    y is 5
+</pre>
+<p>The value of <i>y</i>, 4, is sent to the function which adds one to
+the given value and returns this new value. This new value, 5, is
+assigned back to <i>y</i>. Thus we see that <i>y</i> has a new value of 5.
+</p>
+<p>Suppose, we run the following code instead:
+</p>
+<pre>
+    int y = 4;
+    increment(y);             // NOT y = increment(x); as before
+    printf("y is %d\n",y);
+</pre>
+<p>Note that the
+return value of the function <i>increment</i> is not assigned to any
+variable. Therefore, the return value is thrown away and the
+output becomes:
+</p>
+<pre>
+    y is 4
+</pre>
+<p>The variable <i>y</i> is unchanged because it was never reassigned.
+</p>
+
+<h2><a name="id9">About Patterns</a></h2><p>
+As you can see from above, not all patterns are good ones. However,
+we often mistakenly use bad patterns when programming. If we 
+can recognize those bad patterns more readily, our job of producing
+a correctly working program is greatly simplified.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_7.html">
+  <img border="0" alt="Operators" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_9.html">
+  <img border="0" alt="Arrays" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Assignment</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>2-2</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Sample Questions: SICP Section 2.2
+<br/>
+<br/>
+Hierarchical Data and the Closure Property
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Cons structures
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+
+How many cons cells make up the structure
+with the print value of 
+<code>(1 (2 3) 4)</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 6
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+
+How many cons cells make up the structure
+with the print value of 
+<code>(1 (2 3) . 4)</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 6
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+
+How many cons cells make up the structure
+with the print value of 
+<code>(1 (2 . 3) . 4)</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 6
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+
+How many cons cells make up the structure
+with the print value of 
+<code>(1 (2 . 3) 4)</code>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 6
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+
+What is the minimum number of cons cells needed to bundle up 4 numbers
+into a single cons structure?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 6
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>3
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+
+What is the minimum number of cons cells needed to bundle up 4 numbers
+into a single list structure (i.e. no nested lists)?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 6
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> Heirarchical structures
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Draw a cons structure in the style of the text
+that represents a binary search tree with the
+elements 3, 1, 2, 5 inserted in that order.
+Use nils to indicate missing children.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ Draw a cons structure in the style of the text
+that represents a trinary search tree with the
+elements 3, 1, 2, 1, 5, 1 inserted in that order. A trinary search tree
+behaves just as a binary search tree except
+duplicates are inserted as middle children.
+Use nils to indicate missing children.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ Consider the singly-linked list
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mo>&rarr;</mo>	<mn>5</mn>	<mo>&rarr;</mo>	<mn>3</mn>	<mo>&rarr;</mo></mrow></math><i>nil</i>.
+Draw a cons cell representation of this list,
+assuming there is only a head pointer. Use the style of the text.
+Use the variable <i>items</i> to point to this list.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ Consider the singly-linked list
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mo>&rarr;</mo>	<mn>5</mn>	<mo>&rarr;</mo>	<mn>3</mn>	<mo>&rarr;</mo></mrow></math><i>nil</i>.
+Draw a cons cell representation of this list,
+assuming there is a head and a tail pointer. Use the style of the text.
+Use the variable <i>items</i> to point to this list.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> Conventional interfaces
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ (3 points)
+Define a function named <i>flatten</i> that takes deeply nested list and
+returns a flat list of all the elements in the original list. For example,
+
+<code>(flatten &#39;((a (b)) c))</code> evaluates to 
+<code>(a b c)</code>.
+You may find the functions <i>pair</i>? or <i>atom</i>? useful.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ ount the number of.Sum the odd values in a deeply
+nested list.
+Pick from
+the components <i>flatten</i>, <i>map</i>, <i>keep</i>, <i>remove</i>, <i>accumulate</i>,
+<i>append</i>, and <i>odd</i>?.
+Assume the name of the incoming list is <i>items</i>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ Suppose I wish to find the product of
+all the prime numbers from 1 to <i>n</i>?
+Pick from
+the components <i>enumerate</i>, <i>map</i>, <i>keep</i>, <i>remove</i>, <i>accumulate</i>,
+and <i>prime</i>?.
+Start with <i>n</i>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ Suppose I wish to collect
+all the non-prime numbers from 1 to <i>n</i>?
+Pick from
+the components <i>enumerate</i>, <i>map</i>, <i>keep</i>, <i>accumulate</i>,
+and <i>prime</i>?.
+Start with <i>n</i>.
+Note: <i>remove</i> is not available.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ Sum of
+all the even numbered squares of the numbers
+in a given list named <i>items</i>.
+Pick from
+the components <i>enumerate</i>, <i>map</i>, <i>remove</i>, <i>accumulate</i>,
+<i>square</i>, and <i>even</i>?.
+Note: <i>keep</i> is not available.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ Collect
+all the odd numbered squares of the numbers
+in a given list named <i>items</i>.
+Pick from
+the components <i>enumerate</i>, <i>map</i>, <i>remove</i>, <i>accumulate</i>,
+<i>square</i>, and <i>even</i>?.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ Collect the squares of
+all the Mersenne primes generated from a list of exponents, named <i>raises</i>.
+A Mersenne prime has the form <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mi>n</mi>	</msup>	<mo>-</mo>	<mn>1</mn></mrow></math>.
+Pick from
+the components <i>enumerate</i>, <i>map</i>, <i>keep</i>, <i>remove</i>, <i>accumulate</i>,
+<i>prime</i>?, <i>square</i>, and <i>expt</i>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> Nested mappings
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ (2 points)
+Collect all the pairs <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo form="prefix">(</mo>	<mi>i</mi>	<mo>,</mo>	<mi>j</mi>	<mo form="postfix">)</mo></mrow></math>
+such that <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>0</mn>	<mo>&le;</mo>	<mi>i</mi>	<mo>&lt;</mo>	<mi>n</mi></mrow></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>0</mn>	<mo>&le;</mo>	<mi>j</mi>	<mo>&lt;</mo>	<mi>n</mi></mrow></math>.
+Pick from
+the components <i>enumerate</i>, <i>map</i>, <i>keep</i>, <i>remove</i>, <i>accumulate</i>,
+and <i>expand</i>.
+The <i>expand</i> function takes a list, a single item, and
+a location,
+and creates a list of lists composed each of the list
+items and the single item.
+For example,
+
+<code>(expand &#39;(1 4 2) 0 &#39;back)</code> evaluates to
+
+<code>((1 0) (4 0) (2 0))</code>,
+while
+
+<code>(expand &#39;(1 4 2) 0 &#39;front)</code> evaluates to
+
+<code>((0 1) (0 4) (0 2))</code>.
+Start with <i>n</i>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ (2 points)
+Collect all the pairs <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo form="prefix">(</mo>	<mi>i</mi>	<mo>,</mo>	<mi>j</mi>	<mo form="postfix">)</mo></mrow></math>
+such that <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>0</mn>	<mo>&le;</mo>	<mi>i</mi>	<mo>&lt;</mo>	<mi>n</mi></mrow></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>0</mn>	<mo>&le;</mo>	<mi>j</mi>	<mo>&lt;</mo>	<mi>i</mi></mrow></math>.
+Pick from
+the components <i>enumerate</i>, <i>map</i>, <i>keep</i>, <i>remove</i>, <i>accumulate</i>,
+and <i>expand</i>.
+The <i>expand</i> function takes a list, a single item, and
+a location,
+and creates a list of lists composed each of the list
+items and the single item.
+For example,
+
+<code>(expand &#39;(1 4 2) 0 &#39;back)</code> evaluates to
+
+<code>((1 0) (4 0) (2 0))</code>,
+while
+
+<code>(expand &#39;(1 4 2) 0 &#39;front)</code> evaluates to
+
+<code>((0 1) (0 4) (0 2))</code>.
+Start with <i>n</i>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ (2 points)
+Collect all the pairs <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo form="prefix">(</mo>	<mi>i</mi>	<mo>,</mo>	<mi>j</mi>	<mo form="postfix">)</mo></mrow></math>
+such that <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>0</mn>	<mo>&le;</mo>	<mi>i</mi>	<mo>&lt;</mo>	<mi>n</mi></mrow></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>&le;</mo>	<mi>j</mi>	<mo>&lt;</mo>	<mi>n</mi></mrow></math>.
+Pick from
+the components <i>enumerate</i>, <i>map</i>, <i>keep</i>, <i>remove</i>, <i>accumulate</i>,
+and <i>expand</i>.
+The <i>expand</i> function takes a list, a single item, and
+a location,
+and creates a list of lists composed each of the list
+items and the single item.
+For example,
+
+<code>(expand &#39;(1 4 2) 0 &#39;back)</code> evaluates to
+
+<code>((1 0) (4 0) (2 0))</code>,
+while
+
+<code>(expand &#39;(1 4 2) 0 &#39;front)</code> evaluates to
+
+<code>((0 1) (0 4) (0 2))</code>.
+Start with <i>n</i>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> Programming tasks
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+ (3 points)
+Define a function named <i>index</i> that retrieves the <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>i</mi>		<mrow>			<mi>t</mi>			<mi>h</mi>		</mrow>	</msup></mrow></math> element
+of a given list. Do not perform any error checking.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+ (3 points)
+Define a function named <i>list?</i> that determines whether a given
+cons structures is a list at the top level.
+Do not check if sub-structures are lists.
+Do not perform any error checking.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="23">
+<li>
+ (3 points)
+Define a function named <i>ntail</i> that returns the <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mrow>			<mi>t</mi>			<mi>h</mi>		</mrow>	</msup></mrow></math> tail of
+a given list. When passed a value of 0, <i>ntail</i> should return the
+given list; when passed a value of 1, <i>ntail</i> should return the <i>cdr</i>
+of the list, and so on. Do not perform any error checking.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="24">
+<li>
+ (3 points)
+Define a function named <i>list+</i> that returns the sum of all the elements
+in a given list made up of numbers.
+The list does not have any sub-lists.
+Do not perform any error checking.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="25">
+<li>
+ (3 points)
+Define a function named <i>list+</i> that returns the sum of all the elements
+in a given list made up of numbers.
+The list may have sub-lists that need to be considered.
+Assume the existence of the predicate <i>list?</i>.
+Do not perform any error checking.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="26">
+<li>
+ (3 points)
+Define a function named <i>oddCount</i> that returns the number of elements
+in a given list that are odd.
+The list does not have any sub-lists.
+You must use the predefined predicate function <i>even?</i>.
+Do not perform any error checking.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="27">
+<li>
+ (3 points)
+Define a function named <i>evenCount</i> that returns the number of elements
+in a given list that are even.
+The list may have sub-lists that need to be considered.
+You must use the predefined predicates <i>even?</i> and <i>list?</i>.
+Do not perform any error checking.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="28">
+<li>
+ (3 points)
+Define a function named <i>consCount</i> that counts
+the number of cons cells
+in a given structure. Assume the existence of the predicate <i>pair?</i>
+which returns true if its argument is a cons cell.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="29">
+<li>
+ (3 points)
+Define a function named <i>doubleList</i> that returns a new list
+composed of the numbers that are twice that in a given list of numbers
+(in the same order).
+Do not use <i>map</i>.
+Do not perform any error checking.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

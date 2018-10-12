@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Concept Inventory</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Scam/Scheme Basics
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="basics.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+ Key ideas
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+
+<ul>
+
+<li>
+
+ running the interpreter
+</li>
+
+<li>
+
+ evaluating Scam expressions
+</li>
+
+<li>
+
+ binding names to things (definitions)
+</li>
+
+<li>
+
+ function definitions
+</li>
+
+<li>
+
+ conditional expressions
+</li>
+
+<li>
+
+ nesting functions
+</li>
+
+</ul>
+
+
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Running the interpreter
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Once Scam is installed,
+simply type
+<i>scam</i> at the system prompt.
+Once inside the interpreter, you can load a file containing Scam
+definitions thusly:
+<br/>
+
+<pre>
+    (include &quot;defs.scm&quot;)
+</pre>
+
+where <i>defs.scm</i> is the name of the file to be loaded. You can
+also start up the interpreter and read stuff from a file by the command:
+<br/>
+
+<pre>
+    scam defs.scm
+</pre>
+
+I automate this task by placing the following macro definition in my .exrc
+(or .vimrc) file:
+<br/>
+
+<pre>
+    map @ :!scam % ^M
+</pre>
+
+The 
+<code>^M</code> is entered as 
+<code>ctl-v ctl-m</code>. This will
+automatically load the file I'm editing into the Scam interpreter
+when I press the 
+<code>&#39;@&#39;</code>
+key. Remember to save your file before running the macro.
+To exit <i>scam</i>, type
+
+<code>ctl-c q</code>.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Scheme basics
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Every expression in Scheme has a value and every non-trivial expression
+is
+expressed in prefix notation. The value of the expression 6 is 6 while
+the
+value of the expression (* 4 6) is 24. Note that a non-trivial
+expression is enclosed in parentheses.
+Expressions can be nested, as in:
+<br/>
+
+<pre>
+    (* (+ 2 2) (+ 3 3))
+</pre>
+
+which has a value of 24 as well. The value of an expression is
+generally
+obtained by evaluating the operator and the operands, then applying the
+operator
+to the operands.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Definitions in Scheme
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Names can be bound to values in Scheme. For example,
+<br/>
+
+<pre>
+    (define x 2)
+</pre>
+
+binds the name <i>x</i> to the value 2. If <i>x</i> is ever
+evaluated, it
+returns the value 2. Note that the definition is not evaluated as most
+expressions.
+The <i>x</i> is not evaluated (in fact, it may be undefined and not
+have
+a value). Expressions that are not evaluated in the normal fashion are
+called
+special forms. Scheme has a very limited number of special
+forms,
+which makes Scheme interpreters very easy to write.
+Names can be bound to functions as well as values. For example
+<br/>
+
+<pre>
+    (define (sqr x) 
+        (* x x) 
+        )
+</pre>
+
+binds the name <i>sqr</i> to the function which squares its argument.
+Thus
+<br/>
+
+<pre>
+    (sqr 5)
+</pre>
+
+evaluates to the value 25.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Conditionals
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+The <i>cond</i> special form has the following syntactic
+structure
+<br/>
+
+<pre>
+    (cond
+        (&lt;pred_1&gt; &lt;expr_1_a&gt; &lt;expr_1_b&gt; ... &lt;expr_1_z&gt;) 
+        (&lt;pred_2&gt; &lt;expr_2_a&gt; &lt;expr_2_b&gt; ... &lt;expr_2_z&gt;)
+          . 
+          . 
+          .
+        (&lt;pred_n&gt; &lt;expr_n_a&gt; &lt;expr_n_b&gt; ... &lt;expr_n_z&gt;) 
+        )
+</pre>
+
+The value of a <i>cond</i> exprression is the expression
+associated with the first true predicate. Like switch statements in C
+and C++, the cond special form has a default clause
+<br/>
+
+<pre>
+    (cond
+        (&lt;pred_1&gt; &lt;expr_1_a&gt; &lt;expr_1_b&gt; ... &lt;expr_1_z&gt;) 
+        (&lt;pred_2&gt; &lt;expr_2_a&gt; &lt;expr_2_b&gt; ... &lt;expr_2_z&gt;)
+          . 
+          . 
+          .
+        
+        (else &lt;expr_n_a&gt; &lt;expr_n_b&gt; ...  &lt;expr_n_z&gt;) 
+        )
+</pre>
+
+The value of a <i>cond</i> expression is the expression
+associated with the <i>else</i> if none of the previous
+predicates evaluate to true.
+<br/>
+
+<pre>
+    (define (maximum a b)
+        (cond
+            ((&gt; a b) a)
+            (else b)
+            )
+        )
+</pre>
+
+A sometimes handier version of conditional evaluation is the <i>if</i>
+special form. Its syntax is
+<br/>
+
+<pre>
+    (if &lt;pred&gt; 
+        &lt;expr_t&gt; 
+        &lt;expr_f&gt; 
+        )
+</pre>
+
+The expression 
+<code>&lt;expr\_t&gt;</code> is evaluated if 
+<code>&lt;pred&gt;</code>
+evaluates to true; 
+<code>&lt;expr\_f&gt;</code> is evaluated otherwise.
+Let's use <i>if</i> to compute the absolute value of a number.
+<br/>
+
+<pre>
+    (if (&lt; num 0) 
+        (- num) 
+        num 
+        )
+</pre>
+
+The return value is again the last expression evaluated.
+The downside of the if is that only a single expression
+can serve as the true or false expression. To evaluate
+multiple expressions, a begin expression (similar to
+a C block) is needed:
+<br/>
+
+<pre>
+    (if (&lt; num 0) 
+        (begin
+            (showln &quot;debug: flipping the sign&quot;)
+            (- num) 
+            )
+        num 
+        )
+</pre>
+
+Logical expressions can be combined using <i>and</i> and <i>or</i>
+special forms and logical values can be reversed with <i>not</i>.
+<br/>
+
+<pre>
+    (and &lt;pred_1&gt; &lt;pred_2&gt; ...  &lt;pred_n&gt;) 
+    (or  &lt;pred_1&gt; &lt;pred_2&gt; ...  &lt;pred_n&gt;) 
+    (not &lt;pred&gt;)
+</pre>
+
+Of course, these special forms can be nested. Scheme short-circuits the
+evaluation
+of logical expressions in the same fashion as C.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Functions
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Functions are easily defined in Scheme. The syntax of a definition is
+<br/>
+
+<pre>
+    (define (&lt;name&gt; &lt;arg1&gt; &lt;arg2&gt; ... &lt;argn&gt;)
+        &lt;exp1&gt; &lt;exp2&gt; ... &lt;expn&gt;)
+</pre>
+
+Here is the definition of a function which performs addition
+<br/>
+
+<pre>
+    (define (add a b) 
+         (+ a b) 
+         )
+</pre>
+
+It would be called thusly...
+<br/>
+
+<pre>
+    (add 3 5)
+</pre>
+
+The value 3 would be bound to the name <i>a</i> and the value 5 would be bound
+to
+the name <i>b</i>.
+The interpreter would return a value of 8 since the value of
+a function call is the value of the last expression in the function
+body.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Defining functions - finding square roots
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Scheme is well adapted to implemented recursive and iterative searches.
+Newton's
+method for finding square roots can be easily implemented in Scheme.
+The
+text uses a top down approach, which I term programming by
+procrastination (never write a function today what you can write
+tomorrow). Here is the
+top-level code
+<br/>
+
+<pre>
+    (define (sqrt-search guess target) 
+        (if (stop? guess target) 
+            guess 
+            (sqrt-search (improve guess target) target) 
+            ) 
+        )
+</pre>
+
+Note that <i>stop?</i> and <i>improve</i> have been postponed. Let's
+write those functions now (instead of tomorrow).
+<br/>
+
+<pre>
+    (define (stop? guess target) 
+        (&lt; (abs (- (* guess guess) target)) .00001)
+        )
+
+    (define (improve guess target) 
+        (* 0.5 (+ guess (/ target guess))) 
+        )
+</pre>
+
+We assume that a proper binding for 
+<code>abs</code> exists. It turns out
+that our <i>sqrt-search</i> procedure has two helper functions, both
+of which are
+polluting the namespace. Scheme allows nested procedures (as does
+Pascal) to localize the names of the helper functions. A revised
+implementation looks
+like...
+<br/>
+
+<pre>
+    (define (sqrt-search guess target) 
+        (define (stop? guess target) 
+            (&lt; (abs (- (* guess guess) target)) .00001) 
+            ) 
+        (define (improve guess target) 
+            (* 0.5 (+ guess (/ target guess))) 
+            ) 
+
+        (if (stop? guess target) 
+            guess 
+            (sqrt-search (improve guess target) target) 
+            ) 
+        )
+</pre>
+
+Now names <i>stop?</i> and <i>improve</i> are bound only within the
+body of the procedure and are not visible outside the function.
+Note that the guess parameter of the stop? function is an
+alias for the guess parameter of the sqrt-search routine.
+Since the body of stop? is within scope of the sqrt-search
+parameters, we can eliminate the redundant parameters in
+the nested functions and modify the calls accordingly:
+<br/>
+
+<pre>
+    (define (sqrt-search guess target) 
+        (define (stop?) 
+            (&lt; (abs (- (* guess guess) target)) .00001) 
+            ) 
+        (define (improve) 
+            (* 0.5 (+ guess (/ target guess))) 
+            ) 
+
+        (if (stop?) 
+            guess 
+            (sqrt-search (improve) target) 
+            ) 
+        )
+</pre>
+
+Note that we can perform the same manipulation for the <i>improve</i>
+function and the target parameters.
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

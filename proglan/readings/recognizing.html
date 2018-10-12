@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>recognizing</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Recognizing Languages
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="recognizing.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Introduction
+<br/>
+</h2><!-- section ENDED -->
+
+A
+recognizer is like a souped-up scanner; Like a scanner,
+it repeatedly calls <i>lex</i> to serve up lexemes.
+Additionally,
+it checks each lexeme against a grammar that describes the
+language in the text being scanned.
+Ultimately, a recognizer reports whether the entire text is syntactically
+correct or not.
+<br/>
+<!-- section -->
+<h2> Recursive Descent Parsing
+<br/>
+</h2><!-- section ENDED -->
+
+Building a recognizer for a typical programming language grammar is
+rather easy. There are many tools for turning a grammar into a
+recognizer, but there is a technique called <i>recursive descent parsing</i>
+that obviates the need for tools.
+A <i>parser</i> is a recognizer that also builds an abstract representation
+of the text being scanned and is necessary for creating a language
+interpreter.
+However, it is useful to use the recursive descent technique to
+construct a recognizer first and then convert the recognizer into a parser.
+<br/>
+<br/>
+A recursive descent recognizer is
+composed of a set of functions,
+each of which corresponds to a
+rule in the grammar.
+It will become apparent why the appellation
+<i>recursive descent</i> is used to describe recognizers and parsers built in
+this fashion.
+<br/>
+<!-- section -->
+<h2> Transforming grammars
+<br/>
+</h2><!-- section ENDED -->
+
+There is a straightforward transformation from a grammar to a set of
+recursive descent functions.
+Each
+grammar rule becomes a single function implementing the grammar rule.
+The terms <i>lhs</i> and <i>rhs</i> denote the left-hand side and the
+right-hand side of the grammar
+rule,
+respectively,
+with the colon serving as the line of demarcation.
+<br/>
+
+<ul>
+
+<li>
+
+
+the <i>lhs</i> side of a rule becomes the name of the
+implementing function -- the terminals and non-terminals of
+the <i>rhs</i> guide the implementation of the body of the function
+</li>
+
+<li>
+
+
+each terminal on the <i>rhs</i> corresponds to a call to a function
+named <i>match</i> -- <i>match</i> is used to ensure the given
+terminal is pending in the data stream
+</li>
+
+<li>
+
+
+a vertical bar on the <i>rhs</i> indicates a need to call a
+predicate function named <i>check</i> or a <i>pending</i> function --
+these predicates are used to see which
+alternative is present in the data stream
+</li>
+
+<li>
+
+
+each non-terminal on the <i>rhs</i> corresponds to a call to
+the function named by that non-terminal
+</li>
+
+</ul>
+
+
+Even before we get into the details of <i>match</i>, <i>check</i>,
+and the <i>pending</i> functions,
+an example will
+be
+quite useful.
+Consider the grammar rule for specifying an arbitrarily
+long
+sum of numbers:
+<br/>
+
+<pre>
+    sum : NUMBER 
+        | NUMBER PLUS sum
+</pre>
+
+An implementation of this grammar rule using the above transformation
+strategy yields:
+<br/>
+
+<pre>
+    function sum() 
+        { 
+        match(NUMBER); 
+        if (check(PLUS)) 
+            { 
+            match(PLUS); 
+            sum(); 
+            } 
+        // else done
+        }
+</pre>
+
+Note that both alternatives begin with the terminal 
+<code>NUMBER</code>,
+so a
+call to 
+<code>match(NUMBER)</code> is made.
+The function <i>match</i> is used to
+ensure
+that the next lexeme in the data stream is a 
+<code>NUMBER</code>.
+If <i>match</i>
+fails,
+that means that the input is not valid,
+i.e. the lexemes are not in the
+correct
+order.
+If <i>match</i> is successful,
+it advances the lexical stream (via a
+call
+to <i>lex</i>).
+Assuming a 
+<code>NUMBER</code> was matched,
+we then check
+to
+see which alternative is present in the lexical stream.
+If a 
+<code>PLUS</code>
+lexeme is pending,
+then the second alternative must be present -- we
+match
+the 
+<code>PLUS</code> and then recursively call <i>sum</i>.
+If not,
+the
+first
+alternative was present in the lexical stream; there is nothing more to
+do
+since we matched entirety of the sum with the initial call to <i>match</i>.
+<br/>
+<br/>
+It is relatively easy to see that not all grammars are suitable for
+recursive
+descent parsing.
+Suppose the above grammar rule for sum had been
+written
+equivalently as:
+<br/>
+
+<pre>
+    sum : NUMBER
+        | sum PLUS NUMBER
+</pre>
+
+Using the transformation strategy,
+we get:
+<br/>
+
+<pre>
+    function sum() 
+        { 
+        if (check(NUMBER); 
+            match(NUMBER); 
+        else 
+            { 
+            sum(); 
+            match(PLUS); 
+            match(NUMBER); 
+            } 
+        }
+</pre>
+
+There are major problems with this function.
+Suppose a 
+<code>NUMBER</code>
+lexeme
+is not pending in the lexical stream.
+The <i>else</i> branch is then taken and
+an
+immediate recursive call to <i>sum</i> is made.
+Since the lexical
+stream
+has not been advanced (only <i>match</i> advances the lexical stream),
+the
+function falls into a recursive infinite loop.
+If there is a NUMBER pending, followed by a PLUS,
+then the else branch is never taken
+and the following PLUS is never recognized.
+For this reason, one of the primary
+rules
+of recursive descent parsing is that the grammar may not have any left
+recursion,
+either directly or indirectly.
+<br/>
+<br/>
+Usually,
+common sense can be used to eliminate direct left
+recursion.
+Since
+all non-terminals must eventually ground out to terminals,
+we examine <i>sum</i>
+and see that a <i>sum</i> must begin with a 
+<code>NUMBER</code>.
+as stated
+prior.
+Moreover,
+it is relatively easy to see from the rule that a sum
+is simply a string of numbers separated by plus signs.
+The right
+recursive version of
+sum is immediately suggested from this fact.
+that rule to a right-recursive format. There is a formal technique for
+If a right-recursive analog is not apparent, there is
+a formal way to
+deal with immediately left-recursive rules. Given
+a left recursive rule of the form:
+<br/>
+
+<pre>
+    a : a x | b
+</pre>
+
+where <i>a</i> and <i>b</i> are strings of terminals and non-terminals, an
+equivalent pair of rules is:
+<br/>
+
+<pre>
+    a : b r
+    r : x r | *empty*
+</pre>
+
+Performing such a transformation on the <i>sum</i> rule binds <i>x</i> to
+
+<code>PLUS NUMBER</code> and <i>b</i> to 
+<code>NUMBER</code>, yielding:
+<br/>
+
+<pre>
+    sum : NUMBER sumR
+
+    sumR : PLUS NUMBER sumR | *empty*
+</pre>
+
+These two rules, neither of which is left-recursive, replace the original
+<i>sum</i> rule.
+<br/>
+<!-- section -->
+<h2> Support functions for recursive descent parsing.
+<br/>
+</h2><!-- section ENDED -->
+
+A small number of lexical helper functions simplify the task of
+creating a recursive descent recognizer,
+two of which,
+<i>match</i> and <i>check</i>,
+are
+mentioned in the previous section.
+These helper functions and their uses are:
+<br/>
+<span class="indent">
+<table>
+<tr>
+<td style="text-align:left";> <b>function</b> </td><td style="text-align:left";> <b>purpose</b> </td>
+</tr>
+<tr>
+<td style="text-align:left";> <i>advance</i> </td><td style="text-align:left";> move to the next lexeme in the input stream </td>
+</tr>
+<tr>
+<td style="text-align:left";> <i>match</i> </td><td style="text-align:left";> like <i>advance</i> but forces the current lexeme to be matched </td>
+</tr>
+<tr>
+<td style="text-align:left";> <i>check</i> </td><td style="text-align:left";> check whether or not the current lexeme is of the given type </td>
+</tr>
+</table>
+
+
+</span>
+
+<br/>
+The functions are considered lexical interface functions because
+they deal
+with the lexemes that make up the input stream and isolate the recognizer
+from
+the details of the lexical analyzer.
+In addition to simplifying the
+design
+of the recognizer,
+they,
+themselves,
+are also easy to implement.
+Here are
+basic
+implementations of <i>advance</i>,
+<i>match</i>,
+and <i>check</i>:
+<br/>
+
+<pre>
+    function check(type) 
+        { 
+        return type(CurrentLexeme) == type; 
+        }
+  
+    function advance() 
+        { 
+        CurrentLexeme = lex(); 
+        } 
+  
+    function match(type) 
+        { 
+        matchNoAdvance(type); 
+        advance(); 
+        }
+  
+    function matchNoAdvance(type)
+        {
+        if (!check(type))
+            fatal(&quot;syntax error&quot;);
+        }
+</pre>
+
+The variable <i>CurrentLexeme</i> is global to these interface
+functions.
+<br/>
+<br/>
+If it hasn't yet occurred to you,
+the set of
+terminals
+in a grammar is exactly the set of lexemes returned that can possibly
+be
+returned by <i>lex</i>.
+<br/>
+<!-- section -->
+<h2> Recognizing expressions
+<br/>
+</h2><!-- section ENDED -->
+
+Recall the expression rule:
+<br/>
+
+<pre>
+    expression : unary operator expression 
+               | unary
+      
+    operator : PLUS 
+             | TIMES 
+      
+    unary : NUMBER 
+          | VARIABLE
+</pre>
+
+At this point,
+let's try to implement the expression rule as a
+recursive descent parsing function.
+We get something like:
+<br/>
+
+<pre>
+    function expression() 
+        { 
+        unary(); 
+        if (operatorPending()) 
+            { 
+            operator(); 
+            expression(); 
+            } 
+        }
+</pre>
+
+Note that the function <i>operatorPending</i> is used instead of <i>check</i>
+to distinguish between the two alternatives.
+Examination of <i>check</i>
+reveals
+that it is used to distinguish terminals pending on the lexical stream.
+Here,
+an attempt is being made to see if a non-terminal is pending.
+A
+non-terminal
+is <i>pending</i> if any of the terminals comprising its <i>first set</i> are
+pending on the lexical stream.
+The <i>first set</i> of a non-terminal is simply the set of terminals
+that
+can begin the non-terminal.
+In the case of operator,
+the first set is 
+<code>{PLUS,TIMES}</code>,
+yielding the following implementation of <i>operatorPending</i>:
+<br/>
+
+<pre>
+    function operatorPending() 
+        { 
+        return check(PLUS) || check(TIMES); 
+        }
+</pre>
+
+More generally,
+given a rule of the form:
+<br/>
+
+<pre>
+    a : A b | C d | e f
+</pre>
+
+where lowercase letters are non-terminals and uppercase letters are
+terminals,
+the associated pending function for the rule would be:
+<br/>
+
+<pre>
+    function aPending() 
+        { 
+        return check(A) || check(C) || ePending();
+        }
+</pre>
+
+In general,
+use <i>check</i> to see if
+a
+terminal is pending in the lexical stream and define a <i>zzzPending</i>
+function
+to see if the non-terminal <i>zzz</i> is pending in the lexical stream.
+<br/>
+<br/>
+Consider, as before, expanding the <i>unary</i> rule so
+that expressions can involve function calls and can be grouped with
+parentheses:
+<br/>
+
+<pre>
+    unary : NUMBER 
+          | VARIABLE 
+          | VARIABLE OPAREN optEexpressionList CPAREN 
+          | OPAREN expression CPAREN
+</pre>
+
+Here is the
+implementation of the new unary:
+<br/>
+
+<pre>
+    function unary() 
+        { 
+        if (check(NUMBER)) 
+            { 
+            match(NUMBER); 
+            } 
+        else if (check(VARIABLE)) 
+            { 
+            // two cases! 
+            match(VARIABLE); 
+            if (check(OPAREN))
+                { 
+                match(OPAREN); 
+                optExpressionList(); 
+                match(CPAREN); 
+                } 
+            } 
+        else 
+            { 
+            match(OPAREN); 
+            expression(); 
+            match(CPAREN); 
+            } 
+        }
+</pre>
+
+Again,
+note the close correspondence between the function <i>unary</i>
+and the <i>unary</i> grammar rule.
+The only tricky part is handling
+the two alternatives that begin with 
+<code>VARIABLE</code>.
+These are
+folded into a single top-level alternative.
+Inside that alternative,
+the two forms are
+distinguished with a call to 
+<code>check(OPAREN)</code>.
+To reduce this
+complexity,
+the grammar rule for <i>unary</i> could have been written more clearly as:
+<br/>
+
+<pre>
+    unary : NUMBER 
+          | varExpression 
+          | OPAREN expression CPAREN
+  
+    varExpression : VARIABLE 
+                  | VARIABLE OPAREN optEexpressionList CPAREN
+</pre>
+
+<br/>
+yielding implementations of:
+<br/>
+
+<pre>
+    function unary() 
+        { 
+        if (check(NUMBER)) 
+            { 
+            match(NUMBER); 
+            } 
+        else if (varExpressionPending()) 
+            { 
+            varExpression(); 
+            } 
+        else 
+            { 
+            match(OPAREN); 
+            expression(); 
+            match(CPAREN); 
+            } 
+        }
+
+    varExpression() 
+        { 
+        match(VARIABLE); 
+        if (check(OPAREN)) 
+            { 
+            match(OPAREN); 
+            optExpressionList();
+            match(CPAREN); 
+            } 
+        }
+  
+    varExpressionPending() 
+        { 
+        return check(VARIABLE); 
+        }
+</pre>
+
+The grammar rule and implementation of <i>optExpressionList</i> is
+similar the grammar rules for list seen earlier.
+<br/>
+<!-- section -->
+<h2> Summary
+<br/>
+</h2><!-- section ENDED -->
+
+In summary,
+each grammar rule corresponds to a function.
+Each
+non-terminal on the right-hand side corresponds to a function call to
+the function that associated with that non-terminal.
+Each terminal
+corresponds to a call to
+<i>match</i>.
+Each "or" corresponds to a call to <i>check</i> or a pending function.
+It is
+as simple
+as that.
+<br/>
+<br/>
+As a final note,
+the recursive descent functions described thus far
+do
+not return anything.
+The functions merrily move through the lexical
+input
+stream until it is exhausted or until <i>match</i> detects an error.
+Later, you will modify your recognizer so that it
+returns <i>abstract syntax trees</i>, commonly referred to as
+<i>parse trees</i>.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

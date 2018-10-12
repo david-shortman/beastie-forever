@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:15 2015 -->
+<head>
+<title>The Art and Craft of Programming -- The C Framework</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_2.html">
+  <img border="0" alt="Starting Out" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_4.html">
+  <img border="0" alt="Testing code examples" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>The C Framework</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>The C Framework</h1>
+<p>Working with C requires that you be able to edit a text file.
+I use <i>vim</i> as my text editor. <i>Vim</i> is
+an editor that was written by programmers
+for programmers (<i>emacs</i> is another such
+editor) and Serious Computer Scientists
+and Programmers should learn either <i>vim</i> or <i>emacs</i>.
+</p>
+<p>C also requires that your program follow certain guidelines, such as
+your source code 
+having a function called <i>main</i>. You may not know what a function
+is, so we are going to give you an entire program for you to enter 
+into a file named <i>hello.c</i>. By convention, all C programs and
+modules (we will learn about modules later) should be stored as
+text files with the filenames ending in <i>.c</i>.  Please note that case
+is important - you must enter a lowercase <i>.c</i>.
+</p>
+
+<h2><a name="id1">Your first program</a></h2><p>
+Using vim (or emacs), place the following code in a file named <i>hello.c</i>:
+</p>
+<pre>
+    int
+    main()
+        {
+        printf("hello, world!");
+        return 0;
+        }
+</pre>
+<p>Save your work and exit the text editor.
+</p>
+<p>Now issue the following command at the
+system prompt to <i>compile</i> the file:
+</p>
+<pre>
+    gcc hello.c
+</pre>
+<p>Compiling
+and linking (more on linking when we get to modules) is
+the process of turning source code (what you placed in
+the file <i>hello.c</i>) into executable code (code that
+your computer can understand and run).
+If you do a directory listing after running the above command,
+you should see a new file created named <i>a.out</i>.
+This new file contains the executable code. To run the
+code, one types the command:
+</p>
+<pre>
+    ./a.out
+</pre>
+<p>You should see the phrase:
+</p>
+<pre>
+    hello, world!
+</pre>
+<p>displayed on your console. Note that if you are using Cygwin, the executable
+will be named <i>a.exe</i>, instead of <i>a.out</i>. Here's a trace of both commands:
+</p>
+<pre>
+    lusth@warka:~$ gcc hello.c
+    lusth@warka:~$ ./a.out
+    hello, world!
+    lusth@warka:~$
+</pre>
+<p>where <code>lusth@warka:~$</code> is my system prompt;
+yours will be different.
+</p>
+
+<h2><a name="id2">More advanced compilation</a></h2><p>
+Most advanced programmers do not compile this simple way. The command you should
+use from now on should look something like this:
+</p>
+<pre>
+    gcc -Wall -g hello.c -o hello -lm
+</pre>
+<p>The term <code>-Wall</code> tells the compiler to issue all warnings. 
+This will tell you if you have some
+stylistic or other non-critical errors in your code.
+In the Linux world, terms beginning with a dash are denoted <i>options</i>.
+The <code>-g</code> option tells the compiler to save information
+in the executable code that will allow you to debug the code should you need to.
+The <code>-o</code> option says
+to forgo <i>a.out</i> as the name of the executable file; rather the name following the <code>-o</code>
+should be used instead.
+In the example above,
+the name of the executable file is designated to be <i>hello</i> (no extension).
+By convention, the name of the executable file is the base name of the <i>.c</i>
+file that contains
+the <i>main</i> function.
+Finally, the <code>-lm</code> at the end of the <i>gcc</i> command
+adds in some important math functions.
+</p>
+<p>If you ran the <i>gcc</i> command with the <code>-Wall</code> option,
+you would see a couple of
+warning messages generated:
+</p>
+<pre>
+    lusth@warka:~$ gcc -Wall -g hello.c -o hello
+    hello.c: In function 'main':
+    hello.c:4:5: warning: implicit declaration of function 'printf'
+    hello.c:4:5: warning: incompatible implicit declaration of built-in function 'printf'
+</pre>
+<p>You will receive many such warnings in your C programming career.
+The warning states that we are calling a built-in function named <code>printf</code>,
+yet we haven't told the compiler how
+one calls the <i>printf</i> function<sup><a href="index_26.html#footnote-1">1</a></sup>.
+We fix this problem by telling the compiler
+to look for the missing information in what is known as a <i>standard</i>
+<i>header</i> file. Header files, by conventions, end in <i>.h</i>.
+We use the <i>include</i> directive to indicate the name of the header file.
+Our program now
+becomes:
+</p>
+<pre>
+    #include &lt;stdio.h&gt;
+    
+    int
+    main()
+        {
+        printf("hello, world!");
+        return 0;
+        }
+</pre>
+<p>With this addition, our program compiles without any warnings issued.
+</p>
+<p>From now on, always use the <code>-Wall</code>,
+<code>-g</code>, and <code>-o</code> options when compiling unless you have good reason
+not to.
+</p>
+
+<h2><a name="id3">Breaking down <i>hello.c</i></a></h2><p>
+Let's look in more detail at the <i>hello.c</i> program. We have annotated it
+to show the line numbers:
+</p>
+<pre>
+    1:    #include &lt;stdio.h&gt;
+    2:    
+    3:    int
+    4:    main()
+    5:        {
+    6:        printf("hello, world!");
+    7:        return 0;
+    8:        }
+</pre>
+<p>As stated previously, line 1 is an include directive, which informs the
+compiler what a call to the <i>printf</i> function (among many functions)
+should look like. We can tell we are including a standard header file
+by the use of the angle brackets
+(the <i>less than</i> and <i>greater than</i> symbols).
+A standard header file is installed for you automatically and you generally
+don't need to know where it is located<sup><a href="index_26.html#footnote-2">2</a></sup>.
+Later, we will learn how to define and include local header files.
+</p>
+<p>Line 3 holds the <i>return type</i> of the <i>main</i> function. You can think of
+a function as a little factory. It takes in raw data and produces refined
+data or <i>information</i>.
+The data, whether raw or refined, is made up of the primitive values or
+collections thereof.
+These values all have types, which you will learn about in the next chapter.
+One of the primitive types is <code>int</code>,
+which stands for an integer. So line 3
+is saying that the <i>main</i> function will produce an integer as a result of
+the work it does.
+</p>
+<p>Line 4 holds the name of the function (in this case <i>main</i>)
+and a comma-separated, parenthesized list of the
+receptacles that will hold the incoming raw data (in this case, there are
+no receptacles). If <i>main</i> had required some incoming raw data to do its
+job, the names of the receptacles and the types of data the receptacles hold
+would be listed between the parentheses. As <i>hello.c</i> is such a simple
+program, the <i>main</i> function does not need any incoming data, leading to
+the empty set of parentheses.
+Together, lines 3 and 4 compose the <i>signature</i> of a function. 
+Later on, you will
+learn more on functions, function signatures, and formal parameters (the
+official name of the receptacles that hold the incoming raw data).
+</p>
+<p>Line 5 is an <i>open brace</i>, which indicates the beginning of a <i>block</i>.
+A block is a section of code which is run sequentially. A line of code
+that appears earlier in the block is <i>executed</i><sup><a href="index_26.html#footnote-3">3</a></sup>
+after any preceding code in the block and prior to any subsequent code in the
+block.
+Line 8 holds a <i>close brace</i>,
+which indicates the end of a block of code.
+</p>
+<p>Lines 6 and 7 are the lines of code in the block that is associated
+with the <i>main</i> function. We visually show the block belongs to <i>main</i>
+by indenting it. Line 6 prints out the message we see when we run the
+program. Line 7 gives the refined data value that the <i>main</i> function
+produces as a result of all its work. In this case, it says that the
+<i>main</i> function returns a zero when it is done. Note that zero is
+an integer, which matches the return type found on line 3.
+The return value of a function is almost always used in some way, often
+serving as the raw data to be given to some other function. In the case
+of <i>main</i> functions in C programs, the return value of <i>main</i> indicates
+whether or not the program ran successfully. By conventions, a zero
+return value from <i>main</i> means 'zero errors'. If an error occurred,
+some other integer value would be returned. We will learn how to choose
+between returning zero or some other integer when we learn about conditionals.
+</p>
+<p>All C programs require a <i>main</i> function,
+so until you can write a <i>main</i>
+function for scratch, use the following version as a starting point:
+</p>
+<pre>
+    //template for testing code
+    //download with: wget troll.cs.ua.edu/ACP-C/tester.c
+    #include &lt;stdio.h&gt;     // Provides standard I/O functions
+    #include &lt;stdlib.h&gt;    // Includes a number of basic built-in functions
+    #include &lt;string.h&gt;    // Provides functions that operate on strings
+    #include &lt;math.h&gt;      // Provides a wealth of mathematical functions
+
+    int
+    main(int argc,char **argv)
+        {
+        /* place code here */
+
+        return 0;
+        }
+</pre>
+<p>You'll notice this version has a few more include directives plus a
+couple of
+formal parameters for the <i>main</i> function.
+These formal parameters accept any command-line arguments (as stated earlier,
+command-line arguments will be covered in a later chapter).
+In addition, the very first line is a <i>comment</i>, meaning it is there
+to be read, but is otherwise ignored by the C compiler.
+Comments that begin with <code>//</code> are called <i>line comments</i>;
+the
+compiler ignores those characters and
+every character beyond on the same line.
+The template program exhibits another style of comment, the block comment.
+In a block comment, the <code>/*</code> and <code>*/</code> characters and all the characters between,
+are ignored by the compiler. The advantage of block comments is
+that they can be placed in between source code bits and 
+can also span lines.
+</p>
+
+<h2><a name="id4">About C programs and whitespace</a></h2><p>
+Other than line comments and include directives,
+there are no rules for C programs
+specifying what parts of the programs have to be on what lines. For example,
+the template program above could have been written like this:
+</p>
+<pre>
+    //template for testing code
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include &lt;math.h&gt;
+    int main(int argc,char **argv) { /* place code here */ return 0; }
+</pre>
+<p>Note that the entire <i>main</i> function is on a single line.
+This is because C is a <i>free-format</i> language. A free-format language
+says wherever you can have <i>whitespace</i> (a space or a tab or a newline),
+you can replace it with some other kind of whitespace or any combination of
+whitespace characters.
+</p>
+
+<h2><a name="id5">Vim and C</a></h2><p>
+In order to be most efficient at programming, one needs to configure the
+editor to understand the language being edited.
+We will do that now.
+</p>
+<p>Move into your home directory with the:
+</p>
+<pre>
+    cd
+</pre>
+<p>command and list the files found there
+with this version of the <i>ls</i> command:
+</p>
+<pre>
+    ls -al
+</pre>
+<p>If you see the file <i>.exrc</i>, then all is well and good.
+If you do not, then run the following command to
+retrieve it:
+</p>
+<pre>
+    (cd ; wget troll.cs.ua.edu/ACP-C/.exrc)
+</pre>
+<p>This places a copy of the <code>.exrc</code> file in your home directory.  It contains
+a number of commands that help customize <tt>vim</tt> for writing C programs, they
+configure <tt>vim</tt> to understand C syntax and to color various primitives and
+keywords in a pleasing manner. 
+These commands are processed every time that you invoke <tt>vim</tt>.
+</p>
+
+<h2><a name="id6">Four Shortcuts to Improve Efficiency</a></h2><p>
+You can program your entire life without knowing the following four shortcuts.
+However, that is the same as typing <tt>http://</tt> on every website that you visit.
+You can save time if you know a few basic tricks for the <i>edit-compile-test</i> cycle.
+</p>
+
+<h3><a name="id7">Running a Program without leaving the Editor</a></h3><p>
+Since you spend a lot of your development time in the edit-compile-test cycle,
+being able to compile and test your program without officially leaving the editor
+can save significant time.  We can add some macros (shortcuts) to <i>vim</i> so that
+compilation and testing of your program can be done while editing.
+</p>
+<p>First, go to your home directory (<i>cd</i>) and check to see if you have an <i>.exrc</i>
+file.  If you retrieved the <tt>.exrc</tt> file from <i>troll.cs.ua.edu</i>
+as described in Section 2.5, then this line already exists.
+If you do not have a <i>.exrc</i> file in your home directory then either copy it (as
+described in Section 2.5) or create
+the file yourself and add this line at the top of the file:
+</p>
+<pre>
+    map @    :!clear; rm -f a.out; gcc -Wall -g % -lm; ./a.out^M
+</pre>
+<p>The <code>^M</code> part of the macro is not a two character sequence
+(<code>^</code> followed by <tt>M</tt>),
+but a single character made by typing <code>&lt;Ctrl&gt;-v</code> followed by
+<code>&lt;Ctrl&gt;-m</code>.
+It's just when you type <code>&lt;Ctrl&gt;-v &lt;Ctrl&gt;-m</code>, it will display as
+<code>^M</code>.
+</p>
+<p>What this line says is that, when the <code>@</code> key is pressed, the system should:
+</p>
+<ol><li>clear the screen,
+</li><li>remove the old <i>a.out</i> file,
+</li><li>run the <i>gcc</i> compiler on
+the file you are currently editing and place the executable
+code in the default file named <i>a.out</i>,
+</li><li>then run the executable code.
+</li></ol>
+<p>Remember, to save your work (<tt>:w</tt> is one method) before running this command.
+Also, if you are using Cygwin, then
+replace the occurrences of <i>a.out</i> with <i>a.exe</i>.
+</p>
+<p>How does this work?  Suppose you are editing a file named
+<i>project1.c</i>, then the <code>@</code> command would be equivalent to you 
+first saving your file, exiting the editor, and then running the commands:
+</p>
+<pre>
+    lusth@warka:~$ rm a.out
+    lusth@warka:~$ gcc -Wall -g project1.c -lm
+    lusth@warka:~$ ./a.out
+</pre>
+<p>You can see that the <code>@</code> macro saves you quite a bit of typing!
+</p>
+
+<h3><a name="id8">Running a Program with Command Line Arguments from within the Editor</a></h3><p>
+As you expand your programming knowledge, you will be writing programs that take
+<i>command-line arguments</i> when you execute them.  These are simply data
+values that are provided when you execute the program.  In these cases, you need
+to be able to enter them before hitting <tt>return</tt> on the line that invokes
+your program.  So that <code>^M</code> in the <code>@</code> command above needs to be removed, as 
+<code>^M</code> represents an <i>enter</i> on the command line.
+Thus, we create a new macro <code>#</code> that is the same as the old,
+except the <code>^M</code> has been removed.
+The <code>#</code> macro pauses to let you enter
+command-line arguments to your C program<sup><a href="index_26.html#footnote-4">4</a></sup>.
+</p>
+<pre>
+    map # :!clear; rm a.out; gcc -Wall -g % -lm; ./a.out
+</pre>
+<p>As you did with the <code>@</code> macro, add the line above to the <i>.exrc</i> file
+in your home directory if it does not already exist.
+</p>
+
+<h3><a name="id9">Configuring VIM to Display C Programs Elegantly</a></h3><p>
+The commands below help <i>vim</i> to display C programs in a pleasing format.
+Make sure to add these lines to your <i>.exrc</i> if you had to create one from 
+scratch:
+</p>
+<pre>
+    set autoindent
+    set shiftwidth=4
+    set tabstop=4
+    set expandtab
+    set softtabstop=4
+    set smarttab
+    syntax enable 
+    autocmd FileType make setlocal noexpandtab
+</pre>
+
+<h3><a name="id10">Cut and Paste in VIM using the Mouse</a></h3><p>
+You can copy and paste test code with the mouse.
+On a Linux system, the copy command is <code>Shift-Control-c</code>,
+rather than <code>Control-c</code> used in Windows. This is because
+<code>Control-c</code> in Linux means "kill the currently running program".
+You will find <code>Control-c</code> quite useful when you write programs
+that don't behave like you think they should.
+The paste command is <code>Control-v</code>, just like it is in Windows.
+</p>
+<p>Because you likely have autoindent turned on in Vim, when you
+get ready to paste, turn off autoindent with the vim command:
+</p>
+<pre>
+    :set noai
+</pre>
+<p>Then go into insert mode and do the paste. To turn autoindent back on,
+enter this vim command:
+</p>
+<pre>
+    :set ai
+</pre>
+<p>The <i>.exrc</i> file on <i>troll</i> has a macro that takes care of the
+pasting issue:
+</p>
+<pre>
+    map &lt;F9&gt; :set paste!
+</pre>
+<p>This macro toggles autoindent,
+so to paste with the mouse, press <code>&lt;F9&gt;</code> first.
+Press <code>&lt;F9&gt;</code> again to turn autoindent back on.
+</p>
+
+<h2><a name="id11">One Final Comment</a></h2><p>
+In subsequent chapters, code that we wish for you to insert
+into the template C program, <i>tester.c</i>, given above
+will start with:
+</p>
+<pre>
+    //test
+</pre>
+<p>This is simply a shorthand notation used in the text.  Mentally,
+you should replace <tt>//test</tt> with:
+</p>
+<pre>
+    //template for testing code
+    //download with: wget troll.cs.ua.edu/ACP-C/tester.c
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include &lt;string.h&gt;
+    #include &lt;math.h&gt;
+
+    int
+    main(int argc,char **argv)
+        {
+</pre>
+<p>and follow the test code with:
+</p>
+<pre>
+        return 0;
+        }
+</pre>
+<p>Computer Scientists are all about efficiency; we can make the process of
+testing code fragments in this book even easier. We do so by writing
+a program (no surprise there)
+that does this mental replacement for you; the program is
+called <i>quickc</i> and is discussed in the next chapter.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_2.html">
+  <img border="0" alt="Starting Out" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_4.html">
+  <img border="0" alt="Testing code examples" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>The C Framework</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>invar</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Invariants
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="invar.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ Introduction
+
+<br/>
+</h2><!-- section ENDED -->
+
+The liberal use of invariants can greatly reduce the number of bugs
+in your code. The problem is identifying useful invariants. Here is
+a typical first stab at a
+binary search routine. In this
+version, the high and low limits of the search are required to specify
+a valid range.
+<br/>
+
+<pre>
+    function search(items,lo,hi,value)
+        {
+        // hi &gt;= lo
+        // value not below index lo
+        // value not above index hi
+        // if lo &gt; 0 then value &gt;= items[lo]
+        // if high &lt; length(items) - 1 then value &lt;= items[hi]
+    
+        var result;
+        var middle = (lo + hi) / 2;
+    
+        if (items[middle] == value)
+            result = True;
+        else if (lo == hi)
+            result = False;
+        else if (items[middle] &lt; value)
+            result = search(items,middle + 1,hi,value);
+        else
+            result = search(items,lo,middle - 1,value);
+    
+        // if result == False, then value not in items[lo..hi]
+        // if result == True, then value in items[lo..hi]
+    
+        return result;
+        }
+</pre>
+
+Note that this version is incorrect in the case of a 2 element
+array with the first element smaller than the target value. The invariant
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>h</mi>	<mi>i</mi>	<mo>&ge;</mo>	<mi>l</mi>	<mi>o</mi></mrow></math> would have caught this error.
+A fix is to add this if clause
+after the 
+<code>if (lo == hi)</code> clause:
+<br/>
+
+<pre>
+    else if (lo == middle &amp;&amp; items[middle] &gt; value)
+        result = False;
+</pre>
+
+Sometimes changing an invariant sometimes leads to a cleaner implementation.
+In this version, we insist that <i>hi</i> always be greater than <i>lo</i>
+(we will assume that the value of <i>hi</i> is one higher than the index
+of the last element to be searched).
+<br/>
+
+<pre>
+    function search(items,lo,hi,value)
+        {
+        // hi &gt; lo
+        // value not below index lo
+        // value not above hi-1
+        // if lo &gt; 0 then value &gt;= items[lo]
+        // if high &lt; length(items) then value &lt;= items[hi -1]
+
+        int result;
+
+        int middle = (lo + hi) / 2;
+
+        if (items[middle] == value)
+            result = True;
+        else if (lo == middle)
+            result = False;
+        else if (value &gt; items[middle])
+           result = search(items,middle+1,hi,value);
+        else
+            result = search(items,lo,middle,value);
+
+        // if result == False, then value not in items[lo..hi-1]
+        // if result == True, then value in items[lo..hi-1]
+
+        return result;
+        }
+</pre>
+
+Here's another example. This time we will search a binary tree:
+<br/>
+
+<pre>
+    int search(t,value)
+        {
+        //t points to an actual Tree (e.g. t is not NULL)
+
+        var result;
+
+        if (t.value == value)
+            result = True;
+        else if (t.left != NULL &amp;&amp; t.value &lt; value)
+            result = search(t.left,value);
+        else if (t.value &lt; value)
+            result = False;
+        else if (t.right != NULL)
+            result = search(t.right,value);
+        else
+            result = False;
+
+        // if result == False, value is not in tree t
+        // if result == True, value is in tree t
+
+        return result;
+        }
+</pre>
+
+This time, relaxing an invariant leads to a cleaner implementation:
+int
+<br/>
+
+<pre>
+    int search(Tree *t,int value)
+        {
+        //t points to an actual Tree or t is NULL
+
+        int result;
+
+        if (t == NULL)
+            result = False;
+        else if (t.value == value)
+            result = True;
+        else if (t.value &lt; value)
+            result = search(t.left,value);
+        else
+            result = search(t.right,value);
+
+        // if result == False, value is not in tree t
+        // if result == True, value is in tree t
+
+        return result;
+        }
+</pre>
+
+This second version reduced the number of cases from five to four and
+reduced the total number of tests from five to three.
+<br/>
+<!-- section -->
+<h2>
+ Assertions
+<br/>
+</h2><!-- section ENDED -->
+
+Assertions are run time checks that ensure an invariant holds.
+In Scam, one can define a simple <i>assert</i> function that enforces a given
+invariant:
+<br/>
+
+<pre>
+    (define (assert # $invariant)
+        (define passed (eval $invariant #))
+        (if (not passed)
+            (throw
+                &#39;assertionFailure
+                (string+ &quot;invariant &quot; (string $invariant) &quot; failed!&quot;)
+                )
+            )
+        )
+</pre>
+
+The <i>assert</i> function delays the evaluation of the invariant so that
+the string form of the invariant can be obtained.
+This string form is
+used to generate a helpful exception should evaluation of the
+invariant result in a false value.
+<br/>
+Rewriting the binary seach routine in Scam and using the <i>assert</i> function,
+yields:
+<br/>
+
+<pre>
+    (define (search items lo hi value)
+        (assert (&gt;  hi lo))
+        (assert (eq? (linearSearch items 0 lo value) #f))
+        (assert (eq? (linearSearch items hi (length items) value) #f))
+        (assert (or (= lo 0) (&gt;= value (getElement items lo)))
+        (assert (or (= hi (length items) (&lt;= value (getElement items (- hi 1)))))
+
+        (define result)
+
+        (define middle (/ (+ lo hi) 2))
+
+        (cond
+            ((= (getElement items middle) value)
+                (set! result #t))
+            ((= lo middle)
+                (set! result #f))
+            ((&gt; value (getElement items middle))
+                (set! result (search items (+ middle 1) hi value)))
+            (else
+                (set! result (search items lo middle value)))
+            )
+
+        (if (eq? result #f)
+            (assert (eq? (linearSearch items lo hi value) #f))
+            (assert (eq? (linearSearch items lo hi value) #t))
+            )
+
+        result
+        )
+</pre>
+
+The initial assertions that begin with <i>or</i> employ the transformation
+of an <i>if</i>:
+<br/>
+
+<pre>
+   if E then S
+</pre>
+
+to a logical implication:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>E</mi>	<mo>&rarr;</mo>	<mi>S</mi></mrow></math>
+</span>
+
+<br/>
+to a logical disjunction:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo>&not;</mo>	<mi>E</mi>	<mo>&or;</mo>	<mi>S</mi></mrow></math>
+</span>
+
+<br/>
+Note also the use of an alternate search method, <i>linearSearch</i>, that is
+used to enforce some of the preconditions and postconditions. A common
+programming
+technique is to use
+a simple, but inefficient, algorithm
+to verify
+a complex, but efficient, one.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

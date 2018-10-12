@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>logic</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="bigger"><span class="bigger">ECE 121</span></span>
+<br/>
+<br/>
+<span class="bigger">Boolean Logic</span>
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>binary and decimal numbers</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ What is the binary representation of the decimal number 47?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>101111
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 111100
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 100011
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 110001
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ What is the decimal representation of the binary number 1001?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 15
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 10
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 8
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>9
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>Boolean algebra</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ In Boolean algebra, what is 0 + 0, 0 + 1, 1 + 0, and 1 + 1?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0, 0, 1, and 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>0, 1, 1, and 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0, 1, 1, and 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0, 01, 10, and 11
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ In Boolean algebra, what is 0 * 0, 0 * 1, 1 * 0, and 1 * 1?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0, 1, 1, and 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0, 01, 10, and 11
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0, 0, 1, and 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>0, 0, 0, and 1
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ Using De Morgan's rule, <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mrow>			<mover accent="true">				<mi>A</mi>				<mo stretchy="true">&OverBar;</mo>			</mover>			<mspace width="0.167em" />			<mi>B</mi>			<mo>+</mo>			<mi>C</mi>		</mrow>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math> is equivalent to:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mover accent="true">			<mi>A</mi>			<mo stretchy="true">&OverBar;</mo>		</mover>		<mo>+</mo>		<mi>B</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>*</mo>	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mover accent="true">			<mi>A</mi>			<mo stretchy="true">&OverBar;</mo>		</mover>		<mo>+</mo>		<mover accent="true">			<mi>B</mi>			<mo stretchy="true">&OverBar;</mo>		</mover>		<mo form="postfix">)</mo>	</mrow>	<mo>*</mo>	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>A</mi>		<mo>+</mo>		<mover accent="true">			<mi>B</mi>			<mo stretchy="true">&OverBar;</mo>		</mover>		<mo form="postfix">)</mo>	</mrow>	<mo>*</mo>	<mover accent="true">		<mrow>			<mover accent="true">				<mi>C</mi>				<mo stretchy="true">&OverBar;</mo>			</mover>		</mrow>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>A</mi>		<mo>+</mo>		<mover accent="true">			<mi>B</mi>			<mo stretchy="true">&OverBar;</mo>		</mover>		<mo form="postfix">)</mo>	</mrow>	<mo>*</mo>	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Using De Morgan's rule, <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mrow>			<mrow>				<mo form="prefix">(</mo>				<mi>A</mi>				<mo>+</mo>				<mover accent="true">					<mi>B</mi>					<mo stretchy="true">&OverBar;</mo>				</mover>				<mo form="postfix">)</mo>			</mrow>			<mo>*</mo>			<mover accent="true">				<mi>C</mi>				<mo stretchy="true">&OverBar;</mo>			</mover>		</mrow>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math> is equivalent to:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mover accent="true">			<mi>A</mi>			<mo stretchy="true">&OverBar;</mo>		</mover>		<mo>+</mo>		<mi>B</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>A</mi>	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mo>+</mo>	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi>	<mo>+</mo>	<mi>C</mi></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mover accent="true">			<mi>A</mi>			<mo stretchy="true">&OverBar;</mo>		</mover>		<mo>+</mo>		<mover accent="true">			<mi>B</mi>			<mo stretchy="true">&OverBar;</mo>		</mover>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>logic gates</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Feeding the value <i>A</i> to both inputs of a NAND gate yields what
+value on the output?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>A</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ Feeding the value <i>A</i> to both inputs of a NOR gate yields what
+value on the output?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>A</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ Feeding the value <i>A</i> to one input of a NOR gate and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math> to
+the other yields what
+value on the output?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>A</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ Feeding the value <i>A</i> to one input of a NAND gate and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math> to
+the other yields what
+value on the output?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>A</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>1
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ Which logic implements NAND?
+
+
+<br/>
+<div class="ldraw">
+<image src="/concepts/ee/digital/img-logic-0-0.png">
+</div>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> both the leftmost and rightmost structures
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the leftmost structure
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the structure in the middle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the rightmost structure
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ Which logic implements NAND?
+
+
+<br/>
+<div class="ldraw">
+<image src="/concepts/ee/digital/img-logic-1-0.png">
+</div>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> both the leftmost and rightmost structures
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the structure in the middle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the rightmost structure
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the leftmost structure
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ Considering the inputs <i>A</i> and <i>B</i> and output <i>C</i>,
+the following logic is equivalent to which function?
+
+
+<br/>
+<div class="ldraw">
+<image src="/concepts/ee/digital/img-logic-2-0.png">
+</div>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the NOR of <i>A</i> and <i>B</i> gives <i>C</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the NAND of <i>A</i> and <i>B</i> gives <i>C</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the AND of <i>A</i> and <i>B</i> gives <i>C</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the XOR of <i>A</i> and <i>B</i> gives <i>C</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ Considering the inputs <i>A</i> and <i>B</i> and output <i>C</i>,
+the following logic is equivalent to which function?
+
+
+<br/>
+<div class="ldraw">
+<image src="/concepts/ee/digital/img-logic-3-0.png">
+</div>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the NOR of <i>A</i> and <i>B</i> gives <i>C</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the AND of <i>A</i> and <i>B</i> gives <i>C</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the NAND of <i>A</i> and <i>B</i> gives <i>C</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the XOR of <i>A</i> and <i>B</i> gives <i>C</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>truth tables</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ Consider the following truth table that only lists the rows where the resulting
+function <i>f</i> has a 1 (the rows where <i>f</i> is zero are omitted):
+
+<pre>
+    A  B  C  f
+    0  0  0  1
+    1  1  1  1
+</pre>
+
+Which of the following functions accurately reflect the above table?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>A</mi>	<mo>+</mo>	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi>	<mo>+</mo>	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mo>+</mo>	<mi>A</mi>	<mspace width="0.167em" />	<mi>B</mi>	<mspace width="0.167em" />	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>A</mi>	<mo>+</mo>	<mi>B</mi>	<mo>+</mo>	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = 1
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ Consider the following truth table that only lists the rows where the resulting
+function <i>f</i> has a 1 (the rows where <i>f</i> is zero are omitted):
+
+<pre>
+    A  B  C  f
+    0  0  0  1
+    0  1  0  1
+    0  1  1  1
+    1  1  0  1
+</pre>
+
+Which of the following functions accurately reflect the above table?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mo>+</mo>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi>	<mspace width="0.167em" />	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mo>+</mo>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi>	<mspace width="0.167em" />	<mi>C</mi>	<mo>+</mo>	<mi>A</mi>	<mspace width="0.167em" />	<mi>B</mi>	<mspace width="0.167em" />	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>B</mi>	<mo>+</mo>	<mi>B</mi>	<mspace width="0.167em" />	<mi>C</mi>	<mo>+</mo>	<mi>A</mi>	<mspace width="0.167em" />	<mi>B</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi>	<mspace width="0.167em" />	<mi>C</mi>	<mo>+</mo>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi>	<mspace width="0.167em" />	<mi>C</mi>	<mo>+</mo>	<mi>A</mi>	<mspace width="0.167em" />	<mi>B</mi>	<mspace width="0.167em" />	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi>	<mspace width="0.167em" />	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mo>+</mo>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi>	<mspace width="0.167em" />	<mi>C</mi>	<mo>+</mo>	<mi>A</mi>	<mspace width="0.167em" />	<mi>B</mi>	<mspace width="0.167em" />	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ Consider the following truth table that only lists the rows
+where the resulting
+function <i>f</i> has a 1 (the rows where <i>f</i> is zero are omitted):
+
+<pre>
+    A  B  C  f
+    0  0  1  1
+    0  1  0  1
+    0  1  1  1
+    1  1  0  1
+</pre>
+
+When transformed into a standard Karnaugh map, as shown in lecture,
+row 1, column 3 and row 2, column 1 have which entries, respectively?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1 and 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0 and 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0 and 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>1 and 1
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ Consider the following truth table that only lists the rows
+where the resulting
+function <i>f</i> has a 1 (the rows where <i>f</i> is zero are omitted):
+
+<pre>
+    A  B  C  f
+    0  0  1  1
+    0  1  0  1
+    0  1  1  1
+    1  1  0  1
+</pre>
+
+Using a standard Karnaugh map, as shown in lecture,
+what is a minimal description of <i>f</i>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi>	<mo>+</mo>	<mi>C</mi></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>B</mi>	<mspace width="0.167em" />	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mo>+</mo>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>B</mi>	<mo>+</mo>	<mi>A</mi>	<mspace width="0.167em" />	<mi>B</mi>	<mo>+</mo>	<mi>C</mi>	<mo>+</mo>	<mi>B</mi>	<mspace width="0.167em" />	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi>	<mo>+</mo>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>C</mi>	<mo>+</mo>	<mi>A</mi>	<mspace width="0.167em" />	<mi>B</mi>	<mspace width="0.167em" />	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ Consider the following truth table that only lists the rows
+where the resulting
+function <i>f</i> has a 1 (the rows where <i>f</i> is zero are omitted):
+
+<pre>
+    A  B  C  f
+    0  0  1  1
+    1  0  1  1
+    1  0  0  1
+    1  1  0  1
+</pre>
+
+Using a standard Karnaugh map, as shown in lecture,
+what is a minimal description of <i>f</i>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>A</mi>	<mspace width="0.167em" />	<mover accent="true">		<mi>C</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mo>+</mo>	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi>	<mo>+</mo>	<mi>A</mi>	<mspace width="0.167em" />	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi>	<mo>+</mo>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>C</mi>	<mo>+</mo>	<mi>A</mi>	<mspace width="0.167em" />	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>B</mi>	<mo>+</mo>	<mi>C</mi></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ Consider the following truth table that only lists the rows
+where the resulting
+function <i>f</i> has a 1 (the rows where <i>f</i> is zero are omitted):
+
+<pre>
+    A  B  C  f
+    0  0  0  1
+    0  0  1  1
+    1  0  0  1
+    1  0  1  1
+    1  1  1  1
+</pre>
+
+Using a standard Karnaugh map, as shown in lecture,
+what is a minimal description of <i>f</i>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mo>+</mo>	<mi>A</mi>	<mspace width="0.167em" />	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mo>+</mo>	<mi>A</mi>	<mspace width="0.167em" />	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>B</mi>	<mo>+</mo>	<mi>A</mi>	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mo>+</mo>	<mi>A</mi>	<mspace width="0.167em" />	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>f</i> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>A</mi>	<mover accent="true">		<mi>B</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mo>+</mo>	<mover accent="true">		<mi>A</mi>		<mo stretchy="true">&OverBar;</mo>	</mover>	<mspace width="0.167em" />	<mi>B</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

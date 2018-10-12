@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Aug 18 09:08:15 2014 -->
+<head>
+<title>An Encyclop&aelig;dia of Elementary Data Structures -- Dynamic Arrays</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_7.html">
+  <img border="0" alt="Circular Arrays" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_9.html">
+  <img border="0" alt="Dynamic Circular Arrays" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Dynamic Arrays</h1>
+
+<h2><a name="id1">Synopsis</a></h2><p>
+A dynamic array 
+is a fillable array that can grow in capacity should the array
+become completely filled, thus making room for more additions.
+Conversely, a dynamic array can shrink in capacity if it
+becomes mostly empty.
+</p>
+
+<h2><a name="id2">Structure</a></h2><p>
+The typical dynamic array object adds one component
+to those of a
+<a href="index_6.html#FillableArraysStructure">fillable array</a>.
+</p>
+<pre>
+    class dynamic-array extends fillable-array
+        {
+        var factor = 2;         //how much to grow or shrink the store by
+        //operations
+        ...
+        }
+</pre>
+<p>The <i>factor</i> is typically set to two, which means growing the array
+doubles its capacity. Conversely, shrinking the array halves the
+capacity.
+</p>
+
+<h2><a name="DynamicArraysVocabulary">Vocabulary</a></h2>
+<p>The terms used in describing a dynamic array,
+in addition to those of
+<a href="index_5.html#ArraysVocabulary">normal arrays</a>,
+are:
+</p>
+<dl><dt>dynamic fillable array</dt><dd>
+a more precise description of this data structure.
+</dd><dt>slot</dt><dd>
+A spot in the array which may or may not hold an element.
+Each spot is associated with a unique <i>index</i>.
+</dd><dt>empty slot</dt><dd>
+A spot in the array that does not (yet) hold an element.
+</dd><dt>filled slot</dt><dd>
+A spot in the array that holds an element.
+</dd><dt>capacity</dt><dd>
+The maximum number of elements that can be stored in an array.
+Also, the length of the array.
+</dd><dt>front</dt><dd>
+The first/leftmost value in the array.
+</dd><dt>back</dt><dd>
+The last/rightmost value in the array. With zero-based counting,
+if the array is non-empty, the back (or <i>rear</i>) element in
+the array has index <i>size</i> - 1.
+</dd><dt>size</dt><dd>
+The number of elements stored in the array. The size ranges from
+0 (the array is completely empty) to the capacity of the array
+(the array is completely full). Also, with zero-based counting
+the size of the array is also an index that points to the
+next available slot.
+</dd></dl>
+
+<h2><a name="id4">Supports</a></h2><p>
+Dynamic arrays can be used to implement:
+</p>
+<ul><li><a href="index_13.html">Unbounded Stacks</a>
+</li></ul>
+<p>They are also useful for reading in an unknown quantity
+of data:
+</p>
+<pre>
+    items = new-dynamic-array();
+
+    value = readValue();
+    if (valid(value))
+        {
+        items.add-to-back(value);
+        value = readValue();
+        }
+    items.shrink-to-fit();
+</pre>
+<p>The <i>shrink-to-fit</i> is like <a href="#DynamicArraysShrink">shrink</a>, but the
+operation removes all empty slots.
+</p>
+
+<h2><a name="id5">Dependencies</a></h2><p>
+Dynamic arrays can be implemented using
+<a href="index_6.html">fillable arrays</a>.
+</p>
+
+<h2><a name="id6">Operations</a></h2>
+
+<h3><a name="DynamicArraysOperationsAdd">add-to-back (override)</a></h3>
+<p>This operation works the same as <i>add-to-back</i> for fillable
+arrays. The only
+difference is, at the very start
+of the operation, a check is made to see if the array
+is full. If it is, a <i>grow</i> operation is performed.
+Whether or not, the array was full at the start of
+<i>add-to-back</i>, there is now at least one empty slot
+in which the new value can be placed.
+</p>
+<pre>
+    function add-to-back(value)
+        {
+        if (size == capacity)
+            grow();
+        store[size] = value;
+        size += 1;
+        }
+</pre>
+<p>This operation takes <i>&#920;(1)</i> time if the array is not
+full, but takes <i>&#920;(n)</i> time if it is, due to the
+expense of the <i>grow</i> operation.
+</p>
+
+<h3><a name="DynamicArraysOperationsRemove">remove-from-back (override)</a></h3>
+<p>As with fillable arrays,
+this operation removes the rightmost <i>value</i> in the array
+and can be done simply by decrementing the size.
+However, a test can be made to see if the array
+has become mostly empty. If so, a <i>shrink</i> operation
+can be performed. A good metric: when the ratio
+of size to capacity is less than 0.25, the array
+should be shrunk.
+</p>
+<p>This operation
+takes <i>&#920;(n)</i> time if shrinking occurs, due to the
+expense of the <i>shrink</i> operation.
+Otherwise, the operation takes <i>&#920;(1)</i> time.
+</p>
+
+<h3><a name="DynamicArraysGrow">grow</a></h3>
+<p>The <i>grow</i> operation performs the following steps:
+</p>
+<ul><li>calculate the new capacity
+</li><li>allocate a new store with the new capacity
+</li><li>copy the elements from the old store to the new store
+</li><li>free the old store
+</li><li>set the data structure's store to the new store
+</li><li>update the capacity
+</li></ul>
+<p>Although it is beyond this document to explain why,
+computing the new capacity using a constant multiplicative
+factor (<i>e.g.</i>, doubling the capacity) gives far better
+efficiency than by using a constant additive term (<i>e.g.</i>,
+increasing the capacity by 100).
+</p>
+
+<h3><a name="DynamicArraysShrink">shrink</a></h3>
+<p>The <i>shrink</i> operation is similar to that of the 
+<a href="#DynamicArraysGrow"><i>grow</i></a> operation,
+except that the capacity is made smaller. As with grow, computing
+the new capacity by dividing by a constant gives better
+performance than by subtracting off a constant.
+</p>
+<p>A variant of <i>shrink</i> is <i>shrink-to-fit</i>, where the capacity
+is reduced to the size so that the resulting store is
+completely filled.
+</p>
+
+<h3><a name="id11">get, set, find</a></h3><p>
+These operations are the same as those for
+(or inherited from)
+<a href="index_6.html#FillableArraysGet">fillable arrays</a>.
+</p>
+
+<h2><a name="id12">Traversals</a></h2><p>
+Traversing a dynamic array proceeds exactly as that for a
+fillable array.
+</p>
+
+<h2><a name="id13">Concept Inventory</a></h2>
+<div align="center">
+</div>
+<ol>&nbsp;
+<li>Suppose a dynamic array has size <i>s</i> and capacity <i>c</i>, with <i>s</i> equal to <i>c</i>. Is the array required to grow on the next addition?
+<ol><li>
+true
+</li><li>
+false
+</li></ol>
+</li></ol>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_7.html">
+  <img border="0" alt="Circular Arrays" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_9.html">
+  <img border="0" alt="Dynamic Circular Arrays" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

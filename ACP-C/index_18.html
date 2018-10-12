@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:17 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Structures</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_17.html">
+  <img border="0" alt="Input and Loops" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_19.html">
+  <img border="0" alt="Nodes" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Structures</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Structures</h1>
+<p>You can download the functions defined or used in this chapter with the
+following commands:
+</p>
+<pre>
+    wget troll.cs.ua.edu/ACP-C/employee.c
+    wget troll.cs.ua.edu/ACP-C/employee.h
+</pre>
+<p>These files will help you run the test code listed in this chapter.
+</p>
+
+<h2><a name="id1">Structures</a></h2><p>
+Arrays in C are limited in that they are homogeneous and
+cannot grow as needed.
+To tackle the homogeneity problem, we will use something called
+a <i>structure</i>; a structure will allow us to collect
+heterogeneous data together. To solve the expandability problem,
+we will use structures to implement linked lists. We'll discuss
+linked-lists in subsequent chapters; for now, we will focus
+on the structures themselves.
+</p>
+<p>Just like we can collect literal values together in an array and
+can collect actions together in a function, we can collect variables
+together in something called a <i>structure</i>.
+Suppose we wished to collect an integer, a string, and a double
+variable together. To do so, we would define a structure like this:
+</p>
+<pre>
+    struct stuff
+        {
+        int x;
+        char *s;
+        double r;
+        };
+</pre>
+<p>A structure in C is introduced with the keyword <code>struct</code>, followed
+by the name of the structure (in this case, <i>stuff</i>)
+followed by a collection of variable
+definitions enclosed in braces. Our <i>stuff</i> structure is composed of
+three variables, <i>x</i>, <i>s</i>, and <i>r</i>.
+</p>
+<p>Like arrays, we can allocate a structure both statically and
+dynamically. A static allocation looks like this:
+</p>
+<pre>
+    struct node n;
+</pre>
+<p>To access the individual variables in a statically allocated structure,
+we use the <i>dot</i> operator:
+</p>
+<pre>
+    //test
+    struct stuff { int x; char *s; double r; }; //define the struct
+    struct stuff n;                             //allocate the struct
+    n.x = 42;
+    n.s = "hello, world!";
+    n.r = 3.14159;
+    printf("n.x is %d\n",n.x);
+    printf("n.s is %s\n",n.s);
+    printf("n.r is %f\n",n.r);
+</pre>
+<p>Running this code yields:
+</p>
+<pre>
+    n.x is 42
+    n.s is hello, world!
+    n.r is 3.141590
+</pre>
+<p>Unlike statically allocated arrays, statically allocated structures
+can be returned from functions under certain circumstances. Such manipulations
+of structures can be inefficient, so we will focus on dynamically
+allocated structures. Here is the dynamically allocated version of the 
+above code fragment:
+</p>
+<pre>
+    //test
+    struct stuff { int x; char *s; double r; }; //define the struct
+    struct stuff *n;                            //create the pointer
+    n = malloc(sizeof(struct stuff));           //malloc failure test omitted
+    n-&gt;x = 42;
+    n-&gt;s = "hello, world!";
+    n-&gt;r = 3.14159;
+    printf("n-&gt;x is %d\n",n-&gt;x);
+    printf("n-&gt;s is %s\n",n-&gt;s);
+    printf("n-&gt;r is %f\n",n-&gt;r);
+</pre>
+<p>Note that the "dot" operator is replace by the "arrow" operator;
+the arrow is composed of a hyphen followed by a greater-than symbol.
+</p>
+
+<h2><a name="id2">Records as structures</a></h2><p>
+Recall,
+from the <a href="index_17.html">previous chapter</a>,
+the concept of a record as a collection of related data.
+A structure, because of its ability to bundle heterogeneous
+data together, makes an ideal repository for the data comprising
+a record. When we used an array to store a record, we needed
+to keep each field of the record as a string, even when some
+fields were clearly numbers. With structures, we are freed from
+that constraint.
+</p>
+<p>Suppose, as before, our record is composed of name, title,
+years of service, and salary:
+</p>
+<pre>
+    "Amber Smith"       President   32   97000.05
+    "Thad Jones"        Assistant   15   89000.42
+    "Ellen Thompson"    Hacker       2  147000.99
+</pre>
+<p>A structure to reflect such a record could be defined as:
+</p>
+<pre>
+    struct employee
+        {
+        char *name;
+        char *title;
+        int years;
+        double salary;
+        };
+</pre>
+<p>Since typing <code>struct employee</code> is such an onerous task, many Computer
+Scientists will use the <i>typedef</i> mechanism to make an alias:
+</p>
+<pre>
+    typedef struct employee
+        {
+        char *name;
+        char *title;
+        int years;
+        double salary;
+        } Employee;
+</pre>
+<p>Given this <i>typedef</i>, we can now use the terms <code>struct employee</code>
+and <i>Employee</i>
+interchangeably:
+</p>
+<pre>
+    struct employee *e = malloc(sizeof(struct employee));
+    Employee *e = malloc(sizeof(Employee));
+</pre>
+<p>These dynamic allocations are equivalent. Once you have an employee record,
+it is extremely useful to define a function for displaying said record:
+</p>
+<pre>
+    void
+    displayEmployee(Employee *e)
+        {
+        printf("Employee: %s\n",e-&gt;name);
+        printf("    Title: %s\n",e-&gt;title);
+        printf("    Years of Service: %d\n",e-&gt;years);
+        printf("    Salary: $%.2f\n",e-&gt;salary);
+        }
+</pre>
+<p>Given the <i>Employee</i> structure
+definition, a (renamed) version of the  <i>readRecord</i> function from the
+<a href="index_17.html">previous chapter</a>,
+becomes:
+</p>
+<pre>
+    Employee *
+    readEmployeeRecord(FILE *fp)         // we pass the file pointer in
+        {
+        char *name;
+        
+        name = readString(fp);           //name is a string, not a token
+
+        if (feof(fp)) { return 0; }      // no record, return null
+
+        //make an empty record
+
+        Employee *e = malloc(sizeof(Employee)); //malloc failure test omitted
+
+        e-&gt;name = name;
+        e-&gt;title = readToken(fp);
+        e-&gt;years = readInt(fp);
+        e-&gt;salary = readReal(fp);
+
+        return e;
+        }
+</pre>
+<p>To test our <i>readEmployeeRecord</i> function, we will successively read employee
+records from a file and print out the individual variable values
+for each record:
+</p>
+<pre>
+    void
+    displayEmployeesInFile(FILE *fp)
+        {
+        Employee *e;
+
+        e = readEmployeeRecord(fp);
+        while (!feof(fp))
+            {
+            displayEmployee(e);
+            e = readEmployeeRecord(fp);
+            }
+
+        fclose(fp);
+        }
+</pre>
+<p>We use the standard reading pattern: read the first item
+before the loop - test if the read was successful -
+process the item read - read again at the bottom of the loop.
+In this case, processing the item means displaying the record.
+</p>
+<p>Assuming the employee data can be found in the file <i>employees.dat</i>,
+we can implement our main:
+</p>
+<pre>
+    //test (compile with employee.c and scanner.c)
+    #include "scanner.h"
+    #include "employee.h"
+    FILE *fp;
+    if ((fp = fopen("employees.dat","r")) == 0)
+        fprintf(stderr,"employees.dat could not be opened for reading\n");
+    else
+        displayEmployeesInFile(fp);
+    fclose(fp);
+</pre>
+
+<h2><a name="id3">Constructors, accessors, and mutators</a></h2><p>
+You may have heard of the term <i>object-oriented</i> when it comes to
+programming languages. Object-oriented languages were created because
+organizing code along object lines can be a very good way to write programs.
+While the C language is not object-oriented, we can write our code in
+much the same way.
+</p>
+<p>The fundamental unit in an object-oriented language is the <i>class</i>, which
+is roughly equivalent to structures in C. Given a class, <i>objects</i> are
+created using something called the <i>new</i> operator, which causes a new
+object to come into being. We will simulate the <code>new</code> operator by
+defining a function to dynamically allocate a structure and return it:
+</p>
+<pre>
+    Employee *
+    newEmptyEmployee(void)
+        {
+        Employee *p = malloc(sizeof(Employee)); //malloc failure test omitted
+        p-&gt;name = "";                           //set to the empty string
+        p-&gt;title = "";                          //set to the empty string
+        p-&gt;years = 0;                           //set to zero
+        p-&gt;salary = 0.0;                        //set to zero
+        return p;
+        }
+</pre>
+<p>A good implementation initializes the variables within the structure.
+Given <i>p</i>, the
+pointer to the structure, recall that we access the individual variables in the
+structure by using the arrow operator, which is a hyphen followed by
+a greater-than symbol. We initialize all the variables stored in
+the structure to "empty" values.
+</p>
+<p>A function such as <i>newEmptyEmployee</i> is
+known as a
+<i>constructor</i>,
+as it specifies how a structure should be constructed and initialized.
+We can make an alternate constructor whereby we pass in all the values
+stored in the structure:
+</p>
+<pre>
+    Employee *
+    newEmployee(char *n,char *t,int y,double s)
+        {
+        Employee *p = malloc(sizeof(Employee)); //malloc failure test omitted
+        p-&gt;name = n;
+        p-&gt;title = t;
+        p-&gt;years = y;
+        p-&gt;salary = s;
+        return p;
+        }
+</pre>
+<p>Object-orientation also introduces the terms <i>accessors</i> and <i>mutators</i>.
+An accessor (sometimes the term <i>getter</i> is used) retrieves a component 
+of an object or, in our case, the value of a variable inside the structure.
+Since we have four variables in our <i>Employee</i> structure,
+we will have four accessors:
+</p>
+<pre>
+    char *getEmployeeName(Employee *e) { return e-&gt;name; }
+    char *getEmployeeTitle(Employee *e) { return e-&gt;title; }
+    int getEmployeeYears(Employee *e) { return e-&gt;years; }
+    double getEmployeeSalary(Employee *e) { return e-&gt;salary; }
+</pre>
+<p>A mutator (sometimes <i>setter</i>) replaces a component in an object:
+</p>
+<pre>
+    void setEmployeeName(Employee *e,char *n) { e-&gt;name = n; }
+    void setEmployeeTitle(Employee *e,char *t) { e-&gt;title = t; }
+    void setEmployeeYears(Employee *e,int y) { e-&gt;years = y; }
+    void setEmployeeSalary(Employee *e,double s) { e-&gt;salary = s; }
+</pre>
+<p>A convention we will follow is that the structure will always be
+the first argument to a function that manipulates the structure.
+</p>
+<p>Given these definitions, we can rewrite <i>readEmployeeRecord</i>:
+</p>
+<pre>
+    Employee *
+    readEmployeeRecord(FILE *fp)         // we pass the file pointer in
+        {
+        char *name,*title;
+        int years;
+        double salary;
+        
+        name = readString(fp);           //name is a string, not a token
+
+        if (feof(fp)) { return 0; }      // no record, return the null pointer
+
+        name = name;
+        title = readToken(fp);
+        years = readInt(fp);
+        salary = readReal(fp);
+
+        return newEmployee(name,title,years,salary);
+        }
+</pre>
+<p>We can also rewrite <i>displayEmployee</i> to use accessors:
+</p>
+<pre>
+    void
+    displayEmployee(Employee *e)
+        {
+        printf("Employee: %s\n",getEmployeeName(e));
+        printf("    Title: %s\n",getEmployeeTitle(e));
+        printf("    Years of Service: %d\n",getEmployeeYears(e));
+        printf("    Salary: $%.2f\n",getEmployeeSalary(e));
+        }
+</pre>
+<p>Note how <i>readEmployeeRecord</i> and <i>displayEmployee</i>
+now give no clues
+as to how an employee record is stored. Indeed, with an alternate definition of
+the typedef <i>Employee</i>, with new versions of constructors and accessors,
+we could store an employee records as an array of four strings (as in
+the previous chapter) and both <i>readEmployeeRecord</i> as well as
+<i>displayEmployee</i>
+would still
+work as before, <i>without any changes</i>.
+</p>
+<p>This idea of abstracting the internal details of how data is stored
+is a powerful tool in writing code that is easy to understand, modify,
+and maintain.
+</p>
+
+<h2><a name="id4">Storing collections of records</a></h2><p>
+We have omitted from our discussions how we might store 
+a collection of records.
+One possibility is to store them in an array.
+</p>
+
+<h3><a name="id5">Storing records in a dynamic array</a></h3><p>
+The code for storing records in a dynamic array will be almost identical
+to the <i>readTable</i> function shown in the previous chapter.
+Recall, that we will need
+to return two values from the function that performs this task, the
+number of records found and the array that stores them:
+</p>
+<pre>
+    Employee **
+    readAllEmployeeRecords(FILE *fp,int *finalSize)
+        {
+        int count;
+        int size = 10;                //initial size of destination array
+        Employee *record;
+        Employee **table;
+
+        //allocate the destination array
+        table = allocate(sizeof(Employee *) * size);
+
+        count = 0;
+        record = readEmployeeRecord(fp);
+        while (!feof(fp))
+            {
+            if (count == size)              //array is full!
+                {
+                // grow the array by doubling its size
+                size = size * 2;
+                table = reallocate(table,sizeof(Employee *) * size);
+                //now there is enough room
+                }
+            table[count] = record;           //DO NOT FREE THE RECORD!
+            ++count;
+            record = readEmployeeRecord(fp);
+            }
+        fclose(fp);
+
+        //shrink the array to 'count' number of elements
+        table = reallocate(table,sizeof(Employee *) * count);
+
+        //count holds the number of items, store it in *finalSize
+        *finalSize = count;
+        return table;
+        }
+</pre>
+<p>A call to this function might look like:
+</p>
+<pre>
+    int size;
+    Employee **table = readAllEmployeeRecords(fp,&amp;size);
+</pre>
+<p>At this point, <i>table</i> points to an array of Employee record pointers
+and <i>size</i> holds the final size of that array.
+</p>
+<p>One can see by comparing <i>readTable</i> from the previous chapter and
+<i>readAllEmployeeRecords</i> in this chapter, we see that the only 
+changes are the return value,
+the type array of records (the table), the
+type of the individual record, and the name of the function
+to read a record.  This is why the pattern approach to
+programming is so powerful. Once you understand the pattern, it
+is relatively simple to implement it for a variety of types.
+</p>
+
+<h2><a name="id6">Another way to store records</a></h2><p>
+There is another way to store a collection of records: using
+a <i>linked list</i>.
+We investigate linked lists in the next chapter.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_17.html">
+  <img border="0" alt="Input and Loops" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_19.html">
+  <img border="0" alt="Nodes" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Structures</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Having Trouble Cleaning</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Having Trouble Cleaning</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=69">Having Trouble Cleaning</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=69">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=53">sam</a></h2></div><div class="dateline">09-13-2018, 03:18 PM</div>
+</div>
+<div class="message">For some reason my make clean is not working, my make test is though. I attached the output for make clean, and my code snippet for cleaning from my makefile, any ideas?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=79">jvteel</a></h2></div><div class="dateline">09-13-2018, 05:00 PM</div>
+</div>
+<div class="message">After you compile, before you make clean, does integer.o exist in that directory? And do you have a command/line/gcc command to compile integer.o?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=53">sam</a></h2></div><div class="dateline">09-13-2018, 08:22 PM</div>
+</div>
+<div class="message">yes and yes<br />
+<hr class="mycode_hr" />
+i think its something to do with the way i installed gcc maybe because when i try to just run rm -f integer.o it says 'rm' is not recognized as an internal or external command, operable program or batch file</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a></h2></div><div class="dateline">09-14-2018, 02:37 PM</div>
+</div>
+<div class="message">You should use WSL. It looks like you're using straight Windows, for which the commands will differ.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">09-14-2018, 06:20 PM</div>
+</div>
+<div class="message">It must be that rm is not being found. The -f flag to rm means don't complain if the file to be deleted doesn't exist.<br />
+<br />
+Your clean rule looks fine. Try testing it on the test server. Your test rule could look like:<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>test :<br />
+   make clean<br />
+   make<br />
+   #more testing here</code></div></div></div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Having Trouble Cleaning</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

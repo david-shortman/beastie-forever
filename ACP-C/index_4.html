@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:15 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Testing code examples</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_3.html">
+  <img border="0" alt="The C Framework" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_5.html">
+  <img border="0" alt="Literals" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Testing code examples</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Testing code examples</h1>
+<p>Starting with the next chapter, we look at the C programming language and and its
+features and usage.  As you read these chapters, you <i>should</i> want to try
+the various constructs and operations so that you fully understand how they operate.
+You can do this by writing a series of small C programs and then compiling and
+executing each of these programs.  This chapter introduces a second method to
+practice using the C programming language.  This method provides a clean, simple
+interface with minimal overhead for your practice.
+</p>
+<p>This second method uses a program called <i>quickc</i>.  It is designed for
+testing and experimentation.  We expect you to write your projects and lab programs
+and exams using the traditional <i>edit-compile-test</i> process described 
+previously.  You should use <i>quickc</i> when you want to just do some quick
+checks or tests on pieces of C code.  While we believe that <i>quickc</i> will
+be beneficial to your studies, it is not required.  If you prefer to use the
+traditional <i>edit-compile-test</i> cycle for everything that you do with the
+C programming language, then you can skip the remainder of this chapter.
+</p>
+<p>The <i>quickc</i> program is provided to help you quickly test some of the
+code examples in the book. For example, suppose you see some
+code fragment that is preceded with the C comment <code>//test</code>, as in:
+</p>
+<pre>
+    //test
+    printf("Hello, world\n");
+</pre>
+<p>With the <i>quickc</i> program, you can copy and paste the code
+fragment at the <i>quickc</i> prompt, press the <code>&lt;Enter&gt;</code> key, and see
+the result of the code fragment being executed.
+</p>
+
+<h2><a name="id1">Using <i>quickc</i></a></h2><p>
+For example,
+here is the <i>quickc</i> program starting up in a terminal window.
+To the terminal window prompt (in this case <code>$</code>),
+you would type <code>quickc</code>:
+</p>
+<pre>
+    $ quickc
+    &gt;
+</pre>
+<p>The <i>quickc</i> prompt is the "greater than" sign.
+Pasting the above code fragment would look like:
+</p>
+<pre>
+    $ quickc
+    &gt;     //test
+    +     printf("Hello, world\n");
+    + 
+</pre>
+<p>At this point, press the <code>&lt;Enter&gt;</code> key and you will see the fragment 
+compiled (as part of an automatically generated C program) and
+executed:
+</p>
+<pre>
+    $ quickc
+    &gt;     //test
+    +     printf("Hello, world\n");
+    + 
+    compiling the program...
+    running the program...
+    Hello, world
+    &gt; 
+</pre>
+<p>To exit the <i>quickc</i> program,
+type the <code>q</code> character followed by the <code>&lt;Enter&gt;</code> key.
+The <i>quickc</i> program can do lots of other tasks;
+typing the <code>h</code> character brings up a menu of these
+additional tasks.
+</p>
+<p>If you make a mistake entering some code, you can use the
+<i>up</i> and <i>down</i>
+arrow keys to recover a statement, which you can then edit,
+using the <i>backspace</i>, <i>delete</i>, and <i>left</i> and <i>right</i>
+arrow keys. Pressing <code>&lt;Enter&gt;</code> at this point adds the edited line to
+the program.
+</p>
+
+<h2><a name="id2">Installing <i>quickc</i></a></h2><p>
+To get the <i>quickc</i> program, first retrieve it from the ACP server:
+</p>
+<pre>
+    wget troll.cs.ua.edu/ACP-C/quickc.c
+</pre>
+<p>Then compile it with the command:
+</p>
+<pre>
+    gcc -Wall quickc.c -o quickc -lm -lreadline
+</pre>
+<p>If you see an error that the symbol <code>free_history_entry</code> is not
+defined, edit <i>quickc.c</i> and change the line near the top that
+reads:
+</p>
+<pre>
+    #define FREE_HISTORY 1
+</pre>
+<p>to read:
+</p>
+<pre>
+    #define FREE_HISTORY 0
+</pre>
+<p>and recompile. Once compiled, place the <i>quickc</i> executable in a directory
+that's part of your search path, say <code>~/bin/</code>, <code>/usr/local/bin/</code>
+or <code>/usr/bin/</code>.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_3.html">
+  <img border="0" alt="The C Framework" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_5.html">
+  <img border="0" alt="Literals" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Testing code examples</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:16 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Strings</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_9.html">
+  <img border="0" alt="Arrays" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_11.html">
+  <img border="0" alt="Functions" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Strings</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Strings</h1>
+<p>As stated in a previous chapter, strings in C are really arrays of characters.
+For example, the two variables <i>s1</i> and <i>s2</i> are very similar:
+</p>
+<pre>
+    //test
+    char *s1 = "hello";
+    char s2[6] = { 'h', 'e', 'l', 'l', 'o', '\0' };
+    printf("%s\n",s1);
+    printf("%s\n",s2);
+</pre>
+<p>Both print statements produce the word <code>hello</code>. The difference is that <i>s1</i> is 
+a true pointer while <i>s2</i> is a pseudopointer.
+We can tell this by the types of <i>s1</i> and <i>s2</i>.
+The variable <i>s1</i> has a type <code>char *</code>, which
+means it holds an address of a memory location that stores a character.
+The variable <i>s2</i> has the type <code>char[6]</code>.
+Since <i>s1</i> is a true
+pointer, it can point to any number of different characters.  The program above points it
+to the first character in the literal <tt>hello</tt> but that can be updated
+and point to different locations as the program executes.
+On the other hand, <i>s2</i> will always refer to (first of) the six characters that were
+allocated to it.  While the characters might change, the location that <i>s2</i>
+references will never change.
+</p>
+<p>A strange thing in the code above is that <i>s2</i> is an array of six characters
+while the counting the characters between the quotes in the initializer for
+<i>s1</i>, <code>"hello"</code>, yields
+five.
+It appears the sixth
+slot of <i>s2</i>
+(at index 5, remember your zero-based counting!) is initialized to a rather
+funny looking character <code>'\0'</code>. This character is sometimes
+pronounced <i>backslash-zero</i> or, more often, the <i>null character</i> or
+the <i>null byte</i>.
+In C, strings are terminated by the null character, so both <i>s1</i> and <i>s2</i>
+in our example point to arrays of six slots:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-strings1.png"/>
+</div>
+<p>For <i>s1</i>, the C compiler adds on terminating null characters to
+literal strings such as <code>"hello"</code>.
+When we build a string with an array ourselves, we are in charge of getting
+things right. We must be mindful not to forget
+to both make room for the null character and place it into the array.
+</p>
+<p>Note: you can safely allocate a static array of characters, making
+sure there is room for the null character with initializations like:
+</p>
+<pre>
+    char s3[] = "hello";
+</pre>
+<p>When you do this, the C compiler will determine the length of the string and
+allocate space for all the characters in the string plus the <i>null</i> character.
+</p>
+
+<h2><a name="id1">Printing strings</a></h2><p>
+When we wish to print a string, we use the <code>%s</code> format
+directive in the guide string:
+</p>
+<pre>
+    //test
+    char *s = "The integer directive is %d";
+    printf("%s\n",s);               //should print: The integer directive is %d
+</pre>
+<p>Often, we wish to build a guide string and use it in a print statement:
+</p>
+<pre>
+    //test
+    int z = 5;
+    char *s = "The result is %d\n";
+    printf(s,z*z);                  //should print: The result is 25
+</pre>
+<p>From this example, we can see that <i>printf</i> (indeed, all functions) are quite flexible in
+terms of what kinds of data we can send it. For the guide string, we can send a literal
+string, a character pointer, or an array of characters. Of course, with the latter
+two, the array of characters has to be terminated with the null character.
+</p>
+<p>One difference between literal strings and arrays of characters
+is that one can change a character in an array of characters using bracket
+notation. For literal strings, attempting to change a character will
+cause undefined behavior. For example:
+</p>
+<pre>
+    char *r = "rat";                    //r points to a literal string
+    char s[] = { 'r', 'a', 't', '\0'};  //s pseudopoints to an array of char
+    char *t = r;                        //t points to a literal string
+    char *u = s;                        //u points to an array of char
+
+    r[0] = 'c';     //BAD
+    s[0] = 'c';     //OK
+    t[0] = 'c';     //BAD
+    u[0] = 'c';     //OK
+</pre>
+<p>From the code above, we can see it doesn't matter if we use the
+name of an array or a pointer to the same array; we are allowed to
+change the contents of the array. Likewise, we are <i>not</i> allowed to
+change the contents of a literal string, regardless of how we access it.
+</p>
+
+<h2><a name="id2">Determining string length</a></h2><p>
+C has a built-in function for determining the length of a string, <i>strlen</i>.
+The <i>strlen</i> function returns the number of characters in the given
+string, <i>not counting the null character</i>. For example,
+</p>
+<pre>
+    //test
+    char s[6] = { 'w', 'o', 'r', 'l', 'd', '\0' };
+    char *t = "world";
+    //calculate!
+    printf("the length of s is %zu\n",strlen(s));
+    printf("the length of t is %zu\n",strlen(t));
+</pre>
+<p>The output of the above code is:
+</p>
+<pre>
+    the length of s is 5
+    the length of t is 5
+</pre>
+<p>There are actually six characters in <i>s</i> and <i>t</i>,
+so when using <i>strlen</i>
+to compute the length of the string, remember to add in one more
+to account for the null character.
+</p>
+<p>A quick question for you regarding <i>strelen</i>.  In the example above,
+what character does <tt>s[strlen(s)]</tt> reference?  Is it the last
+character in the array (`d') or the <tt>null</tt> character?  Since arrays start
+counting at zero, it is always important that you account for this
+when using <i>strlen</i>.
+</p>
+<p>You likely noticed the use of the <code>%zu</code> format specifier 
+in the guide string
+to look at the return value of <i>strlen</i>.
+Like <i>sizeof</i>, <i>strlen</i> returns an integer on a 32-bit machine and
+a long(er) integer on a 64-bit machine.
+</p>
+<p>In order for <i>strlen</i> to work properly on character arrays, they must be terminated
+by the null character. Consider this code:
+</p>
+<pre>
+    char s[5] = { 'w', 'o', 'r', 'l', 'd' };
+    printf("the length of s is %zu\n",strlen(s));
+</pre>
+<p>The result of running the <i>strlen</i> function in this case
+is undefined. This is because <i>strlen</i>
+will count characters until it encounters the null character. Since there is no
+null character specified,
+<i>strlen</i> will cruise through memory until it finds one
+accidentally. If it finds one, it will report an erroneous length,
+If it doesn't find one, your program will crash.
+</p>
+
+<h2><a name="id3">Copying strings</a></h2><p>
+Sometimes it is useful to copy a string.
+The following code does not copy. Rather,
+it sets up an alias:
+</p>
+<pre>
+    //test
+    char *s = "rat";
+    char *t = s;                //t is an alias for s
+    printf("%s\n",t);           //should print: rat
+</pre>
+<p>To make a copy, we need to allocate an array and then use the
+<i>strncpy</i> function to
+copy the string into the array. The <i>strncpy</i> function takes
+an array that receives the characters being copied,
+the string to be copied, and
+an integer that limits the number of characters to be copied.
+Here is an example:
+</p>
+<pre>
+    //test
+    char *s = "rat";
+    char t[4];
+    //calculate!
+    strncpy(t,s,4);         //magic number, s has four characters!
+    t[0] = 'c';             //OK, t is an array
+    printf("%s\n",s);       //should print rat
+    printf("%s\n",t);       //should print cat
+</pre>
+<p>Here the output of the first print statement is <code>rat</code>, showing that changing the first
+character of <i>t</i> had no effect on <i>s</i>.
+The second print statement produces <code>cat</code>, indicating
+that the copy performed by <i>strncpy</i> worked.
+</p>
+<p>One common mistake made with this kind of code is to specifiy one less character
+than necessary in specifying the number of characters to be copied, i.e.,
+forgetting to count the null character. A better version uses <i>strlen</i>:
+</p>
+<pre>
+    strncpy(t,s,strlen(s)+1);   //add 1 for the null byte
+</pre>
+<p>A second common mistake is to allocate the
+destination array with too few slots.
+A safer version of this code copies as many characters
+as allowed, then writes a null byte in the last slot of array:
+</p>
+<pre>
+    strncpy(t,s,SLOTS(t));
+    t[SLOTS(t)-1] = '\0';
+</pre>
+<p>Even this code is problematic, in that if <i>t</i> is too small,
+the string in <i>t</i> will be a prefix of the string in <i>s</i>:
+</p>
+<pre>
+    //test
+    #define SLOTS(a) (sizeof(a)/sizeof(*a))
+    char *s = "rat";
+    char t[3];              //t is too small!
+    //calculate!
+    strncpy(t,s,SLOTS(t));
+    t[SLOTS(t)-1] = '\0';
+    printf("%s\n",s);       //should print rat
+    printf("%s\n",t);       //should print ra
+</pre>
+<p>Instead of using a statically allocated array to hold a string, we can
+use a dynamically allocated array:
+</p>
+<pre>
+    //test
+    char *s = "rat";
+    char *t = malloc(strlen(s) + 1); //remember the null character!
+    // check to see that malloc was successful
+    if (t == 0)
+        {
+        fprintf(stderr,"allocation of t failed\n");
+        exit(1);
+        }
+    //calculate!
+    strncpy(t,s,strlen(s) + 1);
+    t[0] = 'c';             //OK, t points to an array
+    printf("%s\n",s);       //should print rat
+    printf("%s\n",t);       //should print cat
+</pre>
+<p>The use of dynamic allocation solves all our problems!
+</p>
+<p>One final note on copying strings.  We used the <tt>strncpy</tt> routine and
+specifically watched how many characters were being copied.  There is also a
+<tt>strcpy</tt> routine that simply copies a string without doing any checking
+to make sure you have the space necessary to make the copy.  Since one of
+the easiest ways to get in trouble with C programming is to overwrite
+something, we recommend you always make sure you have room to store whatever
+it is that you are copying.
+</p>
+
+<h2><a name="id4">Comparing strings</a></h2><p>
+Can one string be "less than" another, in the same way that one number can
+be less than another? It turns out the answer is yes. In fact, the ability
+to say one string is less than another allows us to quickly look up words
+in a dictionary<sup><a href="index_26.html#footnote-20">20</a></sup>.
+In a dictionary, the word <i>aardvark</i> comes before <i>zebra</i>,
+because the letter
+<i>a</i>, which starts aardvark,
+comes before <i>z</i>, which starts zebra, in the alphabet.
+</p>
+<p>If we were to ask:
+</p>
+<pre>
+    //test
+    char *w1 = "zebra";
+    char *w2 = "aardvark";
+    printf("%d\n",w2 &lt; w1);     //may print true: 1, but likely false: 0
+</pre>
+<p>the output may surprise us. This is because we did not ask whether
+<i>w2</i> comes before <i>w1</i>
+in the dictionary.
+Recall that <i>w1</i> and <i>w2</i> are pointers.
+Thus, the question that we asked was is the address held in <i>w2</i>
+less than the address held in <i>w1</i>.
+</p>
+<p>We have a special purpose operator/function for answering dictionary
+questions. It is called <i>strcmp</i>. When given two strings, <i>strcmp</i>
+returns 0 if they are composed of the same characters in the same order,
+a negative
+integer if the first string precedes the second in a dictionary, and
+a positive integer if the first string follows the second:
+</p>
+<pre>
+    //test
+    char *w1 = "zebra";
+    char *w2 = "aardvark";
+    printf("%d\n",strcmp(w2,w1) &lt; 0);       //should print true: 1
+</pre>
+<p>We have thrown around the term <i>dictionary</i> rather cavalierly.
+C's dictionary ordering is a bit different than what we are used to.
+For example, in C's alphabet, a capital <i>Z</i> comes before a lower-case
+<i>a</i>. Therefore,
+when we capitalize <i>Zebra</i>:
+</p>
+<pre>
+    //test
+    char *w1 = "Zebra";
+    char *w2 = "aardvark";
+    printf("%d\n",strcmp(w2,w1) &lt; 0);       //should print false: 0
+</pre>
+<p>we get the opposite result from before.
+</p>
+<p>Several chapters ago, we mentioned an <tt>ASCII</tt> table for characters.
+This table is what C uses for its ordering.  If you find this table online,
+you can easily see why a capital-Z (<tt>ASCII</tt> value 90) is considered
+less than a lowercase-a (<tt>ASCII</tt> value 97).
+</p>
+
+<h2><a name="id5">Converting strings to numbers</a></h2><p>
+The function <i>atoi</i> can convert a string representing an integer to
+an actual integer:
+</p>
+<pre>
+    //test
+    int i;
+    char *s;
+    //calculate!
+    s = "123";
+    i = atoi(s);
+    printf("s+1 is %s\n",s+1);   //should print 23
+    printf("i+1 is %d\n",i+1);   //should print 124
+</pre>
+<p>The first print statements prints 23 because <code>s+1</code> skips over
+the first character. The second print 124 because <i>atoi</i> converts
+the string <code>"123"</code> into the integer 123. Adding one to the
+integer increments the value to 124. If you give <i>atoi</i> a string
+that doesn't look like an integer, it will return 0.
+</p>
+<p>The <i>atof</i> function can be used to convert a string into a real number.
+</p>
+<pre>
+    double r = atof("3.14159");
+</pre>
+<p>Like <i>atoi</i>,
+if you give <i>atof</i> a string that does not look like a number,
+it will return 0.0;
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_9.html">
+  <img border="0" alt="Arrays" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_11.html">
+  <img border="0" alt="Functions" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Strings</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

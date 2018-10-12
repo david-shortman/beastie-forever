@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> #186 - binary tree with 10 leaves - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=53">#186 - binary tree with 10 leaves</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Prerequisite exam (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=2</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  #186 - binary tree with 10 leaves (<em>/showthread.php?tid=53</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>#186 - binary tree with 10 leaves</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=104">dnstacy</a> -  <strong>09-09-2018</strong>
+<br />
+<br />
+Suppose a binary tree has 10 leaves. How many nodes in the tree must have 2 children? <br />
+<br />
+I'm trying to draw out a variety of binary trees with 10 leaves, but I was wondering if there was a mathematical approach to solving this problem. Is there? Or is there an aspect of the definition of binary trees that would answer this question?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: #186 - binary tree with 10 leaves</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-09-2018</strong>
+<br />
+<br />
+Try working from smaller to larger and look for a pattern. How many nodes have two children when you start connecting up two leaves. Three leaves?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: #186 - binary tree with 10 leaves</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=106">humblebeast</a> -  <strong>09-09-2018</strong>
+<br />
+<br />
+I think of it like this:<br />
+<br />
+if you have 1 leaf, you have 0 nodes with 2 children.<br />
+<br />
+in order to add 1 leaf, you must have 1 more node have 2 children (having 1 child just replaces, keeping the total number of leaves constant)<br />
+<br />
+since you start with (leaves-1) nodes with 2 children, and you have to make 1 more node have 2 children to get a new leaf, you always have leaves-1 nodes with 2 children.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

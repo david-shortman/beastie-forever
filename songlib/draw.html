@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: draw.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Nov 18 09:47:49 2013 -->
+<head>
+<title>Songlib: draw</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: draw<br /></h1>
+<h2 class="maketitle">John C. Lusth</h2>
+<h3 class="maketitle">Revision Date: November 18, 2013</h3>
+</p>
+
+<h3><a name="id1"><a href="draw.pdf">Printable Version</a></a></h3><p><hr />The <i>draw</i> family of functions is used to smoothly play multiple notes
+from a single sample. The intent is to play multiple notes as does
+a violinist when changing the fingering on the neck of the
+violin during a
+a single draw of the bow.
+</p>
+<pre>
+void draw(double beats,int instrument,int octave,int pitch,double length,...,(int) 0);
+
+void ndraw(double beats,int instrument,int numberedNote,double length,...,(int) 0);
+
+void adraw(double beats,int instrument,int count,int *octaves,int * pitches,double *lengths);
+</pre>
+<p>The <i>draw</i> function is a variadic function for playing multiple notes
+from a single sample.
+The sample is given by the instrument and the first triple
+(<i>instrument</i> and <i>octave</i>,<i>pitch</i>, and <i>length</i>).
+The variadic part contains
+a series of (<i>octave</i>,<i>pitch</i>,<i>length</i>) triplets that
+designate the subsequent notes and durations to be resampled from the
+given sample. The variadic part is terminated by a zero.
+Since subsequent notes 
+start playing where the previous note left off in the
+given sample, the transition does not produce any
+discontinuites. 
+</p>
+<p>The <i>draw</i> function is normally used when the notes have a distinctive
+attack and the attack is not desired for short subsequent notes.
+</p>
+<p>For example, this use of draw plays a little trill:
+</p>
+<pre>
+    draw(W,recorder,
+        4,C,Q,
+        4,D,Q,
+        4,C,I,
+        4,D,I,
+        4,C,I,
+        4,D,I,
+        4,C,Q,
+        (int) 0
+        );
+</pre>
+<p>The last triplet designates the pitch that is used of fill out the
+total number of beats.
+If there isn't enough data in the original sample, silence is played.
+</p>
+<p>The <i>ndraw</i> function is similar to <i>draw</i> but takes numbered notes
+instead of octave/pitch pairs. The variadic part
+consists of <i>int numberedNote</i> and <i>double length</i>) pairs.
+</p>
+<p>The example call to <i>draw</i> above could be equivalently rendered as:
+</p>
+<pre>
+    ndraw(recorder,
+        C4,Q,
+        D4,Q,
+        C4,I,
+        D4,I,
+        C4,I,
+        D4,I,
+        C4,Q,
+        (int) 0
+        );
+</pre>
+<p>Both <i>draw</i> and <i>ndraw</i> are wrapper functions for <i>adraw</i>.
+The <i>adraw</i> function takes three parallel arrays of size <i>count</i>.
+These arrays are filled with octave/pitch/length triplets.
+</p>
+<p>There are also two convenient wrapper functions for <i>draw</i> when the goal
+is to play two notes:
+</p>
+<pre>
+void resolve(int instrument,
+    int firstOctave,int firstPitch,double firstBeats,
+    int secondOctave,int secondPitch,double secondBeats);
+
+void nresolve(int instrument,
+    int firstNumberedNote,double firstBeats,
+    int secondNumberedNote,double secondBeats);
+</pre>
+<p>The following two calls are equivalent:
+</p>
+<pre>
+    resolve(W,violin,3,C,Q,3,D);
+    draw(W,violin,3,D,0.0,3,C,Q,D3,W,(int) 0);
+</pre>
+
+<h1><a name="id2">Transitions between notes</a></h1><p>
+The transistions between notes within the <i>draw</i> family is controlled
+by the variable <i>drawRamp</i>. The <i>drawRamp</i> setting specifies the number
+of seconds it takes for a preceding note to slide into the following
+note, using a linear ramp. The default setting of <i>drawRamp</i> is 0.25
+seconds. You can get and set the <i>drawRamp</i> with the functions:
+</p>
+<pre>
+    double setDrawRamp(double seconds)
+    double getDrawRamp(void)
+</pre>
+<p>See also:
+<a href="notePlaying.html">playingNotes</a>,
+<address><a href="mailto:lusth@cs.ua.edu">lusth@cs.ua.edu</a></address><br />
+</body></html>

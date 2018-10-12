@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign-stack</title>
+<link rel=stylesheet
+    href="201.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+A Stack Class
+<br/>
+<br/>
+<span class="smaller">Version 1c</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller"><a href="assign-stack-cda.pdf">Printable Version</a></span></span>
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> The <i>STACK</i> class
+<br/>
+</h2><!-- section ENDED -->
+
+For your stack class, the header file, <i>stack.h</i>, should look
+like:
+<br/>
+
+<pre>
+    #ifndef __STACK_INCLUDED__
+    #define __STACK_INCLUDED__
+
+    #include &lt;stdio.h&gt;
+
+    typedef struct stack STACK;
+
+    extern STACK *newSTACK(void);
+    extern void  setSTACKdisplay(STACK *,void (*)(void *,FILE *));
+    extern void  setSTACKfree(STACK *,void (*)(void *));
+    extern void  push(STACK *items,void *value);
+    extern void *pop(STACK *items);
+    extern void *peekSTACK(STACK *items);
+    extern void  displaySTACK(STACK *items,FILE *fp);
+    extern int   debugSTACK(STACK *items,int level);
+    extern void  freeSTACK(STACK *items);
+    extern int   sizeSTACK(STACK *items);
+
+#endif
+</pre>
+
+The header file contains the function signatures of your public
+methods while the code module, <i>stack.c</i>, contains their implementations.
+<br/>
+<br/>
+The only local includes that <i>stack.c</i> should have are <i>stack.h</i> and
+the header file of the underlying data structure upon which the stack
+is based.
+<br/>
+<!-- subsection -->
+<h3> Method behavior
+<br/>
+</h3><!-- subsection ENDED -->
+
+Here are some of the behaviors your methods should have. This listing
+is not exhaustive; you are expected, as a computer scientist, to
+complete the implementation in the best possible manner.
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newSTACK</i>, <i>setSTACKdisplay</i>, <i>setSTACKfree</i> -
+analogous to the <i>DA</i> class.
+<br/>
+</li>
+
+<li>
+
+ <i>push</i> -
+The <i>push</i> method runs in constant or amortized constant time.
+The value to be pushed is stored in the underlying data structure.
+<br/>
+</li>
+
+<li>
+
+ <i>pop</i> -
+The <i>pop</i> method runs in constant or amortized constant time.
+The value to be popped is removed in the underlying data structure.
+<br/>
+</li>
+
+<li>
+
+ <i>peekSTACK</i> -
+The peek method returns the value ready to come off the stack,
+but leaves the stack unchanged.
+It runs in constant time.
+<br/>
+</li>
+
+<li>
+
+ <i>sizeSTACK</i> -
+The size method returns the number of items stored in the stack.
+It runs in amortized constant time.
+<br/>
+</li>
+
+<li>
+
+ <i>displaySTACK</i> -
+The display method prints the items stored in the stack. If the
+integers 5, 6, 2, 9, and 1 are pushed in the order given,
+the method would generate this output:
+
+<pre>
+    |1,9,2,6,5|
+</pre>
+
+with no preceding or following whitespace. An empty stack displays as 
+<code>||</code>.
+However, the display can be modified by the debug routine.
+<br/>
+</li>
+
+<li>
+
+ <i>debugSTACK</i> -
+This if the debug level is set to one, the display method uses the
+underlying data structure's display method.
+If the debug method is set to two, the display method uses
+the underlying data structure's debugged display method.
+<br/>
+</li>
+
+<li>
+
+ <i>freeSTACK</i> -
+Analogous to the <i>method</i>.
+</li>
+
+</ul>
+
+
+<!-- subsection -->
+<h3> Assertions
+<br/>
+</h3><!-- subsection ENDED -->
+
+Include the following assertions in your methods:
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newSTACK</i> -
+The memory allocated shall not be zero.
+<br/>
+</li>
+
+<li>
+
+ <i>pop</i> -
+The size shall be greater than zero.
+<br/>
+</li>
+
+<li>
+
+ <i>peekSTACK</i> -
+The size shall be greater than zero.
+</li>
+
+</ul>
+
+
+<!-- subsection -->
+<h3> Testing your STACK class
+<br/>
+</h3><!-- subsection ENDED -->
+
+Make sure you test
+to make sure the time constraints of all methods are met.
+<br/>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: quick.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Feb  1 16:00:18 2010 -->
+<head>
+<title>sway</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</head>
+<body>
+<p><h1 class="maketitle">The Sway Programming Language<br />Quick Hits</h1>
+<h2 class="maketitle">written by: John C. Lusth</h2>
+<h3 class="maketitle">Revision Date: February 1, 2010</h3>
+</p>
+<p><a href="quick.pdf">Printable Version</a>
+</p>
+<p>Things to note for programmers who are trying Sway:
+</p>
+<ul><li><i>If</i>s, <i>while</i>s, etc. require a brace-delimited block after
+the test, even if the block consists of one statement. You can use
+function-call format for single statement blocks:
+<font color="#007233">
+<font size="+1">
+<pre>
+    min = if(x &lt; y,x,y);
+</pre>
+</font>
+<font color="#000000">
+</li><li>Operators must be surrounded by whitespace.
+</li><li><i>For</i> loops use commas, not semi-colons, to separate the initializer,
+test, and update expressions. This is because for-loops are, in fact,
+function calls and those expressions are arguments). You must include
+the <i>basics</i> library to use loops other than <i>while</i> loops.
+</li><li>The only keyword in Sway is <tt><font size="+1">else</font></tt>. Every other
+keyword-looking token is a variable and can be reassigned.
+</li><li>If there is no explicit return, the value of the
+last expression evaluated in the function body is the return value.
+</li><li>Class and constructor are the same thing in Sway. Any function that
+returns the pre-defined variable <i>this</i> is considered a class
+definition and a constructor for that class. Here is an example
+<i>Node</i> class:
+<font color="#007233">
+<font size="+1">
+<pre>
+        function node(value,next)
+            {
+            this;
+            }
+</pre>
+</font>
+<font color="#000000">
+</li><li>Nested functions in a constructor are methods:
+<font color="#007233">
+<font size="+1">
+<pre>
+        function node(value,next)
+            {
+            function toString()
+                {
+                "value: " + value + ", next: " + next;
+                }
+            this;
+            }
+</pre>
+</font>
+<font color="#000000">
+</li><li>Inheritance is implemented by the <i>extends</i> function:
+<font color="#007233">
+<font size="+1">
+<pre>
+        function A(value,next)
+            {
+            extends(B());
+            this;
+            }
+</pre>
+</font>
+<font color="#000000">
+<p>The extends function concatenates (with some tweaking) the
+given object to the current object.
+</p>
+<p>Inheritance is similar to Java; every method is virtual.
+</p>
+</font></font></font></font></font></font></font></font></li></ul>
+<hr /><address><p>lusth@cs.ua.edu</address><br />
+</body></html>

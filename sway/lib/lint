@@ -1,0 +1,48 @@
+include("basics");
+
+function findGlobals(spot)
+    {
+    if (spot . context == :null,spot,findGlobals(spot . context));
+    }
+
+var globals = findGlobals(this);
+
+function if($a,$b,$){
+	
+	var s = ($a . code);
+	var if = shadowed(:if);	
+	var $body;
+
+	if(head(s) == :=){throw(:styleViolation , "= used instead of ==");}
+	if(length($) != 1){if(force($a),$b);}
+	else{
+		$body = head($);
+		if(force($a),$b,$body);
+	}
+}
+function while($a,$){
+	var s = $a . code;
+	var while = shadowed(:while);
+	var $body = head($);
+	if(head(s) == :=){throw(:styleViolation , "= used instead of ==");}
+	while($a,$body);
+}
+function =($a,$b,$){ //possible future use
+	var old= = shadowed(:=);
+	old=(force($a),force($b));
+
+}
+
+function f(x)
+    {
+    if (x = 0)
+        {
+        println("ouch");
+        }
+    x == x + 1;
+    x . a = 5;
+    x . setA(5);
+    }
+
+f(3);
+

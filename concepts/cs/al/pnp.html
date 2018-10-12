@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>pnp</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Analysis of Algorithms
+<br/>
+<br/>
+<span class="bigger"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>-Completeness</span>
+<br/>
+
+<span class="smaller"><span class="smaller">
+<a href="pnp.pdf">Printable Version</a>
+</span></span>
+<br/>
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+
+<!-- section -->
+<h2> <b>Concept:</b> <i>The classes <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math></i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 9 questions in this selection -->
+<!-- 4 items needed -->
+<!-- selection array: 1 0 1 0 1 0 0 1 0 -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ A problem can be in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> and not in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>False
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> True
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> Not known
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ A problem can be in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> and not in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>Not known
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> False
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> True
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ All problems are in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> True
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> Not known
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>False
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ All problems are in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> True
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> Not known
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>False
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> stands for:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>Non-deterministic Polynomial</i>.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>Non-intractable Program</i>.
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>Non-exponential Program</i>.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>Non-Polynomial</i>.
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ <b>T</b> or <b>F</b>:
+A constant time algorithm is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ <b>T</b> or <b>F</b>:
+A linear time algorithm is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ <b>T</b> or <b>F</b>:
+A constant time algorithm is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ <b>T</b> or <b>F</b>:
+A linear time algorithm is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ Someone shows you a correct algorithm for problem <i>A</i>
+whose solution can be verified in polynomial time.
+You can conclude:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> nothing about whether problem <i>A</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> or not.
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>problem <i>A</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> problem <i>A</i> is not in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ Someone proves that for a correct algorithm for problem <i>A</i>,
+solutions must be verified in at least exponential time.
+You can conclude:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> nothing about whether problem <i>A</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> or not.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>problem <i>A</i> is not in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> problem <i>A</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ Someone shows you a correct polynomial time algorithm for problem <i>A</i>.
+You can conclude:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> problem <i>A</i> is not in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> nothing about whether problem <i>A</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> or not.
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>problem <i>A</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ Someone shows you a correct exponential time algorithm for problem <i>A</i>
+whose solution can be verified in polynomial time.
+You can conclude:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> problem <i>A</i> is not in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> problem <i>A</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>nothing about whether problem <i>A</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> or not.
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ Someone shows you a correct polynomial time algorithm for problem <i>A</i>.
+You can conclude:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> nothing about whether problem <i>A</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> or not.
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> problem <i>A</i> is not in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>problem <i>A</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ Which one of the following is not a valid way to prove
+a problem is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> show that a solution can be found in polynomial time on a deterministic computer.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> show that a solution can be found in polynomial time on a non-deterministic computer.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> show that a solution can be verified in polynomial time on a deterministic computer.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>show that a solution can be verified in polynomial time on a non-deterministic computer.
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>-completeness
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ To show that a problem <i>A</i> is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>-complete, one task is to:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> show <i>A</i> is <i>not</i> in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>.
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> show <i>A</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>show <i>A</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> show <i>A</i> is <i>not</i> in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>.
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ Suppose <i>B</i> is an <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>-complete problem.
+To show that a problem <i>A</i> is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>-complete, one task could
+be:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> show a exponential time/space reduction from <i>B</i> to <i>A</i>.
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>show a polynomial time/space reduction from <i>B</i> to <i>A</i>.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> show an exponential time/space reduction from <i>A</i> to <i>B</i>.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> show a polynomial time/space reduction from <i>A</i> to <i>B</i>.
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ Another way of stating &ldquo;a reduction from <i>A</i> to <i>B</i>&rdquo; is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> convert an algorithm for <i>B</i> to an algorithm for <i>A</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> convert an algorithm for <i>A</i> to an algorithm for <i>B</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> solve <i>B</i>-type problems with an algorithm for <i>A</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>solve <i>A</i>-type problems with an algorithm for <i>B</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> If <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi>	<mo>=</mo>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>?
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 0 0 -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ If <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>, then all problems in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> are in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>True
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> Not known
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> False
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ If <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>, then all problems in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> are in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> Not known
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>True
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> False
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+ If <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> != <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>, then there exist problems in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> that are not in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> True
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> Not known
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>False
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+ If <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> != <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>, then there exist problems in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> that are not in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> True
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>False
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> Not known
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> Proving <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi>	<mo>=</mo>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>.
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 6 questions in this selection -->
+<!-- 3 items needed -->
+<!-- selection array: 0 1 1 0 1 0 -->
+<!-- QA -->
+<ol type="1" start="23">
+<li>
+ <i>Factoring</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>. Currently, the best known algorithm on a
+conventional computer takes exponential time. If <i>factoring</i> is
+proved to take at least exponential time, what is the effect on
+the question <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the question is still unanswered
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> != <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="24">
+<li>
+ <i>Factoring</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>. Currently, the best known algorithm on a
+conventional computer takes exponential time. If <i>factoring</i> is
+shown to take take polynomial time, what is the effect on
+the question <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the question is still unanswered
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> != <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="25">
+<li>
+ <i>Factoring</i> is in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> and the best known
+algorithm takes exponential time. In the past, a linear time algorithm
+was discovered for quantum computers.
+What is the effect on the question <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> != <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>, but just for quantum computers
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> != <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> for all types of computers.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>? is still unanswered.
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>, but just for quantum computers
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> for all types of computers.
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="26">
+<li>
+ <i>Subset Sum</i> is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>-complete.
+Currently, the best known algorithm on a
+conventional computer takes exponential time. If <i>Subset Sum</i> is
+proved to take at least exponential time,
+what is the effect on the question <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> != <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the question is still unanswered
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="27">
+<li>
+ <i>Subset Sum</i> is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>-complete.
+Currently, the best known algorithm on a
+conventional computer takes exponential time. If solving <i>Subset Sum</i>
+can be
+shown to take polynomial time, what is the effect on
+the question <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the question is still unanswered
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> != <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="28">
+<li>
+ In the past, it was shown how to solve Hamiltonian Path
+(an <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>-complete
+problem) in linear time, using a DNA-based computer. However,
+the algorithm takes a factorial number of DNA strands, which need
+to be created each time. This means:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> for all types of computers.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> != <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> for all types of computers.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>? is still unanswered.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>, but just for DNA-based computers
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> != <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>, but just for DNA-based computers
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="29">
+<li>
+ <b>T</b> or <b>F</b>:
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Pscr;</mi></mrow></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math> is just another way of saying,
+for problems in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="script">		<mi>N</mi>		<mi>P</mi>	</mstyle></mrow></math>,
+finding a solution is no harder than verifying a solution.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

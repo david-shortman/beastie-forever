@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>1-3</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Sample Questions: SICP Section 1.3
+<br/>
+<br/>
+Functional Abstractions in Scheme
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>procedures as arguments</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Suppose I wish to pass function <i>y</i> to function <i>z</i>. The correct syntax
+would be:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(z (y))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(z y)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>((z (y)))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>z((y))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(z)(y)</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>z(y)</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Consider the following generalization of the accumulate pattern:
+
+<pre>
+    (define (a b c d e f)
+        (if (= b c) e (f b (a (d b) c d e f)))
+        )
+</pre>
+
+Suppose I wish to compute the sum of the numbers
+from <i>b</i> (inclusive) to <i>c</i> (exclusive).
+What should
+the fifth formal parameter, <i>f</i>, be bound to?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the 
+<code>+</code> operator
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the number <i>c</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> zero
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function equivalent to 
+<code>(define (x) (+ x 1))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> one
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Consider the following generalization of the accumulate pattern:
+
+<pre>
+    (define (a b c d e f)
+        (if (= b c) e (f b (a (d b) c d e f)))
+        )
+</pre>
+
+Suppose I wish to compute the sum of the numbers
+from <i>b</i> (inclusive) to <i>c</i> (inclusive).
+What should
+the fifth formal parameter, <i>f</i>, be bound to?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function equivalent to 
+<code>(define (x) (+ x 1))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> one
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> zero
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the number <i>c</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>the 
+<code>+</code> operator
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Consider the following generalization of the accumulate pattern:
+
+<pre>
+    (define (a b c d e f)
+        (if (= b c) e (f b (a (d b) c d e f)))
+        )
+</pre>
+
+Suppose I wish to compute the sum of the numbers
+from <i>b</i> (inclusive) to <i>c</i> (exclusive).
+What should
+the fourth formal parameter, <i>e</i>, be bound to?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> one
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the 
+<code>+</code> operator
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the number <i>c</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>zero
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function equivalent to 
+<code>(define (x) (+ x 1))</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ Consider the following generalization of the accumulate pattern:
+
+<pre>
+    (define (a b c d e f)
+        (if (= b c) e (f b (a (d b) c d e f)))
+        )
+</pre>
+
+Suppose I wish to compute the sum of the numbers
+from <i>b</i> (inclusive) to <i>c</i> (inclusive).
+What should
+the fourth formal parameter, <i>e</i>, be bound to?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the number <i>c</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the 
+<code>+</code> operator
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> one
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>zero
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function equivalent to 
+<code>(define (x) (+ x 1))</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Consider the following generalization of the accumulate pattern:
+
+<pre>
+    (define (a b c d e f)
+        (if (= b c) e (f b (a (d b) c d e f)))
+        )
+</pre>
+
+Suppose I wish to compute the sum of the numbers
+from <i>b</i> (inclusive) to <i>c</i> (exclusive).
+What should
+the third formal parameter, <i>d</i>, be bound to?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> zero
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> one
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the number <i>c</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the 
+<code>+</code> operator
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>a function equivalent to 
+<code>(define (x) (+ x 1))</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Consider the following generalization of the accumulate pattern:
+
+<pre>
+    (define (a b c d e f)
+        (if (= b c) e (f b (a (d b) c d e f)))
+        )
+</pre>
+
+Suppose I wish to compute the sum of the numbers
+from <i>b</i> (inclusive) to <i>c</i> (inclusive).
+What should
+the third formal parameter, <i>d</i>, be bound to?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> zero
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the 
+<code>+</code> operator
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the number <i>c</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>a function equivalent to 
+<code>(define (x) (+ x 1))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> one
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ Consider the following generalization of the accumulate pattern:
+
+<pre>
+    (define (a b c d e f)
+        (define (iter x y)
+             (if (= y c)
+                 x
+                 (iter (f x y) (e y))
+                 )
+             )
+        (iter d b)
+        )
+</pre>
+
+Suppose I wish to compute the sum of the numbers
+from <i>b</i> (inclusive) to <i>c</i> (exclusive).
+What should
+the fifth formal parameter, <i>f</i>, be bound to?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the 
+<code>+</code> operator
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> one
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> zero
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function equivalent to 
+<code>(define (x) (+ x 1))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> the number <i>c</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ Consider the following generalization of the accumulate pattern:
+
+<pre>
+    (define (a b c d e f)
+        (define (iter x y)
+             (if (= y c)
+                 x
+                 (iter (f x y) (e y))
+                 )
+             )
+        (iter d b)
+        )
+</pre>
+
+Suppose I wish to compute the sum of the numbers
+from <i>b</i> (inclusive) to <i>c</i> (inclusive).
+What should
+the fifth formal parameter, <i>f</i>, be bound to?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function equivalent to 
+<code>(define (x) (+ x 1))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the number <i>c</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the 
+<code>+</code> operator
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> zero
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> one
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ Consider the following generalization of the accumulate pattern:
+
+<pre>
+    (define (a b c d e f)
+        (define (iter x y)
+             (if (= y c)
+                 x
+                 (iter (f x y) (e y))
+                 )
+             )
+        (iter d b)
+        )
+</pre>
+
+Suppose I wish to compute the sum of the numbers
+from <i>b</i> (inclusive) to <i>c</i> (exclusive).
+What should
+the fourth formal parameter, <i>e</i>, be bound to?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> zero
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> one
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the 
+<code>+</code> operator
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>a function equivalent to 
+<code>(define (x) (+ x 1))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> the number <i>c</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ Consider the following generalization of the accumulate pattern:
+
+<pre>
+    (define (a b c d e f)
+        (define (iter x y)
+             (if (= y c)
+                 x
+                 (iter (f x y) (e y))
+                 )
+             )
+        (iter d b)
+        )
+</pre>
+
+Suppose I wish to compute the sum of the numbers
+from <i>b</i> (inclusive) to <i>c</i> (exclusive).
+What should
+the third formal parameter, <i>d</i>, be bound to?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>zero
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the 
+<code>+</code> operator
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> one
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the number <i>c</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function equivalent to 
+<code>(define (x) (+ x 1))</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ Consider the following generalization of the accumulate pattern:
+
+<pre>
+    (define (a b c d e f)
+        (define (iter x y)
+             (if (= y c)
+                 x
+                 (iter (f x y) (e y))
+                 )
+             )
+        (iter d b)
+        )
+</pre>
+
+Suppose I wish to compute the sum of the numbers
+from <i>b</i> (inclusive) to <i>c</i> (inclusive).
+What should
+the third formal parameter, <i>d</i>, be bound to?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> zero
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the 
+<code>+</code> operator
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the number <i>c</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function equivalent to 
+<code>(define (x) (+ x 1))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> one
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>lambdas and lets</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ (4 pts) Perform a syntactic transformation to replace the
+local defines with a let:
+
+<pre>
+    (define (f x)
+        (define y (- x 1))
+        (define z (+ x 1))
+        (+ (* x y) (* x z) (* y z))
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ (4 pts) Perform a syntactic transformation ro replace the
+local defines with a lambda:
+
+<pre>
+    (define (f x)
+        (define y (- x 1))
+        (define z (+ x 1))
+        (+ (* x y) (* x z) (* y z))
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ (4 pts) Perform a syntactic transformation to replace the
+lambda with local defines:
+
+<pre>
+    (define (f x)
+        ((lambda (a b c)
+           (+ (* a b) c)
+           )
+           x (* x x) (* x x x))
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ (4 pts) Perform a syntactic transformation to replace the
+lambda with a let:
+
+<pre>
+    (define (f x)
+        ((lambda (a b c)
+           (+ (* a b) c)
+           )
+           x (* x x) (* x x x))
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ (4 pts) Perform a syntactic transformation to replace the
+let with a lambda:
+
+<pre>
+    (define (f x)
+        (let
+            ((w (* x 2))
+             (y (+ x 2))
+             (z (/ x 2))
+             )
+           (+ (* w y) z x)
+           )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ (4 pts) Perform a syntactic transformation to replace the
+replace the let with local defines:
+
+<pre>
+    (define (f x)
+        (let
+            ((w (* x 2))
+             (y (+ x 2))
+             (z (/ x 2))
+             )
+           (+ (* w y) z x)
+           )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>procedures as return values</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 1 0 1 0 -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ What does the following expression evaluate to?
+
+<pre>
+    ((lambda (x) ((lambda (y) (- x y)) 10)) 6)
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> -4
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> an error (int called as a function)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function with formal parameter x
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function with formal parameter y
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ What does the following expression evaluate to?
+
+<pre>
+    (lambda (x) ((lambda (x y) (- x y)) 10 6))
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function with formal parameter x
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function with formal parameter y
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> an error (int called as a function)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> -4
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+ What does the following expression evaluate to?
+
+<pre>
+    ((lambda (x) (((lambda (y) (- x y)) 10))) 6)
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function with formal parameter x
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function with formal parameter y
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> an error (int called as a function)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> -4
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+ What does the following expression evaluate to?
+
+<pre>
+    ((lambda (x) (lambda (y) (- x y))) 10)
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> an error (int called as a function)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> -4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function with formal parameter y
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> a function with formal parameter x
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

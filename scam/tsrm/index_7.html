@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Sep  5 20:07:21 2016 -->
+<head>
+<title>The Scam Reference Manual -- Lists, Strings, and Arrays</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_6.html">
+  <img border="0" alt="Combining Literals" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_8.html">
+  <img border="0" alt="Variables" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Lists, Strings, and Arrays</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Lists, Strings, and Arrays</h1>
+<p>Recall that the built-in function <i>list</i> is used to construct a list.
+A similar function, called <i>array</i>, is used to construct an array populated
+with the given elements:
+</p>
+<pre>
+    (array 1 "two" 'three)
+    -&gt; [1 two three]
+</pre>
+<p>while a function named <i>allocate</i> is used to allocate an array
+of the given size:
+</p>
+<pre>
+    (allocate 5)
+    -&gt; [0 0 0 0 0]
+</pre>
+<p>Note that the elements of an allocated array are initialized to <i>zero</i>.
+</p>
+<p>The functions for manipulating lists, arrays, and strings are quite
+similar. In the following sections, we will use the term <i>collection</i>
+to stand for lists, arrays, and strings.
+</p>
+
+<h2><a name="id1">Comparing collections</a></h2><p>
+The <i>equal?</i> function is used to compare two collections of the same type:
+</p>
+<pre>
+    (equal? (list 1 (array "23" 'hello)) (list 1 (array "23" 'hello)))
+    -&gt; #t
+
+    (eq? (list 1 (array "23" 'hello)) (list 1 (array "23" 'hello)))
+    -&gt; #f
+</pre>
+<p>Note that the <i>eq?</i> function tests for pointer equality and thus fails
+when comparing two separate lists, even though they look similar.
+</p>
+<p>Strings can be compared with the <i>string-compare</i> function.
+Assuming a lexigraphical ordering based upon the ASCII code,
+then a string compare of two strings, <i>a</i> and <i>b</i>,
+returns a negative number if <i>a</i>
+appears lexigraphically before <i>b</i>, returns zero if a and
+b are lexigraphically equal,
+and returns a positive number otherwise.
+</p>
+<pre>
+    (string-compare "abc" "bbc")
+    -&gt; -1
+</pre>
+
+<h2><a name="id2">Extracting elements</a></h2><p>
+You can pull out an item from a collection
+by using the
+<i>getElement</i> function.
+With <i>getElement</i>,
+you specify exactly which element
+you wish to extract. This specification is called an
+<i>index</i>. The first element of a collection has index 0, the second
+index 1, and so on. This concept of having the first element having
+an index of zero is known as <i>zero-based counting</i>, a common concept
+in Computer Science. Here is some code that extracts the first element
+of a list:
+</p>
+<pre>
+    (getElement (list "a" #t 7) 0)
+    -&gt; a
+
+    (getElement (array "b" #f 11) 1)
+    -&gt; #f
+
+    (getElement "howdy" 2)
+    -&gt; w
+</pre>
+<p>What happens if the index is too large?
+</p>
+<pre>
+    (getElement (list "a" #t 7) 3)
+    EXCEPTION: generalException
+    index (3) is too large
+</pre>
+<p>Not surprisingly, an error is generated.
+In Scam, as with many programming languages, an error is known
+as an <i>exception</i>.
+</p>
+<p>As with Scheme, the built-in <i>car</i> and <i>cdr</i> functions
+returns the first item and the tail of a collection, respectively:
+</p>
+<pre>
+    (car (list 3 5 7))
+    -&gt; 3
+
+    (cdr "howdy")
+    -&gt; owdy
+
+    (cdr (array 2 4 6))
+    -&gt; [4 6]
+
+    (car "bon jour")
+    -&gt; b
+</pre>
+<p>In addition to extracting elements of a collection, one can 
+change the elements in a collection as well. For more
+information, please see the chapter on 
+<a href="index_9.html">Assignment</a>.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_6.html">
+  <img border="0" alt="Combining Literals" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_8.html">
+  <img border="0" alt="Variables" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Lists, Strings, and Arrays</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

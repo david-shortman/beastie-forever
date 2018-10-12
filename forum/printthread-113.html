@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> insertDA runtime - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=6">insertDA runtime</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  insertDA runtime (<em>/showthread.php?tid=6</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>insertDA runtime</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>08-23-2018</strong>
+<br />
+<br />
+I can't wrap my head around this. From the <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=3&amp;pid=14#pid14" target="_blank" rel="noopener" class="mycode_url">other thread</a>:<br />
+<br />
+<blockquote class="mycode_quote"><cite>Quote:</cite>Consider these two calls:<br />
+<br />
+insertDA(items,sizeDA(items)/2,x);<br />
+insertDA(items,sizeDA(items)-5,x);<br />
+<br />
+The latter inserts a constant distance from the back, while the former does not.</blockquote>
+<br />
+Why would the former would not be a constant distance from the back? Are we not considering individual insertions? Like if size is 10, then size/2 will be 5 which is a constant distance from the back, and this will be true for any value of size.<br />
+<br />
+Also, what about a call such as <span style="font-family: Courier New;" class="mycode_font">insertDA(items,sizeDA(items),x)</span> when the array is full? Wouldn't it run it linear time then too (despite being at a constant distance from the back) as the whole array needs to be copied into a new one? Or are we assuming that <span style="font-family: Courier New;" class="mycode_font">realloc</span> runs in constant time?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: insertDA runtime</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>08-23-2018</strong>
+<br />
+<br />
+It's all about the growth of the function. Consider this function:<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>function lotsOfInserts(items,y)<br />
+    {<br />
+    var i;<br />
+    for (i = 0; i &lt; y; ++y)<br />
+        insertDA(items,sizeDA(items)/2,getRandomInteger());<br />
+    }</code></div></div><br />
+The function runs in theta(y^2) amortized time as y grows to infinity. On the other hand, this function:<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>function lotsOfInserts2(items,y)<br />
+     {<br />
+    var i;<br />
+     for (i = 0; i &lt; y; ++y)<br />
+        if (sizeDA(items) &lt; 10)<br />
+            insertDA(items,0,getRandomInteger());<br />
+        else<br />
+            insertDA(items,sizeDA(items)-10,getRandomInteger());<br />
+      }</code></div></div><br />
+runs in theta(y) amortized time.<br />
+<br />
+The amortized time comes from the fact that growing the array by doubling the capacity averages out to a constant bit of work per individual insert, so we only have to worry about how much shifting of elements is done.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: insertDA runtime</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>08-23-2018</strong>
+<br />
+<br />
+In the first implementation, we shift more and more elements each time, while in the second version, the number of shifted elements is the same for each insert.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: insertDA runtime</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a> -  <strong>08-23-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (08-23-2018, 03:47 PM)</span>magarwal Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=23#pid23" class="quick_jump"></a></cite>I can't wrap my head around this. From the <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=3&amp;pid=14#pid14" target="_blank" rel="noopener" class="mycode_url">other thread</a>:<br />
+<br />
+<blockquote class="mycode_quote"><cite>Quote:</cite>Consider these two calls:<br />
+<br />
+insertDA(items,sizeDA(items)/2,x);<br />
+insertDA(items,sizeDA(items)-5,x);<br />
+<br />
+The latter inserts a constant distance from the back, while the former does not.</blockquote>
+<br />
+Why would the former would not be a constant distance from the back? Are we not considering individual insertions? Like if size is 10, then size/2 will be 5 which is a constant distance from the back, and this will be true for any value of size.<br />
+<br />
+Also, what about a call such as <span style="font-family: Courier New;" class="mycode_font">insertDA(items,sizeDA(items),x)</span> when the array is full? Wouldn't it run it linear time then too (despite being at a constant distance from the back) as the whole array needs to be copied into a new one? Or are we assuming that <span style="font-family: Courier New;" class="mycode_font">realloc</span> runs in constant time?</blockquote>You are partially right.<br />
+When distance is a constant like 10, all distance should be constant no matter what. <br />
+1000000000000000000 is a constant, so 1000000000000000000/2 is a constant.<br />
+<br />
+Let's suppose the size of array is n, distance of first call is n/2, the second call is 5. Only the second call is constant.<br />
+n/2 is NOT a constant, constant means fixed value.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: insertDA runtime</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>08-23-2018</strong>
+<br />
+<br />
+Also, insert <span style="font-style: italic;" class="mycode_i">does</span> run in linear time in the worst case (as noted, the entire array needs to be copied when there is no room). But these "bad" cases don't happen every time and, in fact, they get further and further apart. That is why, on average, the bad cases can be ignored.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: insertDA runtime</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a> -  <strong>08-23-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (08-23-2018, 03:47 PM)</span>magarwal Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=23#pid23" class="quick_jump"></a></cite>I can't wrap my head around this. From the <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=3&amp;pid=14#pid14" target="_blank" rel="noopener" class="mycode_url">other thread</a>:<br />
+<br />
+<blockquote class="mycode_quote"><cite>Quote:</cite>Consider these two calls:<br />
+<br />
+insertDA(items,sizeDA(items)/2,x);<br />
+insertDA(items,sizeDA(items)-5,x);<br />
+<br />
+The latter inserts a constant distance from the back, while the former does not.</blockquote>
+<br />
+Why would the former would not be a constant distance from the back? Are we not considering individual insertions? Like if size is 10, then size/2 will be 5 which is a constant distance from the back, and this will be true for any value of size.<br />
+<br />
+Also, what about a call such as <span style="font-family: Courier New;" class="mycode_font">insertDA(items,sizeDA(items),x)</span> when the array is full? Wouldn't it run it linear time then too (despite being at a constant distance from the back) as the whole array needs to be copied into a new one? Or are we assuming that <span style="font-family: Courier New;" class="mycode_font">realloc</span> runs in constant time?</blockquote><br />
+The realloc should run in constant time when there is enough memory space right after the array, but according to the standard of C, realloc should always copy the data, so the running time is O(n). In his description of insertDA,<br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">The insert method places the given item at the given index. The method returns the given index. It should run in amortized constant time when inserting an item a constant distance from the back and in linear time otherwise. </span></span></span></blockquote>
+<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">"<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">amortized constant time</span></span></span>" means average constant running time.</span></span></span><br />
+<br />
+<br />
+<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">Let's say there is array with capacity of 1.</span></span></span><br />
+<br />
+<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">1st insert costs 1.</span></span></span><br />
+<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">2nd insert costs 1+1 (double the capacity)</span></span></span><br />
+<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">......</span></span></span><br />
+<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">1023th insert costs 1</span></span></span><br />
+<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">1024th insert costs 1</span></span></span><br />
+<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">1025th insert costs 1+1024 (double the capacity)</span></span></span><br />
+<br />
+<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">Total running time for realloc: 1+2+4+8+16+32+64+128+256+512+1024 = 1024*2 = 2047</span></span></span><br />
+<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">Total running time for insert: 1+1+1+...+1 = 1025</span></span></span><br />
+<br />
+<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">Total running time: 2047+1025 = 3072</span></span></span><br />
+<br />
+<span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">amortized running time for each insert: 3072/1025 = 3.0</span></span></span></span></span></span>
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: insertDA runtime</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>08-23-2018</strong>
+<br />
+<br />
+Nice analysis.<br />
+<br />
+I should note that the above is assuming insertion at the back each time (no shifting of elements).
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

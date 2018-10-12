@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>amortized</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Analysis of Algorithms
+<br/>
+<br/>
+<span class="bigger">Amortized Analysis</span>
+<br/>
+
+<span class="smaller"><span class="smaller">
+<a href="amortized.pdf">Printable Version</a>
+</span></span>
+<br/>
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+
+<!-- section -->
+<h2> <b>Concept:</b> <i>amortized analysis</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Suppose a dynamic array was implemented so that growing the
+array increased the capacity by 1000 elements.
+What is the worst-case cost of the append operation?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Suppose a dynamic array was implemented so that growing the
+array increased the capacity by 2%. What is the
+amortized and worst-case costs of the append operation?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>constant and linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic and quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear and linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log and linear
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Suppose a dynamic array was implemented so that growing the
+array increased the capacity by 100 elements. What is the
+amortized and worst-case costs of the append operation?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic and quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear and linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant and linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log and linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Consider a dynamic fillable array which grows by doubling in size.
+Which is a valid equation for calculating the total cost incurred
+when insertion <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mi>i</mi>	</msup>	<mo>+</mo>	<mn>1</mn></mrow></math> is made?
+Assume the individual cost of an insert when there is room is 1 and
+the individual cost of an insert when there is no room is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mi>i</mi>	</msup>	<mo>+</mo>	<mn>1</mn></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mi>n</mi>	<mo>-</mo>	<mn>1</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>n</mi>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mi>n</mi>	<mo>-</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mi>n</mi>	<mo>-</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>n</mi>	<mo>-</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>n</mi>	<mo>-</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ Consider a dynamic fillable array which grows from size <i>n</i>
+to size <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>n</mi>	<mo>+</mo>	<mn>1</mn></mrow></math> each time the array is filled.
+Which is a valid equation for calculating the total cost incurred
+when insertion <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mi>i</mi>	</msup></mrow></math> is made?
+Assume the individual cost of an insert when there is room is 1 and
+the individual cost of an insert when there is no room is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mi>i</mi>	</msup></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>n</mi>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mi>n</mi>	<mo>-</mo>	<mn>6</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mi>n</mi>	<mo>-</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mi>n</mi>	<mo>-</mo>	<mi>log</mi>	<mi>n</mi>	<mo>-</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mi>n</mi>	<mo>-</mo>	<mn>1</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Consider a dynamic fillable array which grows by doubling in size.
+Let <i>S</i> represent the number of filled slots and <i>E</i>, the number
+of empty slots, and <i>C</i>, the capacity of the array.
+Which is a valid potential function for proving the amoritized
+cost of an insert is constant?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>S</mi>	<mo>+</mo>	<mi>E</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>S</mi>	<mo>-</mo>	<mi>E</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>E</mi>	<mo>+</mo>	<mn>2</mn>	<mi>C</mi></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>S</mi>	<mo>+</mo>	<mn>2</mn>	<mi>E</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>S</mi>	<mo>-</mo>	<mi>E</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>S</mi>	<mo>-</mo>	<mi>C</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Consider implementing a queue with two stacks. <i>Enqueues</i> are
+translated to pushes onto the first stack. For a <i>dequeue</i>,
+if the second stack is empty,
+each element on the first stack is popped and
+pushed, in turn, onto the second stack.
+In either case,
+the item popped from the second stack is returned.
+<br/>
+<br/>
+The worst-case times for <i>enqueue</i> and <i>dequeue</i> are:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ Consider implementing a queue with two stacks. <i>Enqueues</i> are
+translated to pushes onto the first stack, <i>V</i>. For a <i>dequeue</i>,
+if the second stack, <i>W</i>, is empty,
+each element on the first stack is popped and
+pushed, in turn, onto the second stack.
+The total work of this transfer is the number of elements popped plus the
+number of elements pushed.
+In either case,
+the item popped from the second stack is returned.
+The number of elements on stack <i>V</i> is denoted <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi>V</mi>		<mi>S</mi>	</msub></mrow></math> and the
+number of elements on stack <i>W</i> is denoted <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi>W</mi>		<mi>S</mi>	</msub></mrow></math>.
+<br/>
+<br/>
+Which of the following potential functions can be used to
+show an amortized bound of <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math> for operations
+on this kind of queue?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Phi;</mi>	<mo>=</mo>	<mn>2</mn>	<msub>		<mi>V</mi>		<mi>s</mi>	</msub></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Phi;</mi>	<mo>=</mo>	<msub>		<mi>V</mi>		<mi>s</mi>	</msub></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Phi;</mi>	<mo>=</mo>	<msub>		<mi>V</mi>		<mi>s</mi>	</msub>	<mo>+</mo>	<mn>2</mn>	<msub>		<mi>W</mi>		<mi>s</mi>	</msub></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Phi;</mi>	<mo>=</mo>	<msub>		<mi>V</mi>		<mi>s</mi>	</msub>	<mo>+</mo>	<msub>		<mi>W</mi>		<mi>s</mi>	</msub></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 0 -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ Suppose a data structure has
+operation <i>A</i> with a real cost of 1 and
+operation <i>B</i> with a real cost of <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<mn>2</mn>	<mi>n</mi>	<mo>+</mo>	<mn>1</mn>	</mrow></math>.
+After an <i>A</i> operation, <i>n</i> increases by 1 while
+after a <i>B</i> operation, <i>n</i> decreases to zero.
+<br/>
+<br/>
+Which of the following potential functions can be used to
+show an amortized bound of <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi></mrow></math>(1) for operations <i>A</i> and <i>B</i>
+on this data structure?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<mi>P</mi>	<mi>h</mi>	<mi>i</mi>	<mo>=</mo>	<mn>2</mn>	<mi>n</mi>	<mo>.</mo>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Phi;</mi>	<mo>=</mo>	<mn>3</mn>	<mi>n</mi></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<mi>P</mi>	<mi>h</mi>	<mi>i</mi>	<mo>=</mo>	<mi>n</mi>	<mo>.</mo>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ Suppose a data structure has
+operation <i>A</i> with a real cost of <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mi>n</mi>	<mo>+</mo>	<mn>1</mn></mrow></math> and
+operation <i>B</i> with a real cost of <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mn>3</mn>		<mn>2</mn>	</mfrac>	<mi>n</mi>	<mo>+</mo>	<mn>1</mn></mrow></math>.
+After an <i>A</i> operation, <i>n</i> decreases to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mn>1</mn>		<mn>4</mn>	</mfrac>	<mi>n</mi></mrow></math> while
+after a <i>B</i> operation, <i>n</i> decreases to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mn>5</mn>		<mn>8</mn>	</mfrac>	<mi>n</mi></mrow></math>.
+<br/>
+<br/>
+Which of the following potential functions can be used to
+show an amortized bound of <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi></mrow></math>(1) for operations <i>A</i> and <i>B</i>
+on this data structure?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Phi;</mi>	<mo>=</mo>	<mn>4</mn>	<mi>n</mi></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Phi;</mi>	<mo>=</mo>	<mfrac linethickness="1">		<mn>3</mn>		<mn>2</mn>	</mfrac>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Phi;</mi>	<mo>=</mo>	<mn>3</mn>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ Suppose a data structure has
+operation <i>A</i> with a real cost of 1 and
+operation <i>B</i> with a real cost of <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>k</mi>	<mo>+</mo>	<mi>n</mi></mrow></math>.
+After an <i>A</i> operation, <i>n</i> increases by 1.
+After a <i>B</i> operation, <i>n</i> decreases to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>k</mi>	<mo>+</mo>	<mn>1</mn></mrow></math>.
+<br/>
+<br/>
+Which of the following potential functions can be used to
+show an amortized bound of <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi></mrow></math>(1) for <i>A</i> operations
+and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math> for <i>B</i> operations?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Phi;</mi>	<mo>=</mo>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Phi;</mi>	<mo>=</mo>	<mn>3</mn>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Phi;</mi>	<mo>=</mo>	<mn>2</mn>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

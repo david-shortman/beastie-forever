@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>C-objects</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Teaching C in an Object Oriented Style
+<br/>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="C-first.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Introduction
+<br/>
+</h2><!-- section ENDED -->
+
+This document concerns the teaching of C as a first language
+in a CS1 course. As it is often the desire to include the
+ideas of object encapsulation in a first course, C should be
+taught in a style that emphasizes encapsulation. Students
+who learn this style should have little trouble in moving
+to an object-oriented language later, especially if the
+advanced ideas (last section) are taught.
+<br/>
+<br/>
+The remainder of this document assumes a familiarity with
+C and some object oriented language.
+<br/>
+<!-- section -->
+<h2> The basic idea
+<br/>
+</h2><!-- section ENDED -->
+
+Instructors should always stress the object oriented nature of the program,
+emphasizing the classes/objects that would make up an implementation.
+Each &ldquo;class&rdquo; in C gets its own module. In general, the public interface of a class
+<i>X</i> is placed in a file named <i>X.h</i>, often
+called a <i>header file</i>.
+The public interface consists of a forward declaration of
+the structure that
+encapsulates the components of a class's object plus
+the prototypes of the public functions (methods) that
+(typically) operate upon the object. The public interface
+also includes external declarations of any components that
+are shared between objects of a class.
+The implementation of the
+class <i>X</i> is placed in a file named <i>X.c</i>.
+The implementation consists of the method definitions
+and variable declarations that were mentioned in the
+public interface along with definitions and declarations
+that are private (i.e., not visible outside the module).
+In short, classes are modeled by modules and objects
+are modeled by structures.
+<br/>
+<!-- section -->
+<h2> An example class declaration
+<br/>
+</h2><!-- section ENDED -->
+
+Here is the public interface for a <i>NODE</i> class, which can
+be used to make a linked list. The public interface
+is stored in a file named <i>node.h</i>:
+<br/>
+
+<pre>
+    #ifndef __NODE_INCLUDED__
+    #define __NODE_INCLUDED__
+
+    #include &lt;stdio.h&gt;
+
+    typedef struct node NODE; /* forward declaration of our structure */
+
+    extern NODE  *newNODE(void *value,NODE *next);     /* constructor */
+    extern void  *getNODEvalue(NODE *n);
+    extern NODE  *getNODEnext(NODE *n);
+    extern void  setNODEvalue(NODE *n,void *);
+    extern void  setNODEnext(NODE *n,NODE *);
+    extern void  displayNODE(NODE *n,FILE *fp,void (*display)(FILE *,void *));
+    extern void  displayNODEdebug(NODE *n,FILE *fp,void (*display)(FILE *,void *));
+
+    #endif
+</pre>
+
+Note that it is not necessary to explicitly declare the methods
+of the class external, but we do so, so that the instance variables
+and the method prototypes look consistent in
+the <i>.h</i> file.
+<br/>
+<br/>
+The public interface exposes node creating function (constructor)
+named <i>newX</i>.
+Our node stores a generic value, as indicated by the 
+<code>void *</code>
+type for the value argument to
+the constructor. This value can be any kind of data pointer in C.
+depending on what kind of node you would like to create.
+The public interface also
+exposes the access functions and mutator functions, generally prefixed with
+<i>get</i> and <i>set</i>, respectively.
+Finally, we have visualizer functions, generally prefixed with
+<i>display</i>.
+<br/>
+<br/>
+The implementation, which should be stored in a file
+named <i>node.c</i>, looks like this:
+<br/>
+
+<pre>
+    #include &lt;stdio.h&gt;
+    #include &quot;node.h&quot;
+
+    static void displayCstring(FILE *fp,void *s) { fprintf(fp,&quot;%s&quot;,(char *) s); }
+    static void displayCinteger(FILE *fp,void *s) { fprintf(fp,&quot;%d&quot;,*((int *) s)); }
+        
+    int
+    main(void)
+        {
+        NODE *n,*p;
+
+        n = newNODE(&quot;dog&quot;,0); /* zero is the null pointer */
+        n = newNODE(&quot;cat&quot;,n);
+        n = newNODE(&quot;rhino&quot;,n);
+
+        while (n != 0)
+            {
+            displayNODE(n,stdout,displayCstring);
+            n = getNODEnext(n);
+            }
+        printf(&quot;\n&quot;);
+
+        int a = 5,b = 10,c = 6;
+
+        p = newNODE(&amp;a,0);
+        p = newNODE(&amp;b,p);
+        p = newNODE(&amp;c,p);
+
+        while (p != 0)
+            {
+            displayNODE(p,stdout,displayCinteger);
+            p = getNODEnext(p);
+            }
+        printf(&quot;\n&quot;);
+
+        return 0;
+        }
+</pre>
+
+Here are links to this source code:
+<a href="nodetest.c" style="font-size:10px,font-family:'Lucida Console',monospace">nodetest.c</a>,
+<a href="node.c" style="font-size:10px,font-family:'Lucida Console',monospace">node.c</a>, and
+<a href="node.h" style="font-size:10px,font-family:'Lucida Console',monospace">node.h</a>.
+Compile <i>nodetest</i> with the command:
+<br/>
+
+<pre>
+    gcc -Wall -Wextra nodetest.c node.c -o nodetest
+</pre>
+
+Running the executable yields:
+<br/>
+
+<pre>
+    [[rhino]][[cat]][[dog]]
+    [[6]][[10]][[5]]
+</pre>
+
+<!-- section -->
+<h2> A more complicated example
+<br/>
+</h2><!-- section ENDED -->
+
+The <i>X.h</i> file contains the forward definition of the
+typedef-ed structure
+representing class X as well as the prototypes for all the public
+methods. Consider a <i>STUDENT</i> class which holds the ID number
+of a student, a list of the classes he or she is currently taking,
+a list of past classes, and the student's cumulative gpa.
+The file named <i>student.h</i>, might
+look like:
+<br/>
+
+<pre>
+    #ifndef __STUDENT_INCLUDED__
+    #define __STUDENT_INCLUDED__
+
+    #include &lt;stdio.h&gt;
+    #include &quot;class.h&quot;
+
+    typedef struct student STUDENT;
+
+    extern STUDENT *newSTUDENT(int id);
+    extern void addSTUDENTclass(STUDENT *s, CLASS *c);
+    extern void setSTUDENTgrade(STUDENT *s, CLASS *c,int grade);
+    extern void setSTUDENTgpa(STUDENT *s, double avg);
+    extern void displaySTUDENT(STUDENT *s, FILE *where);
+
+    #endif
+</pre>
+
+Note the typedef that gives a simple name to a <i>student</i> structure/object.
+Note also that <i>STUDENT</i> references another class named <i>CLASS</i>.
+<br/>
+<br/>
+Public methods for a class follow a naming convention. For example, an
+insert method for objects of class <i>X</i> would be named <i>insertX</i>.
+Another convention is that the first argument for a class method is always
+the object.
+<br/>
+<!-- section -->
+<h2> Public versus private
+<br/>
+</h2><!-- section ENDED -->
+
+Students should be well versed in the use of the keywords
+{tt static} and {tt extern}
+for controlling the visibility of definitions
+and declarations.
+Public components that are shared by all objects in a class are declared in
+the associated <i>.c</i> file.
+For example, suppose a shared component is the
+total number of students.
+This would be declared as a global in the <i>.c</i>
+file as:
+<br/>
+
+<pre>
+    int NumberOfStudents = 0;
+</pre>
+
+if it is a public shared attribute. These public, shared
+components are also
+re-declared extern in the <i>.h</i> file, as in:
+<br/>
+
+<pre>
+    extern int NumberOfStudents;
+</pre>
+
+If the component is to be shared, but made private,
+it would be declared static in the implementation file, as in:
+<br/>
+
+<pre>
+    static int NumberOfGoodStudents;
+</pre>
+
+and would not appear in the header file.
+<br/>
+<br/>
+Private methods
+in the implementation are placed in the <i>.c</i>
+file but are declared static.
+<br/>
+<!-- section -->
+<h2> Constructors
+<br/>
+</h2><!-- section ENDED -->
+
+The constructor for a class <i>X</i> is named <i>newX</i>,
+by convention. It
+allocates space for the object and then initializes the components of
+the object. For example, if the student structure looked like:
+<br/>
+
+<pre>
+    struct student
+        {
+        int id;
+        CLASS **currentClasses;
+        int currentClassCount;
+        CLASS **pastClasses;
+        int pastClassCount;
+        double gpa;
+        };
+</pre>
+
+the constructor <i>newSTUDENT</i> might look like:
+<br/>
+
+<pre>
+    STUDENT *
+    newSTUDENT(int id)
+        {
+        STUDENT *p;
+
+        /* allocate the object */
+
+        p = (STUDENT *) malloc (sizeof(STUDENT));
+
+        if (p == 0) Error(&quot;Allocating a STUDENT: out of memory&quot;);
+
+        /* initialize components */
+
+        p-&gt;id = id;
+        p-&gt;currentClasses = 0;
+        p-&gt;currentClassCount = 0;
+        p-&gt;pastClasses = 0;
+        p-&gt;pastClassCount = 0;
+        p-&gt;gpa = 0.0;
+
+        ++NumberOfStudents;
+
+        return p;
+        }
+</pre>
+
+Multiple constructors require unique names.
+By convention, constructors
+for class <i>X</i> would all have the form <i>newXalpha</i>,
+where <i>alpha</i> is either empty
+or a description that distinguishes the constructor from the other
+constructors.
+The same is true for accessors, mutators, and visualizers.
+<br/>
+<!-- section -->
+<h2> Encapsulating methods
+<br/>
+</h2><!-- section ENDED -->
+
+It is easy enough for an object to &ldquo;carry along&rdquo; methods as function
+pointers, relieving the programmer from coming up with unique names for
+public methods. This is probably too much for a first semester course,
+however. Also, realize that the object must still be passed to these
+methods so that the object's components are all accessible.
+<br/>
+<br/>
+Here is the <i>STUDENT</i> structure rewritten in such a style:
+<br/>
+
+<pre>
+    #include &quot;student.h&quot;
+
+    struct student
+        {
+        /* components */
+        int id;
+        CLASS **currentClasses;
+        int currentClassCount;
+        CLASS **pastClasses;
+        int pastClassCount;
+        double gpa;
+
+        /* pointer to methods */
+        void (*addClass)(STUDENT *s,Class *c);
+        void (*setGrad)(STUDENT *s,Class *c,int grade);
+        void (*setGPA)(STUDENT *s,double avg);
+        void (*display)(STUDENT *s,FILE *);
+        };
+
+    extern STUDENT *newSTUDENT(int id);
+</pre>
+
+The constructor for <i>STUDENT</i> sets the function pointers in the methods
+section of the typedef:
+<br/>
+
+<pre>
+    STUDENT *
+    newSTUDENT(int id)
+        {
+        STUDENT *p;
+
+        /* allocate the object */
+
+        p = (STUDENT *) malloc (sizeof(STUDENT));
+
+        if (p == 0) Error(&quot;Allocating a STUDENT: out of memory&quot;);
+
+        /* initialize components */
+
+        p-&gt;id = id;
+        p-&gt;currentClasses = 0;
+        p-&gt;currentClassCount = 0;
+        p-&gt;pastClasses = 0;
+        p-&gt;pastClassCount = 0;
+        p-&gt;gpa = 0.0;
+
+        /* set the methods */
+
+        p-&gt;addClass = addClass;
+        p-&gt;addGrade = addGrade;
+        p-&gt;setGPA = setGPA;
+        p-&gt;display = display;
+
+        ++NumberOfStudents;
+
+        return p;
+        }
+</pre>
+
+The methods <i>addClass</i>, <i>addGrade</i>,
+<i>setGPA</i>, and <i>display</i>
+are defined with the 
+<code>static</code> keyword (making them private)
+in <i>student.c</i>.
+<br/>
+<br/>
+Here is an example call to the <i>display</i> method:
+<br/>
+
+<pre>
+    STUDENT *s;
+
+    s = newSTUDENT(123456789);
+    /* add past classes */
+    ...
+    s-&gt;setGPA(s,&quot;transcript&quot;);
+    s-&gt;display(s,stdout);
+</pre>
+
+Even when encapsulating methods, one still needs to pass the object
+itself to the method.
+<br/>
+<!-- section -->
+<h2> Inheritance
+<br/>
+</h2><!-- section ENDED -->
+
+As inheritance is not allowed, code reuse is accomplished via wrapper
+functions that dispatch to clients. Instead of a class <i>X</i> inheriting
+from class <i>Y</i>,
+an object of type <i>X</i> instead has a component which holds
+a pointer to an object of type <i>Y</i>.
+Suppose inserting into an <i>X</i> object is
+really an insertion into the <i>Y</i> object.
+If so, the solution is to define a function <i>insertX</i>
+that simply calls <i>insertY</i> on object component <i>Y</i>.
+<br/>
+<!-- section -->
+<h2> Advanced ideas
+<br/>
+</h2><!-- section ENDED -->
+
+In the above scenario, all of the components of an object are
+private, but the
+object itself is exposed and can be manipulated outside of the
+public interface.
+If the object itself must be private, then the constructors
+are reformulated to
+return an index into a private array of objects (similar to the <i>open</i>
+constructor for file descriptor objects). The object is now an integer
+rather than a pointer to a structure.
+The <i>newSTUDENT</i> constructor, in this case, might
+look like:
+<br/>
+
+<pre>
+    int
+    newSTUDENT(int id)
+        {
+        STUDENT *p;
+
+        ++NumberOfStudents;
+
+        p = (STUDENT *) malloc (sizeof(STUDENT));
+
+        if (p == 0) Error(&quot;out of memory&quot;);
+
+        p-&gt;id = id;
+        p-&gt;currentClasses = 0;
+        p-&gt;currentClassCount = 0;
+        p-&gt;pastClasses = 0;
+        p-&gt;pastClassCount = 0;
+        p-&gt;gpa = 0.0;
+
+        return add(p);
+        }
+</pre>
+
+The <i>add</i> function resizes the array holding the allocated <i>STUDENT</i>
+objects to make room for the new object and returns the index
+corresponding to where the new object was placed:
+<br/>
+
+<pre>
+    static int
+    add(STUDENT *p)
+        {
+        /* increase the number of students */
+
+        ++NumberOfStudents;
+
+        /* reallocate where the object is stored */
+
+        Students = (STUDENT **) realloc(Students * sizeof(STUDENT *) 
+            * NumberOfStudents);
+
+        if (Students == 0) Error(&quot;out of memory&quot;);
+
+        /* store the student object and return its index */
+
+        Students[NumberOfStudents - 1] = p;
+        return NumberOfStudents - 1;
+        }
+</pre>
+
+The <i>Student</i> array is also
+declared static in the <i>student.c</i>
+file:
+<br/>
+
+<pre>
+    static STUDENT **Students = 0;
+</pre>
+
+Of course, the <i>add</i> routine should use
+array size doubling if a large amount of objects
+are to be allocated.
+<br/>
+<br/>
+The downside to privatizing the components is that type checking on the
+first argument to class methods (the object argument) is weakened since
+the first argument is now an integer index. Also, there is no protection
+against arbitrarily generating Student indices. One can mitigate this
+latter concern by having the constructor return
+long integer keys that map to actual internal indices. A red-black tree
+can store the mapping between keys and actual indices.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - debugSTACK</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; debugSTACK</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=42">debugSTACK</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=42">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=114">mdrobinson4</a></h2></div><div class="dateline">09-06-2018, 07:34 PM</div>
+</div>
+<div class="message"><span style="font-style: italic;" class="mycode_i"><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">debugSTACK</span></span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"> - This if the debug level is set to one, the display method uses the underlying data structure's display method. If the debug method is set to two, the display method uses the underlying data structure's debugged display method. </span></span></span><br />
+<br />
+Do we reset debugDA to its original value after we set it to either "0" or "1"?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a></h2></div><div class="dateline">09-07-2018, 04:06 AM</div>
+</div>
+<div class="message">What?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=114">mdrobinson4</a></h2></div><div class="dateline">09-07-2018, 05:47 AM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (09-07-2018, 04:06 AM)</span>magarwal Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=220#pid220">[ -> ]</a></cite>What?</blockquote><br />
+The description for debugSTACK stated that if the debug level is set to 1, we had to use the DA display method. So I thought that meant we had to set the DA debug level to 0 before we called the displayDA function to prevent the number of empty slots from being added to the output. Sorry if this does not make sense.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">09-07-2018, 07:24 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (09-07-2018, 05:47 AM)</span>mdrobinson4 Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=221#pid221">[ -> ]</a></cite>The description for debugSTACK stated that if the debug level is set to 1, we had to use the DA display method. So I thought that meant we had to set the DA debug level to 0 before we called the displayDA function to prevent the number of empty slots from being added to the output. Sorry if this does not make sense.</blockquote><br />
+The DA debug level should be set to 0 when the STACK constructor creates the underlying DA.<br />
+<br />
+Then, displaySTACK can look at its debug level and decide what to set the underlying DA's debug level to in displaySTACK.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=114">mdrobinson4</a></h2></div><div class="dateline">09-07-2018, 10:10 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (09-07-2018, 07:24 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=225#pid225">[ -> ]</a></cite><blockquote class="mycode_quote"><cite><span> (09-07-2018, 05:47 AM)</span>mdrobinson4 Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=221#pid221">[ -> ]</a></cite>The description for debugSTACK stated that if the debug level is set to 1, we had to use the DA display method. So I thought that meant we had to set the DA debug level to 0 before we called the displayDA function to prevent the number of empty slots from being added to the output. Sorry if this does not make sense.</blockquote><br />
+The DA debug level should be set to 0 when the STACK constructor creates the underlying DA.<br />
+<br />
+Then, displaySTACK can look at its debug level and decide what to set the underlying DA's debug level to in displaySTACK.</blockquote><br />
+Thanks!</div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; debugSTACK</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

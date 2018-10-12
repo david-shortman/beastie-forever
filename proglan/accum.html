@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Concept Inventory</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Conventional Interfaces
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="accum.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+ Enumeration, filtering, and accumulation
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+The nature of programming is such that there is pressure to provide
+languages in which problems can be specified with ever higher
+constructs. Assemblers replaced machine code and high-level programming
+languages replaced assembers for that very reason. Generally, the
+higher-level the language, the more productive are programmers. CASE
+tools attempt to provide even higher level programming constructs than
+languages such as C and Java. CASE stands for Computer-aided Software
+Engineering. Programs are developed within a CASE environment by selecting
+off the shelf software components and connecting them together to get
+the final product, much as an electrical engineer constructs a device
+on a breadboard wiring up discrete electronic components.
+<br/>
+<br/>
+A good programming language supports the use of off-the shelf components
+and a way to glue them together. Scheme is especially suited to this kind
+of programming. Consider a routine which counts the number of numbers in a
+(possibly nested) list:
+<br/>
+
+<pre>
+    (define (count items)
+        (cond
+            ((null? items)
+                0)
+            ((list? (car items))
+                (+ (count (car items)) (count (cdr items))))
+            ((number? (car items))
+                (+ 1 (count (cdr items))))
+            (else
+                (count (cdr items)))
+            )
+        )
+</pre>
+
+Suppose we have <i>a</i> bound thusly:
+<br/>
+
+<pre>
+    (define a &#39;(1 z (2 y 3) x))
+</pre>
+
+The expression 
+<code>(count a)</code> would yield a value of 3 since there are
+three numbers in the list. There is another way of solving this problem
+using a CASE style approach. In such an approach, we design some general
+components and string them together to solve this particular problem. The
+difficulty here, as with all CASE approaches, is the "stringing". How do
+ensure that the output from one module is compatible with another? The
+solutions is the "conventional interface". For the UNIX system, which
+uses CASE style in the way utilities are strung together with pipes,
+the conventional interface is the ASCII or Unicode file.
+The obvious conventional interface for Scheme is the <i>list</i>.
+<br/>
+<br/>
+Now that we have settled on an interface, what are the general purpose
+modules. A great many number of problems can be solved using some
+combination of these four steps:
+<br/>
+
+<ul>
+
+<li>
+
+ <i>enumerate</i> all the possible candidates
+</li>
+
+<li>
+
+ remove (or <i>filter</i>) the unacceptable ones
+</li>
+
+<li>
+
+ transform (or <i>map</i>) the candidates into a usable form
+</li>
+
+<li>
+
+ <i>accumulate</i> the result
+</li>
+
+</ul>
+
+
+In fact, Google's Map-Reduce programming paradigm is built on these
+modules, with <i>reduce</i> being another name for <i>accumulate</i>.
+<br/>
+<br/>
+For our particular problem, we need to:
+<br/>
+
+<ul>
+
+<li>
+
+ <i>filter</i>: remove all the elements which are not numbers
+</li>
+
+<li>
+
+ <i>map</i>: replace each remaining element with unity
+</li>
+
+<li>
+
+ <i>accumulate</i>: sum the transformed elements
+</li>
+
+</ul>
+
+
+Here is one possible implementation of an enumeration function:
+<br/>
+
+<pre>
+    (define (enum items)
+        (cond
+            ((null? items)
+                nil)
+            ((list? (car items)) (append (enum (car items))
+                (enum (cdr items))))
+            (else
+                (cons (car items) (enum (cdr items))))
+            )
+        )
+</pre>
+
+If we bind <i>b</i> to 
+<code>(enum a)</code>,
+the value of <i>b</i> becomes 
+<code>(1 z 2 y 3 x)</code>. Next,
+we need to filter out those elements which are not numbers. Here is a
+filtering routine which takes a predicate <i>p?</i>. If the predicate is true
+for an item, that item is retained in the resulting list.
+<br/>
+
+<pre>
+    (define (filter p? items)
+        (cond
+            ((null? items)
+                &#39;())
+            ((p? (car items))
+                (cons (car items) (filter p? (cdr items))))
+            (else
+                (filter p? (cdr items)))
+            )
+        )
+</pre>
+
+Scheme has a useful predicate <i>number?</i> which has an obvious meaning. If
+we bind <i>c</i> thusly:
+<br/>
+
+<pre>
+    (define c (filter number? b))
+</pre>
+
+the value of <i>c</i> should be 
+<code>(1 2 3)</code>.
+Now we know that, in this case, we
+want our final result to be three. The approach mentioned above suggests
+that we replace each number in <i>c</i> with the number one and then sum all
+the numbers in the resulting list. Obviously, this will produce our desired
+answer. Here is a definition of map which can be used to accomplish the
+desired replacement.
+<br/>
+
+<pre>
+    (define (map f items)
+        ((null? items)
+            nil)
+        (else
+            (cons (f (car items)) (map f (cdr items))))
+            )
+        )
+</pre>
+
+We also need to define the function to perform the replacement.
+<br/>
+
+<pre>
+    (define (cardinality x) 1)
+</pre>
+
+We now can bind <i>d</i> thusly:
+<br/>
+
+<pre>
+    (define d (map cardinality c))
+</pre>
+
+At this point, the value of <i>d</i> should be 
+<code>(1 1 1)</code>.
+Finally we accumulate
+our result by adding all the numbers in the list together. Here is a
+routine for accumulating:
+<br/>
+
+<pre>
+    (define (accum f base items)
+        (cond
+            ((null? items)
+                base)
+            (else
+                (f (car items) (accum f base (cdr items))))
+            )
+        )
+</pre>
+
+We sum all the ones together by supplying 
+<code>+</code> as the function and 0 as
+the base, as in:
+<br/>
+
+<pre>
+    (accum + 0 d)
+</pre>
+
+Of course, there is no need for the temporary variables. We could have
+generated the result by making the result of the previous step the input
+of the current step:
+<br/>
+
+<pre>
+    (accum + 0 (map cardinality (filter number? (enum a))))
+</pre>
+
+This seems like a lot of work but, as in most cases, writing general
+code takes longer than writing specific code. The benefit is that the
+general code need only be written once, whereas the specific code must
+be written again and again. For example, suppose the problem changes to
+"add all the numbers in list a". We get the result with this expression:
+<br/>
+
+<pre>
+    (accum + 0 (filter number? (enum a)))
+</pre>
+
+If the problem changes to "sum the squares of all the numbers in list a",
+we can get that result with:
+<br/>
+
+<pre>
+    (accum + 0 (map square (filter number? (enum a))))
+</pre>
+
+If the problem changes to "find all the non-numbers in list a" we can
+get that result with:
+<br/>
+
+<pre>
+    (define (nan? x) (not (number? x)))
+</pre>
+
+followed by:
+<br/>
+
+<pre>
+    (filter nan? (enum a))
+</pre>
+
+Alternatively, we use a lambda to reduce polluting the namespace:
+<br/>
+
+<pre>
+    (filter (lambda (x) (not (number? x))) (enum a))
+</pre>
+
+The superior student will ponder why:
+<br/>
+
+<pre>
+    (filter (not number?) (enum a))
+</pre>
+
+doesn't work until enlightenment dawns.
+<br/>
+<br/>
+Finally, we could have solved this problem by skipping the filtering
+step and mapping the non-numeric items to 0 and the numeric items to 1
+and then accumulating.
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

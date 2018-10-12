@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>union-fibheap</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+Fibonacci Heap Union
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="union-fibheap.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+The <i>union</i> function:
+<br/>
+
+<pre>
+    function union(a,b)    // a and b are non-empty heaps
+        {
+        h = new FibHeap();
+        h.size = a.size + b.size;
+        if (a.min.value &lt; b.min.value)
+            h.min = a.min;
+        else
+            h.min = b.min;
+        h.rootList = append(a.rootList,b.rootList);
+        }
+</pre>
+
+The <i>union</i> function simply concatenates the donor heaps root lists
+and sets its minimum to the minimum of the donor heaps.
+<br/>
+<br/>
+<b>Next:</b>
+<a href="decreasekey-fibheap.html">
+Decreasing the value of an arbitrary node in a <i>Fibonacci</i> heap
+</a>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

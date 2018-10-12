@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Concept Inventory</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Functions
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="funct1.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+ Key ideas
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+
+<ul>
+
+<li>
+
+ first class status of functions
+</li>
+
+<li>
+
+ passing functions
+</li>
+
+<li>
+
+ returning functions
+</li>
+
+<li>
+
+ returned functions "remember" their free variables
+</li>
+
+<li>
+
+ local variables via lambda
+</li>
+
+</ul>
+
+
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Functions as first-class objects
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Suppose you really, really, really, hated the prefix notation of Scheme.
+The fact that functions are first-class objects gives you a way to force prefix
+notation into (nearly) infix. Suppose we wanted to add the integers 3 and
+5 together. In Scheme, the answer would be the value of the expression:
+<br/>
+
+<pre>
+    (+ 3 5)
+</pre>
+
+Unfortunately, there's no way to have the Scheme interpreter make
+sense of the expression:
+<br/>
+
+<pre>
+    (3 + 5)
+</pre>
+
+since it will attempt the execute the function 3. But we can come close by
+defining a function which does understand infix notation. Suppose we name
+our new function <i>expr</i>. Then we could call <i>expr</i> with an infix
+notation, as in:
+<br/>
+
+<pre>
+    (expr 3 + 5)
+</pre>
+
+which we assume would evaluate to 8. Let's define it now:
+<br/>
+
+<pre>
+    (define (expr left op right) 
+        (op left right) 
+        )
+</pre>
+
+The first-class status of functions in Scheme make this transformation trivial.
+Extending <i>expr</i> to handle an arbitrary infix expression is not trivial,
+although not because of Scheme itself but because of the intricacies of associativity,
+precedence, and grouping of infix mathematical expressions. Suppose we say
+that all operations have the same precedence and that operators are evaluated
+from left to right and there is no grouping of sub-expressions. Then <i>expr</i>
+becomes:
+<br/>
+
+<pre>
+    (define (expr left op right . more) 
+        (cond 
+            ((null? more) (op left right)) 
+            (else (apply expr (cons (op left right) more))) 
+            ) 
+        )
+</pre>
+
+Evaluating the expression:
+<br/>
+
+<pre>
+    (expr 3 + 4 - 5 * 2)
+</pre>
+
+yields 4, the correct answer (remember there is no precedence).
+<br/>
+This version of <i>expr</i> uses the syntax for supplying a variable number of
+argument (the "dot" in the formal parameter list - extraneous arguments are
+bundled up in to the list more) and a number of functions for manipulating
+lists (<i>null?</i>, <i>apply</i>, and <i>cons</i> - more about these later).
+The point here is not so much understanding how this version of 
+<code>expr</code>
+works but that it is quite powerful yet only slightly more complicated than
+the original version.
+<br/>
+Adding associativity, precedence, and grouping requires the ability to
+&ldquo;parse&rdquo; expressions, which is the subject of the latter half of this course.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Functions which return functions
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Previously, we've seen examples of functions which take other functions as
+parameters. Now let's look at functions which return functions. Consider this
+definition:
+<br/>
+
+<pre>
+    (define (adjuster op amount) 
+        (define (f x) 
+            (op x amount) 
+            ) 
+        f 
+        )
+</pre>
+
+This function defines an internal function, bound to the name <i>f</i>, and
+then returns the value of <i>f</i>, namely the internal representation of
+the function itself. Clearly, this function returned takes a single argument
+and then adjusts that argument based upon the operator <i>op</i> and the
+amount passed to the creating function. What happens when these definitions
+and expressions are evaluated?
+<br/>
+
+<pre>
+    (define adjust (adjuster + 2)) 
+    (adjust 10)
+</pre>
+
+The name <i>adjust</i> is bound to a function, created by <i>adjuster</i>,
+which takes
+a single argument and "adjusts" it by adding 2 its argument.
+Therefore, evaluation
+of 
+<code>(adjust 10)</code> yields 12. More than one kind of adjuster function
+can be created:
+<br/>
+
+<pre>
+    (define adjust1 (adjuster + 2)) 
+    (define adjust2 (adjuster * 3)) 
+    (adjust1 (adjust2 10))
+</pre>
+
+Evaluation of the last expression should yield 32. Note that <i>adjust1</i>
+is unaffected by the creation of <i>adjust2</i>. They each "remember" their
+own adjustment operator and adjustment amount. Note that <i>op</i> and <i>amount</i>
+are free variables with respect to the returned function. In general, returned
+functions "remember" their free variables (by storing a pointer to those
+variables).
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Function literals
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+It seems kind of klunky for the adjuster function to have to name the function
+it creates since nobody uses that name. It's similar to being required to
+write:
+<br/>
+
+<pre>
+    double pi() 
+        { 
+        return 3.14159; 
+        }
+</pre>
+
+as:
+<br/>
+
+<pre>
+    double pi() 
+        { 
+        double x = 3.14159; 
+        return x; 
+        }
+</pre>
+
+in C or C++. Why do we have to name a function object just to return its
+value? It turns out that in Scheme, you don't. Since functions are first class
+objects, they also have literal forms (above, <i> x</i> is a double variable
+and 3.14159
+is a double literal). Let's adjust adjuster so that it simply returns
+the literal form of the function it creates.
+<br/>
+
+<pre>
+    (define (adjuster op amount) 
+        (lambda (x) (op x amount)) 
+        )
+</pre>
+
+Note that the literal form is very similar to the original definition. Only
+two changes have been made. First the name define is changed to <i>lambda</i>
+and the defined function name is deleted (since it's not needed anymore).
+Now let's look again at the use of adjuster. Note that the last three
+expressions are all equivalent and are generated by successive substitutions.
+<br/>
+
+<pre>
+    (define adjust (adjuster + 2)) 
+    (adjust 10) 
+    ((adjuster + 2) 10) 
+    ((lambda (x) (+ 2 x)) 10)
+</pre>
+
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Using lambdas to generate local variables
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+One surprising consequence of first-class functions is that it
+is never necessary to have local variables in your language.
+Consider the function:
+<br/>
+
+<pre>
+    f(x) = (x-1) * (x-1) - (x-1)
+</pre>
+
+If we implement this function as a Scheme procedure, we get:
+<br/>
+
+<pre>
+    (define (f x) 
+        (- (* (- x 1) (- x 1)) (- x 1)) 
+        )
+</pre>
+
+Note that the quantity 
+<code>(- x 1)</code> is computed three times. It would
+be nice to be able to precompute this quantity, bind it to a name and then
+perform the calculation on the bound name, saving two recomputations of the
+quantity. If we don't want to define local variables,
+We can get by with a helper function:
+<br/>
+
+<pre>
+(define (f x) 
+    (define (helper a) 
+        (- (* a a) a) 
+        ) 
+    (helper (- x 1)) 
+    )
+</pre>
+
+Note how the quantity <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>-</mo>	<mn>1</mn></mrow></math> is computed only once.
+<br/>
+Still it seems awkward to have to name a function just to invoke it. Here's
+where <i>lambda</i>s come in. We can rewrite this function to use a call to a
+<i>lambda</i>
+which takes one argument and then pass the quantity 
+<code>(- x 1)</code> as that
+argument.
+<br/>
+
+<pre>
+    (define (f x) 
+        ((lambda (a) (- (* a a) a))
+            (- x 1)) 
+        )
+</pre>
+
+I've placed the <i>lambda</i> expression on one line and its argument on
+the next line (indented) to help comprehension.
+Now the value of 
+<code>(f x)</code> is the value of passing
+
+<code>(- x 1)</code> to the function (with no name) which subtracts its argument
+from the square of its argument. As the text says, this is such a useful
+way to construct local variables that a rearranged version of <i>lambda</i>,
+called <i>let</i>, is provided. Recast using <i>let</i>, the function becomes
+<br/>
+
+<pre>
+    (define (f x) 
+        (let 
+            ((a (- x 1))) 
+            (- (* a a) a) 
+            ) 
+        )
+</pre>
+
+Even so, I find this a bit hard to read. So I use local
+variables in
+most situations:
+<br/>
+
+<pre>
+    (define (f x) 
+        (define a (- x 1)) 
+        (- (* a a) a) 
+        )
+</pre>
+
+Care must be taken with internal defines in Scheme as they
+are as processed simultaneously. For example:
+<br/>
+
+<pre>
+    (define a 16)
+
+    (define (f x) 
+        (define b (* x a)) ; which a, local or global?
+        (define a 3) 
+        (- (* a a) b) 
+        )
+</pre>
+
+might not behave as expected.
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

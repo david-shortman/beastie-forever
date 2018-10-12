@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Aug 18 09:08:14 2014 -->
+<head>
+<title>An Encyclop&aelig;dia of Elementary Data Structures -- Circular Arrays</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_6.html">
+  <img border="0" alt="Fillable Arrays" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_8.html">
+  <img border="0" alt="Dynamic Arrays" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Circular Arrays</h1>
+
+<h2><a name="id1">Synopsis</a></h2><p>
+A circular array is like a fillable array except values can be added
+to and removed from the
+front of the store as well as the back.
+A consequence of this is the front element of the store
+may have an associated index other than zero.
+To avoid shifting elements when adding an element to the front of
+the store, indices are allowed to <i>roll over</i>.
+For example, suppose the capacity is 10 and the size is 5,
+with the first element residing at index 0 (using zero-based
+counting). Adding a new value to the front should place it
+at index -1, which does not exist. Since the index is too small
+(<i>i.e.</i>, negative),
+the capacity is added to the index to
+make it non-negative. For our example, the new index is -1 plus
+10, or 9. Thus the new element is added at index 9, the rightmost
+slot.
+Conversely, with the same size and capacity as before,
+but with the index of the first element being 5, consider
+adding an element to the back. In this
+case, the index of the most rightmost element is 9, because the size is
+5 (the five values are stored at indices 5, 6, 7, 8, and 9).
+Adding an element at the back would place it
+at index 10, which does not exist. Since the index is
+too large, the proper index is
+then computed by subtracting off the capacity. The places
+the to-be-added element at index 0.
+The tests for indices being too small or too large can
+be eliminated by the use of modular arithmetic.
+</p>
+<p>As with
+<a href="index_6.html">fillable arrays</a>
+circular arrays use a normal
+array as a store.
+</p>
+
+<h2><a name="CircularArraysStructure">Structure</a></h2>
+<p>The typical circular array object has three components plus
+a set of operators:
+</p>
+<pre>
+    class circular-array
+        {
+        var store = ?;      //points to an array
+        var capacity = ?;   //length of the store
+        var size = 0;       //net number of elements added
+        var startIndex = 0; //index of the first/leftmost element
+        var endIndex = 0;   //optional: index of the first open slot
+        //operations
+        ...
+        }
+</pre>
+<p>The <i>store</i> component points to a normal array and is set by the
+constructor. The <i>capacity</i> is usually given as an argument to the
+constructor and is used to allocate the <i>store</i>.
+Both the start and end indices are set to zero; the only case
+when these indices are equal is when the circular array is empty.
+</p>
+
+<h2><a name="CircularArraysVocabulary">Vocabulary</a></h2>
+<p>The terms used in describing a circular array,
+in addition to those of
+<a href="index_5.html#ArraysVocabulary">normal arrays</a>,
+are:
+</p>
+<dl><dt>start index</dt><dd>
+The index of the first element in the store.
+When computing a new start index, if the result is too large,
+it is corrected by subtracting off the capacity. If it becomes
+to small (<i>e.g.</i>, negative for zero-based counting),
+it is corrected by adding in the capacity.
+</dd><dt>end index</dt><dd>
+The index of the first open slot in the store.
+It is computed dynamically by adding the size to the start index.
+If the generated index is too large,
+it is corrected by subtracting off the capacity.
+The end index may also be cached as a component of the data structure.
+</dd><dt>index correction</dt><dd> 
+The process of correcting an index if it is too small or
+too large. A convenient method of correction uses modular
+arithmetic.
+</dd><dt>modular arithmetic</dt><dd>
+A calculated index, whether it be too
+small or two large, can be corrected by adding in the capacity and 
+then <i>modding</i> by the capacity. If the calculated index was
+neither too small or too large, the operations of adding in the
+capacity and then modding has no effect.
+</dd></dl>
+
+<h2><a name="id4">Supports</a></h2><p>
+Circular arrays can be used to implement:
+</p>
+<ul><li><a href="index_13.html">Bounded Stacks with a <i>least-recently-pushed</i> replacement
+strategy</a>
+</li><li><a href="index_14.html">Bounded Queues</a>
+</li></ul>
+<p>Circular arrays are used as a basis for:
+</p>
+<ul><li><a href="index_9.html">Dynamic Circular Arrays</a>
+</li></ul>
+
+<h2><a name="id5">Dependencies</a></h2><p>
+Circular arrays are implemented using <a href="index_5.html">arrays</a>,
+with similarities to <a href="index_6.html">fillable arrays</a>.
+</p>
+
+<h2><a name="id6">Operations</a></h2>
+
+<h3><a name="id7">decrement-index</a></h3><p>
+This operation subracts one from the given index. If
+the resulting value becomes too small, the value is
+corrected by adding in the capacity. In any case,
+the new, perhaps corrected, value is returned.
+</p>
+<p>This operation is generally a private method.
+</p>
+
+<h3><a name="id8">increment-index</a></h3><p>
+Like <i>decrement-index</i>, except one is added to
+the given index (with possible correction).
+</p>
+<p>This operation is generally a private method.
+</p>
+
+<h3><a name="id9">correct</a></h3><p>
+The <i>increment</i> and <i>decrement</i> operations can be
+replaced with this operation which typically
+uses modular arithmetic to adjust the given index.
+The calls:
+</p>
+<pre>
+    u = decrementIndex(v)
+    x = incrementIndex(y)
+</pre>
+<p>would be replaced with:
+</p>
+<pre>
+    u = correctIndex(v - 1);
+    x = correctIndex(y + 1);
+</pre>
+<p>This operation is generally a private method.
+</p>
+
+<h3><a name="id10">add-to-front</a></h3><p>
+This operation adds a given <i>value</i> to the front of
+the store. A special case exists if the array is empty.
+If so, <i>add-to-back</i> is called to handle the addition.
+Otherwise, the start index is decremented and corrected,
+if necessary.
+</p>
+<pre>
+    function add-to-front(value)
+        {
+        if (size == 0)
+            add-to-back(value)
+        else
+            {
+            startIndex = decrementIndex(startIndex);
+            store[startIndex] = value;
+            size += 1;
+            }
+        }
+</pre>
+<p>Adding an element to the front takes <i>&#920;(1)</i> time.
+</p>
+
+<h3><a name="id11">add-to-back</a></h3><p>
+This operation adds a given <i>value</i> to the back of
+the store. Unlike fillable arrays, the next available slot may not
+have index <i>size</i>. The start index is added to the
+<i>size</i> to generate the actual index of the next available
+slot. The generated index is corrected, if necessary.
+</p>
+<pre>
+    function add-to-back(value)
+        {
+        store[endIndex] = value;
+        endIndex = incrementIndex(endIndex)
+        size += 1;
+        }
+</pre>
+<p>Adding an element to the back takes <i>&#920;(1)</i> time.
+</p>
+
+<h3><a name="id12">remove-from-front</a></h3><p>
+This operation removes the leftmost <i>value</i> in the store.
+This can be done simply by incrementing the start index
+(with correction). The size component is updated
+accordingly.
+</p>
+<p>Removing the front element takes <i>&#920;(1)</i> time.
+</p>
+
+<h3><a name="id13">remove-from-back</a></h3><p>
+This operation removes the rightmost <i>value</i> in the store.
+This can be done simply by decrementing the size, if the
+end index is not cached. If the end index is cached, it
+needs to be decremented (with correction) as well.
+</p>
+<p>Removing the back element takes <i>&#920;(1)</i> time.
+</p>
+
+<h3><a name="id14">get, set</a></h3><p>
+Like
+<a href="index_6.html#FillableArraysGet">fillable arrays</a>,
+a valid index
+for <i>get</i> and <i>set</i> lies between 0 and <i>size</i> - 1.
+However, the value of the start index must be added to the
+given index and then corrected as necessary. For example,
+<i>get</i> becomes:
+</p>
+<pre>
+    function get(index)
+        {
+        var spot = correctIndex(index + startIndex);
+        return store[spot];
+        }
+</pre>
+<p>The code for <i>set</i> follows a similar pattern.
+</p>
+
+<h3><a name="id15">find</a></h3><p>
+Find is similar to that of 
+<a href="index_6.html#FillableArraysFind">fillable arrays</a>.
+Assuming the 
+elements are unsorted, a modified linear
+traversal (see below) is used.
+</p>
+
+<h2><a name="CircularArrayTraversals">Traversals</a></h2>
+<p>Circular arrays support traversals similar to that of arrays,
+except that the actual starting (or ending) point is the start index
+while the actual ending (or starting point) is the end index.
+However, since the end index  may be smaller than the start index,
+it becomes difficult to write a loop based upon these actual values.
+By basing the traversal on <i>get</i> (or <i>set</i>), then
+the starting (or ending) point is zero and
+the ending (or starting point) is the <i>size</i> - 1
+and writing such a traversing loop is greatly simplified:
+</p>
+<pre>
+    for (i = 0; i &lt; size; i += 1)
+        println(get(i));
+</pre>
+<p>A right-to-left traversal is similar.
+</p>
+
+<h2><a name="id17">Concept Inventory</a></h2>
+<div align="center">
+</div>
+<ol>&nbsp;
+<li>In a circular array, the start index (after correction) can never equal the size.
+<ol><li>
+True
+</li><li>
+False
+</li></ol>
+&nbsp;
+</li><li>In a circular array, the start index (after correction) can never equal the capacity.
+&nbsp;<br />&nbsp;<br />&nbsp;
+</li><li>Suppose a circular array has size <i>s</i>, capacity <i>c</i>, and start index of <i>i</i>. Before correction, the next value to be added to the front of the array will be placed at index:
+<ol><li>
+<i>s</i> + <i>i</i>
+</li><li>
+<i>s</i> - <i>i</i>
+</li><li>
+<i>i</i>
+</li><li>
+<i>i</i> - 1
+</li><li>
+<i>c</i> - 1
+</li><li>
+<i>c</i> - <i>i</i>
+</li></ol>
+&nbsp;
+</li><li>Suppose for a circular array, the size is equal to the capacity. Can a value be added?
+<ol><li>
+Yes, there is room for one more value
+</li><li>
+No, the array is completely full
+</li></ol>
+&nbsp;
+</li><li>Suppose a circular array is empty. The size of the array is:
+<ol><li>
+zero
+</li><li>
+one
+</li><li>
+the length of the array
+</li><li>
+the capacity of the array.
+</li></ol>
+</li></ol>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_6.html">
+  <img border="0" alt="Fillable Arrays" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_8.html">
+  <img border="0" alt="Dynamic Arrays" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

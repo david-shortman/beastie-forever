@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>binomial</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+Binomial Heaps
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="binomial.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+<br/>
+<center>
+
+<i>NOTE: THIS PSEUDOCODE IS THE SIXTH DRAFT. EXPECT UPDATES.</i>
+</center>
+
+<br/>
+<br/>
+A binomial heap class is easy to implement if you have a robust linked list
+class to work with
+since most of the heap's methods simply call the methods of the underlying
+linked list class. The root list of a binomial heap is implemented as a circular
+doubly-linked list. The children of a node in a binomial heap are kept as
+a circular doubly-linked list as well.
+<br/>
+<br/>
+We will assume that the ordering of the heap (min-heap or max-heap)
+is specified via a comparator function that is passed into the
+constructor of the heap. The constructor caches this comparator and
+initializes its root list, a pointer to the most extreme node in
+the root list, and the heap's size:
+<br/>
+
+<pre>
+    function newBinheap(comparator)
+        {
+        set b to the allocation of a binheap
+        set b&#39;s comparator to the given comparator
+        set b&#39;s root list to a new linked list (via linked-list constructor)
+        set b&#39;s extreme pointer to null
+        set b&#39;s size to zero
+        return b
+        }
+</pre>
+
+The <i>union</i> method makes use of the underlying linked list's union method
+to merge the root list of the donor heap into the root list of the
+recipient heap. Note that the donor is emptied out:
+<br/>
+
+<pre>
+    function union(b,donor)
+        {
+        //b and donor are binomial heaps
+        merge the root list of the donor into the root list of b (via linked-list union)
+        increment b&#39;s size by donor&#39;s size
+        set donor&#39;s root list to a new empty linked list
+        set donor&#39;s size to zero
+        set donor&#39;s extreme pointer to null
+        consolidate the root list of b using b&#39;s comparator
+        }
+</pre>
+
+The <i>insert</i> routine gets a value to be inserted and creates a node from
+that value. It then sets the children and parent pointers appropriately.
+Next, it inserts the new node into its root list. Finally it consolidates
+the root list:
+<br/>
+
+<pre>
+    function insert(b,v)
+        {
+        //b is a binomial heap, v is the value to be inserted
+        set a variable n to a new node containing value v
+        set the parent of n to n
+        set the children pointer of n to a new (empty) linked list
+        insert n into the rootlist of b (via linked-list insert)
+        increment b&#39;s size
+        consolidate the root list of b using b&#39;s comparator
+        return n
+        }
+</pre>
+
+The <i>decreaseKey</i> method is straightforward; it simply updates the
+value of a given node and bubbles up that new value as much as
+necessary:
+<br/>
+
+<pre>
+    function decreaseKey(b,n,v)
+        {
+        set n&#39;s value to the new value v
+        bubble up the new value using b&#39;s comparator and
+            return the node where the new value finishes up
+            (also update b&#39;s extreme value pointer, if necessary)
+        }
+</pre>
+
+The <i>bubble</i> up method swaps node values if a node's value is less than
+(or greater than for a max-heap) the value of it's parent. For the CS201
+project, it also needs to inform values of their new owners:
+<br/>
+
+<pre>
+    function bubbleUp(b,n)
+        {
+        if n is the root of a subheap
+            return n;
+        else if b&#39;s comparator says the n&#39;s value isn&#39;t smaller than its parent&#39;s
+            return n;
+        else
+            {
+            inform the value of n that n&#39;s parent is the new owner
+            inform the value of n&#39;s parent that n is the new owner
+            swap the values of n and and n&#39;s parent
+            return bubbleUp(b,n&#39;s parent);
+            }
+        }
+</pre>
+
+The <i>delete</i> method uses <i>null</i> to signify infinity for the heap's comparator:
+<br/>
+
+<pre>
+    function delete(b,n)
+        {
+        decreaseKey(b,n,null)
+        extractMin(b);
+        }
+</pre>
+
+Note: the comparator function has to be implemented so that it treats a
+null value as more extreme than any other value.
+<br/>
+<br/>
+The <i>extractMin</i> function returns the minimum value in the heap if
+the heap is a min heap and the maximum value otherwise. It makes use of
+the cached extreme value (the most extreme value is updated any time the
+consolidation routine runs).
+It also makes use of the linked-list's <i>remove</i> and
+<i>union</i> methods:
+<br/>
+
+<pre>
+    function extractMin(b)
+        {
+        set a variable y to the extreme node in b
+        remove y from b&#39;s root list (via linked-list remove)
+        // the children of y are a linked list
+        set each of the children&#39;s parent to point to themselves
+        merge the children of y into b&#39;s root list (via linked-list union)
+        consolidate b&#39;s root list using b&#39;s comparator
+        decrement b&#39;s size
+        return y&#39;s value
+        }
+</pre>
+
+Consolidation is the most complicated task in maintaining a binomial heap
+because there is no analogous linked-list method. The basic idea is
+to move all the subheaps from the root root to a consolidation array
+and then moving them back into the root list:
+<br/>
+
+<pre>
+    function consolidate(b)
+        {
+        //create the consolidation array D
+        calculate D&#39;s size: (log (base 2) of b&#39;s size) + 1
+        set a variable D to the allocation of an array of D&#39;s size
+        initialize the D array to nulls
+
+        //place all the subheaps in the D array, combining as necessary */
+        while b&#39;s root list is not empty
+            {
+            set a variable spot to the head node in b&#39;s root list
+            remove spot from the root list (via linked-list remove)
+            update the D array with spot
+            }
+
+        //transfer the D array back to the heap, keeping track of the extreme value
+        set b&#39;s extreme pointer to null
+        for (i = 0; i &lt; D&#39;s size; ++i)
+            {
+            if D[i] not equal to null
+                {
+                insert D[i] into b&#39;s root list (via the linked-list&#39;s insert method)
+                update b&#39;s extreme pointer if it&#39;s null or b&#39;s comparator indicates that D[i] is more extreme
+                }
+            }
+        free the D array (if needed)
+        }
+</pre>
+
+Updating the consolidation array involves putting the subheap into
+an empty slot in the array, as indicated by the degree of the subheap.
+If the slot indicated by the degree is not empty, the original subheap and
+the subheap in the consolidation array are merged. This merged subheap
+is then placed into the consolidation array at the next higher slot.
+Of course, if this new slot is not empty, the merging process continues:
+<br/>
+
+<pre>
+    function updateConsolidationArray(D,spot)
+        {
+        set a variable degree to the number of spot&#39;s children (using linked-list size)
+        while (D[degree] != null)
+            {
+            combine spot and D[degree], setting spot to the combined subheap
+            set D[degree] to null, since that slot is now empty
+            increment degree
+            }
+        set D[degree] to spot
+        }
+</pre>
+
+The <i>combine</i> routine takes two subheaps and makes the subheap, whose
+root is less extreme, a child of the other:
+<br/>
+
+<pre>
+    function combine(b,x,y)
+        {
+        if b&#39;s comparator says x&#39;s value is more extreme than y&#39;s
+            {
+            insert y into the children of x (via linked list insert)
+            set the parent of y to x
+            return x
+            }
+        else
+            {
+            insert x into the children of y (via linked list insert)
+            set the parent of x to y
+            return y
+            }
+        }
+</pre>
+
+Although some function names reflect a min-heap
+(<i>decreaseKey</i> and <i>extractMin</i>), whether the heap is acutally a
+min-heap or a max-heap is under the control of the comparator function.
+Typically, if a min-heap is desired, the comparator returns a negative
+number if the first value is less than the second, zero if the values are the same, and a positive number if the first value is greater than the second.
+If a max-heap is desired, the comparator return a negative number if
+the first value is <i>greater</i> than the second, and so on.
+<br/>
+<br/>
+The remaining functions of a binomial implementation are left to the reader.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

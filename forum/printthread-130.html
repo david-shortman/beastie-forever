@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> The ol' randomly lost memory leak problem - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=25">The ol' randomly lost memory leak problem</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  The ol' randomly lost memory leak problem (<em>/showthread.php?tid=25</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>The ol' randomly lost memory leak problem</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=107">dmwever</a> -  <strong>08-30-2018</strong>
+<br />
+<br />
+So good ol' valgrind, that beaut of a program, is informing me that all of my initial newDA bytes are becoming lost immediately after exiting the function. It is a curious problem to me, seeing as I have allocated and initialized everything within the function, and then at the end typed: return new;<br />
+<br />
+It seems to my inexperienced eyes that the entire DA is created, and then only a copy of it is actually passed onward to the main file. So all those allocated bits just happen to float off in outer space, definitely lost for all eternity. Almost poetic, in a tragic sort of way.<br />
+<br />
+I also lose random a random byte every time I insertDA. Interesting. All of the lost bytes come from the same malloc address.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: The ol' randomly lost memory leak problem</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>08-30-2018</strong>
+<br />
+<br />
+What?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: The ol' randomly lost memory leak problem</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=107">dmwever</a> -  <strong>08-30-2018</strong>
+<br />
+<br />
+My bytes allocated by newDA are lost as soon as I exit the function.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: The ol' randomly lost memory leak problem</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a> -  <strong>08-31-2018</strong>
+<br />
+<br />
+Would you mind give me the error message Valgrind prompted
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: The ol' randomly lost memory leak problem</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=107">dmwever</a> -  <strong>08-31-2018</strong>
+<br />
+<br />
+==2185== 4 bytes in 1 blocks are definitely lost in loss record 2 of 5<br />
+==2185==    at 0x4C2AC23: malloc (vg_replace_malloc.c:299)<br />
+==2185==    by 0x40110B: newINTEGER (in /home/Davecool/Lusth201/project0/da)<br />
+==2185==    by 0x400804: main (in /home/Davecool/Lusth201/project0/da)
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: The ol' randomly lost memory leak problem</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-01-2018</strong>
+<br />
+<br />
+This might be worth an office hour visit on Tuesday.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

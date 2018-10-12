@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: vocals.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Feb 23 12:25:29 2015 -->
+<head>
+<title>Songlib: processing vocals</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: processing filters<br /></h1>
+<h2 class="maketitle">written by: Song Li Buser</h2>
+<h3 class="maketitle">Revision Date: February 23, 2015</h3>
+</p>
+
+<h3><a name="id1"><a href="vocals.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Processing vocals</a></h1><p>
+This page gives a recipe for producing a rich sounding vocal track using
+<i><b>songlib</b></i>&#32;and <i>Audacity</i>.
+</p>
+
+<h1><a name="id3">Record multiple takes</a></h1><p>
+Using whatever recording software you like, record multiple takes of
+your vocals. One way is to use the <i>record</i> program that comes with
+<i><b>Songlib</b></i>. Instructions can be found near the bottom of the <i><b>Songlib</b></i>&#32;
+homepage. Another is Audacity.
+</p>
+<p>However you record, save each take as a wave file. We will assume those
+takes are named:
+</p>
+<pre>
+    take1.wav take2.wav take3.wav ...
+</pre>
+
+<h1><a name="id4">Cleaning up the dead air</a></h1><p>
+Often, there is a slight amount of noise in your recordings even when
+you are not singing. Use the <i>rrasilence</i> filter to clean up your takes.
+For example, to clean up <i>take1.wav</i>, you would run the command:
+</p>
+<pre>
+    wav2rra take1.wav | rrasilence | rra2wav &gt; clean1.wav
+</pre>
+<p>The <i>rrasilence</i> filter forces quiet sections of your vocals down to
+absolute zero volume. To make the filter more or less aggressive,
+see its options:
+</p>
+<pre>
+    silence -h
+</pre>
+
+<h1><a name="id5">Compressing your vocals</a></h1><p>
+Open up Audacity and import your mastered instrument track (you will
+need to convert it WAV first) as an audio track.
+In addition, import two of your clean WAV files and save your project.
+Select all the tracks and the select the Compressor from the Effects
+menu. Run the compressor to make the loudest parts of your vocals
+no so loud.
+</p>
+
+<h1><a name="id6">Picking the best phrases</a></h1><p>
+Using the Time Shift Tool (double-headed horizontal arrow on
+the tool bar), align the two tracks with the instrumental track.
+</p>
+<p>Using the mouse, highlight the first phrase of your two vocal tracks.
+The keyboard combination <code>&lt;Shift&gt;-&lt;spacebar&gt;</code> will start playing the
+selected vocals in a loop. You should also hear your instrumentals, as well.
+Again, using the mouse, mute one of the tracks;
+the <i>Mute</i> button is located to the
+left of the track. Listen to the phrase that is not muted and then mute it
+and unmute the other track. Listen to the newly unmuted phrase. Keep going
+back and forth until you decide which version you like better. 
+Press the spacebar to stop the loop. Highlight
+the phrase in the track you don't like and enter <code>&lt;Ctl&gt;-L</code>!
+This will reduce the unwanted phrase to silence. If you did it correctly,
+the phrase you prefered will remain.
+</p>
+<p>Repeat this process for every phrase in the tracks.
+</p>
+<p>Once you are done, highlight a region in both tracks and
+enter <code>&lt;Ctl&gt;-&lt;Shift&gt;-M</code> to merge the two tracks into a new, single track.
+Save your project and then delete the two individual tracks.
+</p>
+<p>Import your next clean take into Audacity and repeat the entire process
+again until you have the best phrases from all your takes.
+</p>
+
+<h1><a name="id7">Adjust the timings of your phrases</a></h1><p>
+Play the entire song, stopping when you hear some vocals that are 
+not quite lined up with the instrumentals. If the vocals are coming
+in too late, higlight a small bit of the quiet region before the phrase
+and enter <code>&lt;Ctl&gt;-X</code> to remove the section.
+Click on a region of quiet space
+immediately after the phrase and enter <code>&lt;Ctl&gt;-V</code> to paste in the deleted
+section. This procedure will move the phrase earlier in time, leaving
+subsequent phrases at their same positions.
+For phrases that come in too early, cut time after the phrase
+and paste the deleted portion before the phrase.
+</p>
+<p>Repeat the entire process until all phrases are properly aligned.
+</p>
+<p>Once you are happy with the timing,
+duplicate your vocal track twice with
+<code>&lt;Ctl-D&gt;</code>. The two duplicate tracks will eventually become
+your backing vocals.
+</p>
+
+<h1><a name="id8">Equalizing your vocals</a></h1><p>
+Run the equalizer from the Effects menu on your vocals. See the web for the
+best curve for vocals.
+</p>
+
+<h1><a name="id9">Add backing tracks</a></h1><p>
+Select one of the duplicate tracks by double-clicking and then choose
+<i>Change Pitch</i> on the <i>Effects</i> menu. 
+Move the pitch up by a little bit (0.1 or 0.2 semitones). Do the same
+for the other track, only pitch it down (-0.1 or -0.2 semitones).
+At this point, the vocals should sound fuller and richer.
+</p>
+<p>If the original vocals are on the sharp side, then pitch both tracks down,
+one more than the other. Likewise, if the original vocals are flattish, pitch
+both tracks up.
+</p>
+<p>You can also time shift the duplicate tacks forward in time a little bit,
+one more than the other to add a chorus effect.
+</p>
+<p>Reduce the volume of the duplicate tracks gradually until any flanging
+type artifacts cannot be heard.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

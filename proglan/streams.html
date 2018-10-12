@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>streams</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Streams
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="streams.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+
+Consider a list of <i>n</i> factorials, where the <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>i</mi>		<mrow>			<mi>t</mi>			<mi>h</mi>		</mrow>	</msup></mrow></math>
+element of the list is <i>i</i>!. Here's one way to construct such a list.
+<br/>
+
+<pre>
+    (define (fs n)
+        (define (iter count)
+            (if (&gt; count n)
+                &#39;()
+                (cons (factorial count) (iter (+ count 1)))
+                )
+            )
+        (iter 1)
+        )
+</pre>
+
+The function <i>fs</i>, which stands for <i>factorial stream</i>, generates
+a list of factorials from 1! to <i>n</i>!. The version generates <i>n</i>
+factorials and places them in the list. Now what happens if we end up wanting
+only the third factorial in that list, as in
+<br/>
+
+<pre>
+    (define p (fs 100))
+    (display (caddr p))
+</pre>
+
+We will have generated <i>n</i>-3 factorials that we ended up not using.
+Here is a version which generates only the factorials we need. This seems
+like an impossible task. We are told to generate <i>n</i> numbers and at
+some future date we will be told how many of those numbers will actually
+be needed. To generate just the number we need seems to require the ability
+to tell the future! Since functions are first class objects, we don't need
+to tell the future at all (although we will require users of our list of
+factorials to use special access functions). Here's a new definition accomplishes
+our goal.
+<br/>
+
+<pre>
+    (define (dfs n)
+        (define (iter count)
+            (if (&amp;gt; count n)
+                &#39;()
+                (cons (factorial count) (lambda ()(iter (+ count 1))))
+                )
+            )
+        (iter 1)
+        )
+</pre>
+
+The name <i>dfs</i> is mnemonic for <i>delayed factorial stream</i> because
+the <i>cdr</i> of the stream is delayed. Note that we have wrapped the
+recursive call to <i>iter</i> in a lambda function thus preventing evaluation
+of the recursive call. Thus 
+<code>(dfs n)</code> returns a single cons object
+(the <i>car</i> points to the result of the call to 
+<code>(factorial 1)</code>
+and the <i>cdr</i> points to the lambda function), regardless of how large
+<i>n</i> gets. Now we define our special access functions.
+<br/>
+
+<pre>
+    (define (h s) (car s))
+    (define (t s) ((cdr s)))
+</pre>
+
+The function <i>h</i>, which is mnemonic for head, retrieves the <i>car</i>
+of the cons object. The function <i>t</i>, which is mnemonic for tail,
+evaluates the <i>cdr</i> of the cons object. It can't simply return the
+<i>cdr</i> since the <i>cdr</i> has been wrapped in a lambda. Evaluating
+the <i>cdr</i> strips the lambda. Now to display the first, second, and
+third numbers in the stream, we evaluate these expressions
+<br/>
+
+<pre>
+    (define p (dfs 100))
+    (display (h t))
+    (display (h (t p)))
+    (display (h (t (t p))))
+</pre>
+
+Every time we ask for the tail of the stream, the lambda is evaluated which
+generates a new cons object, whose <i>car</i> points to the next number
+in the stream and whose <i>cdr</i> points to a wrapped recursive call to
+generate the remainder of the stream.
+<br/>
+Now that we have a delayed stream, if we ask for the third element,
+only the first three elements are ever generated. Note that now the upper
+limit on the stream is now moot. The function <i>dfs</i> can be rewritten
+as:
+<br/>
+
+<pre>
+    (define (dfs)
+        (define (iter count)
+            (cons (factorial count)
+                (lambda () (iter (+ count 1))))
+            )
+        (iter 1)
+        )
+</pre>
+
+It turns out that there is a built-in special form called <i>delay</i>
+which uses this wrapping technique. To use <i>delay</i>, the above code
+would be simply rewritten as
+<br/>
+
+<pre>
+    (define (dfs)
+        (define (iter count)
+            (cons (factorial count) (delay (iter (+ count 1))))
+            )
+        (iter 1)
+        )
+</pre>
+
+Furthermore, there is a special version of <i>cons</i> which delays its
+second argument. Using this special form yields
+<br/>
+
+<pre>
+    (define (dfs)
+        (define (iter count)
+            (cons-stream (factorial count) (iter (+ count 1)))
+            )
+        (iter 1)
+        )
+</pre>
+
+The system versions of <i>h</i> and <i>t</i> are <i>stream-car</i> and
+<i>stream-cdr</i> respectively.
+<br/>
+<br/>
+Consider now an infinite stream of ones. Here is such a definition
+<br/>
+
+<pre>
+    (define ones
+        (cons-stream 1 ones))
+</pre>
+
+and here is a definition of the positive integers
+<br/>
+
+<pre>
+    (define positive-integers
+        (cons-stream 1 (add-stream ones integers)))
+</pre>
+
+The function <i>add-stream</i> takes two stream arguments and generates
+a new stream where the <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>i</mi>		<mrow>			<mi>t</mi>			<mi>h</mi>		</mrow>	</msup></mrow></math> item in the new stream is
+the sum of the <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>i</mi>		<mrow>			<mi>t</mi>			<mi>h</mi>		</mrow>	</msup></mrow></math> items in the original stream. Here
+is a definition of <i>add-stream</i>.
+<br/>
+
+<pre>
+    (define (add-stream s1 s2)
+        (cons-stream
+            (+ (stream-car s1) (stream-car s2))
+            (add-stream (stream-cdr s1) (stream-cdr s2))
+            )
+        )
+</pre>
+
+There is a system definition which makes add-stream much simpler:
+<br/>
+
+<pre>
+    (define (add-stream s1 s2)
+        (stream-map + s1 s2)
+        )
+</pre>
+
+assuming <i>stream-map</i> is implemented on your system.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

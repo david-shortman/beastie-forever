@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>axiom3</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Axiomatic Semantics (part 3)
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="axiom3.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Deriving preconditions for loops
+<br/>
+</h2><!-- section ENDED -->
+
+Recall that there are two flavors associated with axiomatic semantics. The
+first is given a precondition and a postcondition, prove that the
+intervening code fragment is correct. The second is given a postcondition,
+derive the least-restrictive, or
+<i>weakest</i>, precondition such that when a code fragment is executed,
+the postcondition holds. We've looked at the first flavor for loops,
+but not the second. Deriving preconditions for loops
+requires some bookkeeping, followed by looking for a pattern.
+All in all, though, the
+method for finding loop preconditions is straight forward. Consider this loop:
+<br/>
+
+<pre>
+    while (x &gt; 0)
+        {
+        x = x - 1;
+        y = y + 1;
+        }
+    &lt;&lt;ensures: y == 0 AND x == 0&gt;&gt;
+</pre>
+
+Our process will be to push the postcondition through the loop body 0
+times, 1 time, 2 times, and so, essentially unraveling the loop. In this
+case, for up to 3 iterations, we get:
+<br/>
+<center>
+
+<table>
+<tr>
+<td style="text-align:center";> number of iterations </td><td style="text-align:center";> Z </td><td style="text-align:center";> how to get that number of iterations? </td>
+</tr>
+<tr>
+<td style="text-align:center";> 0 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mspace width="0.278em" />	<mspace width="0.278em" />	<mspace width="0.278em" />	<mn>0</mn></mrow></math> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo>&and;</mo></mrow></math> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>0</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&le;</mo>	<mn>0</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 1 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>1</mn></mrow></math> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo>&and;</mo></mrow></math> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>1</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>1</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 2 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>2</mn></mrow></math> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo>&and;</mo></mrow></math> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>2</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>2</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 3 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>3</mn></mrow></math> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo>&and;</mo></mrow></math> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>3</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>3</mn></mrow></math> </td>
+</tr>
+</table>
+
+
+</center>
+
+<br/>
+At this point, we abandon mechanistic transformations and simply grok
+the pattern that's generated, noting that for each iteration count,
+<i>Z</i> and <i>how?</i> are ANDed together.
+First we note that for 0 iterations, <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mi>&ZeroWidthSpace;</mi>	<mi>&ZeroWidthSpace;</mi>	<mo>&and;</mo>	<mstyle mathvariant="italic">		<mi>h</mi>		<mi>o</mi>		<mi>w</mi>		<mo>?</mo>	</mstyle></mrow></math>
+is only true when <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>0</mn></mrow></math>. Clearly, in this case, the pattern is:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mi>y</mi>	<mo>&and;</mo>	<mi>x</mi>	<mo>&ge;</mo>	<mn>0</mn></mrow></math>
+</span>
+
+<br/>
+and this is indeed the weakest precondition. In general, deriving
+preconditions for loops requires this process of generating and
+recognizing a pattern.
+<br/>
+<!-- subsection -->
+<h3> Another example
+<br/>
+</h3><!-- subsection ENDED -->
+
+Suppose that the post
+condition had been <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mn>0</mn></mrow></math> with the while loop staying the
+same. Our table becomes:
+<br/>
+<center>
+
+<table>
+<tr>
+<td style="text-align:center";> number of iterations </td><td style="text-align:center";> Z </td><td style="text-align:center";> how to get that number of iterations? </td>
+</tr>
+<tr>
+<td style="text-align:center";> 0 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mspace width="0.278em" />	<mspace width="0.278em" />	<mspace width="0.278em" />	<mn>0</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&le;</mo>	<mn>0</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 1 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>1</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>1</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 2 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>2</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>2</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 3 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>3</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>3</mn></mrow></math> </td>
+</tr>
+</table>
+
+
+</center>
+
+<br/>
+We note that the 0 iterations row has a different form than the other
+rows, so let's break that out as a separate part of the precondition. The
+remaining rows have the pattern:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&lt;</mo>	<mn>0</mn>	<mo>&and;</mo>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mi>x</mi>	<mo>&and;</mo>	<mi>x</mi>	<mo>&gt;</mo>	<mn>0</mn></mrow></math>
+</span>
+
+<br/>
+which can be simplified to:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mi>x</mi>	<mo>&and;</mo>	<mi>x</mi>	<mo>&gt;</mo>	<mn>0</mn></mrow></math>
+</span>
+
+<br/>
+Combined with the first row, the precondition is:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mn>0</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>&le;</mo>		<mn>0</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&or;</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mo>-</mo>		<mi>x</mi>		<mo>&and;</mo>		<mi>x</mi>		<mo>&gt;</mo>		<mn>0</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+<br/>
+which is indeed the weakest precondition.
+<br/>
+<!-- subsection -->
+<h3> Yet another example
+<br/>
+</h3><!-- subsection ENDED -->
+
+Consider the loop:
+<br/>
+
+<pre>
+    while (x &gt; 0)
+        {
+        x = x / 2;
+        y = y + 1;
+        }
+    &lt;&lt;ensures: y == 0&gt;&gt;
+</pre>
+
+We generate the following table:
+<br/>
+<center>
+
+<table>
+<tr>
+<td style="text-align:center";> number of iterations </td><td style="text-align:center";> <i>Z</i> </td><td style="text-align:center";> how to get that number of iterations? </td>
+</tr>
+<tr>
+<td style="text-align:center";> 0 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mspace width="0.278em" />	<mi>&nbsp;</mi>	<mn>0</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&le;</mo>	<mn>0</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 1 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>1</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>1</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 2 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>2</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<mn>2</mn>	<mo>&and;</mo>	<mi>x</mi>	<mo>&lt;</mo>	<mspace width="0.222em" />	<mi>&nbsp;</mi>	<mn>4</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 3 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>3</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<mn>4</mn>	<mo>&and;</mo>	<mi>x</mi>	<mo>&lt;</mo>	<mspace width="0.222em" />	<mi>&nbsp;</mi>	<mn>8</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 4 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>4</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<mn>8</mn>	<mo>&and;</mo>	<mi>x</mi>	<mo>&lt;</mo>	<mn>16</mn></mrow></math> </td>
+</tr>
+</table>
+
+
+</center>
+
+<br/>
+The first two rows seem separate so we treat them individually. We note
+that the constants in the remaining rows are powers of two so we rewrite
+them to reflect this fact:
+<br/>
+<center>
+
+<table>
+<tr>
+<td style="text-align:center";> number of iterations </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi></mrow></math> </td><td style="text-align:center";> how to get that number of iterations? </td>
+</tr>
+<tr>
+<td style="text-align:center";> 0 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mspace width="0.278em" />	<mi>&nbsp;</mi>	<mn>0</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&le;</mo>	<mn>0</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 1 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>1</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>1</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 2 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>2</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<msup>		<mn>2</mn>		<mn>1</mn>	</msup>	<mo>&and;</mo>	<mi>x</mi>	<mo>&lt;</mo>	<msup>		<mn>2</mn>		<mn>2</mn>	</msup></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 3 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>3</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<msup>		<mn>2</mn>		<mn>2</mn>	</msup>	<mo>&and;</mo>	<mi>x</mi>	<mo>&lt;</mo>	<msup>		<mn>2</mn>		<mn>3</mn>	</msup></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:center";> 4 </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>-</mo>	<mn>4</mn></mrow></math> </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<msup>		<mn>2</mn>		<mn>3</mn>	</msup>	<mo>&and;</mo>	<mi>x</mi>	<mo>&lt;</mo>	<msup>		<mn>2</mn>		<mn>4</mn>	</msup></mrow></math> </td>
+</tr>
+</table>
+
+
+</center>
+
+<br/>
+Now the pattern is easier to see. All the rows from 2 and beyond can be summed up with:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&le;</mo>	<mo>-</mo>	<mn>2</mn>	<mo>&and;</mo>	<mi>x</mi>	<mo>&ge;</mo>	<msup>		<mn>2</mn>		<mrow>			<mo>-</mo>			<mi>y</mi>			<mo>-</mo>			<mn>1</mn>		</mrow>	</msup>	<mo>&and;</mo>	<mi>x</mi>	<mo>&lt;</mo>	<msup>		<mn>2</mn>		<mrow>			<mo>-</mo>			<mi>y</mi>		</mrow>	</msup></mrow></math>
+</span>
+
+<br/>
+Therefore our weakest precondition is:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mn>0</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>&le;</mo>		<mn>0</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&or;</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mo>-</mo>		<mn>1</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>&equiv;</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&or;</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>y</mi>		<mo>&le;</mo>		<mo>-</mo>		<mn>2</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>&ge;</mo>		<msup>			<mn>2</mn>			<mrow>				<mo>-</mo>				<mi>y</mi>				<mo>-</mo>				<mn>1</mn>			</mrow>		</msup>		<mo>&and;</mo>		<mi>x</mi>		<mo>&lt;</mo>		<msup>			<mn>2</mn>			<mrow>				<mo>-</mo>				<mi>y</mi>			</mrow>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+<br/>
+Finally, we note that the <i>how?</i> entry for row 1 could have been
+written as <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<msup>		<mn>2</mn>		<mn>0</mn>	</msup>	<mo>&and;</mo>	<mi>x</mi>	<mo>&lt;</mo>	<msup>		<mn>2</mn>		<mn>1</mn>	</msup></mrow></math> which also fits the patterns of the
+subsequent rows, so our precondition can be simplified to:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mn>0</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>&le;</mo>		<mn>0</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>&or;</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>y</mi>		<mo>&le;</mo>		<mo>-</mo>		<mn>1</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>&ge;</mo>		<msup>			<mn>2</mn>			<mrow>				<mo>-</mo>				<mi>y</mi>				<mo>-</mo>				<mn>1</mn>			</mrow>		</msup>		<mo>&and;</mo>		<mi>x</mi>		<mo>&lt;</mo>		<msup>			<mn>2</mn>			<mrow>				<mo>-</mo>				<mi>y</mi>			</mrow>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

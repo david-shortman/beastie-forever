@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: modes.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Thu Mar  2 12:09:32 2017 -->
+<head>
+<title>songlib: modes</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: modes<br /></h1>
+<h2 class="maketitle">written by: Song Li Buser</h2>
+<h3 class="maketitle">Revision Date: March 2, 2017</h3>
+</p>
+
+<h3><a name="id1"><a href="modes.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Musical modes</a></h1><p>
+Musical modes provide a structure for generating
+nice sounding chords. There are seven modern
+musical modes:
+</p>
+<ul><li>Ionian
+</li><li>Dorian
+</li><li>Phrygian
+</li><li>Lydian
+</li><li>Mixolydian
+</li><li>Aeolian
+</li><li>Locrian
+</li></ul>
+<p>The <i>Ionian</i>, <i>Lydian</i>, and <i>Mixolydian</i> modes are considered
+major modes and have a brighter and more cheery 
+feel than the other listed modes, which are considered
+minor modes.
+</p>
+<p>To read more about modes, see
+<a href="http://en.wikipedia.org/wiki/Musical_mode">Musical Modes</a>
+on Wikipedia.
+</p>
+
+<h1><a name="id3">Using modal chords</a></h1><p>
+It is not actually necessary to understand modes
+to use them as a composition tool in <i><b>songlib</b></i>.
+By setting a particular mode, <i><b>songlib</b></i>&#32;allows
+you to generate <i>modal</i> chords compatible with that mode quite easily.
+The trichord generating function
+is named <i>c</i>, with the first argument specifying
+the chord number:
+</p>
+<p><code>c(1,...)</code>, <code>c(2,...)</code>, <code>c(3,...)</code>, <code>c(4,...)</code>,
+<code>c(5,...)</code>, <code>c(6,...)</code>, and <code>c(7,...)</code>
+</p>
+<p>A trichord is simply a chord of three notes.
+If you are building a song in the key of C, then the
+<code>c(1,...)</code> chord has a base (or <i>root</i>) note of C,
+the <code>c(2,...)</code> chord has a root
+note of D, and so on through E, F, G, A, and B. If you
+are using the key of E, the <code>c(1,...)</code> chord has a root note
+of E, the <code>c(2,...)</code> chord has a root note of F&#35;, and so on.
+</p>
+<p>Thus, an <i>Ionian</i> riff in the key of <i>D</i> might look like the
+following in <i><b>songlib</b></i>:
+</p>
+<pre>
+    setKey(D);
+    setMode(IONIAN);
+
+    for (i = 0; i &lt; 4; ++i)
+        {
+        c(1,H,guitar,octave);
+        c(4,H,guitar,octave-1);
+        c(5,H,guitar,octave-1);
+        c(5,H,guitar,octave-1);
+        c(4,Hd,guitar,octave-1);
+        }
+</pre>
+<p>For simplicity, we will sometimes abbreviate the call <code>c(1,...)</code> as 
+<i>c1</i>, <code>c(2,...)</code> as <i>c2</i>, and so on.
+</p>
+<p>Notice the absence of F&#35; in the above riff. This is because <i><b>songlib</b></i>&#32;figures
+out the root note and the other notes in the chord automatically when the
+<i>c</i> function is used.
+</p>
+
+<h1><a name="id4">Chord progressions</a></h1><p>
+When using the modal system, not only does <i><b>songlib</b></i>&#32;figure out which notes go
+with which chord, you also get, for free, a bullet-proof way to compose songs using chord progressions.
+A chord progression is simply two or more chords in a row. Some very smart
+people have figured out which chords sound 'ice' next to each other. Here
+are the general purpose charts for designing your own nice-sounding chord
+progressions.
+</p>
+<p>For the <i>Ionian</i> or major mode, the chord progression generating chart looks
+like:
+</p>
+<ul><li><i>c3</i>
+</li><li><i>c6</i>
+</li><li><i>c2</i> or <i>c4</i>
+</li><li><i>c5</i> (then go to <i>c1</i>) or <i>c7</i> (then go to <i>c3</i>)
+</li><li><i>c1</i>
+</li><li>any chord
+</li></ul>
+<p>To generate a chord progression, you can start at any bullet.
+Say we start at <i>c1</i>. Then we go to the next bullet. It says
+any chord, so we can go to any bullet. Let's go to the
+<i>c2</i> or <i>c4</i>
+bullet and choose <i>c4</i>. Again, we go to the next bullet 
+and choose <i>c5</i>. Finally, we return to <i>c1</i>.
+It is common for major chord progressions to end at <i>c1</i>.
+Our little journey yielded the progression:
+</p>
+<div class="quote">
+<i>c1</i> <i> -&gt; </i> <i>c4</i> <i> -&gt; </i> <i>c5</i> <i> -&gt; </i> <i>c1</i>
+</div>
+<p>For the <i>harmonic minor</i> mode,
+the generating chart is slightly different:
+</p>
+<ul><li><i>cM7</i>
+</li><li><i>c3</i>
+</li><li><i>c6</i>
+</li><li><i>c2</i> (then go to <i>c5</i>
+or <i>c7</i>) or <i>c4</i> (then go to <i>c7</i>)
+</li><li><i>c5</i> or <i>c7</i>
+</li><li><i>c1</i>
+</li><li>any chord
+</li></ul>
+<p>Note that this chart introduces a new chord, <i>cM7</i>, which stands
+for a <i>Major c7</i>. In the harmonic minor mode, <i>c7</i> is a a diminished chord,
+so this chart features two versions of <i>c7</i>, one major and one diminished.
+The next section covers forcing chords in one mode to behave as if in
+another mode.
+</p>
+
+<h1><a name="id5">Playing chords out of mode</a></h1><p>
+No matter the mode, some of the seven possible chords are major
+chords, some are minor, some are augmented, and some are diminished chords.
+<i><b>Songlib</b></i>&#32;figures this out automatically, so composing using the
+modal system is quite easy.
+However, the modal system described above is a little
+too confining. For example, in <i>Ionian</i> mode, <i>c1</i> is a major chord.
+But perhaps you wish
+to throw in a minor version of <i>c1</i>.
+To do so, simply call the <code>cm(1,...)</code> function
+instead of <code>c(1,...)</code>.
+</p>
+<pre>
+    setKey(D);
+    setMode(IONIAN);
+
+    for (i = 0; i &lt; 4; ++i)
+        {
+        cm(1,H,guitar,octave);
+        c(4,H,guitar,octave-1);
+        c(5,H,guitar,octave-1);
+        c(5,H,guitar,octave-1);
+        c(4,Hd,guitar,octave-1);
+        }
+</pre>
+<p>In <i>Ionian</i> mode,
+the three major chords are <i>c1</i>, <i>c4</i>, and <i>c5</i>,
+and the three minor chords are <i>c2</i>, <i>c3</i>, and <i>c6</i>.
+The last chord, <i>c7</i>, is
+a diminished chord.
+In <i>Aeolian</i> mode, the major chords are <i>c3</i>, <i>c6</i>, and <i>c7</i>,
+while <i>c1</i>, <i>c4</i>, and
+<i>c5</i> are minor chords and <i>c2</i> is a diminished chord.
+All chords have major, minor, augmented, and
+diminished versions, obtained by appending the appropriate
+letter to the chord name; the major, minor, augmented,
+and diminished versions are named, <i>cM</i>, <i>cm</i>, <i>ca</i>, and <i>cd</i>,
+respectively.
+</p>
+<p>Thus for the progression generating chart for the <i>harmonic minor</i> mode,
+shown in
+the previous section, the <i>cM7</i> placeholder would be implemented by
+a call to <code>cM(7,...)</code>.
+Since <i>c7</i> is a diminished chord in the <i>harmonic minor</i> mode,
+it could be implemented as:
+</p>
+<pre>
+    chord(beats,instrument,octave,C,+3,+6,(int) 0);
+</pre>
+<p>A diminished chord lowers both the
+second note and the third note one semitone each.
+A call to the <i>harmonic minor</i> chord <code>cM(7,...)</code> in the key of C is 
+equivalent to the following call to <i>chord</i>:
+</p>
+<pre>
+    chord(beats,instrument,octave,C,+4,+7,(int) 0);
+</pre>
+<p>Augmenting a chord generally means to
+raise the third note in the chord one semitone. For example,
+the <i>Aeolian</i> <i>c7</i> chord is a major chord, so
+calling <code>ca(7,...)</code> in that mode in the key of C is equivalent to:
+</p>
+<pre>
+    chord(beats,instrument,octave,C,+4,+8,(int) 0);
+</pre>
+
+<h1><a name="id6">Degrees</a></h1><p>
+In music theory, the degree of a note indicates
+its index with respect to the root note in the
+scale. The modal system of <i><b>songlib</b></i>&#32;uses a
+diatonic scale having seven notes. In the key
+of <i>C</i>, the index of <i>C</i> is 1, <i>D</i> is 2, <i>E</i> is 3 and
+so on. In the key of <i>D</i>, the index of <i>D</i> is 1,
+<i>E</i> is 2, <i>F&#35;</i> is 3 and so on. 
+</p>
+<p>The degree function returns the root note of the associated modal
+chord. For example,
+if you are in the key of <i>C</i>, then
+<tt>degree(1)</tt> returns a <i>C</i>,
+<tt>degree(2)</tt> returns a <i>D</i>,
+and so on.
+</p>
+<p>Since <i>c1</i> is a major chord in <i>Ionian</i> mode, it is therefore 
+equivalent, under this scenario, to all of the following calls:
+</p>
+<pre>
+    chord(H,guitar,octave,C,+4,+7,(int) 0);
+    chord(H,guitar,octave,degree(1),+4,+7,(int) 0);
+    maj(H,guitar,octave,C);
+    maj(H,guitar,octave,degree(1));
+</pre>
+<p>when in the key of C.
+Likewise, <i>c2</i> is a minor chord and
+is thus equivalent to all these calls:
+</p>
+<pre>
+    chord(H,guitar,octave,D,+3,+7,(int) 0);
+    chord(H,guitar,octave,degree(2),+3,+7,(int) 0);
+    min(H,guitar,octave,D);
+    min(H,guitar,octave,degree(2));
+</pre>
+<p>Of course, you can always use <i>chord</i> and hardwire the notes,
+but then it is difficult to change the key of your composition.
+By using the degree <i>function</i> with <i>chord</i>, it is easy to change the
+key,
+but you have to keep track of which
+chords sound appropriate, i.e. when to play major and
+when to play minor chords. <i><b>Songlib</b></i>'s modal system
+takes care of all these problems automatically.
+</p>
+
+<h1><a name="id7">Modes and their chords</a></h1><p>
+Note that
+every mode uses some combination of major and
+minor chords in its scale. For example, 
+the <i>Ionian</i> mode actually uses the chords:
+</p>
+<div align="center">
+<i>maj/<tt>degree(1)</tt></i>,
+<i>min/<tt>degree(2)</tt></i>,
+<i>min/<tt>degree(3)</tt></i>,
+<i>maj/<tt>degree(4)</tt></i>,
+<i>maj/<tt>degree(5)</tt></i>,
+<i>min/<tt>degree(6)</tt></i>, and
+<i>dim/<tt>degree(7)</tt></i>
+</div>
+<p>so in <i>Ionian</i> mode, <i>c1</i> is equivalent to <i>maj/degree(1)</i>,
+and so on.
+</p>
+<p>The following table lists the types of chords used for
+every mode:
+</p>
+<div align="center">
+<table><tbody><tr><td colspan="1" align="left">
+<p><i>Mode</i> </td><td colspan="1" align="center"> </td><td colspan="1" align="center"> </td><td colspan="1" align="center"> <i>Chord</i> </td><td colspan="1" align="center"> <i>#</i> </td><td colspan="1" align="center"> </td><td colspan="1" align="center"> </td><td colspan="1" align="center"> </td></tr>
+<tr><td colspan="1" align="left">
+</td><td colspan="1" align="center"> 1   </td><td colspan="1" align="center"> 2   </td><td colspan="1" align="center"> 3   </td><td colspan="1" align="center"> 4   </td><td colspan="1" align="center"> 5   </td><td colspan="1" align="center"> 6   </td><td colspan="1" align="center"> 7   </td></tr>
+<tr><td colspan="1" align="left">
+Ionian         </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> dim </td></tr>
+<tr><td colspan="1" align="left">
+Dorian         </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> dim </td><td colspan="1" align="center"> maj </td></tr>
+<tr><td colspan="1" align="left">
+Phrygian       </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> dim </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> min </td></tr>
+<tr><td colspan="1" align="left">
+Lydian         </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> dim </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> min </td></tr>
+<tr><td colspan="1" align="left">
+Mixolydian     </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> dim </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> maj </td></tr>
+<tr><td colspan="1" align="left">
+Aeolian        </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> dim </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> maj </td></tr>
+<tr><td colspan="1" align="left">
+Locrian        </td><td colspan="1" align="center"> dim </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> min </td></tr>
+<tr><td colspan="1" align="left">
+Melodic Minor  </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> aug </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> dim </td><td colspan="1" align="center"> min </td></tr>
+<tr><td colspan="1" align="left">
+Harmonic Minor </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> dim </td><td colspan="1" align="center"> aug </td><td colspan="1" align="center"> min </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> maj </td><td colspan="1" align="center"> dim </td></tr>
+<tr><td colspan="1" align="left">
+</td></tr></tbody></table>
+</p>
+</div>
+<p>&nbsp;<BR>
+To use <i>Aeolian</i> mode, for example, you could use
+the chords:
+</p>
+<div align="center">
+<i>min</i>/<tt>degree(1)</tt>,
+<i>dim</i>/<tt>degree(2)</tt>,
+<i>maj</i>/<tt>degree(3)</tt>,
+<i>min</i>/<tt>degree(4)</tt>,
+<i>min</i>/<tt>degree(5)</tt>,
+<i>maj</i>/<tt>degree(6)</tt>,
+and <i>maj</i>/<tt>degree(7)</tt>
+</div>
+<p>Of course, <i><b>songlib</b></i>&#32;figures out which chords and degrees to use if
+you stick with calls to <code>c(1,...)</code> through <code>c(7,...)</code>.
+</p>
+<p>Note the addition of two more modes in the table, the <i>Melodic</i>
+and <i>Harmonic</i> <i>Minors</i>.
+Furthermore, there are three alias modes, <i>Major</i>
+(which is the same as <i>Ionian</i>) and <i>Minor</i> and
+<i>Natural</i> <i>Minor</i>
+(which are aliases for <i>Aeolian</i>).
+</p>
+<p>The <i>setMode</i> function is used to set the mode. To
+set the desired mode, capitalize the mode name and
+substitute underscores for spaces. For example,
+to set the <i>Harmonic</i> <i>Minor</i> mode, make this call:
+</p>
+<pre>
+    setMode(HARMONIC_MINOR);
+</pre>
+<p>To change the mode within a song, simply call <i>setMode</i> with the
+new mode. Any chords generated subsequently will use the new
+mode.
+</p>
+
+<h1><a name="id8">Flattened and sharpened chords</a></h1><p>
+Sometimes, it is desirable to call a chord in the next
+lower (or next higher) key. One can <i>flatten</i> and <i>sharpen</i> the
+modal chords for this task. The chords are obtained by calling the
+<i>cf</i> function
+(for flatten)
+and the <i>cs</i> function (for sharpen) to the modal chord name.
+For example, suppose your
+<i><b>songlib</b></i>&#32;program is in E-<i>Phrygian</i>:
+</p>
+<pre>
+    setKey(E);
+    setMode(PHRYGIAN);
+</pre>
+<p>and you wish to play a <i>c3</i> chord in the key of <i>D&#35;</i>.
+You would make a call similar to this:
+</p>
+<pre>
+    cf(3,beats,instrument,octave);
+</pre>
+<p>To play a <i>c4</i> chord in the key of <i>F</i>, the call would
+look similar to:
+</p>
+<pre>
+    cs(4,beats,instrument,octave);
+</pre>
+
+<h1><a name="id9">Seventh chords</a></h1><p>
+The <i><b>songlib</b></i>&#32;library also has functions for generating
+modal seventh chords. A seventh chord has an additional
+note one third higher than the highest note
+in a trichord, yielding a total of four notes, although,
+sometimes, the next to the highest note in the chord is omitted.
+</p>
+<p>The seventh chord functions are exactly the same
+as the basic modal
+trichord functions, but the <i>c7</i> function is called instead
+of the <i>c</i> function.
+To provide more control over seventh chords,
+<i><b>songlib</b></i>&#32;provides these additional functions:
+</p>
+<div align="center">
+<table><tbody><tr><td colspan="1" align="left">
+<p><i>Common name</i> </td><td colspan="1" align="center"> <i>technical name</i> </td><td colspan="1" align="center"> <i>modal function</i> 
+</td><td colspan="1" align="center"> <i>semitone deltas</i></td></tr>
+<tr><td colspan="1" align="left">
+Major <i>7<sup>th</sup></i> </td><td colspan="1" align="center"> Major/Major </td><td colspan="1" align="center"> cM7 </td><td colspan="1" align="center"> <tt>4, 7, 11</tt></td></tr>
+<tr><td colspan="1" align="left">
+Minor <i>7<sup>th</sup></i> </td><td colspan="1" align="center"> Minor/Minor </td><td colspan="1" align="center"> cm7 </td><td colspan="1" align="center"> <tt>3, 7, 10</tt></td></tr>
+<tr><td colspan="1" align="left">
+Augmented <i>7<sup>th</sup></i> </td><td colspan="1" align="center"> Augmented </td><td colspan="1" align="center"> ca7 </td><td colspan="1" align="center"> <tt>4, 8, 11</tt></td></tr>
+<tr><td colspan="1" align="left">
+Diminished <i>7<sup>th</sup></i> </td><td colspan="1" align="center"> Diminished/Diminished </td><td colspan="1" align="center"> cd7 </td><td colspan="1" align="center"> <tt>3, 6, &nbsp;9</tt></td></tr>
+<tr><td colspan="1" align="left">
+Dominant <i>7<sup>th</sup></i> </td><td colspan="1" align="center"> Major/Minor </td><td colspan="1" align="center"> cD7 </td><td colspan="1" align="center"> <tt>4, 7, 10</tt></td></tr>
+<tr><td colspan="1" align="left">
+</td></tr></tbody></table>
+</p>
+</div>
+<p>&nbsp;<BR>
+Recall that the degree function can be used to automatically derive the
+correct pitch. In <i>Ionian</i> mode, the seventh chord with a root of degree 3
+would be a minor chord. Thus, in the non-modal system, one would
+call:
+</p>
+<pre>
+    chord(beats,instrument,octave,degree(3),+3,+7,+10,(int) 0);
+</pre>
+<p>Using the modal system, the call would be:
+</p>
+<pre>
+    c7(3,beats,instrument,octave);
+</pre>
+<p>in <i>Ionian</i> mode and 
+</p>
+<pre>
+    cm7(3,beats,instrument,octave);
+</pre>
+<p>in modes where <i>c3</i> is not a minor chord.
+</p>
+<p>If the current key is the key of <i>C</i> and the mode is <i>Ionian</i>, the
+notes in both the above chords would be <i>E</i>, <i>G</i>, <i>B</i>,
+and <i>D</i>.
+Note that there
+are three semitones between <i>E</i> and <i>G</i>, seven semitones between
+<i>E</i> and <i>B</i>, and ten semitones between <i>E</i> and <i>D</i>.
+</p>
+
+<h1><a name="id10">Extended chords</a></h1><p>
+The <i><b>songlib</b></i>&#32;system provides, ninth, eleventh, and thirteenth
+chords as well as seventh chords. Those functions are
+<i>c9</i>, <i>c11</i>, and <i>c13</i>, respectively.
+One can also flatten and sharpen these chords with the functions
+<i>c9f</i>,
+<i>c9s</i>,
+<i>c11f</i>,
+<i>c11s</i>,
+<i>c13f</i>,
+and
+<i>c13s</i>.
+</p>
+<p>With ninth chords, <i><b>songlib</b></i>&#32;omits the <i>3<sup>rd</sup></i> highest note. With
+eleventh chords, the <i>4<sup>th</sup></i> and <i>2<sup>nd</sup></i> highest notes are omitted, while
+with thirteenth chords, the <i>5<sup>th</sup></i>, <i>3<sup>rd</sup></i>, and <i>2<sup>nd</sup></i> highest notes
+are omitted.
+The next section discusses
+how to establish finer control over the modal system,
+including the omission of notes.
+</p>
+
+<h1><a name="id11">Fine control of the modal chord system</a></h1><p>
+All the modal chords are based upon a general purpose function
+named <i>cchord</i>. If you wish to control
+the modal chord system at a lower level,
+you can call the <i>cchord</i> function directly.
+The function
+has the following signature:
+</p>
+<pre>
+    cchord(chordNumber,duration,instrument,octave,tweaks);
+</pre>
+<p>where
+<i>chordNumber</i> is selected from the set &#123;1,2,3,4,5,6,7&#125; and
+and <i>tweaks</i> is an string of adjustments the sharpen,flatten,
+or omit
+the individual notes in the chord. For example, the <i>c</i> chord
+is simply a wrapper to the call:
+</p>
+<pre>
+    cchord(chordNumber,duration,instrument,octave,"xxx");
+</pre>
+<p>In the tweaks string, the following encoding
+is used:
+</p>
+<p><table><tbody><tr><td colspan="1" align="center">
+<i>character</i> </td><td colspan="1" align="left"> <i>meaning</i> </td></tr>
+<tr><td colspan="1" align="center">
+<i>-</i>      </td><td colspan="1" align="left"> corresponding note is omitted </td></tr>
+<tr><td colspan="1" align="center">
+<i>x</i>      </td><td colspan="1" align="left"> corresponding note is left alone </td></tr>
+<tr><td colspan="1" align="center">
+<i>X</i>      </td><td colspan="1" align="left"> corresponding note is raised one octave </td></tr>
+<tr><td colspan="1" align="center">
+<i>y</i>      </td><td colspan="1" align="left"> same as <i>x</i> </td></tr>
+<tr><td colspan="1" align="center">
+<i>Y</i>      </td><td colspan="1" align="left"> corresponding note is lowered one octave </td></tr>
+<tr><td colspan="1" align="center">
+<i>n</i>      </td><td colspan="1" align="left"> corresponding note is the successor note in the scale/mode </td></tr>
+<tr><td colspan="1" align="center">
+<i>N</i>      </td><td colspan="1" align="left"> line <i>n</i>, but one octave higher </td></tr>
+<tr><td colspan="1" align="center">
+<i>m</i>      </td><td colspan="1" align="left"> like <i>n</i>, but two notes up </td></tr>
+<tr><td colspan="1" align="center">
+<i>m</i>      </td><td colspan="1" align="left"> like <i>m</i>, but one octave higher </td></tr>
+<tr><td colspan="1" align="center">
+<i>l</i>      </td><td colspan="1" align="left"> like <i>n</i>, but three notes up </td></tr>
+<tr><td colspan="1" align="center">
+<i>L</i>      </td><td colspan="1" align="left"> like <i>l</i>, but one octave higher </td></tr>
+<tr><td colspan="1" align="center">
+<i>p</i>      </td><td colspan="1" align="left"> corresponding note is the predecessor note in the scale/mode </td></tr>
+<tr><td colspan="1" align="center">
+<i>P</i>      </td><td colspan="1" align="left"> like <i>p</i>, but one octave down </td></tr>
+<tr><td colspan="1" align="center">
+<i>q</i>      </td><td colspan="1" align="left"> like <i>p</i>, but two notes down </td></tr>
+<tr><td colspan="1" align="center">
+<i>Q</i>      </td><td colspan="1" align="left"> like <i>q</i>, but one octave lower </td></tr>
+<tr><td colspan="1" align="center">
+<i>r</i>      </td><td colspan="1" align="left"> like <i>p</i>, but three notes down </td></tr>
+<tr><td colspan="1" align="center">
+<i>R</i>      </td><td colspan="1" align="left"> like <i>r</i>, but one octave lower </td></tr>
+<tr><td colspan="1" align="center">
+<i>s</i>      </td><td colspan="1" align="left"> corresponding note is adjusted up one semitone </td></tr>
+<tr><td colspan="1" align="center">
+<i>S</i>      </td><td colspan="1" align="left"> corresponding note is adjusted up two semitones </td></tr>
+<tr><td colspan="1" align="center">
+<i>u</i>      </td><td colspan="1" align="left"> corresponding note is adjusted up three semitone </td></tr>
+<tr><td colspan="1" align="center">
+<i>U</i>      </td><td colspan="1" align="left"> corresponding note is adjusted up four semitones </td></tr>
+<tr><td colspan="1" align="center">
+<i>b</i>      </td><td colspan="1" align="left"> corresponding note is adjusted down one semitone </td></tr>
+<tr><td colspan="1" align="center">
+<i>B</i>      </td><td colspan="1" align="left"> corresponding note is adjusted down two semitones </td></tr>
+<tr><td colspan="1" align="center">
+<i>d</i>      </td><td colspan="1" align="left"> corresponding note is adjusted down three semitone </td></tr>
+<tr><td colspan="1" align="center">
+<i>D</i>      </td><td colspan="1" align="left"> corresponding note is adjusted down four semitones </td></tr>
+<tr><td colspan="1" align="center">
+</td></tr></tbody></table>
+</p>
+<p>Thus, the chord <i>c7</i> is a wrapper to the call:
+</p>
+<pre>
+    cchord(chordNumber,duration,instrument,octave,"xxxx");
+</pre>
+<p>If <i>c4</i> is a major chord,
+then it can be tweaked into a dominant seventh chord
+using the following call to <i>cchord</i>:
+</p>
+<pre>
+    cchord(4,duration,instrument,octave,"xxxp");
+</pre>
+<p>which flattens the seventh note one step down the scale.
+If <i>c4</i> is a minor chord,
+it can be tweaked into an augmented seventh chord with the call:
+</p>
+<pre>
+    cchord(4,duration,instrument,octave,"xnnx");
+</pre>
+<p>sharpening the middle two notes of the chord.
+</p>
+<p>One should generally stick with tweaks from the set:
+</p>
+<pre>
+    X Y n N m M l L p P q Q r R
+</pre>
+<p>Applying a pleasing sounding tweak using semitone shifts
+in one mode will
+likely sound unpleasant if the mode or key is changed.
+</p>
+<p>In general, the <i>cchord</i> function is called directly if you
+wish to change the notes that are omitted in an extended chord.
+For example, a <i>c9</i> chord is a wrapper to:
+</p>
+<pre>
+    cchord(chordNumber,duration,instrument,octave,"xx-xx");
+</pre>
+<p>This tweaks string omits the middle note of the chord; this note
+is known as <i>the fifth</i>.
+Music theorists use what seems, at first, a strange terminology
+for naming the notes of the chord. The following table gives
+the note names that correspond to the position in the tweaks string:
+</p>
+<p><table><tbody><tr><td colspan="1" align="center">
+<i>string position</i> </td><td colspan="1" align="left"> <i>note name</i> </td></tr>
+<tr><td colspan="1" align="center">
+1           </td><td colspan="1" align="left"> the root</td></tr>
+<tr><td colspan="1" align="center">
+2           </td><td colspan="1" align="left"> the third </td></tr>
+<tr><td colspan="1" align="center">
+3           </td><td colspan="1" align="left"> the fifth </td></tr>
+<tr><td colspan="1" align="center">
+4           </td><td colspan="1" align="left"> the seventh </td></tr>
+<tr><td colspan="1" align="center">
+5           </td><td colspan="1" align="left"> the ninth </td></tr>
+<tr><td colspan="1" align="center">
+6           </td><td colspan="1" align="left"> the eleventh </td></tr>
+<tr><td colspan="1" align="center">
+7           </td><td colspan="1" align="left"> the thirteenth </td></tr>
+<tr><td colspan="1" align="center">
+</td></tr></tbody></table>
+</p>
+<p>If you wish to omit the third instead of the fifth, you would call
+<i>cchord</i> like this:
+</p>
+<pre>
+    cchord(chordNumber,duration,instrument,octave,"x-xxx");
+</pre>
+
+<h1><a name="id12">Other modal chords</a></h1><p>
+There are a few other modal chord functions of note:
+</p>
+<p><table><tbody><tr><td colspan="1" align="center">
+<i>function</i> </td><td colspan="1" align="left"> <i>result</i> </td></tr>
+<tr><td colspan="1" align="center">
+<code>ic</code>           </td><td colspan="1" align="left"> for example, ic(5,2,beats,inst,octave) which plays the lower two notes of chord 5 an
+octave higher - the larger the second argument, the more notes are inverted(raised an octave)</td></tr>
+<tr><td colspan="1" align="center">
+<code>cpower</code>           </td><td colspan="1" align="left">  plays a power chord; the middle note is replaced by the root note at one higher octave</td></tr>
+<tr><td colspan="1" align="center">
+<code>cpower2</code>           </td><td colspan="1" align="left">  like <i>cpower</i>, but the middle note is played as well</td></tr>
+<tr><td colspan="1" align="center">
+<code>csus2</code>           </td><td colspan="1" align="left">  plays a suspended chord; the middle note is replaced by the major second</td></tr>
+<tr><td colspan="1" align="center">
+<code>csus4</code>           </td><td colspan="1" align="left">  plays a suspended chord; the middle note is replaced by the perfect fourth</td></tr>
+<tr><td colspan="1" align="center">
+<code>cquart</code>           </td><td colspan="1" align="left">  plays a quartal chord (stacked fourths)</td></tr>
+<tr><td colspan="1" align="center">
+<code>b</code>           </td><td colspan="1" align="left">  plays  a broken chord (arpeggio)</td></tr>
+<tr><td colspan="1" align="center">
+</td></tr></tbody></table>
+</p>
+<p>All these chords have the same arguments as <i>c</i>, except the broken chord
+function <i>b</i>. With a broken chord, the individual notes are played
+sequentially or in parallel, according to a set of given patterns, rather than
+all in parallel. For example, the call:
+</p>
+<pre>
+    b(1,H,piano,octave,"-x-","x-x",(char *) 0);
+</pre>
+<p>would play the middle note of the chord followed by the root and the
+top note played simultaneously. The duration of each pattern is the
+duration of the chord divided by the
+number of patterns. In the above example, each pattern is played
+for a quarter note.
+Note that tweaks can be used in a broken chord pattern. Also, an
+"unbroken" broken chord is equivalent to <i>cchord</i>. The following
+calls are equivalent:
+</p>
+<pre>
+    b(3,W,piano,octave,"xxx",(char *) 0);
+    cchord(3,W,piano,octave,"xxx");
+    c(3,W,piano,octave);
+</pre>
+<p>You can adjust the amplitude each pattern in a broken chord with a call
+to <i>setBrokenAmplitudes</i>:
+</p>
+<pre>
+    setBrokenAmplitudes(1.0,0.5,DX);
+    b(1,H,piano,octave,"-x-","x-x",(char *) 0);
+</pre>
+<p>Each argument to <i>setBrokenAmplitudes</i> is a factor with which the current
+amplitude is multiplied before the pattern is played. In this example,
+the first pattern <code>"-x-"</code> is played at the current amplitude while the
+second pattern <code>"x-x"</code> is played at half the current amplitude.
+The factors sent to <i>setBrokenAmplitudes</i> persist until the next call to
+<i>setBrokenAmplitudes</i>.
+</p>
+
+<h1><a name="id13">Playing single notes in the modal system</a></h1><p>
+You can play the individual notes in the current key, consistent with
+the current mode. These single note playing functions have the form:
+</p>
+<pre>
+    n(chordNumber,duration,instrument,octave,offset)
+</pre>
+<p>The offset is chosen from the set &#123;0..6&#125;. These numbers
+are the equivalent of <i>do</i>, <i>re</i>, <i>mi</i>, <i>fa</i>, <i>so</i>,
+<i>la</i>, and <i>ti</i>. For example, the <i>c1</i> function is equivalent
+to playing the following notes simultaneously:
+</p>
+<pre>
+    n(1,H,piano,octave,0);
+    n(1,H,piano,octave,2);
+    n(1,H,piano,octave,4);
+</pre>
+<p>You can flatten a note by calling <i>nf</i> instead of <i>n</i>.
+Likewise, you can sharpen a note by calling the <i>ns</i> function.
+For example,
+the chord <i>cm</i> is equivalent to the following notes played simultaneously:
+</p>
+<pre>
+    n(1,H,piano,octave,0);
+    nf(1,H,piano,octave,2);
+    n(1,H,piano,octave,4);
+</pre>
+<p>A power chord omits the third and adds in the root note at
+an octave higher.
+You can play a power chord by combining calls to <i>cchord</i> and <i>n</i>.
+Here is one form of a power chord:
+</p>
+<pre>
+    cchord(chordNumber,duration,instrument,octave,"x-x");
+    backwards(duration);
+    n(chordNumber,duration,instrument,octave+1,0);
+</pre>
+<p>This form has been encapsulated in the <i>cpower</i> function,
+</p>
+<p>Finally, you can retrieve
+the actual note in a modal chord by using the <i>getcnote</i>
+function. These two calls are equivalent:
+</p>
+<pre>
+    n(3,H,piano,5);
+    play(H,piano,getcnote(3,5));
+</pre>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

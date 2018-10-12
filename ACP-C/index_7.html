@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:16 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Operators</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_6.html">
+  <img border="0" alt="Variables" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_8.html">
+  <img border="0" alt="Assignment" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Operators</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Operators</h1>
+<p>Way back when, computers were used primarily as calculators.
+Some whiz-bang programmer would code up some formula and
+run the program on a bunch of data. In fact, the very first
+high-level programming language was called Fortran, for <i>for</i>mula
+<i>tran</i>slation.
+Fortran, and most every language that came after it, supplied
+a full complement of mathmatical operators.
+C is no exception.
+For example, suppose you have forgotten your times table
+and aren't quite sure whether 8 times 7 is 54 or 56. We can write
+a C program to tell us the answer:
+</p>
+<pre>
+    //test
+    printf("%d\n",8 * 7);           //should print: 56
+</pre>
+<p>Of course, we can multiply variables as well as numbers:
+</p>
+<pre>
+    //test
+    int x = 8;
+    int y = 7;
+    printf("%d\n",x * y);           //should print: 56
+</pre>
+<p>We can also intermix variables and numbers:
+</p>
+<pre>
+    //test
+    int x = 8;
+    printf("%d\n",x * 7);           //should print: 56
+</pre>
+<p>Time for some terminology. The
+multiplication sign <code>*</code>
+is known as an <i>operator</i>, as it <i>operates</i> on the numbers
+or variables on either side of it,
+producing an equivalent literal value. The items preceding and following
+the multiplication sign are
+known as <i>operands</i>. It seems that the actual names of various operands are
+not being taught anymore, so for nostalgia's sake, here they are. The
+operand to the left of the multiplication sign is
+known as the <i>multiplicand</i>. The operand to the right
+is known as the <i>multiplier</i>. The result is known as the <i>product</i>.
+</p>
+<p>The operands of the other basic operators
+have special names too. For addition, the left operand is known as the
+<i>augend</i> and the right operand is known as the <i>addend</i>.
+The result is known as the <i>sum</i>.
+For subtraction,
+the left operand is the <i>minuend</i>, the right the <i>subtrahend</i>, and
+the result as the <i>difference</i>.
+For division (and I think this is still taught), the left operand is
+the <i>dividend</i>, the right operand is the <i>divisor</i>, and the 
+result is the <i>quotient</i>.
+</p>
+<p>In general, we will separate
+operators from their operands by
+spaces, tabs,
+or newlines, collectively known as <i>whitespace</i>.<sup><a href="index_26.html#footnote-14">14</a></sup>
+It's not necessary to do so, but it  makes your code
+easier to read.
+</p>
+<p>C always takes an expression and computes an equivalent
+literal expression (e.g., integer or real). Most of the C operators are
+binary, meaning they operate on exactly two operands. We first look at
+the numeric operators.
+</p>
+
+<h2><a name="id1">Numeric operators</a></h2><p>
+If it makes sense to add two numbers together, you can probably do it in
+C using the + operator. For example:
+</p>
+<pre>
+    //test
+    printf("%d\n",2 + 3);           //should print: 5
+    printf("%f\n",1.9 + 3.1);       //should print: 5.000000
+</pre>
+<p>One can see that if one adds two integers, the result is an integer. If
+one does the same with two reals, the result is a real.
+</p>
+<p>Things get more interesting when
+you add things having different types. Adding an integer and a real (in
+any order) always yields a real.
+</p>
+<pre>
+    //test
+    printf("%f\n",2 + 3.3);         //should print: 5.300000
+    printf("%f\n",3.3 + 2);         //should print: 5.300000
+</pre>
+<p>Adding a string to a real number
+yields an error;
+the types are not "close" enough, like they are with
+integers and reals. This statment:
+</p>
+<pre>
+    printf("%f\n",2.2 + "123");
+</pre>
+<p>generates the following error when compiled:
+</p>
+<pre>
+    error: invalid operands to binary + (have 'double' and 'char *')
+</pre>
+<p>In general, when adding two things,
+the types must match or nearly match.
+</p>
+<p>Subtraction, multiplication, and division of numbers follow the
+same rules as addition.
+Of special note is the division operator with respect to integer
+operands. Consider evaluating the following expression:
+</p>
+<pre>
+    15 / 2
+</pre>
+<p>If one asked the C compiler to compute the result, the value
+7, not 7.5, would be produced.
+This is because, when given an integer dividend and an integer
+divisor, the quotient will be an integer. Since 7.5 is not an
+integer, the fractional part is lopped off to make it an integer.
+If we wish to compute a real result, we need to <i>cast</i> the operands:
+</p>
+<pre>
+    //test
+    int x = 15, y = 2;
+    int i_quotient;
+    double r_quotient;
+    //calculate!
+    i_quotient = x / y;
+    r_quotient = (double) x / (double) y;           //(double) is a cast
+    printf("%d and %f\n",i_quotient,r_quotient);    //should print: 7 and 7.500000
+</pre>
+<p>For division, dividing an integer dividend by a real divisor or vice
+versa, a real number results. Therefore,
+we could have used any of the following
+ways to compute <i>r&#95;quotient</i>.
+</p>
+<pre>
+    r_quotient = (double) x / (double) y;
+    r_quotient = (double) x / y;
+    r_quotient = x / (double) y;
+</pre>
+<p>The complement to integer division is the modulus operator &#37;. While the
+result of integer division is the quotient, the result of the modulus
+operator is the remainder. Thus
+</p>
+<pre>
+    14 % 5
+</pre>
+<p>evaluates to 4 since 4 is left over when 5 is divided into 14. To check
+if this is true, one can ask C to compute this expression:
+</p>
+<pre>
+    (14 / 5) * 5 + (14 % 5) == 14
+</pre>
+<p>This complicated expression asks the question "is it true that the
+quotient times the divisor plus the remainder is equal to the original
+dividend?". Running the following code will show that, indeed, it is
+true as a 1 is printed.
+</p>
+<pre>
+    $ quickc
+    &gt; printf("%d\n",(14 / 5) * 5 + (14 % 5) == 14);
+    +
+    compiling the program...
+    running the program...
+    1
+    &gt; 
+</pre>
+<p>The first set of parentheses in the expression surrounds the
+quotient while the second pair surrounds the remainder. 
+</p>
+<p>We can also use the modulus operator
+to check whether a value is even or odd. The expression
+</p>
+<pre>
+    x % 2 == 0
+</pre>
+<p>evaluates to true if the value of <i>x</i> is even, false otherwise.
+</p>
+
+<h2><a name="id2">Precedence</a></h2><p>
+Precedence (partially) describes the order in which operators, in
+an expression involving different operators, are evaluated. In C,
+the expression
+</p>
+<pre>
+    3 + 4 &lt; 10 - 2
+</pre>
+<p>evaluates to true. In particular, <tt>3 + 4</tt> and <tt>10 - 2</tt>
+are evaluated before the <tt>&lt;</tt>, yielding <tt>7 &lt; 8</tt>,
+which is indeed true. This implies that <tt>+</tt> and
+<tt>-</tt> have higher precedence than <tt>&lt;</tt>. If
+<tt>&lt;</tt> had higher precedence, then <tt>4 &lt; 10</tt>
+would be evaluated first, yielding <tt>3 + True - 2</tt>, which
+is nonsensical.
+</p>
+<p>Note that precedence is only a partial ordering. We cannot tell, for
+example whether <tt>3 + 4</tt> is evaluated before the <tt>10 - 2</tt>,
+or vice versa. Upon close examination, we see that it does not
+matter which is performed first as long as both are performed before
+the expression involving <tt>&lt;</tt> is evaluated.
+</p>
+<p>It is common to
+assume that the left operand is evaluated before the right operand. For
+the B<font size="-1">OOLEAN</font>&#32;connectives And and Or,
+this is indeed true. But for other operators, such an assumption
+can lead you into trouble. You will learn why later. For now, remember
+never, never, never depend on the order in which operands are evaluated!
+</p>
+<p>The C language has a complete precedence chart that illustrates operator
+precedence for all possible operators.  This chart includes 15 levels of 
+precedence.  However, since it includes a number of operators that we
+have not yet discussed, we will simply provide you with a subset of this
+chart for now.
+</p>
+<ul><li>The lowest precedence operator in C is the assignment operator (which
+is described later)
+</li><li>Next, the B<font size="-1">OOLEAN</font>&#32;connectives And and Or
+</li><li>At the next higher level are the B<font size="-1">OOLEAN</font>&#10;comparatives, <tt>&lt;</tt>, <tt>&lt;=</tt>, <tt>&gt;</tt>, <tt>&gt;=</tt>, <tt>==</tt>, and <tt>!=</tt>
+</li><li>After that come the additive arithmetic operators <tt>+</tt> and <tt>-</tt>
+</li><li>Next comes the multiplicative operators <tt>*</tt>, <tt>/</tt> and <tt>&#37;</tt>.
+</li><li>Finally, at the highest level of precedence is the selection,
+or <i>dot</i>, operator (the dot operator is a period or full-stop).
+</li></ul>
+<p>Higher precedence operations are performed before lower precedence operations.
+Functions which are called with operator syntax have the same precedence
+level as the mathematical operators.
+</p>
+<p>Parentheses can also be used to change the <i>precedence</i>
+of operators; in a complicated expression composed of differing operators,
+subexpressions with parentheses are done first,
+then dot operations,
+then division and mulitplication, then addition and subtraction, and so on.
+</p>
+<p>General comment on precedence: unless you have the C Operator Precedence
+Chart memorized, it is always a good idea to use lots of parentheses
+whenever you are using multiple operators in an expression or statement.
+That way, you know exactly how things will be handled.
+</p>
+<p>Finally, you are encouraged to find a complete C Operator Precedence Chart
+on the web and examine it.  It contains lots of useful information.
+</p>
+
+<h2><a name="id3">Associativity</a></h2><p>
+Associativity describes how multiple expressions connected by operators at the same
+precedence level are evaluated. All the operators, with the exception of
+the assignment operator, are left associative.
+For example, the expression
+<i>5 - 4 - 3 - 2 - 1</i> is equivalent to <i>((((5 - 4) - 3) - 2) - 1)</i>. For
+a left-associative structure, the equivalent, fully parenthesized,
+structure has open parentheses piling up on the left. If the minus
+operator was right associative, the equivalent expression would be
+<i>(5 - (4 - (3 - (2 - 1))))</i>, with the close parentheses piling up on
+the right. For a commutative operator, it does not matter whether it
+is left associative or right associative. Subtraction, however, is not
+commutative, so associativity does matter. For the given expression, the
+left associative evaluation is -5. If minus were right associative, the
+evaluation would be 3. 
+</p>
+<p>Like subtraction, division, which is non-commutative, exhibits
+left associativity. In the expression:
+</p>
+<pre>
+    a / b / c / d
+</pre>
+<p>the divisions are done from left to right. The above expression is
+equivalent to:
+</p>
+<pre>
+    (((a / b) / c) / d)
+</pre>
+<p>The assignement operator, covered in the next chapter, exhibits right
+associativity.
+</p>
+
+<h2><a name="id4">Comparing things</a></h2><p>
+Remember the B<font size="-1">OOLEAN</font>&#32;interpretation of integers?
+We can use the B<font size="-1">OOLEAN</font>&#10;comparison operators to generate such values. For example, we can ask
+if 3 is less than 4:
+</p>
+<pre>
+    //test
+    int b = 3 &lt; 4;
+    printf("%d\n",b);           //should print: 1
+</pre>
+<p>The output says that, indeed, 3 is less than 4, since 1 is considered
+true.
+If the expression had resolved to false,
+the output would be 0, since 0 represents falsity.
+Besides
+<code>&lt;</code>
+(less than),
+there are other B<font size="-1">OOLEAN</font>&#32;comparison operators:
+<code>&lt;=</code>
+(less than or equal to),
+<code>&gt;}</code>
+(greater than),
+<code>&gt;=</code>
+(greater than or equal to),
+<code>==</code>
+(equal to), and
+<code>!=</code>
+(not equal to).
+</p>
+<p>Note that two equal signs are used to see if to things are the same. A
+single equals sign is reserved for the assignment operator, which you
+will learn about in the next chapter.
+</p>
+<p>Besides integers, we can compare reals with reals and integers and reals
+using the comparison operators. We cannot compare strings with strings
+using the B<font size="-1">OOLEAN</font>&#32;operators, however. We need a special operator to
+do that. This operator, <i>strcmp</i>, is covered in the chapter on strings.
+</p>
+
+<h2><a name="id5">Combining comparisons</a></h2><p>
+We can combine comparisons with the B<font size="-1">OOLEAN</font>&#32;logical connectives
+<code>&amp;&amp;</code> and <code>||</code>, logical <font size="-1"><b>AND</b></font> and logical <font size="-1"><b>OR</b></font>, 
+respectively.
+</p>
+<pre>
+    //test
+    int b = 3 &lt; 4 &amp;&amp; 4 &lt; 5; //true AND true
+    printf("%d\n",b);           //should print: true (which is 1)
+    b = 3 &lt; 4 || 5 &lt; 4; //true OR false
+    printf("%d\n",b);           //should print: true (which is 1)
+    b = 3 &lt; 4 &amp;&amp; 5 &lt; 4; //true AND false
+    printf("%d\n",b);           //should print: false (which is 0)
+</pre>
+<p>The first bit of code asks if both the expression
+<code>3 &lt; 4</code> and the expression
+<code>4 &lt; 5</code> are true. Since both are,
+<i>C</i> calculates a <code>1</code>. The second bit of code
+asks if at least one of the expressions is true. Again,
+<i>C</i> calculates a <code>1</code>. The difference between <code>&amp;&amp;</code>
+and <code>||</code> is illustrated by the last two interactions. Since
+only one expression is true (the latter expression being
+false) only the <code>||</code> operator yields a true value.
+</p>
+<p>There is one more B<font size="-1">OOLEAN</font>&#32;logic operation, called
+<i>not</i>. It simply reverses the value of the expression
+to which it is attached. The <i>not</i> operator is represented by
+an exclamation point (Computer Scientists call it 'bang'):
+</p>
+<pre>
+    int b = !(3 &lt; 4 &amp;&amp; 4 &lt; 5);
+    printf("%d\n",b);           //should print false (which is 0)
+    b = !(3 &lt; 4 || 5 &lt; 4);
+    printf("%d\n",b);           //should print false (which is 0)
+    b = !(3 &lt; 4 &amp;&amp; 5 &lt; 4);
+    printf("%d\n",b);           //should print true  (which is 1)
+</pre>
+<p>Note that we attached <i>not</i> to each of the previous expressions involving
+the logical connectives. Note also that the calculated result
+is reversed from before in each case.
+</p>
+<p>In terms of precedence, <code>&amp;&amp;</code> and <code>||</code> are lower
+than the comparison operators,
+which in turn are lower than the mathmatical operators.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_6.html">
+  <img border="0" alt="Variables" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_8.html">
+  <img border="0" alt="Assignment" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Operators</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

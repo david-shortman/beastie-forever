@@ -1,0 +1,59 @@
+function constant(value)
+    {
+    function toString() { "" + value; }
+    this;
+    }
+
+function variable(name)
+    {
+    function toString() { "" + name; }
+    this;
+    }
+
+function term(coefficient,sym,exponent)
+    {
+    function toString()
+        {
+	if (exponent == 0)
+	    {
+	    "" + coefficient;
+	    }
+	else if (exponent == 1)
+	    {
+	    "" + coefficient + "*" + sym . toString();
+	    }
+	else
+	    {
+	    "" + coefficient + "*" + sym . toString() + "**" + exponent;
+	    }
+
+	}
+    if (coefficient == 0)
+        {
+	constant(0);
+	}
+    else
+	{
+	this;
+	}
+    }
+
+function poly(term1,term2)
+    {
+    function toString()
+        {
+	"" + term1 . toString() + " + " + term2 . toString();
+	}
+    this;
+    }
+
+if (:true)
+    {
+    var p = constant(5);
+    var x = constant("x");
+    p = poly(term(4,x,1),p);
+    p = poly(term(3,x,2),p);
+    p = poly(term(5,x,3),p);
+    inspect(p . toString());
+    }
+

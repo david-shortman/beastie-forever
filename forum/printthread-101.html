@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Exam question discussion - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=131">Exam question discussion</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: First content exam (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=3</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Exam question discussion (<em>/showthread.php?tid=131</em>)<br />
+<br />
+<!-- start: printthread_multipage -->
+<div class="multipage">Pages: <strong></strong> <!-- start: printthread_multipage_page -->
+<a href="printthread.php?tid=131&amp;page=1">1</a>
+<!-- end: printthread_multipage_page --><!-- start: printthread_multipage_page_current -->
+<strong>2</strong>
+<!-- end: printthread_multipage_page_current --></div>
+<!-- end: printthread_multipage --></td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>RE: Exam question discussion</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a> -  <strong>10-02-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (10-02-2018, 01:52 AM)</span>zmweske Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=541#pid541" class="quick_jump"></a></cite>For number 11, I got a minimum of 0 red nodes instead of a minimum of 1. Why does there need to be one red node?</blockquote><br />
+The black height on that side will be illegal if there isn't at least one red node.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Exam question discussion</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>10-02-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (10-02-2018, 03:11 AM)</span>IsabelHerrick Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=542#pid542" class="quick_jump"></a></cite>Can you explain #13 on 5775 (inserting ints into a rb-tree)? I got 8 recolorings and 2 rotations<br />
+<br />
+Also how are all paths trails? Isn't it entirely possible to visit all vertexes without visiting all edges?</blockquote><br />
+<span style="font-family: Courier New;" class="mycode_font">insert(3):</span><br />
+<span style="font-family: Courier New;" class="mycode_font">      3*    recolor    3</span><br />
+<span style="font-family: Courier New;" class="mycode_font">insert(1):</span><br />
+<span style="font-family: Courier New;" class="mycode_font">      3</span><br />
+<span style="font-family: Courier New;" class="mycode_font">     /</span><br />
+<span style="font-family: Courier New;" class="mycode_font">    1*</span><br />
+<span style="font-family: Courier New;" class="mycode_font">insert(2):</span><br />
+<span style="font-family: Courier New;" class="mycode_font">      3                 3                     3*             2</span><br />
+<span style="font-family: Courier New;" class="mycode_font">     /                 /                     /              / \</span><br />
+<span style="font-family: Courier New;" class="mycode_font">    1*      rotate    2*      recolor(2)    2    rotate    1* 3*</span><br />
+<span style="font-family: Courier New;" class="mycode_font">     \               /                     /</span><br />
+<span style="font-family: Courier New;" class="mycode_font">      2*            1*                    1*</span><br />
+<span style="font-family: Courier New;" class="mycode_font">insert(4):</span><br />
+<span style="font-family: Courier New;" class="mycode_font">      2                      2*                     2</span><br />
+<span style="font-family: Courier New;" class="mycode_font">     / \                    / \                    / \</span><br />
+<span style="font-family: Courier New;" class="mycode_font">    1*  3*   recolor(3)    1   3      recolor     1   3</span><br />
+<span style="font-family: Courier New;" class="mycode_font">         \                      \                      \</span><br />
+<span style="font-family: Courier New;" class="mycode_font">          4*                     4*                     4*</span><br />
+<span style="font-family: Courier New;" class="mycode_font">insert(5);</span><br />
+<span style="font-family: Courier New;" class="mycode_font">      2                      2*                     2</span><br />
+<span style="font-family: Courier New;" class="mycode_font">     / \                    / \                    / \</span><br />
+<span style="font-family: Courier New;" class="mycode_font">    1   3    recolor(2)    1   3*      rotate     1   4</span><br />
+<span style="font-family: Courier New;" class="mycode_font">         \                      \                    / \</span><br />
+<span style="font-family: Courier New;" class="mycode_font">          4*                     4                  3*  5*</span><br />
+<span style="font-family: Courier New;" class="mycode_font">           \                      \</span><br />
+<span style="font-family: Courier New;" class="mycode_font">            5*                     5*</span><br />
+<br />
+<br />
+An *Euler* trail requires that all edges be visited. A trail just requires an edge is visited only once and that the edges are "adjacent".
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

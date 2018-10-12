@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Assignment description - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=35">Assignment description</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 1 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=7</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Assignment description (<em>/showthread.php?tid=35</em>)<br />
+<br />
+<!-- start: printthread_multipage -->
+<div class="multipage">Pages: <strong></strong> <!-- start: printthread_multipage_page -->
+<a href="printthread.php?tid=35&amp;page=1">1</a>
+<!-- end: printthread_multipage_page --><!-- start: printthread_multipage_page_current -->
+<strong>2</strong>
+<!-- end: printthread_multipage_page_current --><!-- start: printthread_multipage_page -->
+<a href="printthread.php?tid=35&amp;page=3">3</a>
+<!-- end: printthread_multipage_page --><!-- start: printthread_multipage_page -->
+<a href="printthread.php?tid=35&amp;page=4">4</a>
+<!-- end: printthread_multipage_page --><!-- start: printthread_multipage_page -->
+<a href="printthread.php?tid=35&amp;page=5">5</a>
+<!-- end: printthread_multipage_page --></div>
+<!-- end: printthread_multipage --></td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=95">Bphightower</a> -  <strong>09-06-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite>Quote:</cite>When removing a wall in building a maze, use one random number (i.e. one call to random) to index into an array (or equivalent) of sorted, eligible candidates. For example, if count is the number of candidates, then random() % count would generate a random, but legal, index. Sort the candidates by lower row number (break ties with the lower column number). There can, at most, be four eligible candidates. </blockquote>
+<br />
+If I'm reading this correct, when deciding which neighbor to choose, you would get a new random number every time finding a neighbor <span style="font-style: italic;" class="mycode_i">(random()%count)</span>? But it also says <span style="font-style: italic;" class="mycode_i">(i.e. one call to random). </span>Does that mean we use the same random number for the whole maze creation, or we just use a new one each time when deciding which neighbor to pursue? I may just be reading the description wrong.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-07-2018</strong>
+<br />
+<br />
+I'm restricting the use of the random number generator so that we end up with the same mazes.<br />
+<br />
+Use a new random number each time a choice of a wall removal is made (i.e. the next neighbor to pursue). But make sure you use just one.<br />
+<br />
+You could generate a random number to pick a neighbor. If that neighbor was visited, you could generate a new random number to pick another neighbor and so on, until you get an unvisited neighbor. But I don't want you to do that.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=7">andrasveto</a> -  <strong>09-16-2018</strong>
+<br />
+<br />
+Will -v only ever be passed as a parameter alone, or should we handle the case where -v is passed with other parameters? e.g. should amaze -v -s III OOO still just print the author's name and quit, or should it throw an error? likewise with amaze -s III OOO -v?<br />
+<br />
+<hr class="mycode_hr" />
+<br />
+Also, can we assume in general that the parameters passed are valid? That is, with -s III OOO has III containing a valid maze, -c RRR CCC MMM has RRR and CCC positive integers (not zero), -r NNN has NNN a valid seed, -d III has III containing a valid maze<br />
+<br />
+<hr class="mycode_hr" />
+<br />
+Will you be testing our program using your own correct stack and queue implementations, both yours and ours, or strictly ours?<br />
+<br />
+<hr class="mycode_hr" />
+<br />
+Is it ok if we have our cda, da, stack, and queue files in a subdirectory, or should we just have one directory with everything?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-17-2018</strong>
+<br />
+<br />
+You can print and exit the program once the -v option is encountered. You should do no maze processing.<br />
+<br />
+You can assume good input.<br />
+<br />
+I will be testing your maze with my DA, CDA, STACK, and QUEUE.<br />
+<br />
+All your .c and .h files should be at the top level. I understand it is common to have a src subdirectory, but since I don't know what you would name it, I can't write a test script to handle organizations like that.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=7">andrasveto</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+Thank you.<br />
+<br />
+Is a maze guaranteed to always be rectangular and filled with rows * cols cells?<br />
+<br />
+Is the smallest possible maze (1 row, 1 col) a single cell with no left or right walls? And is this the only possible maze with 1 row and 1 column? Like this:<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>-----<br />
+&nbsp;&nbsp;0  <br />
+-----</code></div></div><br />
+When you test our code, are you strictly testing the executable we write against the five command line options given? i.e. we don't need to handle edge cases other than the ones that can come about as a result of calling any of those options?<br />
+<br />
+Is there a limit to how many columns a maze can have? i.e. a limit to how wide a line we're reading from a file will be
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+A maze is rectangular.<br />
+<br />
+A maze with one cell is reasonable.<br />
+<br />
+For your third quesion, give me an example edge case.<br />
+<br />
+No limit on number of rows and number of columns.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=101">arhencey</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+If rows/columns/both are 0, what should our program do?<br />
+<br />
+For example, if "amaze -c 0 0 filename" is called should we do nothing and exit or create file "filename" and put data in it that can be read by drawMAZE to print nothing?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-20-2018</strong>
+<br />
+<br />
+A maze with 0 rows and 0 columns seems only to be reasonable at Hogwarts. Likewise, a maze of 9 3/4 rows and 9 3/4 columns. Those dimensions would not be reasonable in Muggle World.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=7">andrasveto</a> -  <strong>09-21-2018</strong>
+<br />
+<br />
+When I ran the example given in the description, I got the same result visually. However, the walls removed were different from what you wrote (e.g. mine removed top of (1,1) instead of bottom of (0,1)). This is what I had:<br />
+<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>Removing bottom wall of (0,0)<br />
+Removing right wall of (1,0)<br />
+Removing top wall of (1,1)<br />
+Removing right wall of (0,1)<br />
+Removing bottom wall of (0,2)<br />
+Removing bottom wall of (1,2)<br />
+Removing left wall of (2,2)<br />
+Removing left wall of (2,1)</code></div></div><br />
+<br />
+Is this the correct order for amaze -c 3 3 m?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-21-2018</strong>
+<br />
+<br />
+Likely. I simplified my structure by only having right and bottom walls. That way, I only have to a remove a wall in one place. If you got the same drawing, I would guess you are removing walls in an equivalent way. Does your code match this?<br />
+<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>lusth@goblin:~/201/assignments/assign1&#36; amaze -r 2 -c 10 10 out -d out<br />
+-----------------------------------------<br />
+ &nbsp;&nbsp;     |                           |   |<br />
+-----   -   -----------------   -   -   -<br />
+|   |   |   |   |               |       |<br />
+-   -   -   -   -   -----------------   -<br />
+|   |   |       |           |       |   |<br />
+-   -   -----   ---------   -   -----   -<br />
+|       |   |       |       |   |       |<br />
+-   -----   -----   -   -----   -   -----<br />
+|   |               |       |   |       |<br />
+-   ---------   ---------   -   -----   -<br />
+|   |       |   |       |   |   |       |<br />
+-   -   -   -   -   -   -   -   -   -----<br />
+|       |   |       |   |   |   |   |   |<br />
+---------   ---------   -   -   -   -   -<br />
+|           |   |       |   |   |       |<br />
+-   ---------   -   -----   -   -----   -<br />
+|   |       |       |       |   |       |<br />
+-   -   -   ---------   -----   -   -----<br />
+|       |               |                <br />
+-----------------------------------------</code></div></div>
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

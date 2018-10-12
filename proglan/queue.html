@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>queue</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Queues
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="queue.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+
+<i>Queues</i> are also easy to implement in Scheme, though they are not so
+clean as <i>stacks</i>. Let's define a queue constructor:
+<br/>
+
+<pre>
+    (define (Queue)
+        (define store nil)
+
+        (define (this msg . args)
+            (cond
+                ((eq? msg &#39;enqueue) (apply enqueue args))
+                ((eq? msg &#39;dequeue) (apply dequeue args))
+                ((eq? msg &#39;empty?) (apply empty? args))
+                (else (error &quot;queue message not understood: &quot; msg))
+                )
+            )
+        (define (last x)
+            (if (null? (cdr x))
+                x
+            ;else
+                (last (cdr x))
+                )
+            )
+        (define (enqueue x) ; add to the back
+            (if (empty?)
+                (set! store (list x))
+            ;else
+                (set-cdr! (last store) (list x))
+                )
+            )
+        (define (dequeue) ; remove from the front
+            ; user is responsible ensuring queue is non empty
+            (define tmp (car store))
+            (set! store (cdr store))
+            tmp
+            )
+        (define (empty?)
+            (eq? store nil)
+            )
+
+        this
+        )
+</pre>
+
+Note that since we add to the back of the store and remove from the
+front, we get FIFO behavior. This is not a particularly efficient
+implementation. While removal takes a constant amount of time, adding
+items takes <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math> since the last function walks down the storage list
+every time. If we keep a back pointer, this will save us the walk.
+<br/>
+
+<pre>
+    (define (Queue)
+        (define front nil)
+        (define back nil)
+
+        (define (this msg . args)
+            (cond
+                ((eq? msg &#39;enqueue) (apply enqueue args))
+                ((eq? msg &#39;dequeue) (apply dequeue args))
+                ((eq? msg &#39;empty?) (apply empty? args))
+                (else (error &quot;queue message not understood: &quot; msg))
+                )
+            )
+        (define (enqueue x) ; add to the back
+            (define tmp (list x))
+            (if (empty?)
+                (begin (set! front tmp) (set! back tmp))
+            ;else
+                (begin (set-cdr! back tmp) (set! back tmp))
+                )
+            )
+        (define (dequeue) ; remove from the front
+            ; user is responsible ensuring queue is non empty
+            (define tmp (car front))
+            (set! front (cdr front))
+            tmp
+            )
+        (define (empty?)
+            (eq? front nil)
+            )
+
+        this
+        )
+</pre>
+
+Note that the code for <i>enqueue</i> has to check whether the queue is
+empty. What if we could guarantee that the queue was never empty. Then
+the <i>enqueue</i> code would be simpler. How do we keep that guarantee? By
+creating a head item at the very start. Here's the implementation:
+<br/>
+
+<pre>
+    (define (Queue)
+        (define front (list &#39;head))
+        (define back nil)
+
+        (define (this msg . args)
+            (cond
+                ((eq? msg &#39;enqueue) (apply enqueue args))
+                ((eq? msg &#39;dequeue) (apply dequeue args))
+                ((eq? msg &#39;empty?) (apply empty? args))
+                (else (error &quot;queue message not understood: &quot; msg))
+                )
+            )
+        (define (enqueue x) ; add to the back
+            (set-cdr! back (list x))
+            (set! back (cdr back))
+            )
+        (define (dequeue) ; remove from the front
+            ; user is responsible ensuring queue is non empty
+            (define tmp (cadr front))
+            (set-cdr! front (cddr front))
+            (if (null? (cdr front))
+                (set! back front)
+                )
+            tmp
+            )
+        (define (empty?)
+            (eq? (cdr front) nil)
+            )
+     
+        (set! back front)
+        this
+        )
+</pre>
+
+In this implementation, note that <i>front</i> is initially bound to this head
+object. Just before the constructor returns, <i>back</i> is bound to this head
+object as well (the reason <i>back</i> wasn't bound to <i>front</i> when it was first
+defined has to do with the fact that Scheme may do the definitions in
+any order, even intermixed). Note also that the definition of <i>empty?</i> has
+changed to reflect the presence of a head node as has the definition
+of <i>dequeue</i>. We have also introduced a special case into the dequeue
+algorithm. Can we remove the special cases from both the <i>enqueue</i> and
+<i>dequeue</i> routine at the same time? The superior student well reflect and
+come to enlightenment on this issue.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

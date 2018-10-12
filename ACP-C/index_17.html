@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:17 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Input and Loops</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_16.html">
+  <img border="0" alt="Loops" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_18.html">
+  <img border="0" alt="Structures" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Input and Loops</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Input and Loops</h1>
+<p>You can download the functions defined in this chapter with the
+following commands:
+</p>
+<pre>
+    wget troll.cs.ua.edu/ACP-C/moreInput.c
+    wget troll.cs.ua.edu/ACP-C/moreInput.h
+</pre>
+<p>These files will help you run the test code listed in this chapter.
+</p>
+
+<h2><a name="id1">Converting command line arguments en mass</a></h2><p>
+Now that we have learned how to loop, we can perform
+more sophisticated types of input.
+Suppose all the command-line arguments are integers that
+need to be converted from their string versions stored
+in <i>sys.argv</i>.
+We can use a loop and the accumulate pattern to accumulate
+the converted string elements:
+</p>
+<pre>
+    void
+    convertArgsToNumbers(int argc,char **argv,int *numbers)
+        {
+        int i;
+        // start at 1 to skip over program file name
+        for (i = 1; i &lt; argc; ++i)
+            numbers[i-1] = atoi(argv[i]);
+        }
+</pre>
+<p>Note the use of <code>i-1</code> as the index for the numbers array. This makes sure
+the second element of <i>argv</i> corresponds to the first element of numbers,
+and so on.
+A careful analysis of this function yields the following insight:
+the function implements the <i>map pattern</i>. The function being mapped is
+<i>atoi</i> and we map over the <i>argv</i> array of strings.
+</p>
+<p>We can test our conversion function:
+</p>
+<pre>
+    //test (compile with scanner.c and moreInput.c)
+    #include "scanner.h"
+    #include "moreInput.h"
+    int i;
+    int *nums;
+
+    nums = allocate(sizeof(int) * (argc-1));
+    convertArgsToNumbers(argc,argv,nums);
+
+    printf("original: ");
+    for (i = 0; i &lt; argc; ++i)
+        printf("[\"%s\"]",argv[i]);
+    printf("\n");
+
+    printf("converted: ");
+    for (i = 0; i &lt; argc-1; ++i) //one fewer item in nums
+        printf("[%d]",nums[i]);
+    printf("\n");
+</pre>
+<p>Note the use of the string directive in
+the first loop and the integer directive in the second.
+Let's look at our test code's behavior, assuming we place
+the code in <i>convert.c</i>:
+</p>
+<pre>
+   $ gcc -Wall -g -o convert convert.c scanner.c
+   $ convert 1 34 -2
+   original:  ["convert"]["1"]["34"]["-2"]
+   converted: [1][34][-2]
+</pre>
+<p>We see that the elements of <i>argv</i> are indeed strings. 
+Otherwise, the
+<code>"%s"</code> directive would not have worked.
+</p>
+
+<h2><a name="id2">Reading individual items from files</a></h2><p>
+we can read a unknown number of items from a
+file by using functions 
+found in the scanner module.
+When doing so,
+we always follow this pattern:
+</p>
+<pre>
+    open the file
+    read the first item
+    while the read was good
+        process the item
+        read the next item
+    close the file
+</pre>
+<p>In C, we tell if the read was good by checking the
+the file pointer for the <i>end-of-file</i> condition.
+We do this with the <i>feof</i> function, which returns
+true if the read failed and false if the read succeeded.
+With that detail, the while loop is refined to:
+</p>
+<pre>
+    FILE *fp = fopen(fileName,"r");
+    //read the first item
+    ...
+    while (!feof(fp))
+        {
+        //process the item
+        ...
+        //read the next item
+        ...
+        }
+</pre>
+
+<h2><a name="id3">Processing files a line at a time</a></h2><p>
+Here is a function that version reads and writes
+all the lines in a file,
+one line at a time. In addition, the function returns
+the number of lines processed. It makes use of
+the <i>readLine</i> function in the scanner module.
+</p>
+<pre>
+    int
+    copyFile(char *inFile,char *outFile)
+        {
+        FILE *in = fopen(inFile,"r");       //check for failed open omitted
+        FILE *out = fopen(outFile,"w");     //check for failed open omitted
+        int count = 0;
+        char *line;
+
+        line = readLine(in);        //readLine is a scanner module function
+        while (!feof(in))
+            {
+            ++count;
+            fprintf(out,"%s\n",line);
+            free(line);             //we're done with line, so free it
+            line = readLine(in);
+            }
+
+        //always close your files
+        fclose(in);
+        fclose(out);
+
+        return count;
+        }
+</pre>
+<p>Notice we used the counting pattern, augmented by printing out the current
+line to the output file every time the count was incremented.
+Since the <i>readLine</i> function allocates space for the line it reads,
+we must free it when we are done with it. Note that you only need
+to free items read with the
+<i>readLine</i>, <i>readToken</i>, and <i>readString</i> functions.
+You should only free these items when you are absolutely done with them.
+</p>
+
+<h2><a name="id4">Using functions in the scanner module</a></h2><p>
+Recall that the scanner module contains a number of useful
+function for reading input.
+To use these functions, you must first download the module
+(see the first section of this chapter). 
+Then, you need tell
+the compiler what those functions look like before you call them.
+You do that by including <i>scanner.h</i> in any source code file that
+calls scanner functions:
+</p>
+<pre>
+    #include "scanner.h"
+</pre>
+<p>Finally, you need to compile the scanner source in with your main program:
+</p>
+<pre>
+    gcc -Wall -g mainProgram.c scanner.c
+</pre>
+<p>Here is a program that utilizes the <i>copyFile</i> function defined
+above:
+</p>
+<pre>
+    //test (compile with scanner.h and moreInput.h)
+    #include "scanner.h"
+    #include "moreInput.h" //contains prototype for copyFile
+
+    int count;
+        
+    count = copyFile("copycat.c","junk.c");
+    printf("%d lines copied.\n",count);
+</pre>
+<p>If this program is placed in a file <i>copycat.c</i>, compiled,
+and then run:
+</p>
+<pre>
+    $ gcc -Wall -g -o copycat cat.c scanner.c
+    $ copycat
+</pre>
+<p>Then you should find a copy of <i>copycat.c</i> in the file <i>junk.c</i>.
+</p>
+
+<h2><a name="id5">Patterns for reading input</a></h2><p>
+The same patterns that are commonly used for processing arrays
+can be used for reading input. For example, here is a
+function that implements a filtered count:
+</p>
+<pre>
+    int
+    countSmallNumbers(char *fileName)
+        {
+        FILE *fp = fopen(fileName,"r");    //check for failed open omitted
+        int count;
+        int number;
+        
+        count = 0;
+        number = readInt(fp);              //read the first integer
+        while (!feof(fp))                  //check if the read was good
+            {
+            if (number &lt; SIZE_LIMIT)       //smaller than SIZE_LIMIT, then small!
+                ++count;
+            number = readInt(fp);          //read the next integer
+            }
+        fclose(fp);                        //always close files when done
+        return count;
+        }
+</pre>
+<p>Note that the use of the standard reading pattern:
+opening the file,
+making the first read, testing if the read was good, processing
+the item read (by counting it), reading the next item, and finally
+closing the file after the loop terminates.
+Using  the scanner functions always means performing the five steps as given
+in the comments.
+</p>
+
+<h2><a name="id6">Reading Items into an Array</a></h2><p>
+Note that the <i>countSmallNumbers</i> function is doing two things, reading
+the tokens and also counting the number of short tokens. It is said that this
+function has two <i>concerns</i>, reading and counting. A
+fundamental principle of Computer Science is the <i>separation of
+concerns</i>.
+To separate the concerns, we have one function read the tokens,
+storing them into an array (reading and storing is considered to
+be a single concern).
+We then have another function count the small numbers in
+the array. Thus, we will
+have separated the two concerns into separate functions, each
+with its own concern.
+</p>
+<p>Reading in an undetermined number of items from a file is problematic. 
+We don't know how big to allocate our array that will hold
+the items that we read. We have three choices:
+</p>
+<ol><li>allocate a really big array and stop reading if it fills up
+</li><li>read the file twice, the first time to count, the second to store
+</li><li>grow the array if it fills up
+</li></ol>
+<p>The first choice is a very poor one. The second works well,
+but is inefficient. Still, it is a viable strategy, so let's
+explore that approach.
+</p>
+
+<h3><a name="id7">Reading a file to size an array</a></h3><p>
+For this example, we will count the number of short tokens in
+a file.
+To count tokens in a file, we
+modify the <i>countSmallNumbers</i> function above
+to read in tokens instead of integer and also removing the <i>if</i>
+that protects the increment of the count. Call this function
+<i>countTokens</i>.
+</p>
+<pre>
+    int
+    countTokens(char *fileName)
+        {
+        FILE *fp = fopen(fileName,"r");    //check for failed open omitted
+        int count;
+        char *token;
+        
+        count = 0;
+        token = readToken(fp);             //read the first integer
+        while (!feof(fp))                  //check if the read was good
+            {
+            ++count;
+            free(token);                   //we've counted it, so free it
+            token = readToken(fp);         //read the next integer
+            }
+        fclose(fp);                        //always close files when done
+        return count;
+        }
+</pre>
+<p>Once we have counted the token, then we can free it.
+We call <i>countTokens</i> to get the number of tokens in the
+file:
+</p>
+<pre>
+    int count = countTokens(fileName);
+</pre>
+<p>Next, we allocate the array with exactly the right number of slots:
+</p>
+<pre>
+    char **tokens = malloc(sizeof(char *) * count);
+</pre>
+<p>Finally, we fill the array with a call to a procedure
+named <i>fillArrayWithTokens</i>:
+</p>
+<pre>
+    fillArrayWithTokens(fileName,tokens);
+</pre>
+<p>The <i>fillArrayWithTokens</i> function is left as an exercise for the reader.
+</p>
+
+<h3><a name="id8">Resizing an array as needed</a></h3><p>
+More sophisticated
+C programs use the third choice. The scanner module contains a
+function that will help us do that, <i>reallocate</i>. The <i>reallocate</i>
+function is merely a wrapper for the <i>realloc</i> function, much in the
+same way <i>allocate</i>
+is a wrapper for <i>malloc</i>. What <i>realloc</i> and <i>reallocate</i> do,
+when given a previously allocated array and a new size,
+is to allocate a new array with the given size and copy over elements
+from the old array to the new array. These routines return the 
+new array, so the old array is often reassigned with the return value.
+For example, to reallocate an integer array <i>items</i>
+with an original size of <i>size</i> to a
+a new size of <i>newSize</i>, we would do something like this:
+</p>
+<pre>
+    size = newSize;                                //reset the size
+    items = reallocate(items,sizeof(int) * size);  //reset the array
+</pre>
+<p>The <i>realloc</i> and <i>reallocate</i> functions can also be used to
+shrink an array as well as grow it.
+</p>
+<p>Here is the reading (and storing) function, which grows an array as
+needed using <i>reallocate</i>:
+</p>
+<pre>
+    char **
+    readTokens(char *fileName,int *finalSize)
+        {
+        FILE *fp = fopen(fileName,"r");     //check for failed open omitted
+        int size = 10;                      //initial size of destination array
+        char *token;
+        int count;
+
+        //allocate the destination array
+        //char ** is a pointer to an array of strings (tokens are strings)
+        char **items = allocate(sizeof(char *) * size);
+
+        count = 0;
+        token = readToken(fp);
+        while (!feof(fp))
+            {
+            if (count == size)              //array is full!
+                {
+                // grow the array by doubling its size
+                size = size * 2;
+                items = reallocate(items,sizeof(char *) * size);
+                //now there is enough room
+                }
+            items[count] = token;           //DO NOT FREE THE TOKEN!
+            ++count;
+            token = readToken(fp);
+            }
+        fclose(fp);
+
+        //shrink the array to 'count' number of elements
+        items = reallocate(items,sizeof(char *) * count);
+
+        //count holds the number of items, store it in *finalSize
+        *finalSize = count;
+        return items;
+        }
+</pre>
+<p>The <i>readTokens</i> function is complicated by the fact that it needs
+to return two things, the array of tokens that were found in the file,
+plus the size of the array. Unfortunately, C only allows a function
+to return one thing. So, we have chosen to return the array
+and to update one of the arguments to the function, which we do
+on the second to the last line of the function.
+To use <i>readTokens</i>, we need to define a variable to hold the size
+of the array and a variable to point to that array:
+</p>
+<pre>
+    int size;
+    char **tokenArray;
+
+    tokenArray = readTokens(fileName,&amp;size); //send the address of size
+    //size now holds the number of elements in the tokenArray
+    //tokenArray points to the array of tokens (each token is a string)
+</pre>
+<p>Another thing that is different about the <i>readTokens</i> function is we
+do not free the token after it has been read. Instead, we store it
+in the destination array and leave it to the caller of the function
+to free the tokens and the array itself when it is done with them.
+</p>
+<p>Finally, note that <i>readToken</i> shrinks its array to its final size
+after filling and growing.
+This is because as much as 50&#37; of the array might
+not be used<sup><a href="index_26.html#footnote-31">31</a></sup>.
+</p>
+<p>Next, we implement the function to perform the filtered counting.
+Instead of passing
+the file name, as before, we pass the array of tokens that
+were read, plus the size of that array:
+</p>
+<pre>
+    int
+    countShortTokensInArray(char **items,int size)
+        {
+        int i,count;
+
+        count = 0;
+        for (i = 0; i &lt; size; ++i)
+            {
+            if (strlen(items[i]) &lt; SHORT_LIMIT)
+                count += 1;
+            }
+        return count;
+        }
+</pre>
+<p>The <i>countTokens</i> function is now simpler
+than the original function<sup><a href="index_26.html#footnote-32">32</a></sup>.
+This makes
+it easier to fix any errors in the function since you can concentrate
+on the single concern implemented by that function.
+</p>
+<p>We can test our two functions with the following code:
+</p>
+<pre>
+    //test (compile with scanner.c and moreInput.c)
+    #include "scanner.h"
+    #include "moreInput.h"
+
+    int count;
+    int size;
+    char **tokens;
+
+    count = countShortTokens("tester.c");
+    printf("counting tokens directly: %d tokens\n",count);
+
+    tokens = readTokens("tester.c",&amp;size);
+    count = countShortTokensInArray(tokens,size);
+    printf("counting tokens in two stages: %d tokens\n",count);
+</pre>
+
+<h2><a name="id9">Reading Records into an Array</a></h2><p>
+Often, data in a file is organized as <i>records</i>, where
+a record is just a collection of consecutive and related tokens.
+Each token in a record is known as a <i>field</i>.
+Suppose every four tokens in a file comprises a record:
+</p>
+<pre>
+    "Amber Smith"       President   32   97000.05
+    "Thad Jones"        Assistant   15   89000.42
+    "Ellen Thompson"    Hacker       2  147000.99
+</pre>
+<p>Typically, we define a function to read one collection of tokens
+at a time.
+Here is a function that reads a single record:
+</p>
+<pre>
+    char **
+    readRecord(FILE *fp)                // we pass the file pointer in
+        {
+        char *name,*title,*years,*salary;
+        char **record;
+        
+        name = readString(fp);           //name is a string, not a token
+
+        if (feof(fp)) { return 0; }      // no record, return null
+
+        title = readToken(fp);
+        years = readToken(fp);
+        salary = readToken(fp);
+
+        //make an empty record
+        record = allocate(sizeof(char *) * 4);  //there are four fields
+
+        //fill the record
+        record[0] = name;
+        record[1] = title;
+        record[2] = years;
+        record[3] = salary;
+
+        return record;
+        }
+</pre>
+<p>Note that we return either a record as an array or the null pointer (zero)
+if no record was read.
+Note that we store every field as a string, even though the
+last two fields are numbers. This is because arrays are
+homogeneous. 
+In a later chapter
+when we learn about structures, 
+we will be able to create records that store
+heterogeneous data, such as years as an integer and salary as a
+real number.
+</p>
+<p>To total up all the salaries, for example, we can use an accumulation
+loop (assuming the salary data resides in a file represented
+by the string <i>fileName</i>).
+</p>
+<p>We do so by repeatedly calling <i>readRecord</i>, remembering
+to convert the string representing the salary in the record
+to a real number using <i>atof</i>:
+</p>
+<pre>
+    double
+    totalPay(char *fileName)
+        {
+        FILE *fp;
+        char **record;
+        double total;
+
+        fp = fopen(fileName,"r");       //check for failure to open omitted
+        total = 0;
+        record = readRecord(fp);
+        while (!feof(fp))               //see if the read was good
+            {
+            total += atof(record[3]);
+            freeRecord(record);         //done with record, free it
+            record = readRecord(fp);
+            }
+        fclose(fp);                     //always close file
+        return total;
+        }
+</pre>
+<p>Note that it is the job of the caller of <i>readRecord</i> to
+open the file, repeatedly send the file pointer to
+<i>readRecord</i>, and close
+the file pointer when done.
+As, before we always check if the read was good using <i>feof</i>,
+although we could equivalently test if <i>readRecord</i> returns zero.
+</p>
+<p>Note also the use of a function named <i>freeRecord</i>. If we just return
+the space occupied by
+the record with free:
+</p>
+<pre>
+    free(record);
+</pre>
+<p>we will release the record array, but not the individual elements, which
+also need to be freed. So here is an implementation of <i>freeRecord</i>:
+</p>
+<pre>
+    void
+    freeRecord(char **r)
+        {
+        //free the fields first
+        free(r[0]); //name
+        free(r[1]); //title
+        free(r[2]); //years
+        free(r[3]); //salary
+        //now free the record array
+        free(r);
+        }
+</pre>
+<p>Both <i>totalPay</i> and <i>freeRecord</i>
+suffer from a stylistic flaw. It uses those
+magic numbers we read about in 
+<a href="index_8.html">the chapter on assignment</a>.
+It is not clear from the code that the field at index
+three is the salary.
+To make the code more readable, we can set up some constants
+in the global scope (so that they will be visible everywhere):
+A second issue for <i>totalPay</i> is that
+that the function has two concerns (reading and accumulating).
+We will fix the magic number problem first, by placing constants
+representing the indices of the various fields of a record
+at the top of the file (usually after the includes but before
+the function prototypes):
+</p>
+<pre>
+    #define NAME 0
+    #define TITLE 1
+    #define SERVICE 2
+    #define SALARY 3
+</pre>
+<p>In C, we can create constants by using the <code>#define</code>
+preprocessor directive.
+Our accumulation loop now becomes:
+</p>
+<pre>
+    total = 0;
+    record = readRecord(fp);
+    while (!feof(fp))
+        {
+        total += atof(record[SALARY]);
+        record = readRecord(fp);
+        }
+</pre>
+<p>The body of <i>freeRecord</i> now becomes:
+</p>
+<pre>
+    free(r[NAME]);
+    free(r[TITLE]);
+    free(r[YEARS]);
+    free(r[SALARY]);
+    ...
+</pre>
+<p>We can also rewrite our <i>readRecord</i> function to use
+the field index constants:
+</p>
+<pre>
+    ...
+    //fill the record
+    result[NAME] = name;
+    result[TITLE] = title;
+    result[SERVICE] = service;
+    result[SALARY] = salary;
+</pre>
+<p>Even if someone changes the constants to:
+</p>
+<pre>
+    #define NAME 3
+    #define TITLE 2
+    #define SERVICE 1
+    #define SALARY 0
+</pre>
+<p>The code still works correctly. Now, however, the salary resides
+at index 0, but the accumulation loop is still accumulating the
+salary due to its use of the constant to access the salary.
+</p>
+
+<h2><a name="id10">Creating an Array of Records</a></h2><p>
+We can separate the two concerns of the <i>totalPay</i> function
+by having one function read the records into an array
+and having another total up the salaries.
+An array of
+records is known as a <i>table</i>.
+Creating the table
+is just creating the record, but instead
+of storing tokens in a record array,
+we store records in a table array.
+Because token is an array of characters and
+characters have type <code>char</code>,
+a token has type <code>char *</code>.
+Every time
+we make an array to hold some type <i>X</i>, the type of the array
+is <i>X</i> <code>*</code>.
+A record, which
+is an array of tokens, has type <code>char **</code>.
+We simply add a star for each level of array.
+Since a table is an array of records, its type is
+<code>char ***</code>. If we wanted an array of tables,
+what would that array's type be?
+</p>
+<p>Recall the <i>readTokens</i> function that stored tokens
+in a growing array.
+Here is a <i>readTable</i> function, which takes the same approach:
+</p>
+<pre>
+    char *** 
+    readTable(char *fileName,int *finalSize)
+        {
+        FILE *fp;
+        int count;
+        int size = 10;                  //initial size of destination array
+        char **record;
+        char ***table;
+
+        fp = fopen(fileName,"r");     //check for failed open omitted
+
+        //allocate the destination array
+        table = allocate(sizeof(char **) * size);
+
+        count = 0;
+        record = readRecord(fp);
+        while (!feof(fp))
+            {
+            if (count == size)              //array is full!
+                {
+                // grow the array by doubling its size
+                size = size * 2;
+                table = reallocate(table,sizeof(char **) * size);
+                //now there is enough room
+                }
+            table[count] = record;           //DO NOT FREE THE RECORD!
+            ++count;
+            record = readRecord(fp);
+            }
+        fclose(fp);
+
+        //shrink the array to 'count' number of elements
+        table = reallocate(table,sizeof(char **) * count);
+
+        //count holds the number of items, store it in *finalSize
+        *finalSize = count;
+        return table;
+        }
+</pre>
+<p>The accumulation function is straightforward, now that records 
+have been stored in an array:
+</p>
+<pre>
+    double
+    totalPay2(char ***table,int size)
+        {
+        int i;
+        double total = 0;
+
+        for (i = 0; i &lt; size; ++i)
+            {
+            char **record = table[i];
+            total += atof(record[SALARY]);
+            }
+
+        return total;
+        }
+</pre>
+<p>We can simply this function by removing the temporary variable
+<i>record</i>:
+</p>
+<pre>
+    double
+    totalPay2(char ***table,int size)
+        {
+        int i;
+        int total = 0;
+
+        for (i = 0; i &lt; size; ++i)
+            {
+            total += atof(table[i][SALARY]);
+            }
+        return total;
+        }
+</pre>
+<p>Since a table is just an array, so we can walk it, accumulate
+items in each record (as we just did with salary), filter it and so on.
+</p>
+<p>When we are done with the table, we need to free it. As with <i>freeRecord</i>,
+we cannot just free the table array, we also need to free what the
+array holds. Fortunately, the table holds records and we have already
+written <i>freeRecord</i>:
+</p>
+<pre>
+    void
+    freeTable(char ***table,int size)
+        {
+        int i;
+        //free the records first
+        for (i = 0; i &lt; size; ++i)
+            {
+            freeRecord(table[i]);
+            }
+        //now free the table array
+        free(table);
+        }
+</pre>
+<p>Tying it all together into a program, and putting some employment
+records into a file named <i>employees.dat</i> gives us:
+</p>
+<pre>
+    //test (compile with scanner.c and moreInput.c)
+    #include "scanner.h"
+    #include "moreInput.h"
+
+    int size;
+    char ***table = readTable("employees.dat",&amp;size);
+    double total = totalPay2(table,size);
+
+    printf("total salary: $%.2f\n",total);
+</pre>
+<p>If <i>employees.dat</i> just contains the records of employees Smith, Jones, and
+Thompson above, then the output from this program should be:
+</p>
+<pre>
+    total salary: $333001.46
+</pre>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_16.html">
+  <img border="0" alt="Loops" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_18.html">
+  <img border="0" alt="Structures" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Input and Loops</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

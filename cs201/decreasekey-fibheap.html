@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>decreasekey-fibheap</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+Fibonacci Decrease Key
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="decreasekey-fibheap.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+The <i>decreaseKey</i> function:
+<br/>
+
+<pre>
+    function decreaseKey(h,n,v)  //h is the heap, n is the node, v is the new value
+        {
+        var p;
+        //set the value of the node to the new value
+        n.value = v;
+        //now check the parent&#39;s value
+        p = n.parent;
+        if (p.value &gt; v) 
+            {
+            //the heap is out of order, so cut out n and place it in the root list
+            pruneAndInsert(h,n);
+            //cascading cut - cut ancestors as long as they are marked
+            while (p.marked)
+                {
+                var temp = p.parent;
+                pruneAndInsert(h,p);
+                p = temp;
+                }
+            //mark the unmarked node that stops the cascade (unless it is a root)
+            if (p.parent != p) p.marked = TRUE;
+            }
+        }
+</pre>
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

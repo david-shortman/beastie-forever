@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign0</title>
+<link rel=stylesheet
+    href="201.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS201: Data Structures and Algorithms</span>
+<br/>
+<br/>
+Assignment 0
+<br/>
+<span class="smaller">Version 1a</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller"><a href="assign0.pdf">Printable Version</a></span></span>
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Introduction
+<br/>
+</h2><!-- section ENDED -->
+
+For your first programming assignment,
+you are to build the beginnings of a library of elementary data structures.
+This initial library will consist
+of a dynamic array class,
+a circular dynamic array class,
+a stack class,
+and a queue class.
+The stack class is to be built upon the dynamic array class, while
+the queue class is to be built upon the circular dynamic array class.
+The language of implementation is Portable C99.
+Each of the four classes need to be
+implemented in its own module.
+<br/>
+<br/>
+The classes need to be generic. That is, the type of the value stored in
+a node object will not be specified by the any of the classes.
+The user of your
+array, stack, and queue classes will determine the type of value
+stored in these data structures.
+<br/>
+<!-- section -->
+<h2> Specifications
+<br/>
+</h2><!-- section ENDED -->
+
+The specifications for your classes can be found here:
+<br/>
+
+<ul>
+
+<li>
+
+ <a href="http://beastie.cs.ua.edu/cs201/assign-da.html">dynamic arrays</a>
+<br/>
+</li>
+
+<li>
+
+ <a href="http://beastie.cs.ua.edu/cs201/assign-cda.html">circular dynamic arrays</a>
+<br/>
+</li>
+
+<li>
+
+ <a href="http://beastie.cs.ua.edu/cs201/assign-stack.html">stacks</a>
+<br/>
+</li>
+
+<li>
+
+ <a href="http://beastie.cs.ua.edu/cs201/assign-queue.html">queues</a>
+</li>
+
+</ul>
+
+
+You must program these data structures using the style outlined in
+<a href="http://beastie.cs.ua.edu/C-objects.html" style="font-size:10px,font-family:'Lucida Console',monospace">http://beastie.cs.ua.edu/C-objects.html</a>.
+<br/>
+<!-- section -->
+<h2> Generic data pointers
+<br/>
+</h2><!-- section ENDED -->
+
+Generic values in C are stored in 
+<code>void *</code> pointers. Any data pointer
+can be stored in a 
+<code>void *</code> pointer with no cast:
+<br/>
+
+<pre>
+      void *p = newINTEGER(5);
+</pre>
+
+Assigning a void pointer to a specific type also does not require a cast:
+<br/>
+
+<pre>
+      void *p = newINTEGER(5);
+      INTEGER *q = p;
+</pre>
+
+It is a grave error to cast a 
+<code>void *</code> pointer to a type that does not
+reflect the original value stored in the 
+<code>void *</code> pointer.
+<br/>
+<!-- section -->
+<h2> Function pointers
+<br/>
+</h2><!-- section ENDED -->
+
+You can pass a function to another function in C by using a function
+pointer. Suppose you wish to pass a function with this signature:
+<br/>
+
+<pre>
+    int plus(int,int);
+</pre>
+
+to a function named <i>accumulate</i>, in addition to an array of
+integers. The signature of <i>accumulate</i> would be:
+<br/>
+
+<pre>
+    int accumulate(int *array,int size,int (*combine)(int,int));
+</pre>
+
+That third argument is a function pointer. To derive the proper
+function pointer type, simply take the signature of the function to be
+passed and perform the following transformations:
+<br/>
+
+<pre>
+    int plus(int,int);      //original signature
+    int plus(int,int)       //remove the semicolon
+    int (plus)(int,int)     //wrap the function name in parens
+    int (*plus)(int,int)    //place an asterisk immediately before the function name
+    int (*combine)(int,int) //change the name of the function to the name of the formal parameter
+</pre>
+
+Inside the <i>accumulate</i> function, the <i>combine</i> function pointer can
+be called like a regular function:
+<br/>
+
+<pre>
+    total = combine(total,array[i]);
+</pre>
+
+<!-- section -->
+<h2> Programming style
+<br/>
+</h2><!-- section ENDED -->
+
+You must implement your data structures in C99.
+You must follow the C programming style guide for this project:
+<a href="http://beastie.cs.ua.edu/cs201/cstyle.html" style="font-size:10px,font-family:'Lucida Console',monospace">http://beastie.cs.ua.edu/cs201/cstyle.html</a>.
+<br/>
+<!-- section -->
+<h2> Makefiles
+<br/>
+</h2><!-- section ENDED -->
+
+You should provide a <i>makefile</i> which responds to the commands:
+<br/>
+
+<ul>
+
+<li>
+
+ make
+</li>
+
+<li>
+
+ make test
+</li>
+
+<li>
+
+ make valgrind
+</li>
+
+<li>
+
+ make clean
+</li>
+
+</ul>
+
+
+All compilations should proceed
+cleanly with no warnings or errors
+at the highest level of error checking (the
+
+<code>-Wall</code> and 
+<code>-Wextra</code> options). Failure to
+compile cleanly
+will be considered a failed test.
+<br/>
+<br/>
+The 
+<code>make</code> command should compile all your modules, if they
+have not already been compiled. A second call to 
+<code>make</code> in
+two consecutive calls to 
+<code>make</code> should never result in a module
+being compiled or linked.
+<br/>
+<br/>
+The 
+<code>make test</code> command runs all your tests on your implementations.
+You should provide sufficient testing, especially testing the
+boundaries of your data structures. Examples of boundary
+testing are:
+<br/>
+
+<ul>
+
+<li>
+
+ displaying an empty stack
+</li>
+
+<li>
+
+ printing the size of an empty stack
+</li>
+
+<li>
+
+ having a stack go non-empty, then empty, and then non-empty again
+</li>
+
+<li>
+
+ put a large number of values into a stack and then removing most of them
+</li>
+
+</ul>
+
+
+The 
+<code>make valgrind</code> command should run valgrind on all your executables,
+one test per executable.
+There should be no memory errors or leaks detected.
+Failure to properly implement this makefile rule will be considered a
+failed test. If your executable is named <i>mytest</i>, then your valgrind
+rule might look like:
+<br/>
+
+<pre>
+    valgrind: mytest
+        valgrind ./mytest
+</pre>
+
+The 
+<code>make clean</code> command should remove all object files and
+any executables. Failure to remove such files will be considered a failed
+test
+<br/>
+<!-- section -->
+<h2> Warnings
+<br/>
+</h2><!-- section ENDED -->
+
+Depending on where you develop your code,
+uninitialized variables may have a
+tendency to start with a value of zero. Thus, a program with uninitialized
+variables may work on
+your system but fail when I run it. I won't care, as you are mature enough
+not to have uninitialized variables. You may have other errors as well
+that do not reveal themselves until run on my system. Again,
+that's not my problem. USE VALGRIND!
+<br/>
+<br/>
+At any time, you may submit your project to the <i>compile</i> drop box, which
+will send you a report on how well the compilation went. Use this command
+to submit to this drop box:
+<br/>
+
+<pre>
+    submit cs201 lusth compile
+</pre>
+
+Submissions to the drop box will be automatically compiled, on the order of
+every 5 minutes.
+<br/>
+<br/>
+You can automatically
+test your programs by submitting them to the <i>test0</i>
+dropbox:
+<br/>
+
+<pre>
+    submit cs201 lusth test0
+</pre>
+
+This dropbox will run 
+<code>make clean</code>, 
+<code>make</code>, and 
+<code>make test</code> in that order.
+Your tests should be run by 
+<code>make test</code>. A few additional tests will be
+run as well, to make sure you have submitted all the modules you need to.
+<br/>
+<br/>
+You will need a password in order to submit. Do not ask for the password
+on any public forum.
+<br/>
+<!-- section -->
+<h2> Documentation
+<br/>
+</h2><!-- section ENDED -->
+
+All code you hand in must be
+attributed to its authors. Comment sparingly but well. Do explain the
+purpose of your program. Do not explain obvious code. If code is not
+obvious, consider rewriting the code rather than explaining what is
+going on through comments.
+<br/>
+<!-- section -->
+<h2> Grading
+<br/>
+</h2><!-- section ENDED -->
+
+The output of your programs and modules
+will be tested using the <i>diff</i> utility.
+Your ouput and the expected output must match exactly. A single extra
+space or a space in the wrong place will cause a test to fail, leading
+to a resubmission with an accompanying deduction.
+<br/>
+<!-- section -->
+<h2> Submission
+<br/>
+</h2><!-- section ENDED -->
+
+To submit assignments, you need to install the <i>submit</i> system.
+<br/>
+
+<ul>
+
+<li>
+
+ <a href="linux.html">linux, windows 10 bash</a>
+</li>
+
+<li>
+
+ <a href="mac.html">mac instructions</a>
+</li>
+
+</ul>
+
+
+You will hand in (electronically) your code for
+final testing with the
+command:
+<br/>
+
+<pre>
+    submit cs201 lusth assign0
+</pre>
+
+Make sure you are in the same directory as your makefile when
+submitting.
+The submit program will bundle up all the files in your current
+directory and ship them to me.
+Thus it is very important that only the source code and any testing
+files
+be in your directory.
+This includes subdirectories as well since
+all the files in any subdirectories will also be shipped to me.
+You may submit as many times as you want before the deadline; new
+submissions replace old submissions. Old submissions are stored and
+can be used for backup.
+Do not submit large test files.
+<br/>
+<br/>
+You will need a password in order to submit. Do not ask for the password
+on any public forum.
+<br/>
+<!-- subsection -->
+<h3> Change log
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<code>     1a    </code> stack on DA, queue on CDA
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

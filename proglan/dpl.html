@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>dpl</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+The Designer Programming Language
+<br/>
+<br/>
+<span class="smaller">Version 1</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="dpl.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+<!-- section -->
+<h2> Preliminary information
+<br/>
+</h2><!-- section ENDED -->
+
+Your task is to build an interpreter for a general purpose programming language
+of your own design. Your language must support the following features:
+<br/>
+
+<ul>
+
+<li>
+
+ comments
+</li>
+
+<li>
+
+ integers and strings
+</li>
+
+<li>
+
+ dynamically typed (like Scheme and Python)
+</li>
+
+<li>
+
+ arrays with O(1) access time
+</li>
+
+<li>
+
+ conditionals
+</li>
+
+<li>
+
+ recursion
+</li>
+
+<li>
+
+ iteration
+</li>
+
+<li>
+
+ convenient means to print to the console
+</li>
+
+<li>
+
+ an adequate set of operators
+</li>
+
+<li>
+
+ anonymous functions
+</li>
+
+<li>
+
+ functions as first-class objects
+(i.e. functions can be manipulated as in Scheme - e.g. local functions)
+</li>
+
+<li>
+
+ (graduate only) strong typing (type errors detected at parse time)
+</li>
+
+</ul>
+
+
+The only basic types you need to provide are integer and string and you do
+not need to provide methods for coercing one type to another (although you
+may find it convenient to do so).
+The efficiency of your interpreter is not
+particularly important,
+as long as you can solve the test problem in a reasonable
+amount of time.
+Your language also does not need to support reclamation of
+memory that is no longer needed.
+You are to write your program in a statically-typed, imperative language
+such as C, C++, or Java.
+Check with me first if you wish to use some other host language.
+<br/>
+<!-- section -->
+<h2> Test Problem
+<br/>
+</h2><!-- section ENDED -->
+
+You are to write a program to implement the Sieve of Eratosthenes,
+starting with a (potentially) infinite stream of numbers.
+Provide a README file that explains how to run and test your
+program. Your program should not use assignment.
+<br/>
+<br/>
+You will receive a serious deduction if any
+rule in your makefile causes a pause for input.
+<br/>
+<!-- section -->
+<h2> Grading
+<br/>
+</h2><!-- section ENDED -->
+
+
+<ul>
+
+<li>
+
+ [100 points] everything works
+</li>
+
+<li>
+
+ [51-99 points] functionality is missing/test program is missing
+</li>
+
+<li>
+
+ [50 points] pretty printing
+</li>
+
+<li>
+
+ [30 points] recognizing
+</li>
+
+</ul>
+
+
+Extra credit will be given to exceptional implementations.
+Your README file should give pertinent details.
+<br/>
+<br/>
+<i>For Undergraduates</i>:
+if you do not, at least, implement a recognizer
+for your language, you will fail the course.
+<br/>
+<br/>
+<i>For Graduates</i>:
+if you do not, at least, implement an pretty printer,
+you will fail the course.
+<br/>
+<!-- section -->
+<h2> Submitting the assignment
+<br/>
+</h2><!-- section ENDED -->
+
+To submit your designer programming language,
+place all your source code,
+sample programs, a README detailing how to run and write programs
+in your language, and a makefile for building your system
+into one directory.
+Name the README file <i>README</i>.
+Your makefile should respond the command
+<br/>
+
+<pre>
+    make
+</pre>
+
+which builds your processor and to the following commands,
+each of which illustrates a feature of your language:
+<br/>
+
+<pre>
+    make error1
+    make error1x
+    make error2
+    make error2x
+    make error3
+    make error3x
+    make error4
+    make error4x
+    make error5
+    make error5x
+    make arrays
+    make arraysx
+    make conditionals
+    make conditionalsx
+    make recursion
+    make recursionx
+    make iteration
+    make iterationx
+    make functions
+    make functionsx      # shows you can pass functions and return nested functions
+    make lambda      
+    make lambdax      
+    make dictionary
+    make dictionaryx     # shows that you have a log(n) AVL-tree dictionary
+</pre>
+
+The first rule in a pair of rules should print
+out the appropriate input program,
+while the <i>x</i> rules should execute that program.
+In particular, the first three error rules should show off your parser detecting
+three different kinds of syntax errors,
+while the last to error rules should demonstrate the detection of
+two different kinds of semantic errors.
+<br/>
+<br/>
+Your makefile
+should also respond to the commands:
+<br/>
+
+<pre>
+    make problem
+    make problemx
+</pre>
+
+These commands display the test problem of your implementation
+and run the test problem, respectively.
+<br/>
+<br/>
+Finally, provide an executable shellscript named <i>dpl</i> that runs a program
+like so:
+
+<pre>
+    dpl testprogram1.mylang
+</pre>
+
+Test programs can be named anything.
+<br/>
+<br/>
+Note: in the case of recognizing only, only the error rules need
+be present in your makefile. In the case of pretty printing only,
+the <i>run</i> rules
+should run the input program through the pretty printer.
+<br/>
+<br/>
+Finally, your makefile
+should respond to the command:
+<br/>
+
+<pre>
+    make clean
+</pre>
+
+This command should remove all compilation artifacts
+(such as 
+<code>.o</code> or 
+<code>.class</code> files)
+so that a clean compile can be performed.
+<br/>
+<br/>
+Makefiles for graduate students should additionally respond to the commands:
+<br/>
+
+<pre>
+    make grad
+    make gradx
+</pre>
+
+These rules should thoroughly demonstrate the additional requirements for
+graduate students.
+<br/>
+<br/>
+To submit your language interpreter, run the command:
+<br/>
+
+<pre>
+    submit proglan lusth dpl
+</pre>
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

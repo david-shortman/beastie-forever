@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>delete-avl</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+AVL Tree Deletion
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="delete-avl.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+Start out by swapping the value to be deleted to the appropriate leaf.
+Call this node <i>x</i>. Pass a pointer
+to <i>x</i> to <i>deletionFixUp</i>. After <i>deletionFixUp</i> returns,
+prune <i>x</i> from the tree.
+<br/>
+
+<pre>
+    function deleteFixup(x)
+        {
+        set the height of x to zero //since it will be deleted
+        loop
+            {
+            if (x is the root)
+                exit the loop
+            else if (parent favors x)                  //case 1
+                {
+                set the balance of parent
+                x = parent
+                //continue looping
+                }
+            else if (parent has no favorite)           //case 2
+                {
+                set the balance of parent
+                exit the loop
+                }
+            else 
+                {
+                p = parent of x
+                z = the sibling of x
+                y = favorite of z
+                if (y exists and y,z,p are not linear) //case 3
+                    {
+                    rotate y to z
+                    rotate y to p
+                    set the balance of p
+                    set the balance of z
+                    set the balance of y
+                    x = y
+                    //continue looping
+                    }
+                else
+                    {
+                    rotate z to p                      //case 4
+                    set the balance of p
+                    set the balance of z
+                    if (y does not exist)
+                        exit the loop
+                    x = z
+                    //continue looping
+                    }
+                }
+            }
+        }
+</pre>
+
+Note that in this pseudocode, there are no references to leftness and
+rightness. This issue is deferred to the helper functions. For example,
+determining the linearity of a child, parent, and grandparent
+could be implemented as:
+<br/>
+
+<pre>
+    function linear(c,p,gp)
+        {
+        return (gp.left == p &amp;&amp; p.left == c)
+            || (gp.right == p &amp;&amp; p.right == c);
+        }
+
+</pre>
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

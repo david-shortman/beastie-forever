@@ -1,0 +1,128 @@
+function accumulate(op,base,items)
+    {
+    if (items == :null)
+        {
+	base;
+	}
+    else
+        {
+	head(items) op accumulate(op,base,tail(items));
+	}
+    }
+
+function accumulate*(op,base,@)
+    {
+    accumulateNested(op,base,@);
+    }
+
+function accumulateNested(op,base,items)
+    {
+    if (head(items) == :null)
+	{
+	:null;
+	}
+    else
+	{
+	var first = map(head,items);
+	var rest = map(tail,items);
+	accumulate(op,base,first) join accumulateNested(op,base,rest);
+	}
+    }
+
+function dotProduct(a,b)
+    {
+    accumulate(+,0,map*(*,a,b));
+    }
+
+function matrix*vector(m,v)
+    {
+    map(function (row) { dotProduct(row,v); },m);
+    }
+
+function transpose(m)
+    {
+    accumulateNested(join,:null,m);
+    }
+
+function matrix*matrix(m1,m2)
+    {
+    var columns = transpose(m2);
+    map(function (c) { matrix*vector(m1,c); },columns);
+    }
+
+function rref(m1)
+{
+	var lead = 0;
+	var rowCount = length(m1);
+	var columnCount = length(transpose(m1));
+
+	var r = 0;
+	var i = 0;
+	var swap;
+	var last = 0;
+	
+	while(r < rowCount) {
+		
+		if(rowCount <= lead){
+			break();
+		}		
+		
+		i = r;	
+		while(m1[i][lead] == 0){
+			i = i + 1;
+			if(rowCount == i){
+				i = r;
+				lead = lead + 1;
+					if(columnCount == lead){
+						break();
+					}
+			}
+		}
+		
+		swap = m1[i];
+		m1[i] = m1[r];
+		m1[r] = swap;
+		
+		m1[r] = vector*const(m1[r],(1 / real(m1[r][lead])));	
+		
+		last = 0;
+		
+		while(last < rowCount){
+			if(m1[r] != m1[last])
+			{
+				m1[last] = vectorMinusVector(m1[last],vector*const(m1[r],real(m1[last][lead])));
+			}
+			last = last + 1;
+		}
+	
+		lead = lead + 1;
+		r = r + 1;
+	}
+	
+	m1;
+}	
+
+function vectorMinusVector(m1,m2)
+{
+	var i = 0;
+	while(i < length(m1)){
+		m1[i] = m1[i] - m2[i];
+		i = i + 1;
+	}
+	m1;
+}
+function vector*const(m1,k)
+{
+	map(function(c){ c = c * k; },m1);
+}
+function matrix*const(m1,k)
+{
+	var i = 0;
+	while(i < length(m1)){
+		m1[i] = vector*const(m1[i],k);
+		i = i + 1;
+	}	
+	m1;
+}
+
+sway();

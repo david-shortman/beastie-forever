@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>glossary-fibheap</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+Fibonacci Heaps
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="glossary-fibheap.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Glossary
+<br/>
+</h2><!-- section ENDED -->
+
+Here are some terms that are used when discussing <i>Fibonacci</i> heaps:
+<br/>
+
+<ul>
+
+<li>
+
+ <b>degree</b> &mdash; the number of children a node has
+</li>
+
+<li>
+
+ <b>root list</b> &mdash; a circular, doubly-linked list holding the root nodes of the subheaps
+</li>
+
+<li>
+
+ <b>child list</b> &mdash; a circular, doubly-linked list holding the children
+of a node in a subheap
+</li>
+
+<li>
+
+ <b>rootify</b> &mdash; turn a degree array into a root list (in log <i>n</i> time)
+</li>
+
+<li>
+
+ <b>union</b> &mdash; merge the root lists of two Fibonacci heaps creating a new heap (and destroying the original heaps)
+</li>
+
+<li>
+
+ <b>consolidation</b> &mdash; the process of linking individual subheaps
+having the same degree into a subheap with one degree larger &ndash;
+the ultimate goal of consolidation is a
+root list with no two heaps having the same degree &ndash;
+consolidation works via the <i>degree array</i>
+</li>
+
+<li>
+
+ <b>linking</b> &mdash; joining two subheaps together by making one of the
+subheaps a child of the other &ndash; the heap with the larger valued root
+(for a min heap) becomes the child
+</li>
+
+<li>
+
+ <b>degree array</b> &mdash; an array with size on the order of the log of
+the number of nodes in the Fibonacci heap. The array slot with index 0 is
+a place to hold a subheap of degree zero.
+The slot with index 1 is
+a place ot hold a subheap of degree one, and so on &ndash; it is used
+by the consolidation operation to keep track of which subheaps have
+which degree
+</li>
+
+</ul>
+
+
+Note that the term
+<i>rootify</i>
+is not found in other Fibonacci heap
+descriptions.
+<br/>
+<!-- section -->
+<h2> Fibonacci heap operations
+<br/>
+</h2><!-- section ENDED -->
+
+A <i>Fibonacci</i> heap has the following properties:
+<br/>
+<span class="indent">
+<table>
+<tr>
+<td style="text-align:left";> <i>operation</i> </td><td style="text-align:left";> <i>time bound (amortized)</i> </td>
+</tr>
+<tr>
+<td style="text-align:left";> insert </td><td style="text-align:left";> constant </td>
+</tr>
+<tr>
+<td style="text-align:left";> findMin </td><td style="text-align:left";> constant </td>
+</tr>
+<tr>
+<td style="text-align:left";> extractMin </td><td style="text-align:left";> log </td>
+</tr>
+<tr>
+<td style="text-align:left";> union </td><td style="text-align:left";> constant </td>
+</tr>
+<tr>
+<td style="text-align:left";> decreaseKey </td><td style="text-align:left";> constant </td>
+</tr>
+<tr>
+<td style="text-align:left";> delete </td><td style="text-align:left";> log </td>
+</tr>
+</table>
+
+
+</span>
+
+<br/>
+<br/>
+<b>Next:</b>
+<a href="insert-fibheap.html">
+Inserting into a <i>Fibonacci</i> heap
+</a>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

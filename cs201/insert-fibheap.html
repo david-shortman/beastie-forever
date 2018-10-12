@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>insert-fibheap</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+Fibonacci Heap Insertion
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="insert-rb.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+The <i>insert</i> routine simply adds a new node into the root list,
+updating a pointer to the minimum node in the root list.
+<br/>
+
+<pre>
+    function insert(h,x)    // h is the heap, x is the value
+        {
+        var n = new HeapNode(x);
+        h.rootList = insertIntoList(n,h.rootList);
+        h.size += 1;
+        // keep track of the minimum, root list points to the new value
+        if (h.size == 1 || h.min.value &gt; x) h.min = h.rootList;
+        }
+
+    // this is the standard insert into a circular, doubly-linked list routine 
+    function insertIntoList(n,r) // r is the existing list
+        {
+        if (r == null)
+            {
+            n.next = n;
+            n.prev = n;
+            }
+        else
+            {
+            n.next = r;
+            n.prev = r.prev;
+            r.prev.next = n;
+            r.prev = n;
+            }
+        return n;
+        }
+</pre>
+
+Note that insertion happens in constant time and that the newly inserted
+node is at the &ldquo;front&rdquo; of the circular list.
+<br/>
+<br/>
+<b>Next:</b>
+<a href="extract-fibheap.html">
+Extracting the minimum value from a <i>Fibonacci</i> heap
+</a>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

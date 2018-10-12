@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>grammars</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Grammars
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="grammars.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ Introduction
+
+<br/>
+</h2><!-- section ENDED -->
+
+The set of rules that tell you whether a sentence is correctly structured
+is called a <i>grammar</i>. Here is a simple, and very incomplete, grammar
+for English:
+<br/>
+
+<pre>
+    sentence : nounPhrase verbPhrase PERIOD
+    nounPhrase : ARTICLE Adjective NOUN
+    verbPhrase : VERB nounPhrase
+</pre>
+
+Given these nouns,
+<br/>
+
+<pre>
+    cow
+    water
+    dog
+</pre>
+
+these articles,
+<br/>
+
+<pre>
+    the
+    a
+</pre>
+
+these verbs,
+<br/>
+
+<pre>
+    drank
+    chased
+</pre>
+
+and these adjectives,
+<br/>
+
+<pre>
+    large
+    cool
+    yappy
+</pre>
+
+we can generate a number of syntactically correct sentences, such as:
+<br/>
+
+<pre>
+    The large cow drank the cool water.
+    A yappy dog chased the large cow.
+    The cool water chased the cool dog.
+    The yappy water drank a large cow.
+</pre>
+
+Grammars can also be used to recognize syntactically correct
+sentences. For example, the sentence:
+<br/>
+
+<pre>
+    A large dog drank the cool water.
+</pre>
+
+can be fit to the grammar above in the following way:
+<br/>
+<span class="indent">
+<image src="parse.jpg">
+
+</span>
+
+<br/>
+Note that the grammar above does not allow for the sentence:
+<br/>
+
+<pre>
+    The large yappy dog drank the water.
+</pre>
+
+since the grammar requires a single adjective in a noun phrase. We can
+modify the grammar to allow sentences of this form (and still allow for
+the sentences that were allowed before modification):
+<br/>
+
+<pre>
+    sentence : nounPhrase verbPhrase PERIOD
+    nounPhrase : ARTICLE adjList NOUN
+    verbPhrase : VERB nounPhrase
+    adjList : ADJECTIVE | ADJECTIVE adjList
+</pre>
+
+We can also allow for sentences like:
+<br/>
+
+<pre>
+    The dog drank water.
+</pre>
+
+with a further modification:
+<br/>
+
+<pre>
+    sentence : nounPhrase verbPhrase PERIOD
+    nounPhrase : optArticle optAdjList NOUN
+    verbPhrase : VERB nounPhrase
+    optArticle : ARTICLE | *empty*
+    optAdjList : adjList | *empty*
+    adjList : ADJECTIVE | ADJECTIVE adjList
+</pre>
+
+The newest modification is shown in blue.
+<br/>
+<!-- section -->
+<h2>
+ Semantics
+<br/>
+</h2><!-- section ENDED -->
+
+Syntax tells you if the sentence is constructed correctly. Semantics tells
+you whether a correctly structured sentence makes any sense. The sentence:
+<br/>
+
+<pre>
+    The box drank water
+</pre>
+
+is correct syntactically speaking
+(subject then verb then object) but seems wrong since boxes don't drink.
+<br/>
+Semantics is handled in the <i>evaluation</i> stage.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

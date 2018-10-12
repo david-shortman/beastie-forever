@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:17 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Lists and Loops</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_20.html">
+  <img border="0" alt="Lists" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_22.html">
+  <img border="0" alt="Recursion" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Lists and Loops</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Lists and Loops</h1>
+<p>You can download the functions defined or used in this chapter with the
+following commands:
+</p>
+<pre>
+    wget troll.cs.ua.edu/ACP-C/listLoop.c     #functions from this chapter
+    wget troll.cs.ua.edu/ACP-C/listLoop.h
+</pre>
+<p>These files will help you run the test code listed in this chapter.
+You will also need to download the <i>ilist</i> module.
+</p>
+
+<h2><a name="id1">List/Loop patterns</a></h2><p>
+For every array pattern, there is a corresponding list pattern.
+Sometimes, the pattern is easier to implement with an array than
+a loop. Sometimes, the opposite is true. The next sections
+will detail patterns for lists.
+</p>
+
+<h2><a name="id2">The <i>append</i> pattern</a></h2><p>
+Adding values to the front of a list is known as <i>prepending</i>,
+so <i>join</i><sup><a href="index_26.html#footnote-36">36</a></sup>
+prepends a value to a list.
+Instead of adding new values to the front,
+we can also add values to the back of the list. Such a procedure
+is termed <i>appending</i>; Since lists at this point are nodes,
+we can append a list with either a single node or a list.
+In this section, we will focus an appending a list with another list:
+</p>
+<pre>
+    void
+    append(Node *listA,Node *listB) //listA length must be &gt; 0
+        {
+        while (tail(listA) != 0)
+            {
+            listA = tail(listA); //move to the next node in the list
+            }
+        setTail(listA,listB);
+        return;
+        }
+</pre>
+<p>Here, we start out with the formal parameter <i>listA</i> pointing
+to the first node in the list passed as <i>listA</i>.
+Then, as long as <i>listA</i>'s <i>next</i> pointer points to a node
+and not null<sup><a href="index_26.html#footnote-37">37</a></sup>,
+we set <i>listA</i> to the next node in the list by taking the tail.
+We repeat this process
+until we reach the last node in the list, whose <i>next</i> pointer does
+indeed point to null. At this point, we drop out of the loop and set the
+next pointer of this last node to <i>listB</i> via <i>setTail</i>.
+Suppose we call append with two lists, alpha and beta:
+</p>
+<pre>
+    append(alpha,beta);
+</pre>
+<p>Here is the view just before <i>append</i> walks the first list:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list-loop1.png"/>
+</div>
+<p>Immediately after dropping out of the loop, the local variable
+<i>listA</i> points to the last node in the list:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list-loop2.png"/>
+</div>
+<p>After the reassingment of the tail pointer of the adjusted <i>listA</i>,
+we can see that <i>alpha</i> now incorporates the nodes of <i>beta</i>:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-list-loop3.png"/>
+</div>
+<p>Note that while <i>head</i> and <i>tail</i>
+are non-destructive operations,
+<i>append</i> is a destructive
+operation, since one pointer in an original list is actually changed.
+Generally, you can quickly tell if a function is destructive or
+non-destructive by looking at the return value. If the function
+implements the <i>procedure</i> pattern, it is likely destructive. If
+it implements the <i>function</i> pattern, it is likely non-destructive<sup><a href="index_26.html#footnote-38">38</a></sup>.
+</p>
+<p>To test append, we need to create some lists:
+</p>
+<pre>
+    //test (compile with ilist.c and listLoop.c)
+    #include "listLoop.h"
+    Node *a,*b;
+    a = join(2,join(4,join(6,0)));
+    b = join(1,join(3,join(5,0)));
+    displayList(a);
+    displayList(b);
+    append(a,b);
+    displayList(a);
+</pre>
+<p>The output for this program is:
+</p>
+<pre>
+    {2}{4}{6}
+    {1}{3}{5}
+    {2}{4}{6}{1}{3}{5}
+</pre>
+<p>The last line in the output comes from the last displayIntegerList. This
+clearly shows that <i>append</i> is doing its job.
+</p>
+<p>If we wish to append a single value to a list, we can turn
+the single value into a list first:
+</p>
+<pre>
+    //test (compile with ilist.c and listLoop.c)
+    #include "listLoop.h"
+    Node *a,*b;
+    a = join(2,join(4,join(6,0)));
+    b = newNode(1,0);
+    append(a,join(b,0)); //incorporate b into a list
+    displayList(a);
+</pre>
+<p>The process of moving from one node to the next in a list is known
+as <i>walking</i> the list. Obviously, the longer the list, the longer
+it takes to walk it. Thus, appending to a list can take much
+longer than prepending to the same list, since prepending takes the
+same amount of time regardless of how long the list is.
+However, as you will learn in a subsequent data structures
+class, there is a much faster way to append to a list. If you cannot
+wait to find out this clever implementation of <i>append</i>, search for
+the phrase "linked list tail pointer" on the interwebs.
+</p>
+<p>We can use the idea of walking a list to implement some more
+useful list functions. The <i>getListIndex</i> function returns
+the value at the <i>i<sup>th</sup></i> node in a given list:
+</p>
+<pre>
+    int
+    getListIndex(Node *items,int index)
+        {
+        while (index &gt; 0)
+            {
+            items = tail(items);
+            --index;
+            }
+        return head(items);
+        }
+</pre>
+<p>Note that taking the tail of a list does not alter the original list
+in any way; the list that is passed in is unchanged by this function<sup><a href="index_26.html#footnote-39">39</a></sup>.
+Finally, consider if there are fewer nodes in the
+list than is specified by the index.
+This implementation, like many C built-in functions,
+does no error checking. 
+What happens if the list is too short for the given index is
+undefined (but it will likely be very bad).
+The analogous <i>setListIndex</i> is left as an exercise.
+</p>
+
+<h2><a name="id3">The <i>search</i> pattern</a></h2><p>
+This idea of walking lists is an extremely important concept;
+so important that we will review the two "walks" that
+are commonly needed when manipulating lists. The first is
+walking to a certain location in list. Usually, one walks to
+index (covered previously) or to a value. Of course, walking
+to a value is simply the search pattern, implemented for lists.
+Here is a search function that works on <i>Integer</i> lists:
+</p>
+<pre>
+    Node *
+    findInteger(int value,Node *items)
+        {
+        while (items != 0 &amp;&amp; head(items) != value)
+            {
+            items = tail(items);
+            }
+        return items;
+        }
+</pre>
+<p>Note that this version returns the node containing the value if the value is
+found and the null pointer otherwise.
+Because of the possibility that a value
+may not be in the list, we must add the condition <code>items != 0</code> to
+the while loop test. If we didn't, then <i>items</i> would eventually reach
+0 and the <i>head</i> operation on the null pointer
+would likely generate a crash.
+Sometimes, <i>find</i> would be written with a simpler
+loop test, but complicated by a return from the body of the loop:
+</p>
+<pre>
+    Node *
+    findInteger2(int value,Node *items)
+        {
+        while (items != 0)
+            {
+            if (head(items) == value)
+                 {
+                 return items;
+                 }
+            items = tail(items);
+            }
+        return 0;
+        }
+</pre>
+<p>These two implementations are semantically equivalent;
+the former is usually preferred
+stylistically, but the latter is likely more common.
+</p>
+
+<h2><a name="id4">The <i>trailing walk</i> pattern</a></h2><p>
+The second walk one is likely to encounter is a walk to the next-to-the-last
+node in a list, which is useful in many situations: removing the last item,
+adding an item just prior to the last item,
+and so on.
+</p>
+<p>One must walk the list to get to the penultimate node. Here is one
+attempt; it keeps two pointers when walking the list, a leading
+pointer and a trailing pointer that stays one node behind the leader.
+The walk ends when the <i>next</i> pointer of the leading node becomes null.
+We call this pattern the <i>trailing walk pattern</i>:
+</p>
+<pre>
+    Node *
+    getPenultimateNode(Node *items)
+        {
+        Node *trailing = 0;
+        Node *leading = items;
+        while (tail(leading) != 0) //when to stop walking
+            {
+            trailing = leading;
+            leading = tail(leading);
+            }
+        return trailing;
+        }
+</pre>
+<p>If we walked until the lead node became null, then the trailing node
+would be the last node in the list, not the next-to-the-last node.
+However, checking the next pointer of a node is a dangerous proposition.
+What happens in the case of an empty list?
+How many nodes must be in a list for this function to work properly?
+Highlight the following line to see the answers:
+</p>
+<div class="quote">
+[<font color="#ffffff"> When passed an empty list, the <i>tail</i>
+operation in the
+loop test will generate an error. Therefore, there must be at least one
+node in the list.</font>]
+</div>
+<p>The above approach can be simplified by checking if the trailing pointer's
+next pointer points to a node whose next pointer is null. Although the
+check is a bit more complicated, it obviates the need for the leading
+node:
+</p>
+<pre>
+    Node *
+    getPenultimateNode2(Node *items)
+        {
+        Node *trailing = items;
+        while (tail(tail(trailing)) != 0)
+            {
+            trailing = tail(trailing);
+            }
+        return trailing;
+        }
+</pre>
+<p>The two versions of <i>getPenultimateNode</i>
+are similar, but not exactly equivalent.
+How many nodes must be in a list for the second version to work properly?
+Highlight the following line to see the answers:
+</p>
+<div class="quote">
+[<font color="#ffffff"> There must be at least two nodes in the list.</font>]
+</div>
+<p>To test these implementations, we will create a list and then
+print the value of the penultimate node:
+</p>
+<pre>
+    //test (compile with ilist.c and listLoop.c)
+    #include "listLoop.h"
+    Node *a,*n,*m;
+    a = join(newInteger(2),join(newInteger(4),join(newInteger(6),0)));
+    n = getPenultimateNode(a);
+    printf("n is %d\n",getIntegerValue(head(n)));
+    m = getPenultimateNode2(a);
+    printf("m is %d\n",getIntegerValue(head(m)));
+</pre>
+<p>Both version produce 4, as expected.
+</p>
+<p>An application of the trailing walk pattern is to insert a value into
+an ordered list so that the list remains ordered<sup><a href="index_26.html#footnote-40">40</a></sup>.
+For example, suppose we have an
+ordered list consisting of the numbers 1, 3, 8, 14, and 17:
+</p>
+<p>If we wish to insert 10 into the list, we must place the 10 between the
+8 and the 13 so that the list values remain in increasing order (from left
+to right). To simplify the making of an integer
+Using <i>getPenultimateNode</i> as a starting point, we have:
+</p>
+<pre>
+    void
+    insertIntegerInOrder(int value,Node *items)
+        {
+        Node *trailing = 0;
+        Node *leading = items;
+        while (...) //when to keep walking
+            {
+            trailing = leading;
+            leading = tail(leading);
+            }
+        //insert new value in between trailing and leading
+        ...
+        }
+</pre>
+<p>The ellipses mark where changes to the trailing value pattern need
+to be made. The first ellipsis (the while test) should force the
+walk to stop when the correct insertion point is found. Clearly,
+that is when leading value is greater than the value to be inserted.
+The second ellipsis concerns how the actual
+insertion is to be performed. We know we will need to:
+</p>
+<ul><li>create a new node
+</li><li>set the new node's value pointer to the value to be inserted
+</li><li>set the new node's next pointer to the leading node
+</li><li>set the trailing node's next pointer to the new node
+</li></ul>
+<p>All that's left then is to fill in the blanks. Here is the result:
+</p>
+<pre>
+    void
+    insertInOrder(int value,Node *items)
+        {
+        Node *trailing = 0;
+        Node *leading = items;
+        while (head(leading) &lt; value) //when to keep walking
+            {
+            trailing = leading;
+            leading = tail(leading);
+            }
+        //insert new value in between trailing and leading
+        Node *n = newNode(value,0);
+        setTail(n,leading);     //place n before leading
+        setTail(trailing,n);    //place n after trailing
+        }
+</pre>
+<p>Note that we want to <i>stop</i> when the leading value is <i>greater</i>
+than
+the value to be inserted. Since we are working with a while
+loop, we need to reverse the logic so that the walk <i>continues</i>
+as long as the leading value is <i>less than</i> the new value<sup><a href="index_26.html#footnote-41">41</a></sup>.
+</p>
+<p>Let's test our code:
+</p>
+<pre>
+    //test (compile with ilist.c and listLoop.c)
+    #include "listLoop.h"
+    int numbers[] = {1,3,8,13,14,17};
+    Node *a = arrayToList(numbers,sizeof(numbers)/sizeof(int));
+    insertInOrder(10,a);
+    displayList(a);
+</pre>
+<p>Compiling and running this code yields:
+</p>
+<pre>
+    {1}{3}{8}{10}{13}{14}{17}
+</pre>
+<p>It appears our code works correctly! The 10 is nestled nicely between
+the 8 and the 13. Very exciting! Unfortunately,
+the excitement
+of getting code to work seduces both novice and experienced Computer
+Scientists alike into thinking the task is finished. Many times, including
+this case in particular, initial success only means the basic idea is correct,
+not that the code is correct for all possible inputs. Indeed, for our implementation
+of <i>insertOrder</i>, there are <i>edge cases</i> for which this code
+fails. An edge case is a set of inputs that force the code to do
+as much (or as little) work as possible. For <i>insertInOrder</i>, what
+inputs causes the function to do as much work as possible?
+The only place where a variable amount of work is performed is the
+loop that walks the list. In order to make the loop go as many times
+as possible, it is clear that we would need to insert a value at
+the very end of the list. Changing the line:
+</p>
+<pre>
+    insertInOrder(20,a);    //was: insertInOrder(10,a);
+</pre>
+<p>yields the following result when the program is run:
+</p>
+<pre>
+    Segmentation fault      (core dumped) ./a.out
+</pre>
+<p>Likewise, making the loop do as little work as possible yields
+errors in the code. What inputs would cause the loop run very little
+or not at all? Obviously,
+if the value to be inserted is smaller than any value in the list,
+the loop does not need to be run. Less obviously, what if the given
+list is empty?
+Fixing <i>insertInOrder</i> to handle these edge cases is left as an exercise.
+</p>
+
+<h2><a name="id5">The <i>counting</i> pattern</a></h2><p>
+The counting pattern is very important for lists, since we can
+use that pattern to deduce the
+number of items in a list:
+</p>
+<pre>
+    int
+    length(Node *items)
+        {
+        int count = 0;
+        while (items != 0)                //typical list walking condition
+            {
+            ++count;
+            items = tail(items);          //typical list walking step
+            }
+        }
+</pre>
+<p>Traditionally, the function that counts the number of items in
+a list is called <i>length</i>.
+As with the counting pattern for arrays,
+each "step" taken results in a counter being
+incremented.
+</p>
+
+<h2><a name="id6">The <i>filtered-accumulation</i> pattern</a></h2><p>
+A filtered accumulation looks similar to the counting pattern.
+Here is a function that totals up all the even values in a list:
+</p>
+<pre>
+    int
+    sumEvenIntegers(Node *items)
+        {
+        int total = 0;
+        while (items != 0)
+            {
+            int v = head(items);
+            if (v % 2 == 0)
+                total += v;
+            items = tail(items);
+            }
+        return total;
+        }
+</pre>
+
+<h2><a name="id7">The <i>extreme</i> pattern</a></h2><p>
+Once you have the hang of walking a list, most patterns become
+trivial to implement. Here is an instance of the extreme pattern:
+</p>
+<pre>
+    int
+    getLargest(Node *items)
+        {
+        int largest = head(items); //assume first is largest
+        while (items != 0)
+            {
+            int v = head(items);
+            if (v &gt; largest)
+                largest = v;
+            items = tail(items);
+            }
+        return largest;
+        }
+</pre>
+<p>This implementation looks very much like the extreme pattern for arrays,
+only translated to list walking.
+</p>
+<p>Surprisingly or, maybe, not surprisingly, the <i>extreme index pattern</i> is
+much more difficult to implement for lists than for arrays.
+This is because the
+basic walk of a list ignores the index of a particular node.
+In general, any processing that requires the manipulation of indices
+will be more complicated
+with a list as compared to an array.
+The implementation of the extreme index pattern is left as
+an exercise.
+</p>
+
+<h2><a name="id8">The <i>copy</i>, <i>filter</i> and <i>map</i> patterns</a></h2><p>
+Lists lend themselves to non-destructive
+copying, filtering, and mapping. As the original list is walked and
+values processed, a new list holding the original, filtered, or mapped
+values is built up. One slight problem arises when
+loops are used to walk the list. Since lists are
+grown using <i>join</i>, the elements in the new list are
+found
+in the opposite order as compared to their associated elements
+in the original list.
+If the order of the
+result doesn't matter, then lists and loops go well together for
+this kind of processing. If the order does matter,
+then another way of walking list, using recursion, can be used to
+preserve order. We will cover recursion in the next chapter.
+</p>
+<p>Here is code which copies a list.
+</p>
+<pre>
+    Node *
+    copyList(Node *items)
+        {
+        Node *result = 0;   //resulting list starts out empty
+        Node *spot = items;
+        while (spot != 0)           //walk the list
+            {
+            result = join(head(spot),result); //add current value to result
+            spot = tail(spot);                //take a step
+            }
+        return result;
+        }
+</pre>
+<p>In almost all list processing functions, we see the basic walk of the
+list. Indeed, should you be tasked to define a list processing function,
+you would be well advised to start with a basic walk and then modify
+as needed.
+</p>
+<p>Testing the <i>copyList</i> function reveals the reordering of the original
+values:
+</p>
+<pre>
+    //test (compile with listLoop.c)
+    #include "listLoop.h"
+    int numbers[] = {1,3,8,13,14,17};
+    Node *a = arrayToList(numbers,sizeof(numbers)/sizeof(int));
+    Node *b = copyList(a);
+    displayList(a);
+    displayList(b);
+</pre>
+<p>Compiling and running this code yields:
+</p>
+<pre>
+    {1}{3}{8}{13}{14}{17}
+    {17}{14}{13}{8}{3}{1}
+</pre>
+<p>Filtering and mapping are based
+off of the copy pattern. Here is a function
+the filters out odd-valued integers:
+</p>
+<pre>
+    Node *
+    extractEvens(Node *items)
+        {
+        Node *result = 0;
+        while (items != 0)
+            {
+            int v = head(items);
+            if (isEven(v))
+                result = join(head(items),result);
+            items = tail(items);
+            }
+        return result;
+        }
+</pre>
+<p>Note how the resulting list is grown every time an even valued item
+is found in the original list. Testing the function:
+</p>
+<pre>
+    //test (compile with ilist.c and listLoop.c)
+    #include "listLoop.h"
+    int numbers[] = {1,3,8,13,14,17};
+    Node *a = arrayToList(numbers,sizeof(numbers)/sizeof(int));
+    Node *b = extractEvenIntegers(a);
+    displayIntegerList(b);
+    displayIntegerList(b);
+</pre>
+<p>yields:
+</p>
+<pre>
+    {1}{3}{8}{13}{14}{17}
+    {14}{8}
+</pre>
+<p>The even numbers from the original list are found in the resulting list
+in the opposite order.
+</p>
+
+<h2><a name="id9">The <i>shuffle</i> and <i>merge</i> patterns</a></h2><p>
+As with arrays, shuffling and merging lists using loops is
+rather complicated.
+So much so that we will not
+even bother discussing loop-with-list versions.
+However, using recursion with lists greatly
+simplifies this type of processing, as we shall
+see in the next chapter.
+</p>
+
+<h2><a name="id10">The <i>fossilized</i> pattern</a></h2><p>
+The primary reason for accidentally implementing the fossilized
+pattern is to forget the while loop update. For example, while
+this loop:
+</p>
+<pre>
+    while (items != 0)
+        {
+        //loop body here
+        ...
+        items = tail(items);      //update, often accidentally omitted
+        }
+</pre>
+<p>may have been intended, what sometimes happens is the 
+update to <i>items</i> is omitted.
+Since items is never updated, it never advances to the null
+pointer
+(unless, of course, it
+was an empty list to begin with). This leads to an infinite loop.
+</p>
+
+<h2><a name="id11">Freeing lists</a></h2><p>
+Since our lists are dynamically allocated, we need to free them
+when we are done with them:
+</p>
+<pre>
+    void
+    freeList(Node *items)
+        {
+        Node *spot;
+        while(items != 0)
+            {
+            spot = items;
+            items = tail(items);
+            free(spot);                //free the current node
+            }
+        }
+</pre>
+<p>The only complication to this procedure is the need to save the lead
+node
+of the list before advancing to the next node.
+This is because, once we free something,
+we cannot reference any part of it. Thus, the sequence:
+</p>
+<pre>
+    free(items);            //free the current node
+    items = tail(items);    //WRONG!
+</pre>
+<p>will end in grief. The second statements asks for a part of the node
+(the value of the next pointer), <i>after</i> the node has been freed.
+Note that this routine does not free the values of a node. For integer
+nodes, this is not an issue. For string-valued nodes, where the strings
+were <i>malloc</i>-ed, the freeList function would be modified to
+free those strings:
+</p>
+<pre>
+    void
+    freeList(Node *items)
+        {
+        Node *spot;
+        while(items != 0)
+            {
+            spot = items;
+            items = tail(items);
+            free(spot-&gt;value);
+            free(spot);                //free the current node
+            }
+        }
+</pre>
+
+<h2><a name="id12">Why Lists?</a></h2><p>
+You may be asking, why go through all this trouble to implement lists
+when arrays seem to do every thing lists can do. The reason
+comes down to the fact that no data structure does all things well.
+For example, a data structure may be very fast when putting values
+in, but very slow in taking values out. Another kind of data structure
+may be very slow putting values in but very fast taking values out.
+This is why there are quite a number of different data structures,
+each with their own strengths.
+</p>
+<p>Arrays versus Lists:
+</p>
+<ul><li>Accessing any element in an array is very fast,
+regardless of the size of the array. In contrast, the larger the list,
+the more time it takes to access values near the end  of the list.
+</li><li>Dynamically allocated arrays can be allocated and freed in a single step.
+Freeing a list means freeing every node in the list in turn.
+</li><li>Adding a value to the front of a list is very fast; adding a value
+to the end of a list can be made very fast. In contrast, adding
+an element to a (full) array means a new larger array has to be allocated
+and elements of the old array copied over to the new array.
+</li><li>Lists and recursion go very well together; arrays, not so much.
+We will use lists heavily in the next chapter on recursion.
+</li></ul>
+
+<h2><a name="id13">Problems</a></h2>
+<ol><li>Assume a list holds the values 3, 8 and 10. Draw a box and pointer
+diagram of this list.
+</li><li>Why does the for loop in the <i>intsToList</i> function (in <i>integers.c</i>):
+<pre>
+    for (i = size-1; i &gt;= 0; --i)
+</pre>
+<p>decrement the loop index?
+</li><li>Assume a list holds the values 3 and 8. Consider appending the value 5.
+Draw a set of box and pointer diagrams, similar to those used in the
+discussion of <i>join</i>, that illustrate the action of <i>append</i>.
+You should have a drawing of the situation before the while loop begins,
+one for each update of the variable node while the loop is running, one
+after the new node is created, and one showing the list just before the
+function returns. Label your drawings appropriately.
+</li><li>Define a function named <i>appendValue</i>, which takes a list and
+an <code>int</code> value and appends the value to a list of <i>Integer</i> values.
+Your function should look very similar to
+<i>append</i>.
+</li><li>The module <i>lists.c</i>
+exhibits an important principle in Computer Science, <i>abstraction</i>.
+The list operations treat nodes as abstract objects; that is to say,
+lists do not know nor care about how nodes are constructed. Verify this
+is true by renaming the variables in the Node structure and
+updating the accessors and mutators of nodes accordingly.
+Now test the list operations to see that
+they work exactly as before.
+</li><li>The list operation <i>getListIndex</i> as found in the <i>lists.c</i> module
+exhibits another important concept in
+Computer Science, <i>generalization</i>. Since both <i>getListIndex</i>
+and <i>setListIndex</i>
+need to walk the list, that list-waking code was generalized into the function
+<i>getListIndexedNode</i>.
+Modify the <i>lists.c</i> module so that <i>getListIndex</i>
+and <i>setListIndex</i>
+each walk the list.
+Both operations should function as before, but you should notice how similar
+they look. When you see such similarity, the similar code is a candidate
+for generalization.
+</li><li>Define a function named <i>reverse</i>, which takes a list as an argument and
+returns a new list with the same items as the given list, but in the opposite order.
+</li><li>Define a function named <i>copy2</i>, which takes a list as an argument and
+returns a copy of the list. The new list should have the same ordering
+as the original list.
+</li><li>Define a function named <i>chop</i>, which takes a list as an argument and
+destructively removes the last element of a list. Your function should look similar
+to <i>getPenultimateNode</i>.
+</li><li>Define a function named <i>equals</i>, which takes two lists as arguments and
+returns whether or not the two lists have the same elements in the same order.
+</li><li>The linked lists developed in this chapter are known as <i>singly</i>-linked lists,
+a class of lists with a single pointer links a node to the next node in the list.
+Another class of lists, <i>doubly</i>-linked lists,
+provide an additional pointer from a node to
+its predecessor. Define a constructor for nodes upon which doubly-linked lists could
+be based.
+</li><li>Fix the given version of <i>insertIntegerInOrder</i>
+so that it correctly handles edge cases.
+</li><li>Implement a function that finds the index of the largest element in
+the list. Do not use <i>getListIndex</i> or anything like it.
+</li><li>Consider the version of <i>insertIntegerInOrder</i> given in this chapter.
+If a value to be inserted matches a value already in the list, does the new
+value end up before or after the old value? How would you change the code
+to get the opposite behavior?
+</li></ol>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_20.html">
+  <img border="0" alt="Lists" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_22.html">
+  <img border="0" alt="Recursion" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Lists and Loops</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

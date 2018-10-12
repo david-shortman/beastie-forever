@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>glossary-rb</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+Red-Black Trees
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="glossary-rb.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Glossary
+<br/>
+</h2><!-- section ENDED -->
+
+Here are some terms that are used when discussing <i>red</i>-<i>black</i> trees:
+<br/>
+
+<ul>
+
+<li>
+
+ <b>child</b> &mdash; same as for binary search trees
+</li>
+
+<li>
+
+ <b>parent</b> &mdash; same as for binary search trees
+</li>
+
+<li>
+
+ <b>leaf</b> &mdash; same as for binary binary search trees
+</li>
+
+<li>
+
+ <b>grandparent</b> &mdash; parent of parent
+</li>
+
+<li>
+
+ <b>uncle</b> &mdash; sibling of parent
+</li>
+
+<li>
+
+ <b>niece</b> &mdash; closest child of sibling -
+if you are a right child, your niece is a right child -
+if you are a left child, your niece is a left child
+</li>
+
+<li>
+
+ <b>nephew</b> &mdash; furthest child of sibling - if you are a right child,
+your nephew is a left child -
+if you are a left child, your nephew is a right child
+</li>
+
+<li>
+
+ <b>black height</b> &mdash; the number of black nodes encountered on the way
+to a leaf - sometimes abbreviated <i>BH</i>
+</li>
+
+<li>
+
+ <b>linear</b> &mdash; true if the parent and child are both left children or
+are both right children
+</li>
+
+<li>
+
+ <b>rotation</b> &mdash; make a child a parent and the former parent a child
+- preserves binary search tree ordering
+</li>
+
+</ul>
+
+
+Note that terms like
+<i>uncle</i>, <i>niece</i>, and <i>nephew</i>
+are not found in other binary search tree
+descriptions.
+They are used here in order to remove
+leftness and rightness issues from the main
+red-black tree algorithms.
+<br/>
+<!-- section -->
+<h2> Red-black properties
+<br/>
+</h2><!-- section ENDED -->
+
+A <i>red</i>-<i>black</i> tree has the following properties:
+<br/>
+
+<ul>
+
+<li>
+
+ The root is colored black
+</li>
+
+<li>
+
+ The null child pointers of a leaf are considered black nodes
+</li>
+
+<li>
+
+ No red node has a red parent
+</li>
+
+<li>
+
+ All nodes have a consistent black height
+(all paths from a node to the reachable leaves have the same number of black nodes)
+</li>
+
+</ul>
+
+
+<br/>
+<b>Next:</b>
+<a href="insert-rb.html">
+Inserting into red-black trees
+</a>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

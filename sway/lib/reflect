@@ -1,0 +1,62 @@
+include("basics");
+
+function thunk($a) { $a; }
+
+function thunkize(a,b)
+    {
+    var t = thunk(1);
+    t . code = a;
+    t . context = b;
+    t;
+    }
+
+function parameterize($)
+    {
+    map(function (t) { t . code; },$);
+    }
+
+function defineVariable($name,value)
+    {
+    checkType("function name",type($name . code),:SYMBOL,:VARIABLE);
+    __var__($name,value);
+    }
+
+
+function defineFunction($name,params,$body)
+    {
+    var f;
+    checkType("function name",type($name . code),:SYMBOL,:VARIABLE);
+    checkType("function parameters",type(params),:LIST,:ARRAY);
+    map(
+        function (p)
+            { checkType("function parameter",type(p),:SYMBOL,:VARIABLE); },
+        params);
+
+    checkType("function body",type($body . code),:BLOCK,:SIMPLE_BLOCK);
+
+    f = __function__($name,:null,$body);
+    f . parameters = params;
+    f;
+    }
+
+function checkType(prefix,t,@)
+    {
+    var match = :false;
+    var types = @;
+    while (match == :false && types != :null)
+        {
+        if (t == types . 0,match = :true);
+        types = tail(types);
+        }
+    if (match == :false)
+        {
+        throw(:argumentTypeError,
+            prefix + " should have type " + @ . 0 + ", not " + t);
+        }
+    }
+
+// testing code
+defineFunction(g,parameterize(x,y),{x + y;});
+pp(g);
+inspect(g(2,3));
+

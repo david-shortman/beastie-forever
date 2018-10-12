@@ -1,0 +1,716 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:16 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Input and Output</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_13.html">
+  <img border="0" alt="Conditionals" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_15.html">
+  <img border="0" alt="Scope" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Input and Output</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Input and Output</h1>
+<p>Generally all computational entities, be it variables, functions, or programs,
+require some sort of input and output. Input roughly corresponds
+to the process of supplying
+data and output roughly corresponds to the process of retrieving data.
+For a variable, assignment
+is the way values (data) are supplied to the variable, while
+referencing the
+variable (as part of an expression)
+is the way that data is retrieved.
+For functions, the input is the set of arguments that are supplied
+in a function call, while the output of a function is its return value.
+For programs, input refers to pulling in data
+and output refers to pushing out results.
+In this chapter, we focus on managing the input and output of programs.
+</p>
+
+<h2><a name="id1">Input</a></h2><p>
+Input is the process of obtaining data that a program needs
+to perform its task. There are generally three ways for
+a program to obtain data:
+</p>
+<ul><li>interactively, by querying the user for information
+</li><li>via the command line, by accessing an array of command line arguments
+</li><li>via a file, by opening a file and reading its contents
+</li></ul>
+<p>We examine these three approaches in turn.
+</p>
+
+<h3><a name="id2">Reading from the keyboard</a></h3><p>
+To read from the keyboard, one uses the <i>scanf</i> function.
+</p>
+
+<h4><a name="id3">Reading integers</a></h4><p>
+To read an integer, an integer directive is supplied to <i>scanf</i>:
+</p>
+<pre>
+    //test
+    int num;
+    printf("Please enter an integer: ");
+    scanf("%d",&amp;num);
+    printf("the number you entered was %d\n",num);
+</pre>
+<p>The <i>scanf</i> function
+takes a guide string and a pointer to a memory location,
+Moreover, <i>scanf</i> returns when it has seen an integer followed
+by a newline on the input. At a level lower than <i>scanf</i>, C waits until
+an entire line has been input before <i>scanf</i> can start its task.
+</p>
+<p>In the example, we give the address of <i>num</i>; the <code>&amp;</code> operator returns the
+address of the <i>num</i> variable.
+We have seen pointers to arrays. Pointers
+to variables are really the same thing. The difference is a pointer to
+a single variable can be thought of as an array with a single slot.
+Let's rewrite the above example a little bit:
+</p>
+<pre>
+    //test
+    int num;
+    int *addr;              //an 'array' pointer
+    addr = &amp;num;            //&amp;num has type 'int *'
+    printf("Please enter an integer: ");
+    scanf("%d",addr);
+    printf("num is %d\n",num);
+    printf("addr[0] is %d\n",addr[0]);
+    printf("*addr is %d\n",*addr);
+</pre>
+<p>Suppose <i>num</i> is placed at memory location 1004.
+Immediately prior to the first <i>printf</i>, the situation looks like:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-io1.png"/>
+</div>
+<p>The <i>addr</i> variable, as desired, holds the address of <i>num</i>.
+Now the value of <i>addr</i> is passed as the second argument to <i>scanf</i>.
+The <i>scanf</i> function
+reads in a number and places it in the memory location specified
+by the second argument. In this case, it is placed at memory location
+1004. So, if the user enters the number 42, then 42 is stored as
+the value of <i>num</i>:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-io2.png"/>
+</div>
+<p>The final three print statements all output the value 42. The first
+does so since the value read in by <i>scanf</i> was stored in <i>num</i>.
+The second does so since <i>addr</i> can be considered a
+pointer to an array of length 1:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-io3.png"/>
+</div>
+<p>The final print statement prints 42 since <code>*addr</code>
+is an alternate form of <code>addr[0]</code>.
+When we take the address of a variable, we will rarely use the array
+indexing form used by the second print statement,
+preferring instead the <i>pointer dereferencing</i>
+form of the third print statement.
+</p>
+
+<h4><a name="id4">Reading real numbers</a></h4><p>
+Reading a real number is similar to reading an integer, except the
+<code>"%lf"</code> directive and the address of a double variable
+is passed to <i>scanf</i>:
+</p>
+<pre>
+    //test
+    double realNumber;
+    printf("Please enter a real number: ");
+    scanf("%lf",&amp;realNumber);
+    printf("the number you entered was %f\n",realNumber);
+</pre>
+
+<h4><a name="id5">Reading single characters</a></h4><p>
+For a character, the <code>"%c"</code> directive and the
+address of a character variable is passed to <i>scanf</i>.
+</p>
+<pre>
+    //test
+    char ch;
+    printf("Please enter a character: ");
+    scanf("%c",&amp;ch);
+    printf("the character you entered was &lt;%c&gt;\n",ch);
+</pre>
+<p>With the <code>"%c"</code> directive, the next character on the input stream
+is read, regardless of whether or not it is a whitespace. If one places
+a space before the percent sign in the directive, then <i>scanf</i> will
+skip over any whitespace and read the first non-whitespace character
+pending on the input:
+</p>
+<pre>
+    //test
+    char ch;
+    printf("Please enter some whitespace, then a character: ");
+    scanf(" %c",&amp;ch); //note the space in the directive
+    printf("the first darkspace character you entered was &lt;%c&gt;\n",ch);
+</pre>
+
+<h4><a name="id6">Reading strings</a></h4><p>
+One can use the <i>scanf</i> function to read multiple characters
+at a time from the keyboard with
+the <code>"%s"</code> directive:
+</p>
+<pre>
+    //test of VERY DANGEROUS CODE
+    char buffer[512]; //room for 511 chars plus the null char
+    printf("Please enter a token: ");
+    scanf("%s",buffer);
+    printf("the token you entered was &lt;%s&gt;\n",buffer);
+</pre>
+<p>where a <code>token</code> is a contiguous sequence of non-whitespace characters.
+Why is this code dangerous? The reason is <i>scanf</i> does not ensure that
+no more than 511 characters (in this example) are read into array <i>buffer</i>.
+So if the token entered is, say, 600 characters in length,
+an additional 90 characters will be read into memory, trashing the
+memory beyond the extent of the array.
+</p>
+<p>A very clever and devious person at some point realized that if the token was
+long enough, the memory trashing
+would extend beyond the memory space reserved for the local variables
+and into the region of memory that stores the location of the caller
+of the current function.
+When the current function returns, program control jumps to the caller
+of the function.
+By carefully choosing the additional characters,
+the return location is overwritten with the address of
+the buffer itself. If the buffer is filled with characters that
+look like machine code, then this new program would run with
+the same privileges as the original program.
+If
+a program with high privileges is exploited in this way, then
+the exploiter could potentially
+take over the system.
+</p>
+<p>This is not just a theoretical problem. The first widespread internet
+virus, the Morris worm, used this approach and brought large portions 
+of the internet to a halt<sup><a href="index_26.html#footnote-26">26</a></sup>.
+</p>
+<p>In fact, many of the vulnerabilities being discovered or exploited today
+are due to this use of <i>scanf</i> and related functions in system-level C code.
+So, NEVER USE SCANF TO READ IN A STRING!
+Instead of <i>scanf</i><sup><a href="index_26.html#footnote-27">27</a></sup>,
+one should read a line one character at
+a time and checking to see if too many characters are encountered
+before the newline is seen. This is a rather onerous task, so it
+has been done for you. To get this code, download the following
+files:
+</p>
+<pre>
+    wget troll.cs.ua.edu/ACP-C/scanner.c
+    wget troll.cs.ua.edu/ACP-C/scanner.h
+</pre>
+<p>The <i>scanner.c</i> file contains the definitions of the following functions:
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="left">
+<i>function</i>          </td><td colspan="1" align="left"> <i>purpose</i></td></tr>
+<tr><td colspan="1" align="left">
+<i>readInt</i>     </td><td colspan="1" align="left"> returns the next integer</td></tr>
+<tr><td colspan="1" align="left">
+<i>readReal</i>    </td><td colspan="1" align="left"> returns the next double</td></tr>
+<tr><td colspan="1" align="left">
+<i>readChar</i>    </td><td colspan="1" align="left"> returns the next darkspace character</td></tr>
+<tr><td colspan="1" align="left">
+<i>readRawChar</i> </td><td colspan="1" align="left"> returns the next character, whitespace or darkspace</td></tr>
+<tr><td colspan="1" align="left">
+<i>readToken</i>   </td><td colspan="1" align="left"> returns the next token</td></tr>
+<tr><td colspan="1" align="left">
+<i>readString</i>  </td><td colspan="1" align="left"> returns the next double quoted string</td></tr>
+<tr><td colspan="1" align="left">
+<i>readLine</i>    </td><td colspan="1" align="left"> returns the remainder of current line</td></tr>
+<tr><td colspan="1" align="left">
+</td></tr></tbody></table>
+</p>
+</div>
+<p>You can read more about these functions in the documentation
+of <i>scanner.c</i>. You can find the prototypes of the functions
+in <i>scanner.h</i>.
+</p>
+<p>The <i>scanf</i> code for reading a token can be replaced with a
+safe call to <i>readToken</i>. To use the scanner, you need to
+add the following line after the system includes:
+</p>
+<pre>
+    #include "scanner.h"
+</pre>
+<p>Then you can make calls to the scanner functions:
+</p>
+<pre>
+    //test
+    char *s;  //note change of s to a char pointer
+    printf("Please enter a token: ");
+    s = readToken(stdin);     //stdin is the keyboard
+    printf("the token you entered was &lt;%s&gt;\n",s);
+    free(s); //s points to a malloc'd array so free it when done
+</pre>
+<p>To compile code that calls scanner functions, you will need to
+compile <i>scanner.c</i> with the rest of your
+program. Suppose your <i>main</i> function is in
+<i>tester.c</i> and it calls <i>readToken</i>. To compile the program, you 
+would enter the command:
+</p>
+<pre>
+    gcc -Wall -g -o tester tester.c scanner.c
+</pre>
+<p>The scanner functions require the passing in of a file pointer. This
+allows them to read from the keyboard (using <i>stdin</i>) or from a file (more
+on that later on in the chapter). The first four functions listed
+are wrappers to <i>scanf</i>. The last three read characters into
+a statically allocated array.
+If there is not enough room, an error message
+is printed and the program is terminated. If there is room,
+the array is copied into malloc'd memory and a pointer this
+memory is returned.
+</p>
+
+<h4><a name="id7">Reading directly into arrays</a></h4><p>
+One can read directly into arrays by using pointer offsets:
+</p>
+<pre>
+    //test
+    int a[3];
+    printf("give me the first number: ");
+    scanf("%d",a+0);
+    printf("give me the second number: ");
+    scanf("%d",a+1);
+    printf("give me the third number: ");
+    scanf("%d",a+2);
+
+    printf("[%d]",a[0]);
+    printf("[%d]",a[1]);
+    printf("[%d]",a[2]);
+    printf("\n");
+</pre>
+<p>If the three numbers read were 2, 13, and 42, in that order,
+then the output would be:
+</p>
+<pre>
+    [2][13][42]
+</pre>
+<p>Sometimes you will see:
+</p>
+<pre>
+    scanf("%d",&amp;a[1]);
+</pre>
+<p>instead of:
+</p>
+<pre>
+    scanf("%d",a+1);
+</pre>
+<p>The former is usually written by a programmer who is a little unsure
+of the relationships between statically allocated arrays and pointers.
+One can also use the scanner functions:
+</p>
+<pre>
+    ...
+    printf("give me the first number: ");
+    a[0] = readInt(stdin);
+    printf("give me the second number: ");
+    a[1] = readInt(stdin);
+    printf("give me the third number: ");
+    a[2] = readInt(stdin);
+    ...
+</pre>
+
+<h3><a name="id8">Reading from the command line</a></h3><p>
+The second way to pass information to a program is
+through <i>command-line arguments</i>.
+The command line is the line typed in a terminal window
+that runs a C program (or any other program).
+Here is a typical command line on a Linux system:
+</p>
+<pre>
+    lusth@warka:~/l1/activities$ prog3
+</pre>
+<p>Everything up to and including the dollar sign is
+the system prompt. As with all prompts, it is used
+to signify that the system is waiting for input.
+The user of the system (me) has typed in the command:
+</p>
+<pre>
+    prog3
+</pre>
+<p>in response to the prompt. Suppose <i>prog3.c</i> is a file
+with the following code:
+</p>
+<pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include &lt;math.h&gt;
+    #include &lt;string.h&gt;
+
+    int
+    main(int argc,char **argv)
+        {
+        int i;
+        printf("Number of command-line arguments: %d\n",argc);
+        printf("Command-line arguments:\n");
+        i = 0;
+        while (i &lt; argc)
+            {
+            printf("    %s\n",argv[i]);
+            ++i;
+            }
+        return 0;
+        }
+</pre>
+<p>We haven't covered loops yet, but all the program does is print out
+all of the command line arguments. 
+In this case, the output of this program would be:
+</p>
+<pre>
+
+    lusth@warka:~/l1/activities$ gcc -Wall -g -o prog3 prog3.c
+    lusth@warka:~/l1/activities$ prog3
+    Number of command-line arguments: 1
+    Command-line arguments:
+        prog3
+</pre>
+<p>From the output, we can see that there was one command-line argument,
+the name of the executable. Looking more closely at the code:
+</p>
+<pre>
+    printf("Number of command-line arguments: %d\n",argc);
+</pre>
+<p>we see that the number of command line arguments is stored in the formal
+parameter <i>argc</i>. We see also:
+</p>
+<pre>
+    printf("    %s\n",argv[i]);
+</pre>
+<p>that the command line arguments themselves are stored in the formal
+parameter <i>argv</i>.
+This tells us that <i>argv</i> points to an array of strings.
+A pointer has a star, and a string has a *, hence the typing of
+<i>argv</i>:
+</p>
+<pre>
+    char **argv;
+</pre>
+<p>with two stars.
+</p>
+<p>Any whitespace-delimited tokens following
+the program file name are stored in <i>argv</i> 
+along with the name of the program being run.
+For example, suppose we run <i>prog3</i> with the this
+command:
+</p>
+<pre>
+    lusth@warka:~/l1/activities$ prog3.py 123 123.4 True hello, world
+</pre>
+<p>Then the output would be:
+</p>
+<pre>
+    Number of command-line arguments: 6
+    Command-line arguments:
+        prog3
+        123
+        123.4
+        True
+        hello,
+        world
+</pre>
+<p>From this result, we can see that all of the tokens are stored
+in <i>argv</i> and that they are stored as strings, <i>regardless</i> of
+whether they look like some other entity, such as integer or
+real number.
+</p>
+<p>If we wish for <code>"hello, world"</code> to be a single token,
+we would need to enclose the tokens in quotes:
+</p>
+<pre>
+    prog3 123 123.4 True "hello, world"
+</pre>
+<p>In this case, the output is:
+</p>
+<pre>
+Number of command-line arguments: 5
+Command-line arguments:
+    prog3
+    123
+    123.4
+    True
+    hello, world
+</pre>
+<p>There are certain characters that have special meaning to
+the system. A couple of these are '*' and ';'. To include
+these characters in a command-line argument, they need to
+be <i>escaped</i> by inserting a backslash prior to the 
+character.
+Here is an example:
+</p>
+<pre>
+    prog3 \; \* \\
+</pre>
+<p>To insert a backslash, one escapes it with a backslash.
+The output from this command is:
+</p>
+<pre>
+    Number of command-line arguments: 4
+    Command-line arguments:
+        prog3
+        ;
+        *
+        \
+</pre>
+<p>Although it looks as if there are two backslashes in the last
+token, there is but a single backslash. Most Linux programs,
+including the terminal window shell, uses two
+backslashes to indicate a single backslash.
+</p>
+
+<h4><a name="id9">What command-line arguments are</a></h4><p>
+The command line arguments  are stored as strings.
+Therefore, you must use <i>atoi</i> or <i>atof</i>
+if you
+wish to use any of the command line arguments as integers or
+real numbers, respectively.
+Here is code that tests that there are two command-line arguments
+beyond the program name, the first representing an integer and the second 
+representing a real:
+</p>
+<pre>
+    //test
+    int x;
+    double y;
+    if (argc != 3)
+       {
+       fprintf(stderr,"there should be two args beyond the program name\n");
+       exit(1);
+       }
+    x = atoi(argv[1]);
+    y = atof(argv[2]);
+
+    printf("1st additional arg is %d\n",x);
+    printf("2nd additional arg is %f\n",y);
+</pre>
+<p>Given the additional arguments 23 and 4.5, the output should be:
+</p>
+<pre>
+    1st additional arg is 23
+    2nd additional arg is 4.500000
+</pre>
+
+<h3><a name="id10">Reading from files</a></h3><p>
+The third way to get data to a program is to read the
+data that has been previously stored in a file.
+</p>
+<p>C uses a <i>file pointer</i> system in reading from a
+file. To read from a file, the first
+step is to obtain a pointer to the file. This is
+known as <i>opening</i> a file. The file pointer
+will always point to the first unread character in
+a file.
+When a file is first opened, the file pointer points to
+the first character in the file.
+</p>
+
+<h4><a name="id11">Reading files using <i>fscanf</i></a></h4><p>
+Suppose
+we wish to read from a file named <i>data</i>. We
+first obtain a file pointer by opening the file like this:
+</p>
+<pre>
+    FILE *fp = fopen("data","r")
+    if (fp == 0)
+        {
+        fprintf(stderr,"file data could not be opened for reading\n");
+        exit(1);
+        }
+</pre>
+<p>The <i>fopen</i> function takes two arguments, the name of the
+file and the kind of file pointer to return. We store the file
+pointer in a variable named <i>fp</i> (a variable name commonly used
+to hold a file pointer). In this
+case, we wish for a <i>reading</i> file pointer, so we pass
+the string <code>"r"</code>. We can also open a file for writing;
+more on that in the next section.
+In any case, you should always test the return value of <i>fopen</i>;
+a return value of zero means a problem has occurred.
+</p>
+<p>Once we have the file pointer, we can use <i>fscanf</i> to read various
+kinds of items. For example, to read an integer, we would
+use the <code>"%d"</code> directive:
+</p>
+<pre>
+   //test
+   int x;
+   FILE *fp = fopen("data","r");
+   //test of fp omitted
+   fscanf(fp,"%d",&amp;x);
+   printf("the number read was %d\n",x);
+   fclose(fp);
+</pre>
+<p>Note how similar the call to <i>fscanf</i> is to <i>scanf</i>.
+The following two calls are equivalent:
+</p>
+<pre>
+    scanf("%d",&amp;x);
+    fscanf(stdin,"%d",&amp;x);
+</pre>
+<p>In fact, <i>scanf</i> and <i>fscanf</i>
+are identical except that <i>scanf</i> hard-wires
+the file pointer to <i>stdin</i>, the keyboard.
+</p>
+<p>When we are done reading a file, we <i>close</i> it:
+</p>
+<pre>
+    fclose(fp);
+</pre>
+<p>Always remember to close your files!
+</p>
+
+<h4><a name="id12">Reading files using the scanner</a></h4><p>
+We can also use the scanner functions to read from a file,
+by passing a file pointer
+instead of <i>stdin</i>:
+</p>
+<pre>
+   //test
+   int x;
+   FILE *fp = fopen("data","r");
+   //test of fp omitted
+   x = readInt(fp);
+   printf("the number read was %d\n",x);
+   fclose(fp);
+</pre>
+<p>As always, remember to close your files when finished.
+</p>
+
+<h2><a name="id13">Output</a></h2><p>
+Once a program has processed its input, it needs to make its output
+known, either by displaying results to the user or by storing the
+results in a file.
+</p>
+
+<h3><a name="id14">Writing to the console</a></h3><p>
+We have been writing to the console using <i>printf</i> for some time now.
+The <i>printf</i> function is <i>variadic</i>, which means
+it can take a variable number
+of arguments:
+</p>
+<pre>
+    //test
+    int x = 3;
+    double y = 14.4;
+    char *z = "hello";
+    printf("an integer, %d, a real number, %f, and a string, %s\n",x,y,z);
+</pre>
+<p>The arguments after the guide string are match to the directives
+in the guide string, in order given.
+If you have a mismatch between the directive and the corresponding
+argument, you will get a warning message when you compile.
+</p>
+
+<h2><a name="id15">Printing quote characters</a></h2><p>
+Suppose I have the string:
+</p>
+<pre>
+    char *str = "Hello";
+</pre>
+<p>If I print my string:
+</p>
+<pre>
+    printf("%s",str);
+</pre>
+<p>The output looks like this:
+</p>
+<pre>
+    Hello
+</pre>
+<p>Notice the double quotes are not printed. But suppose I wish to print
+quotes around my string, so that the output looks like:
+</p>
+<pre>
+    "Hello"
+</pre>
+<p>To do this, the print statement becomes:
+</p>
+<pre>
+   printf("\"%s\"",str);
+</pre>
+<p>If I want the double quotes to be in the string itself, str would
+assigned thusly:
+</p>
+<pre>
+    str = "\"Hello\"";
+</pre>
+<p>If you need a refresher on what the string <code>"\""</code> means, please see
+<a href="index_10.html">the chapter on strings</a>.
+</p>
+
+<h2><a name="id16">Writing to a file</a></h2><p>
+C also requires a file pointer to write to 
+a file. The <i>fopen</i> function is again used to obtain
+a file pointer, but this time we desire a <i>writing</i>
+file pointer, so we send the string <code>"w"</code> as the
+second argument to <i>fopen</i>:
+</p>
+<pre>
+    FILE *fp = fopen("data.save","w")
+</pre>
+<p>Now the variable <i>fp</i> points to a writing file object;
+we write to the file using <i>fprintf</i>. The correspondence between
+<i>fprintf</i> and <i>printf</i> is the same as
+that between <i>fscanf</i> and
+<i>scanf</i>. The following two calls are equivalent:
+</p>
+<pre>
+    printf("hello, world!\n");
+    fprintf(stdout,"hello, world!\n");
+</pre>
+<p>The <i>printf</i> function simply hardwires the file pointer to <i>stdout</i>,
+which represents the console.
+As with reading, a file opened for writing should be checked for
+a successful open and should be closed with <i>fclose</i> when reading
+is complete.
+</p>
+<p>Opening a file in order to write
+it has the effect of emptying the file of its contents
+soon as it is opened.
+The following code deletes
+the <i>contents</i> of a file (which is different than
+deleting the file):
+</p>
+<pre>
+    // delete the contents
+    FILE *fp = fopen(fileName,"w")
+    //check that fopen did not encounter a problem
+    fclose(fp);
+</pre>
+<p>If you wish to start writing to a file, but save what was
+there previously, call the <i>open</i> function to obtain
+an <i>appending</i> file pointer:
+</p>
+<pre>
+    FILE *fp = fopen(fileName,"a")
+</pre>
+<p>Subsequent writes to <i>fp</i> will append text to what is already there.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_13.html">
+  <img border="0" alt="Conditionals" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_15.html">
+  <img border="0" alt="Scope" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Input and Output</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

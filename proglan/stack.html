@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>stack</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Stacks
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="stack.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+It is very easy to implement the classic data structures in Scheme. Stacks
+are especially easy.
+Let's define a <i>stack</i> constructor:
+<br/>
+
+<pre>
+    (define (Stack)
+        (define store nil)
+
+        (define (dispatch msg)
+            (cond
+                ((eq? msg &#39;push) push)
+                ((eq? msg &#39;pop) pop)
+                ((eq? msg &#39;empty?) empty?)
+                (else (error &quot;stack message not understood: &quot; msg))
+                )
+            )
+        (define (push x)
+            (set! store (cons x store))
+            )
+        (define (pop) ; user is responsible ensuring stack is non empty
+            (define tmp (car store))
+            (set! store (cdr store))
+            tmp
+            )
+        (define (empty?)
+            (eq? store nil)
+            )
+
+        dispatch
+        )
+</pre>
+
+Note that since we add to the front of the store and remove from the
+front, we get LIFO behavior. Also note how clean the implementation is
+and that it is perfectly generic. We can push any kind of element onto
+the stack and even mix kinds of elements. Here is a sample interaction
+with a <i>stack</i> object:
+<br/>
+
+<pre>
+    (define s (Stack))
+    ((s &#39;push) 3)
+    ((s &#39;push) 5)
+    ((s &#39;push) 4)
+    ((s &#39;pop))               ; should yield 4
+    ((s &#39;empty))             ; should return #f
+</pre>
+
+Using Scam's object system, a <i>stack</i> class becomes even simpler:
+<br/>
+
+<pre>
+    (define (Stack)
+        (define store nil)
+
+        (define (push x)
+            (set! store (cons x store))
+            )
+        (define (pop) ; user is responsible ensuring stack is non empty
+            (define tmp (car store))
+            (set! store (cdr store))
+            tmp
+            )
+        (define (empty?)
+            (eq? store nil)
+            )
+
+        this
+        )
+</pre>
+
+Scam obviates the need for a dispatch function; the interaction with this
+stack is exactly the same as with the Scheme dispatch version.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

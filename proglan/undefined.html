@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>undefined</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Undefined Variables
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="undefined.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ Undefined Variables
+
+<br/>
+</h2><!-- section ENDED -->
+
+Suppose you have an undefined variable in the source code your
+language intrepreter is evaluating.
+Typically, what happens is when the
+evaluator requires the value of a variable, it calls the environmental
+<i>lookup</i> routine. The <i>lookup</i> function signals an error when
+it cannot find the variable in question. We say the undefined variable
+was detected at <i>run</i> <i>time</i>.
+<br/>
+<br/>
+An alternative approach is to detect the undefined variable at
+<i>parse</i> <i>time</i>. If your language requires explicit declarations
+of variables, the task of identifying such variables is rather
+straightforward.
+One only needs to detect and store the variable declarations
+as the parser descends into the source code.
+<br/>
+<!-- section -->
+<h2>
+ Keeping track of variables declarations
+<br/>
+</h2><!-- section ENDED -->
+
+One can use an <i>environment</i> to monitor all variable declarations.
+When a variable is declared, the name of the variable is inserted into the
+current environment. When a function is defined, the name of
+the function is placed in the currented environment
+while an extended environment
+is used to corral the formal parameters and
+the local variables encountered when parsing
+the function body.
+<br/>
+<br/>
+To begin, nearly every parsing routine is now passed a <i>declaration</i>
+environment.
+Consider a parsing function for a simple variable definition:
+<br/>
+
+<pre>
+    // varDef : VAR ID ASSIGN expr SEMI
+    function varDef(env)
+        {
+        var name,value;
+
+        match(VAR);
+        name = match(ID);
+        match(ASSIGN);
+        value = expr(env);
+        match(SEMI);
+
+        insert(name,PRESENT,env);       //add ID to the declaration env
+
+        return cons(VARDEF,name,value); //parse tree
+        }
+</pre>
+
+The environmental <i>insert</i> function places the variable name and a dummy
+value
+in the local frame of the declaration environment,
+corresponding to the fact that we just defined a local variable.
+<br/>
+<br/>
+Note that we are using a typed <i>cons</i> function. It returns
+a lexeme whose left pointer is the name and whose right
+pointer is the initialization expression and whose type
+is 
+<code>VARDEF</code>.
+<br/>
+<br/>
+The modification for a function definition is similar,
+except the environment is extended prior to parsing the body:
+<br/>
+
+<pre>
+    // funcDef : FUNCTION ID OPAREN optParamList CPAREN block
+    function funcDef(env)
+        {
+        var name,params,body;
+        var xenv;
+
+        match(FUNCTION);
+        name = match(ID);
+        match(OPAREN);
+        params = optParamList();
+        match(CPAREN);
+
+        insert(name,PRESENT,env); // add function name to env
+
+        xenv = extend(params,params,env); //values don&#39;t matter, use params
+
+        body = block(xenv);
+
+        return cons(FUNCDEF,name,cons(JOIN,params,body));
+        }
+</pre>
+
+Note that anytime a block is encountered, the environment needs to
+be extended since local definitions may occur in the block.
+The environmental <i>extend</i> function takes a list of variables
+and a parallel list of types, adding a new frame to the existing
+environment. Note that the original environment is unaffected,
+a requirement since we cannot have the local variables polluting the
+calling environment.
+<br/>
+<br/>
+As an example, suppose we are parsing the <i>urp</i> function:
+<br/>
+
+<pre>
+    function urp(x,y)
+        {
+        var z = x - y;
+        x * y * z;
+        }
+</pre>
+
+The name <i>urp</i> is inserted into the current declaration environment
+while the formal parameters and, ultimately, the local
+variable <i>z</i> are inserted into an extension of the declaration environment.
+Note how this parallels function <i>calls</i> when evaluating,
+wherein
+the extended environment is populated with the formal
+parameters and their values.
+In this case,
+the value of a formal parameter doesn't matter, we
+just need it to be present in the extended environment
+when the body of the function definition is parsed.
+<br/>
+<br/>
+Since variable declarations and function definitions
+(function names and formal parameters) are the only
+places variables are declared,
+we are
+done with the ``keeping track<i> part.
+What's left is the ``checking
+that variables are previously declared</i> part.
+<br/>
+<!-- section -->
+<h2>
+ Checking for previous declarations
+<br/>
+</h2><!-- section ENDED -->
+
+The last stage of the implementation of undefined variable detection
+is to look up every occurrence of a variable (other than in
+the declarations mentioned previously). If the variable is
+present in the current environment, everything is copacetic.
+If not, then no declaration for that variable was encountered
+on the path to the current spot in the parser and an
+undefined variable can be signaled.
+<br/>
+<br/>
+Since any other mention of a variable is in the <i>primary</i> rule,
+we modify <i>primary</i> to make the check:
+<br/>
+
+<pre>
+    function primary(env)
+        {
+        var result;
+
+        if (check(INTEGER))
+            return match(INTEGER);
+        else if (check(STRING))
+            return match(STRING);
+        else if (check(ID))
+            {
+            lookup(Pending,env); //throws exception if not found
+            result = match(ID);
+            if (check(OPAREN))
+                {
+                //process function call
+                ...
+                }
+            return result;
+            }
+        //other primaries
+            ...
+        
+        }
+</pre>
+
+At this point, your parser should detect undefined variables.
+<br/>
+<!-- section -->
+<h2>
+ Mutually recursive functions
+<br/>
+</h2><!-- section ENDED -->
+
+A consequence of detecting undefined variables is that
+all variables be declared before
+they are used. Sometimes, however, this rule cannot be
+enforced by the code.
+Consider two mutually recursive functions:
+<br/>
+
+<pre>
+    function f(x)
+        {
+        if (x &lt; 2) { return x; }
+        else { return g(x + 1) * x; }
+        }
+    
+    function g(y)
+        {
+        if (y &lt; 2) { return y; }
+        else { return f(y - 2) * x; }
+        }
+</pre>
+
+When parsing the body of <i>f</i>, we encounter a reference to the
+variable <i>g</i>, which has not yet been declared. Likewise, if
+we place the definition of <i>g</i> prior to that of <i>f</i> to fix this
+problem, we generate a second problem. Namely, now <i>f</i> is referenced
+in the body of <i>g</i> but now <i>f</i> is not yet declared.
+<br/>
+<br/>
+Many languages solve this problem by using some sort of <i>forward</i>
+statement. A forward statement is processed just like any other
+variable declaration:
+<br/>
+
+<pre>
+    forward g; // g will be declared later
+
+    function f(x)
+        {
+        if (x &lt; 2) { return x; }
+        else { return g(x + 1) * x; }
+        }
+    
+    function g(y)
+        {
+        if (y &lt; 2) { return y; }
+        else { return f(y - 2) * x; }
+        }
+</pre>
+
+Typically, you would insert a forward variable with a distinct value
+into the environment:
+<br/>
+
+<pre>
+    // FORWARD ID SEMI
+    function forward(env)
+        {
+        var result,name;
+        
+        result = match(FORWARD);
+        name = match(ID);
+        insert(name,newLexeme(FORWARD),env);
+        match(SEMI);
+
+        return result;
+        }
+</pre>
+
+Now, when inserting the actual definition of a forward variable
+in the local frame, you would update the value of the variable
+from 
+<code>FORWARD</code> to 
+<code>PRESENT</code>.
+By doing the update, you can check for unresolved forward declarations in
+the local frame after parsing function bodies and after
+returning from the start rule.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

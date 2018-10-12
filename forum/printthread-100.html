@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Test Cases - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=117">Test Cases</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 1 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=7</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Test Cases (<em>/showthread.php?tid=117</em>)<br />
+<br />
+<!-- start: printthread_multipage -->
+<div class="multipage">Pages: <strong></strong> <!-- start: printthread_multipage_page -->
+<a href="printthread.php?tid=117&amp;page=1">1</a>
+<!-- end: printthread_multipage_page --><!-- start: printthread_multipage_page -->
+<a href="printthread.php?tid=117&amp;page=2">2</a>
+<!-- end: printthread_multipage_page --><!-- start: printthread_multipage_page_current -->
+<strong>3</strong>
+<!-- end: printthread_multipage_page_current --></div>
+<!-- end: printthread_multipage --></td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>RE: Test Cases</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>10-09-2018</strong>
+<br />
+<br />
+My diff reports a difference. Maybe you are going one step further? My solution, at first, was going an extra step. See this thread: <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=139" target="_blank" rel="noopener" class="mycode_url">http://beastie.cs.ua.edu/forum/showthread.php?tid=139</a>
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Test Cases</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=106">humblebeast</a> -  <strong>10-10-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (10-08-2018, 01:44 PM)</span>jwarnett Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=575#pid575" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (10-08-2018, 04:51 AM)</span>bdgerszewski Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=574#pid574" class="quick_jump"></a></cite>Attached are my results, as well as the diff output from my output vs jwarnett's output.  Generally speaking, my furthest path branches never exceed the value in the lower right-hand corner cell.</blockquote><br />
+I have since edited mine and they are the same as yours.  I had been using a clockwise convention instead of a top down convention on my order of enqueues.</blockquote><br />
+Can you explain what you mean by clockwise convention instead of top down?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Test Cases</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a> -  <strong>10-10-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (10-10-2018, 07:00 PM)</span>humblebeast Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=602#pid602" class="quick_jump"></a></cite>Can you explain what you mean by clockwise convention instead of top down?</blockquote><br />
+I think he's referring to the priority of the neighbors of a cell. Clockwise would be top, right, bottom, left. Top down would be top, left, right, bottom.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Test Cases</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=106">humblebeast</a> -  <strong>10-10-2018</strong>
+<br />
+<br />
+So I made 2 really big test cases. Other than matching output, I'm curious what others' runtime is. Don't want any more failed tests from long runtimes. I used time.h in my main to time it.<br />
+<br />
+EDIT 10-11 1:30PM<br />
+Turns out I was using my old da/cda that were really inefficient at removing from the back so my pop was taking the majority of the time.<br />
+New runtimes listed. Thanks to jwarnett and sbcarp for giving their runtimes.<br />
+<br />
+I'm using Windows 10 WSL Ubuntu on a laptop with a i7-4710HQ<br />
+<br />
+./amaze -d maze-c 300 300  maze -s maze maze<br />
+[attachment=35]<br />
+<br />
+It took me about 2.36 seconds to run EDIT: Now 0.23s<br />
+<br />
+./amaze -d maze -c 1000 1000 maze -s maze maze<br />
+[attachment=34]<br />
+<br />
+This took me 189 seconds to run. EDIT: Now 2.42s<br />
+<br />
+Code to time:<br />
+<br />
+#include &lt;time.h&gt;<br />
+<br />
+int main(...){<br />
+   clock_t begin = clock();<br />
+<br />
+   //rest of main<br />
+<br />
+   clock_t end = clock();<br />
+   double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;<br />
+<br />
+   printf("\nTIME TAKEN: %f\n", time_spent);<br />
+ <br />
+   return 0;<br />
+}<br />
+<br />
+Note that I print the actual maze directly into a file so printing the time does not show up in the text files provided.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Test Cases</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a> -  <strong>10-11-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (10-10-2018, 09:48 PM)</span>humblebeast Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=605#pid605" class="quick_jump"></a></cite>So I made 2 really big test cases. Other than matching output, I'm curious what others' runtime is. Don't want any more failed tests from long runtimes. I used time.h in my main to time it.<br />
+<br />
+./amaze -d maze-c 300 300  maze -s maze maze<br />
+<br />
+<br />
+It took me about 2.36 seconds to run<br />
+<br />
+./amaze -d maze -c 1000 1000 maze -s maze maze<br />
+<br />
+<br />
+This took me 189 seconds to run.<br />
+<br />
+To time:<br />
+<br />
+#include &lt;time.h&gt;<br />
+<br />
+int main(...){<br />
+   clock_t begin = clock();<br />
+<br />
+   //rest of main<br />
+<br />
+   clock_t end = clock();<br />
+   double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;<br />
+<br />
+   printf("\nTIME TAKEN: %f\n", time_spent);<br />
+ <br />
+   return 0;<br />
+}<br />
+<br />
+Note that I print the actual maze directly into a file so printing the time does not show up in the text files provided.</blockquote><br />
+First test: 0.34s<br />
+Second test: 4.42s<br />
+<br />
+But the actual time taken is longer than displayed, about 0.6s for the first and 8s for the second. [Updated]<br />
+<br />
+The running time depends on environment and machine as well, mine is windows 10 Ubuntu and i7-4790K.<br />
+<br />
+<br />
+Updated 10/10/2018:<br />
+<br />
+Then I tested on my laptop, shows similar result, 10s for the second test. There might be some efficiency problems in your code.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Test Cases</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=41">jwarnett</a> -  <strong>10-11-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (10-10-2018, 09:26 PM)</span>jdtubbs3 Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=604#pid604" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (10-10-2018, 07:00 PM)</span>humblebeast Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=602#pid602" class="quick_jump"></a></cite>Can you explain what you mean by clockwise convention instead of top down?</blockquote><br />
+I think he's referring to the priority of the neighbors of a cell. Clockwise would be top, right, bottom, left. Top down would be top, left, right, bottom.</blockquote><br />
+Thats exactly what I meant.  On the runtimes, I get between ~0.42 and ~0.44 seconds for the first and between ~5.6 and ~4.3 for the second on different runs
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

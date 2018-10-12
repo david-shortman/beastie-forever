@@ -1,0 +1,121 @@
+html
+    {
+    border-top: 10px solid navy;
+    border-left: 100px solid navy;
+    border-right: 100px solid navy;
+    border-bottom: 1000px solid navy;
+    }
+
+code,tt,pre    { color: #003333; }
+
+h1 { color:#2F4F1F; }
+h2 { color:#3F5F2F; }
+h3 { color:#4F6F3F; }
+
+body
+    {
+    font-size:100%;
+    font-family:"lucida calligraphy",arial,'sans serif'; 
+    font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+    background-color:#FFFFFF;
+    color:black;
+    margin-left: 40px;
+    margin-right: 40px;
+    }
+
+h1 {font-size:150%;}
+h2 {font-size:130%;}
+h3 {font-size:110%;}
+
+h1, h2, h3 { margin-left:-20px; }
+
+
+td {background-color:#FFFFFF;}
+
+td {padding-left: 10px; padding-right: 10px;}
+
+a:link {color:red;text-decoration:none;}
+a:visited {color:navy;text-decoration:none;}
+a:hover {color:red;font-weight:bold;text-decoration:underline;}
+
+h1 a:link {color:#2F4F1F;text-decoration:none;}
+h1 a:visited {color:#2F4F1F;text-decoration:none;}
+h1 a:hover {color:#2F4F1F;font-weight:bold;text-decoration:none;}
+
+code,tt,pre    { font-size: 110%; }
+
+li > ul, li > ol {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    }
+
+li > ul + p, li > ol + p {
+    margin-top: 0em;
+    }
+    
+ul > li + li {
+    padding-top: 3px;
+    }
+
+table {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+
+table {	
+	color:	black;
+	text-decoration:	none;
+	border-color:	black;
+	border-style:	none;
+    background: none;
+    border-top: 1px solid #4F6F3F;
+    border-bottom: 1px solid #4F6F3F;
+	}	
+
+hr
+    {
+    margin-left: -20px;
+    width: 100%;
+    height: 4px;
+    color:#AFCF9F;
+    background-color:#AFCF9F;
+    }
+
+sub, sup { font-size: 75% }
+
+p { line-height: 1.5em; }
+pre { line-height: 1.5em; }
+sub, sup { line-height: 0; } 
+
+@viewport
+	{
+	width: device-width;
+	zoom: 1.0;
+	}
+
+@media only screen and (max-device-width: 640px) {
+    html
+        {
+        background-color: cadetblue;
+        border-left: 2px solid silver;
+        border-right: 2px solid silver;
+        border-top: 2px solid silver;
+        }
+
+    body
+        {
+        font-family: serif;
+        font-size:100%;
+        background-color: FloralWhite;
+        border: 1px solid silver;
+        padding-top: 10px;
+        padding-left: 2px;
+        padding-right: 2px;
+        padding-bottom: 30px;
+        color:black;
+        line-height: 1.3;
+        }
+
+}

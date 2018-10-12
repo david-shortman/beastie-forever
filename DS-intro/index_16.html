@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Aug 18 09:08:15 2014 -->
+<head>
+<title>An Encyclop&aelig;dia of Elementary Data Structures -- Binary Trees</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_15.html">
+  <img border="0" alt="Priority Queues" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_17.html">
+  <img border="0" alt="Binary Search Trees" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Binary Trees</h1>
+
+<h2><a name="id1">Synopsis</a></h2><p>
+A binary tree is a two-dimensional linked-list.
+Typically, a node in a binary tree has two <i>next</i> pointers,
+named <i>left</i> and <i>right</i>, and a <i>value</i> pointer.
+Binary tree nodes may have <i>parent</i> pointers, as well
+</p>
+
+<h2><a name="id2">Structure</a></h2>
+<pre>
+    class binaryTreeNdde
+        {
+        var value;
+        var left;
+        var right;
+        }
+
+    class binaryTree
+        {
+        var root;              //points to the root binary node
+        //operations
+        ...
+        }
+</pre>
+
+<h2><a name="id3">Vocabulary</a></h2><p>
+The terms used in describing a binary tree are:
+</p>
+<dl><dt>full</dt><dd>
+Each node in the tree has either two children or no children.
+</dd><dt>perfect</dt><dd>
+A full tree with all the leaves at the same level.
+<a name="BinaryTreesComplete"></a>
+</dd><dt>complete</dt><dd> 
+A tree that is perfect except for, perhaps,
+the level furthest from the root.
+In that furthest level, all the leaves are piled up to the left.
+A <a href="index_18.html">heap</a> is an example of a complete binary tree.
+</dd><dt>balanced</dt><dd>
+A tree is balanced if the longest path  from the root to
+a leaf is not much longer than the shortest path.
+In other words, a nearly perfect tree. What constitutes
+"not much more" and "nearly" depends on the situation.
+</dd><dt>completely unbalanced</dt><dd>
+A tree is completely unbalanced if it has but one leaf.
+</dd><dt>root</dt><dd>
+The root node of a binary tree is the only node with no
+parent. It is considered the "top" of the tree, since
+trees are commonly drawn upside down, with the branches
+pointing downwards.
+</dd><dt>leaf,leaves</dt><dd>
+A node whose left and right pointers are null. In other words,
+a node with no children.
+</dd><dt>parent</dt><dd>
+Other than the root, each node <i>n</i> has exactly one other node
+<i>p</i> pointing to it.  The node <i>p</i> is said
+to be the parent of <i>n</i>.
+</dd><dt>child,children</dt><dd>
+Other than the leaves, each node <i>p</i> points to one or two other
+nodes. These nodes are said to be the children of <i>p</i>.
+</dd><dt>sibling</dt><dd>
+The other child of a parent node (if it exists).
+</dd></dl>
+
+<h2><a name="id5">Supports</a></h2><p>
+Complete binary trees (<a href="index_18.html">heaps</a>) are used in heapsorting
+and other higher-order algorithms.
+</p>
+<p>The most common use of a binary tree is when it
+is formulated as a <a href="index_17.html">binary search tree</a>.
+</p>
+
+<h2><a name="id6">Dependencies</a></h2><p>
+Binary trees are implemented with
+<a href="index_10.html">nodes</a>.
+</p>
+
+<h2><a name="id7">Operations</a></h2><p>
+The common operations on a binary tree are
+<i>insert</i>, <i>find</i>, and <i>delete</i>.
+The actual implementation of these operations depends on the
+kind of binary tree, say a <a href="index_17.html">binary search tree</a>
+or a <a href="index_18.html">heap</a>.
+</p>
+
+<h2><a name="BinaryTreesTraversals">Traversals</a></h2>
+
+<h3><a name="id9">in-order</a></h3><p>
+In an <i>in-order</i> traversal is easily implemented using
+a recursive process that
+implements the following
+steps:
+</p>
+<ol><li>traverse the left side 
+</li><li>process the node
+</li><li>traverse the middle side
+</li></ol>
+<p>Note that the node processing step occurs "in the middle".
+Hence the name, <i>in-order</i>.
+Processing the node is a phrase meant to capture
+the purpose of the traversal. For printing out the
+nodes of a tree, processing the node means printing
+the value of the node. Here is such a traversal:
+</p>
+<pre>
+    function print-in-order(node)
+        {
+        if (node.get-left() == null)
+            print-in-order(node.get-left());
+
+        println(node.get-value());
+
+        if (node.get-right() == null)
+            print-in-order(node.get-right());
+        }
+</pre>
+<p>This code can be simplified by the strategy of
+"falling off the tree". One detects a falling
+off by seeing if the given node has become null.
+If so, no processing is done.
+Recall that the null value is used to signify
+that a node pointer does not point to any
+node.
+</p>
+<pre>
+    function print-in-order(node)
+        {
+        if (node != null)
+            {
+            print-in-order(node.get-left());
+            println(node.get-value());
+            print-in-order(node.get-right());
+            }
+        }
+</pre>
+
+<h3><a name="id10">pre-order</a></h3><p>
+A <i>pre-order</i> traversal is like an in-order traversal,
+except node processing happens first:
+</p>
+<ol><li>process the node
+</li><li>traverse the left side 
+</li><li>traverse the right side
+</li></ol>
+
+<h3><a name="id11">post-order</a></h3><p>
+In a <i>post-order</i> traversal,
+node processing happens last.
+</p>
+
+<h3><a name="id12">level-order</a></h3><p>
+A level order uses a queue as an auxilliary structure.
+The traversal starts be enqueuing the root node.
+Next a loop:
+</p>
+<ul><li>dequeues a node
+</li><li>processess it
+</li><li>enqueues the children of the node
+</li></ul>
+<p>The loop continues until the queue is empty.
+</p>
+
+<h2><a name="id13">Concept Inventory</a></h2>
+<div align="center">
+</div>
+<ol>&nbsp;
+<li>This is a question.
+<ol><li>
+This is one possible answer
+</li><li>
+This is another possible answer
+</li></ol>
+</li></ol>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_15.html">
+  <img border="0" alt="Priority Queues" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_17.html">
+  <img border="0" alt="Binary Search Trees" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

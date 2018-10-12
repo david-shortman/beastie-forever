@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Confused by setDAdisplay</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Confused by setDAdisplay</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=27">Confused by setDAdisplay</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=27">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=3">amjohnson36</a></h2></div><div class="dateline">08-31-2018, 05:06 PM</div>
+</div>
+<div class="message">I get the concept of passing a function pointer and storing it in the struct. Where I get lost is at this point in the example main.c (all code taken from <a href="http://beastie.cs.ua.edu/cs201/assign-da.html" target="_blank" rel="noopener" class="mycode_url">http://beastie.cs.ua.edu/cs201/assign-da.html</a> so I hope this is okay).<br />
+<br />
+<span style="color: #115555;" class="mycode_color"><span style="font-size: x-small;" class="mycode_size">setDAdisplay(items,0);<br />
+displayDA(items,stdout);</span></span><br />
+<br />
+If I'm not mistaken the value of NULL is being stored in the display function. But then it calls the function right after and it seemingly prints everything out fine? Has anyone else run into this issue?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=10">fdbostwick</a></h2></div><div class="dateline">08-31-2018, 05:19 PM</div>
+</div>
+<div class="message">If the display function = NULL then it prints the pointer value, an address preceded by the @ symbol.<br />
+<br />
+<span style="color: #115555;" class="mycode_color"><span style="font-size: x-small;" class="mycode_size">The items (debugged) are [@0x420c4d8,@0x420c580,@0x420c510,[1]].</span></span></div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=3">amjohnson36</a></h2></div><div class="dateline">08-31-2018, 05:25 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-31-2018, 05:19 PM)</span>fdbostwick Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=148#pid148">[ -> ]</a></cite>If the display function = NULL then it prints the pointer value, an address preceded by the @ symbol.<br />
+<br />
+<span style="color: #115555;" class="mycode_color"><span style="font-size: x-small;" class="mycode_size">The items (debugged) are [@0x420c4d8,@0x420c580,@0x420c510,[1]].</span></span></blockquote><br />
+I see now, must have missed that part. Thanks!</div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Confused by setDAdisplay</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Aug 18 09:08:14 2014 -->
+<head>
+<title>An Encyclop&aelig;dia of Elementary Data Structures -- Fillable Arrays</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_5.html">
+  <img border="0" alt="Arrays" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_7.html">
+  <img border="0" alt="Circular Arrays" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Fillable Arrays</h1>
+
+<h2><a name="id1">Synopsis</a></h2><p>
+Conceptually,
+a fillable array is composed of slots, which are either empty
+or filled. A filled slot holds an element. Each index of the array
+is associated with a slot and slots are filled preferentially from
+left to right. Thus, if zero-based counting is used,
+the first slot to be filled has index 0, the
+second has index one and so on.
+</p>
+<p>Practically, a fillable array is usually implemented
+as an object with a normal array as a component.
+This array component is typically known as a <i>store</i>,
+since the values stored in a fillable array are actually
+stored in the component array.
+</p>
+
+<h2><a name="FillableArraysStructure">Structure</a></h2>
+<p>The typical fillable array object has three components, plus operators:
+</p>
+<pre>
+    class fillable-array
+        {
+        var store = ?;          //points to a normal array
+        var capacity = ?;       //set by the constructor
+        var size = 0;
+        //operations
+        ...
+        }
+</pre>
+<p>The <i>store</i> component points to a normal array and is set by the
+constructor. The <i>capacity</i> is usually given as an argument to the
+constructor and is used to allocate the <i>store</i>.
+</p>
+
+<h2><a name="id3">Vocabulary</a></h2><p>
+The terms used in describing a fillable array are:
+</p>
+<dl><dt>store</dt><dd>
+The actual array where elements are stored.
+</dd><dt>slot</dt><dd>
+A spot in the store which may or may not hold an element.
+Each spot is associated with a unique <i>index</i>.
+</dd><dt>empty slot</dt><dd>
+A spot in the store that does not (yet) hold an element.
+A slot is empty
+if its index lies between <i>size</i> and <i>capacity</i>-1, inclusive.
+</dd><dt>filled slot</dt><dd>
+A spot in the store that holds an element. A slot is filled
+if its index lies between 0 and <i>size</i>-1, inclusive.
+</dd><dt>capacity</dt><dd>
+The maximum number of elements that can be placed in the store.
+Also, the length of the store array.
+</dd><dt>front</dt><dd>
+The leftmost value in the store.
+</dd><dt>back</dt><dd>
+The rightmost value in the store. With zero-based counting,
+if the array is non-empty, the back (or <i>rear</i>) element in
+the array has index <i>size</i> - 1.
+</dd><dt>size</dt><dd>
+The number of elements placed in the store. The size ranges from
+0 (the store is completely empty) to the capacity of the store
+(the store is completely full). Also, with zero-based counting
+the size of the store is also an index that points to the
+next available slot.
+</dd></dl>
+
+<h2><a name="id4">Supports</a></h2><p>
+Fillable arrays can be used to implement:
+</p>
+<ul><li><a href="index_13.html">Bounded Stacks</a>
+</li></ul>
+<p>Important fillable arrays are:
+</p>
+<ul><li><a href="index_7.html">Circular Arrays</a>
+</li><li><a href="index_8.html">Dynamic Arrays</a>
+</li></ul>
+
+<h2><a name="id5">Dependencies</a></h2><p>
+Fillable arrays are implemented using <a href="index_5.html">arrays</a>.
+</p>
+
+<h2><a name="id6">Operations</a></h2>
+
+<h3><a name="id7">add-to-front</a></h3><p>
+This operation places the given value in the first slot
+of the store. This necessitates shifting all previously added
+elements one slot to the right.
+Because <i>add-to-front</i> takes takes <i>&#920;(n)</i> time,
+it is rarely implemented for fillable arrays.
+</p>
+
+<h3><a name="id8">remove-from-front</a></h3><p>
+This operation removes the in the first slot
+of the store. This necessitates shifting all previously added
+elements one slot to the left, in order to fill the hole
+left by the removed element.
+Because <i>remove-from-front</i> takes takes <i>&#920;(n)</i> time,
+it is rarely implemented for fillable arrays.
+</p>
+
+<h3><a name="id9">add-to-back</a></h3><p>
+This operation adds the given <i>value</i> to the store.
+The value is stored to the immediate right of the previously
+added values
+or, in other words, the leftmost empty slot.
+The size is also incremented to reflect the fact
+that a value has been added.
+</p>
+<pre>
+    function add-to-back(value)
+        {
+        store[size] = value;
+        size += 1;
+        }
+</pre>
+<p>Unlike adding a value to the front,
+adding a value at the back takes <i>&#920;(1)</i> time,
+since no shifting of previously added values is needed.
+</p>
+
+<h3><a name="id10">remove-from-back</a></h3><p>
+This operation removes the rightmost <i>value</i> in the store.
+This can be done simply by decrementing the size.
+</p>
+<p>Removing a value from the back takes <i>&#920;(1)</i> time.
+</p>
+
+<h3><a name="FillableArraysGet">get, set</a></h3>
+<p>These operations are 
+similar to those of <a href="index_5.html#ArraysGet">normal arrays</a>, but a valid index
+lies between 0 and <i>size</i> - 1.
+</p>
+
+<h3><a name="FillableArraysFind">find</a></h3>
+<p>The <i>find</i> operation for fillable arrays, assuming the elements
+are unsorted, uses a traversal as shown below.
+</p>
+
+<h2><a name="id13">Traversals</a></h2><p>
+Like normal arrays, fillable arrays are usually traversed from left to right.
+However, it is important to remember that the last filled slot has
+index <i>size</i> - 1, so any traversal has to take this into account:
+</p>
+<pre>
+    for (i = 0; i &lt; size; i += 1)
+        println(items[i])
+</pre>
+<p>Note that this traversal works from left to right.
+To insert in the middle of the array, a traversal
+of the upper part of the array must
+be performed from right to left, in order that
+shifting an element rightward does not trash the
+element to the immediate right. In a right-to-left
+traversal, the element to the immediate right has
+already been shifted rightward, leaving a hole;
+the element on the left is shifted into this hole, leaving
+a new hole. Thus, the hole appears to move leftward.
+</p>
+<p>To delete from the middle of an array, a left-to-right
+traversal is performed.
+</p>
+
+<h2><a name="id14">Concept Inventory</a></h2>
+<div align="center">
+</div>
+<ol>&nbsp;
+<li>Suppose a fillable array has size <i>s</i> and capacity <i>c</i>. The next value to be added to the array will be placed at index:
+<ol><li>
+<i>s</i>
+</li><li>
+<i>c</i>
+</li><li>
+<i>c</i> - 1
+</li><li>
+<i>c</i> + 1
+</li><li>
+<i>s</i> - 1
+</li></ol>
+&nbsp;
+</li><li>Suppose for a fillable array, the size is equal to the capacity. Can a value be added?
+<ol><li>
+Yes, there is room for one more value
+</li><li>
+No, the array is completely full
+</li></ol>
+&nbsp;
+</li><li>Suppose a fillable array is empty. The size of the array is:
+<ol><li>
+zero
+</li><li>
+one
+</li><li>
+the length of the array
+</li><li>
+the capacity of the array.
+</li></ol>
+</li></ol>
+<a name="ContentsFillableArrays"></a>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_5.html">
+  <img border="0" alt="Arrays" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_7.html">
+  <img border="0" alt="Circular Arrays" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: search_results_posts -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Forums - Search Results</title>
+<!-- start: headerinclude -->
+<link rel="alternate" type="application/rss+xml" title="Latest Threads (RSS 2.0)" href="http://beastie.cs.ua.edu/forum/syndication.php" />
+<link rel="alternate" type="application/atom+xml" title="Latest Threads (Atom 1.0)" href="http://beastie.cs.ua.edu/forum/syndication.php?type=atom1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<script type="text/javascript" src="http://beastie.cs.ua.edu/forum/jscripts/jquery.js?ver=1813"></script>
+<script type="text/javascript" src="http://beastie.cs.ua.edu/forum/jscripts/jquery.plugins.min.js?ver=1813"></script>
+<script type="text/javascript" src="http://beastie.cs.ua.edu/forum/jscripts/general.js?ver=1817"></script>
+
+<link type="text/css" rel="stylesheet" href="http://beastie.cs.ua.edu/forum/cache/themes/theme1/global.css" />
+<link type="text/css" rel="stylesheet" href="http://beastie.cs.ua.edu/forum/cache/themes/theme1/thread_status.css" />
+<link type="text/css" rel="stylesheet" href="http://beastie.cs.ua.edu/forum/cache/themes/theme1/css3.css" />
+
+<script type="text/javascript">
+<!--
+	lang.unknown_error = "An unknown error has occurred.";
+
+	lang.select2_match = "One result is available, press enter to select it.";
+	lang.select2_matches = "{1} results are available, use up and down arrow keys to navigate.";
+	lang.select2_nomatches = "No matches found";
+	lang.select2_inputtooshort_single = "Please enter one or more character";
+	lang.select2_inputtooshort_plural = "Please enter {1} or more characters";
+	lang.select2_inputtoolong_single = "Please delete one character";
+	lang.select2_inputtoolong_plural = "Please delete {1} characters";
+	lang.select2_selectiontoobig_single = "You can only select one item";
+	lang.select2_selectiontoobig_plural = "You can only select {1} items";
+	lang.select2_loadmore = "Loading more results…";
+	lang.select2_searching = "Searching…";
+
+	var cookieDomain = ".beastie.cs.ua.edu";
+	var cookiePath = "/forum/";
+	var cookiePrefix = "";
+	var cookieSecureFlag = "0";
+	var deleteevent_confirm = "Are you sure you want to delete this event?";
+	var removeattach_confirm = "Are you sure you want to remove the selected attachment from this post?";
+	var loading_text = 'Loading. <br />Please Wait..';
+	var saving_changes = 'Saving changes..';
+	var use_xmlhttprequest = "1";
+	var my_post_key = "1980cc875ef085cc5a5752e1dc4a8806";
+	var rootpath = "http://beastie.cs.ua.edu/forum";
+	var imagepath = "http://beastie.cs.ua.edu/forum/images";
+  	var yes_confirm = "Yes";
+	var no_confirm = "No";
+	var MyBBEditor = null;
+	var spinner_image = "http://beastie.cs.ua.edu/forum/images/spinner.gif";
+	var spinner = "<img src='" + spinner_image +"' alt='' />";
+	var modal_zindex = 9999;
+// -->
+</script>
+<!-- end: headerinclude -->
+</head>
+<body>
+<!-- start: header -->
+<div id="container">
+		<a name="top" id="top"></a>
+		<div id="header">
+			<div id="logo">
+				<div class="wrapper">
+					<a href="http://beastie.cs.ua.edu/forum/index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" /></a>
+					<ul class="menu top_links">
+						<!-- start: header_menu_portal -->
+<li><a href="http://beastie.cs.ua.edu/forum/portal.php" class="portal">Portal</a></li>
+<!-- end: header_menu_portal -->
+						<!-- start: header_menu_search -->
+<li><a href="http://beastie.cs.ua.edu/forum/search.php" class="search">Search</a></li>
+<!-- end: header_menu_search -->
+						<!-- start: header_menu_memberlist -->
+<li><a href="http://beastie.cs.ua.edu/forum/memberlist.php" class="memberlist">Member List</a></li>
+<!-- end: header_menu_memberlist -->
+						<!-- start: header_menu_calendar -->
+<li><a href="http://beastie.cs.ua.edu/forum/calendar.php" class="calendar">Calendar</a></li>
+<!-- end: header_menu_calendar -->
+						<li><a href="http://beastie.cs.ua.edu/forum/misc.php?action=help" class="help">Help</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="panel">
+				<div class="upper">
+					<div class="wrapper">
+						<!-- start: header_quicksearch -->
+						<form action="http://beastie.cs.ua.edu/forum/search.php" method="post">
+						<fieldset id="search">
+							<input name="keywords" type="text" class="textbox" />
+							<input value="Search" type="submit" class="button" />
+							<input type="hidden" name="action" value="do_search" />
+							<input type="hidden" name="postthread" value="1" />
+						</fieldset>
+						</form>
+<!-- end: header_quicksearch -->
+						<!-- start: header_welcomeblock_guest -->
+						<!-- Continuation of div(class="upper") as opened in the header template -->
+						<span class="welcome">Hello There, Guest! <a href="http://beastie.cs.ua.edu/forum/member.php?action=login" onclick="$('#quick_login').modal({ fadeDuration: 250, keepelement: true, zIndex: (typeof modal_zindex !== 'undefined' ? modal_zindex : 9999) }); return false;" class="login">Login</a> <a href="http://beastie.cs.ua.edu/forum/member.php?action=register" class="register">Register</a></span>
+					</div>
+				</div>
+				<div class="modal" id="quick_login" style="display: none;">
+					<form method="post" action="http://beastie.cs.ua.edu/forum/member.php">
+						<input name="action" type="hidden" value="do_login" />
+						<input name="url" type="hidden" value="" />
+						<input name="quick_login" type="hidden" value="1" />
+						<input name="my_post_key" type="hidden" value="1980cc875ef085cc5a5752e1dc4a8806" />
+						<table width="100%" cellspacing="0" cellpadding="5" border="0" class="tborder">
+							<tr>
+								<td class="thead" colspan="2"><strong>Login</strong></td>
+							</tr>
+							<!-- start: header_welcomeblock_guest_login_modal -->
+<tr>
+	<td class="trow1" width="25%"><strong>Username/Email:</strong></td>
+	<td class="trow1"><input name="quick_username" id="quick_login_username" type="text" value="" class="textbox initial_focus" /></td>
+</tr>
+<tr>
+	<td class="trow2"><strong>Password:</strong></td>
+	<td class="trow2">
+		<input name="quick_password" id="quick_login_password" type="password" value="" class="textbox" /> <a href="http://beastie.cs.ua.edu/forum/member.php?action=lostpw" class="lost_password">Lost Password?</a>
+	</td>
+</tr>
+<tr>
+	<td class="trow1">&nbsp;</td>
+	<td class="trow1 remember_me">
+		<input name="quick_remember" id="quick_login_remember" type="checkbox" value="yes" class="checkbox" checked="checked" />
+		<label for="quick_login_remember">Remember me</label>
+	</td>
+</tr>
+<tr>
+	<td class="trow2" colspan="2">
+		<div align="center"><input name="submit" type="submit" class="button" value="Login" /></div>
+	</td>
+</tr>
+<!-- end: header_welcomeblock_guest_login_modal -->
+						</table>
+					</form>
+				</div>
+				<script type="text/javascript">
+					$("#quick_login input[name='url']").val($(location).attr('href'));
+				</script>
+<!-- end: header_welcomeblock_guest -->
+					<!-- </div> in header_welcomeblock_member and header_welcomeblock_guest -->
+				<!-- </div> in header_welcomeblock_member and header_welcomeblock_guest -->
+			</div>
+		</div>
+		<div id="content">
+			<div class="wrapper">
+				
+				
+				
+				
+				
+				
+				
+				<!-- start: nav -->
+
+<div class="navigation">
+<!-- start: nav_bit -->
+<a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a><!-- start: nav_sep -->
+&rsaquo;
+<!-- end: nav_sep -->
+<!-- end: nav_bit --><!-- start: nav_bit -->
+<a href="search.php">Search</a>
+<!-- end: nav_bit --><!-- start: nav_sep_active -->
+<br /><img src="http://beastie.cs.ua.edu/forum/images/nav_bit.png" alt="" />
+<!-- end: nav_sep_active --><!-- start: nav_bit_active -->
+<span class="active">Results</span>
+<!-- end: nav_bit_active -->
+</div>
+<!-- end: nav -->
+				<br />
+<!-- end: header -->
+<table width="100%" align="center" border="0">
+	<tr>
+		<td align="right" valign="top"><!-- start: multipage -->
+<div class="pagination">
+<span class="pages">Pages (2):</span>
+<!-- start: multipage_prevpage -->
+<a href="search.php?action=results&amp;sid=4e08834aca498026e0edf178140144d3&amp;sortby=starter&amp;order=desc&amp;uid=0" class="pagination_previous">&laquo; Previous</a>
+<!-- end: multipage_prevpage --><!-- start: multipage_page -->
+<a href="search.php?action=results&amp;sid=4e08834aca498026e0edf178140144d3&amp;sortby=starter&amp;order=desc&amp;uid=0" class="pagination_page">1</a>
+<!-- end: multipage_page --><!-- start: multipage_page_current -->
+ <span class="pagination_current">2</span>
+<!-- end: multipage_page_current -->
+</div>
+<!-- end: multipage --></td>
+	</tr>
+</table>
+<table border="0" cellspacing="0" cellpadding="5" class="tborder">
+	<tr>
+		<td colspan="9" class="thead">
+			<strong>Search Results</strong>
+		</td>
+	</tr>
+	<tr>
+		<td class="tcat" align="center" colspan="3"><span class="smalltext"><strong><a href="search.php?action=results&amp;sid=4e08834aca498026e0edf178140144d3&amp;sortby=subject&amp;order=asc">Post</a> </strong></span></td>
+		<td class="tcat" align="center"><span class="smalltext"><strong><a href="search.php?action=results&amp;sid=4e08834aca498026e0edf178140144d3&amp;sortby=starter&amp;order=asc">Author</a> <!-- start: search_orderarrow -->
+<span class="smalltext">[<a href="search.php?action=results&amp;sid=4e08834aca498026e0edf178140144d3&amp;sortby=starter&amp;order=asc">asc</a>]</span>
+<!-- end: search_orderarrow --></strong></span></td>
+		<td class="tcat" align="center"><span class="smalltext"><strong><a href="search.php?action=results&amp;sid=4e08834aca498026e0edf178140144d3&amp;sortby=forum&amp;order=asc">Forum</a> </strong></span></td>
+		<td class="tcat" align="center"><span class="smalltext"><strong><a href="search.php?action=results&amp;sid=4e08834aca498026e0edf178140144d3&amp;sortby=replies&amp;order=desc">Replies</a> </strong></span></td>
+		<td class="tcat" align="center"><span class="smalltext"><strong><a href="search.php?action=results&amp;sid=4e08834aca498026e0edf178140144d3&amp;sortby=views&amp;order=desc">Views</a></strong> </span></td>
+		<td class="tcat" align="center"><span class="smalltext"><strong><a href="search.php?action=results&amp;sid=4e08834aca498026e0edf178140144d3&amp;sortby=dateline&amp;order=desc">Posted</a> </strong></span></td>
+		
+	</tr>
+	
+	<!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow1" width="2%"><span class="thread_status hotfolder" title="No new posts. Hot thread.">&nbsp;</span></td>
+	<td align="center" class="trow1" width="2%">&nbsp;</td>
+	<td class="trow1">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=24">Valgrind possibly lost</a><br />
+			Post: <a href="showthread.php?tid=24&amp;pid=120#pid120">RE: Valgrind possibly lost</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>Only correct output is: All heap blocks were freed -- no leaks are possible.
+
+Try test the program on another computer, and see if it's environment problem.</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow1" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=6">Project 0</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=24" onclick="MyBB.whoPosted(24); return false;">6</a></td>
+	<td align="center" class="trow1">209</td>
+	<td class="trow1" style="white-space: nowrap; text-align: center;"><span class="smalltext">08-30-2018, 09:48 AM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow2" width="2%"><span class="thread_status hotfolder" title="No new posts. Hot thread.">&nbsp;</span></td>
+	<td align="center" class="trow2" width="2%">&nbsp;</td>
+	<td class="trow2">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=19">Preliminary Test Code</a><br />
+			Post: <a href="showthread.php?tid=19&amp;pid=121#pid121">RE: Preliminary Test Code</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em> (08-29-2018, 12:53 PM)lusth Wrote:  You are correct. 
+
+This is why copying code is dangerous. I copied over my stack module to make my queue module. Then I substituted:
+
+queue for stack
+QUEUE for STA...</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow2" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=6">Project 0</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=19" onclick="MyBB.whoPosted(19); return false;">4</a></td>
+	<td align="center" class="trow2">261</td>
+	<td class="trow2" style="white-space: nowrap; text-align: center;"><span class="smalltext">08-30-2018, 09:53 AM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow1" width="2%"><span class="thread_status hotfolder" title="No new posts. Hot thread.">&nbsp;</span></td>
+	<td align="center" class="trow1" width="2%">&nbsp;</td>
+	<td class="trow1">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=13">Submitted but no feedback</a><br />
+			Post: <a href="showthread.php?tid=13&amp;pid=125#pid125">RE: Submitted but no feedback</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>Got the first email “successful submission of test0”
+
+No result received, seems testing server is down.</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow1" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=6">Project 0</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=13" onclick="MyBB.whoPosted(13); return false;">5</a></td>
+	<td align="center" class="trow1">181</td>
+	<td class="trow1" style="white-space: nowrap; text-align: center;"><span class="smalltext">08-30-2018, 06:50 PM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow2" width="2%"><span class="thread_status hotfolder" title="No new posts. Hot thread.">&nbsp;</span></td>
+	<td align="center" class="trow2" width="2%">&nbsp;</td>
+	<td class="trow2">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=26">unionCDA</a><br />
+			Post: <a href="showthread.php?tid=26&amp;pid=141#pid141">RE: unionCDA</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>You could call insertDA(recipient, donor(x)), insertDA will handle array resizing. 
+
+Each insert costs amortized constant time, so the total cost is amortized linear time.</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow2" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=6">Project 0</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=26" onclick="MyBB.whoPosted(26); return false;">9</a></td>
+	<td align="center" class="trow2">253</td>
+	<td class="trow2" style="white-space: nowrap; text-align: center;"><span class="smalltext">08-31-2018, 03:06 AM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow1" width="2%"><span class="thread_status hotfolder" title="No new posts. Hot thread.">&nbsp;</span></td>
+	<td align="center" class="trow1" width="2%">&nbsp;</td>
+	<td class="trow1">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=25">The ol' randomly lost memory leak problem</a><br />
+			Post: <a href="showthread.php?tid=25&amp;pid=142#pid142">RE: The ol' randomly lost memory leak problem</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>Would you mind give me the error message Valgrind prompted</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow1" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=6">Project 0</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=25" onclick="MyBB.whoPosted(25); return false;">5</a></td>
+	<td align="center" class="trow1">157</td>
+	<td class="trow1" style="white-space: nowrap; text-align: center;"><span class="smalltext">08-31-2018, 03:10 AM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow2" width="2%"><span class="thread_status hotfolder" title="No new posts. Hot thread.">&nbsp;</span></td>
+	<td align="center" class="trow2" width="2%">&nbsp;</td>
+	<td class="trow2">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=26">unionCDA</a><br />
+			Post: <a href="showthread.php?tid=26&amp;pid=194#pid194">RE: unionCDA</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em> (09-05-2018, 02:17 PM)JackODonohue Wrote:  Will the tests include self-unions?
+e.g. unionCDA(cda1, cda1);
+I guess no</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow2" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=6">Project 0</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=26" onclick="MyBB.whoPosted(26); return false;">9</a></td>
+	<td align="center" class="trow2">253</td>
+	<td class="trow2" style="white-space: nowrap; text-align: center;"><span class="smalltext">09-05-2018, 03:01 PM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow1" width="2%"><span class="thread_status hotfolder" title="No new posts. Hot thread.">&nbsp;</span></td>
+	<td align="center" class="trow1" width="2%">&nbsp;</td>
+	<td class="trow1">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=35">Assignment description</a><br />
+			Post: <a href="showthread.php?tid=35&amp;pid=214#pid214">RE: Assignment description</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>Quote:You must create MAZE and CELL classes. 
+Does C have class?</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow1" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=7">Project 1</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=35" onclick="MyBB.whoPosted(35); return false;">46</a></td>
+	<td align="center" class="trow1">1,799</td>
+	<td class="trow1" style="white-space: nowrap; text-align: center;"><span class="smalltext">09-06-2018, 01:53 PM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow2" width="2%"><span class="thread_status folder" title="No new posts.">&nbsp;</span></td>
+	<td align="center" class="trow2" width="2%">&nbsp;</td>
+	<td class="trow2">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=41">valgrind memory check</a><br />
+			Post: <a href="showthread.php?tid=41&amp;pid=215#pid215">RE: valgrind memory check</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>Not the best but could be helpful. Divide your test file to several pieces, use Valgrind to test them separately.</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow2" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=6">Project 0</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=41" onclick="MyBB.whoPosted(41); return false;">2</a></td>
+	<td align="center" class="trow2">101</td>
+	<td class="trow2" style="white-space: nowrap; text-align: center;"><span class="smalltext">09-06-2018, 01:56 PM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow1" width="2%"><span class="thread_status hotfolder" title="No new posts. Hot thread.">&nbsp;</span></td>
+	<td align="center" class="trow1" width="2%">&nbsp;</td>
+	<td class="trow1">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=58">Exam question discussion</a><br />
+			Post: <a href="showthread.php?tid=58&amp;pid=270#pid270">RE: Exam question discussion</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>Question 27, does distinct tree mean distinct shape so answer is 5? 
+Question 30, what about BST with one single node?</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow1" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=2">Prerequisite exam</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=58" onclick="MyBB.whoPosted(58); return false;">14</a></td>
+	<td align="center" class="trow1">572</td>
+	<td class="trow1" style="white-space: nowrap; text-align: center;"><span class="smalltext">09-10-2018, 06:35 PM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow2" width="2%"><span class="thread_status folder" title="No new posts.">&nbsp;</span></td>
+	<td align="center" class="trow2" width="2%">&nbsp;</td>
+	<td class="trow2">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=84">Linker Failed</a><br />
+			Post: <a href="showthread.php?tid=84&amp;pid=364#pid364">RE: Linker Failed</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>I guess there are some missing file names in the gcc command, like integer.c</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow2" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=6">Project 0</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=84" onclick="MyBB.whoPosted(84); return false;">2</a></td>
+	<td align="center" class="trow2">97</td>
+	<td class="trow2" style="white-space: nowrap; text-align: center;"><span class="smalltext">09-16-2018, 11:52 PM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow1" width="2%"><span class="thread_status hotfolder" title="No new posts. Hot thread.">&nbsp;</span></td>
+	<td align="center" class="trow1" width="2%">&nbsp;</td>
+	<td class="trow1">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=100">error in expected results</a><br />
+			Post: <a href="showthread.php?tid=100&amp;pid=400#pid400">RE: error in expected results</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>It's your own code, expected result is above dot line.</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow1" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=6">Project 0</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=100" onclick="MyBB.whoPosted(100); return false;">6</a></td>
+	<td align="center" class="trow1">180</td>
+	<td class="trow1" style="white-space: nowrap; text-align: center;"><span class="smalltext">09-19-2018, 05:04 AM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow2" width="2%"><span class="thread_status folder" title="No new posts.">&nbsp;</span></td>
+	<td align="center" class="trow2" width="2%">&nbsp;</td>
+	<td class="trow2">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=127">Lusthian style?</a><br />
+			Post: <a href="showthread.php?tid=127&amp;pid=510#pid510">Lusthian style?</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>Quote:Consider a proof, by strong induction and using Lusthian style, to show that the above statement is true.
+Can someone tell me what is Lusthian style? Never heard about that.</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow2" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=3">First content exam</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=127" onclick="MyBB.whoPosted(127); return false;">1</a></td>
+	<td align="center" class="trow2">109</td>
+	<td class="trow2" style="white-space: nowrap; text-align: center;"><span class="smalltext">09-30-2018, 04:34 AM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow1" width="2%"><span class="thread_status hotfolder" title="No new posts. Hot thread.">&nbsp;</span></td>
+	<td align="center" class="trow1" width="2%">&nbsp;</td>
+	<td class="trow1">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=117">Test Cases</a><br />
+			Post: <a href="showthread.php?tid=117&amp;pid=607#pid607">RE: Test Cases</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em> (10-10-2018, 09:48 PM)humblebeast Wrote:  So I made 2 really big test cases. Other than matching output, I'm curious what others' runtime is. Don't want any more failed tests from long runtimes. I us...</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow1" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=7">Project 1</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=117" onclick="MyBB.whoPosted(117); return false;">25</a></td>
+	<td align="center" class="trow1">774</td>
+	<td class="trow1" style="white-space: nowrap; text-align: center;"><span class="smalltext"><span title="10-11-2018">Yesterday</span>, 02:50 AM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow2" width="2%"><span class="thread_status folder" title="No new posts.">&nbsp;</span></td>
+	<td align="center" class="trow2" width="2%"><!-- start: search_results_icon -->
+<img src="images/icons/shocked.png" alt="Shocked" title="Shocked" />
+<!-- end: search_results_icon --></td>
+	<td class="trow2">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=151">Largest Possible Maze</a><br />
+			Post: <a href="showthread.php?tid=151&amp;pid=608#pid608">Largest Possible Maze</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>Quote:No limit on number of rows and number of columns.
+When I try ./amaze -d test -c 10000 10000 test -s test test,
+it ate over 16GB memory and then showed "Segmentation fault (core dumped)"
+
+What i...</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow2" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=7">Project 1</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=151" onclick="MyBB.whoPosted(151); return false;">2</a></td>
+	<td align="center" class="trow2">81</td>
+	<td class="trow2" style="white-space: nowrap; text-align: center;"><span class="smalltext"><span title="10-11-2018">Yesterday</span>, 03:36 AM</span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow1" width="2%"><span class="thread_status folder" title="No new posts.">&nbsp;</span></td>
+	<td align="center" class="trow1" width="2%">&nbsp;</td>
+	<td class="trow1">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=152">Passing free functions to setSTACKfree/setQUEUEfree</a><br />
+			Post: <a href="showthread.php?tid=152&amp;pid=611#pid611">RE: Passing free functions to setSTACKfree/setQUEU...</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>Try not to pass freeMAZE to setSTACKfree or setQUEUEfree.
+You don't need to free the items in stack or queue, just free stack and queue themselves.
+
+freeMAZE should free all cells and then call freeSt...</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow1" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=7">Project 1</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=152" onclick="MyBB.whoPosted(152); return false;">1</a></td>
+	<td align="center" class="trow1">36</td>
+	<td class="trow1" style="white-space: nowrap; text-align: center;"><span class="smalltext"><span title="10-11-2018, 05:14 PM">11 hours ago</span></span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow2" width="2%"><span class="thread_status folder" title="No new posts.">&nbsp;</span></td>
+	<td align="center" class="trow2" width="2%">&nbsp;</td>
+	<td class="trow2">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=151">Largest Possible Maze</a><br />
+			Post: <a href="showthread.php?tid=151&amp;pid=614#pid614">RE: Largest Possible Maze</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em> (9 hours ago)humblebeast Wrote:  While testing this, valgrind said the stack size is about 8,388,000 bytes.
+
+When I try to run a 2900x2900 (=8,410,000) maze, I get a stack overflow in the initializat...</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow2" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=7">Project 1</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow2"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=151" onclick="MyBB.whoPosted(151); return false;">2</a></td>
+	<td align="center" class="trow2">81</td>
+	<td class="trow2" style="white-space: nowrap; text-align: center;"><span class="smalltext"><span title="10-12-2018, 02:27 AM">2 hours ago</span></span></td>
+	
+</tr>
+<!-- end: search_results_posts_post --><!-- start: search_results_posts_post -->
+<tr class="inline_row">
+	<td align="center" class="trow1" width="2%"><span class="thread_status folder" title="No new posts.">&nbsp;</span></td>
+	<td align="center" class="trow1" width="2%">&nbsp;</td>
+	<td class="trow1">
+		<span class="smalltext">
+			Thread: <a href="showthread.php?tid=154">Test server no './amaze' file</a><br />
+			Post: <a href="showthread.php?tid=154&amp;pid=616#pid616">RE: Test server no './amaze' file</a>
+		</span><br />
+		<table width="100%"><tr><td><span class="smalltext"><em>Delete all files except headers, sources and makefile. 
+Then try make command and see if ./amaze -xxxxxxx works?</em></span></td></tr></table>
+	</td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></td>
+	<td class="trow1" ><!-- start: search_results_posts_forumlink -->
+<a href="forumdisplay.php?fid=7">Project 1</a>
+<!-- end: search_results_posts_forumlink --></td>
+	<td align="center" class="trow1"><a href="http://beastie.cs.ua.edu/forum/misc.php?action=whoposted&tid=154" onclick="MyBB.whoPosted(154); return false;">2</a></td>
+	<td align="center" class="trow1">23</td>
+	<td class="trow1" style="white-space: nowrap; text-align: center;"><span class="smalltext"><span title="10-12-2018, 04:00 AM">56 minutes ago</span></span></td>
+	
+</tr>
+<!-- end: search_results_posts_post -->
+</table>
+<table width="100%" align="center" border="0">
+	<tr>
+		<td align="left" valign="top"><!-- start: multipage -->
+<div class="pagination">
+<span class="pages">Pages (2):</span>
+<!-- start: multipage_prevpage -->
+<a href="search.php?action=results&amp;sid=4e08834aca498026e0edf178140144d3&amp;sortby=starter&amp;order=desc&amp;uid=0" class="pagination_previous">&laquo; Previous</a>
+<!-- end: multipage_prevpage --><!-- start: multipage_page -->
+<a href="search.php?action=results&amp;sid=4e08834aca498026e0edf178140144d3&amp;sortby=starter&amp;order=desc&amp;uid=0" class="pagination_page">1</a>
+<!-- end: multipage_page --><!-- start: multipage_page_current -->
+ <span class="pagination_current">2</span>
+<!-- end: multipage_page_current -->
+</div>
+<!-- end: multipage --></td>
+		<td align="right" valign="top"></td>
+	</tr>
+</table>
+<!-- start: footer -->
+
+	</div>
+</div>
+<div id="footer">
+	<div class="upper">
+		<div class="wrapper">
+			
+			
+			<ul class="menu bottom_links">
+				<!-- start: footer_contactus -->
+<li><a href="http://beastie.cs.ua.edu/forum/contact.php">Contact Us</a></li>
+<!-- end: footer_contactus -->
+				<li><a href="http://beastie.cs.ua.edu/">Beastie</a></li>
+				<li><a href="#top">Return to Top</a></li>
+				<li><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Lite (Archive) Mode</a></li>
+				<li><a href="http://beastie.cs.ua.edu/forum/misc.php?action=markread">Mark All Forums Read</a></li>
+				<li><a href="http://beastie.cs.ua.edu/forum/misc.php?action=syndication">RSS Syndication</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="lower">
+		<div class="wrapper">
+			<span id="current_time"><strong>Current time:</strong> 10-12-2018, 04:57 AM</span>
+			<span id="copyright">
+				<!-- MyBB is free software developed and maintained by a volunteer community.
+					It would be much appreciated by the MyBB Group if you left the full copyright and "powered by" notice intact,
+					to show your support for MyBB.  If you choose to remove or modify the copyright below,
+					you may be refused support on the MyBB Community Forums.
+
+					This is free software, support us and we'll support you. -->
+				Powered By <a href="https://mybb.com" target="_blank" rel="noopener">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com" target="_blank" rel="noopener">MyBB Group</a>.
+				<!-- End powered by -->
+			</span>
+		</div>
+	</div>
+</div>
+<!-- The following piece of code allows MyBB to run scheduled tasks. DO NOT REMOVE --><!-- start: task_image -->
+<img src="http://beastie.cs.ua.edu/forum/task.php" width="1" height="1" alt="" />
+<!-- end: task_image --><!-- End task image code -->
+
+</div>
+<!-- end: footer -->
+</body>
+</html>
+<!-- end: search_results_posts -->

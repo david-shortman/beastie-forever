@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>summations</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS201 Data Structures and Algorithms</span>
+<br/>
+<br/>
+Summations
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="summations.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+<i>Prove</i> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>1</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<mfrac linethickness="1">		<mrow>			<mi>n</mi>			<mrow>				<mo form="prefix">(</mo>				<mi>n</mi>				<mo>+</mo>				<mn>1</mn>				<mo form="postfix">)</mo>			</mrow>		</mrow>		<mn>2</mn>	</mfrac></mrow></math>.
+<br/>
+<br/>
+By induction on <i>n</i>.
+<br/>
+<br/>
+<b>Basis:</b> Let <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>=</mo>	<mn>1</mn></mrow></math>.
+<br/>
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>1</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<mfrac linethickness="1">		<mrow>			<mi>n</mi>			<mrow>				<mo form="prefix">(</mo>				<mi>n</mi>				<mo>+</mo>				<mn>1</mn>				<mo form="postfix">)</mo>			</mrow>		</mrow>		<mn>2</mn>	</mfrac></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>1</mn>			</mrow>			<mn>1</mn>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<mfrac linethickness="1">		<mrow>			<mn>1</mn>			<mrow>				<mo form="prefix">(</mo>				<mn>1</mn>				<mo>+</mo>				<mn>1</mn>				<mo form="postfix">)</mo>			</mrow>		</mrow>		<mn>2</mn>	</mfrac></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>1</mn>	<mo>=</mo>	<mfrac linethickness="1">		<mrow>			<mn>1</mn>			<mo>&times;</mo>			<mn>2</mn>		</mrow>		<mn>2</mn>	</mfrac>	<mo>=</mo>	<mfrac linethickness="1">		<mn>2</mn>		<mn>2</mn>	</mfrac></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>1</mn>	<mo>=</mo>	<mn>1</mn></mrow></math>
+<br/>
+<br/>
+&#8718;
+</span>
+
+<br/>
+<b>Inductive Hypothesis:</b> Assume true for <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>1</mn>	<mo>&lt;</mo>	<mi>k</mi>	<mo>&lt;</mo>	<mi>n</mi></mrow></math>.
+<br/>
+<br/>
+<b>Induction:</b>
+<br/>
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>1</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>1</mn>			</mrow>			<mrow>				<mi>n</mi>				<mo>-</mo>				<mn>1</mn>			</mrow>		</munderover>	</mstyle>	<mi>k</mi>	<mo>+</mo>	<mi>n</mi></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>1</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<mfrac linethickness="1">		<mrow>			<mrow>				<mo form="prefix">(</mo>				<mi>n</mi>				<mo>-</mo>				<mn>1</mn>				<mo form="postfix">)</mo>			</mrow>			<mrow>				<mo form="prefix">(</mo>				<mo form="prefix">(</mo>				<mi>n</mi>				<mo>-</mo>				<mn>1</mn>				<mo form="postfix">)</mo>				<mo>+</mo>				<mn>1</mn>				<mo form="postfix">)</mo>			</mrow>		</mrow>		<mn>2</mn>	</mfrac>	<mo>+</mo>	<mi>n</mi></mrow></math> (<span style="font-variant: small-caps;">By The Inductive Hypothesis</span>)
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>1</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<mfrac linethickness="1">		<mrow>			<mrow>				<mo form="prefix">(</mo>				<mi>n</mi>				<mo>-</mo>				<mn>1</mn>				<mo form="postfix">)</mo>			</mrow>			<mi>n</mi>		</mrow>		<mn>2</mn>	</mfrac>	<mo>+</mo>	<mi>n</mi></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>1</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<mfrac linethickness="1">		<mrow>			<msup>				<mi>n</mi>				<mn>2</mn>			</msup>			<mo>-</mo>			<mi>n</mi>		</mrow>		<mn>2</mn>	</mfrac>	<mo>+</mo>	<mfrac linethickness="1">		<mrow>			<mn>2</mn>			<mi>n</mi>		</mrow>		<mn>2</mn>	</mfrac></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>1</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<mfrac linethickness="1">		<mrow>			<msup>				<mi>n</mi>				<mn>2</mn>			</msup>			<mo>-</mo>			<mi>n</mi>			<mo>+</mo>			<mn>2</mn>			<mi>n</mi>		</mrow>		<mn>2</mn>	</mfrac></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>1</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<mfrac linethickness="1">		<mrow>			<msup>				<mi>n</mi>				<mn>2</mn>			</msup>			<mo>+</mo>			<mi>n</mi>		</mrow>		<mn>2</mn>	</mfrac></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>1</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<mfrac linethickness="1">		<mrow>			<mi>n</mi>			<mrow>				<mo form="prefix">(</mo>				<mi>n</mi>				<mo>+</mo>				<mn>1</mn>				<mo form="postfix">)</mo>			</mrow>		</mrow>		<mn>2</mn>	</mfrac></mrow></math>
+<br/>
+<br/>
+&#8718;
+</span>
+
+&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;
+<br/>
+<br/>
+<i>Prove</i> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>0</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<msup>		<mn>2</mn>		<mi>k</mi>	</msup>	<mo>=</mo>	<msup>		<mn>2</mn>		<mrow>			<mi>n</mi>			<mo>+</mo>			<mn>1</mn>		</mrow>	</msup>	<mo>-</mo>	<mn>1</mn></mrow></math>.
+<br/>
+<br/>
+By induction on <i>n</i>.
+<br/>
+<br/>
+<b>Basis:</b> Let <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>=</mo>	<mn>0</mn></mrow></math>.
+<br/>
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>0</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<msup>		<mn>2</mn>		<mi>k</mi>	</msup>	<mo>=</mo>	<msup>		<mn>2</mn>		<mrow>			<mi>n</mi>			<mo>+</mo>			<mn>1</mn>		</mrow>	</msup>	<mo>-</mo>	<mn>1</mn></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>0</mn>			</mrow>			<mn>0</mn>		</munderover>	</mstyle>	<msup>		<mn>2</mn>		<mi>k</mi>	</msup>	<mo>=</mo>	<msup>		<mn>2</mn>		<mrow>			<mn>0</mn>			<mo>+</mo>			<mn>1</mn>		</mrow>	</msup>	<mo>-</mo>	<mn>1</mn></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mn>0</mn>	</msup>	<mo>=</mo>	<msup>		<mn>2</mn>		<mn>1</mn>	</msup>	<mo>-</mo>	<mn>1</mn>	<mo>=</mo>	<mn>2</mn>	<mo>-</mo>	<mn>1</mn></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>1</mn>	<mo>=</mo>	<mn>1</mn></mrow></math>
+<br/>
+<br/>
+&#8718;
+</span>
+
+<br/>
+<b>Inductive Hypothesis:</b> Assume true for <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>1</mn>	<mo>&lt;</mo>	<mi>d</mi>	<mo>&lt;</mo>	<mi>n</mi></mrow></math>.
+<br/>
+<br/>
+<b>Induction:</b>
+<br/>
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>0</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<msup>		<mn>2</mn>		<mi>k</mi>	</msup>	<mo>=</mo>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>0</mn>			</mrow>			<mrow>				<mi>n</mi>				<mo>-</mo>				<mn>1</mn>			</mrow>		</munderover>	</mstyle>	<msup>		<mn>2</mn>		<mi>k</mi>	</msup>	<mo>+</mo>	<msup>		<mn>2</mn>		<mi>n</mi>	</msup></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>0</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<msup>		<mn>2</mn>		<mrow>			<mrow>				<mo form="prefix">(</mo>				<mi>n</mi>				<mo>-</mo>				<mn>1</mn>				<mo form="postfix">)</mo>			</mrow>			<mo>+</mo>			<mn>1</mn>		</mrow>	</msup>	<mo>-</mo>	<mn>1</mn>	<mo>+</mo>	<msup>		<mn>2</mn>		<mi>n</mi>	</msup></mrow></math> (<span style="font-variant: small-caps;">By The Inductive Hypothesis</span>)
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>0</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<msup>		<mn>2</mn>		<mi>n</mi>	</msup>	<mo>-</mo>	<mn>1</mn>	<mo>+</mo>	<msup>		<mn>2</mn>		<mi>n</mi>	</msup></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>0</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<mn>2</mn>	<mo>&times;</mo>	<msup>		<mn>2</mn>		<mi>n</mi>	</msup>	<mo>-</mo>	<mn>1</mn></mrow></math>
+<br/>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munderover>			<mo>&sum;</mo>			<mrow>				<mi>k</mi>				<mo>=</mo>				<mn>0</mn>			</mrow>			<mi>n</mi>		</munderover>	</mstyle>	<mi>k</mi>	<mo>=</mo>	<msup>		<mn>2</mn>		<mrow>			<mi>n</mi>			<mo>+</mo>			<mn>1</mn>		</mrow>	</msup>	<mo>-</mo>	<mn>1</mn></mrow></math>
+<br/>
+<br/>
+&#8718;
+</span>
+
+&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;
+<br/>
+<br/>
+Problems:
+<br/>
+
+<ul>
+
+<li>
+
+2.2-3
+</li>
+
+<li>
+
+2.2-7
+</li>
+
+<li>
+
+3.1-1
+</li>
+
+<li>
+
+3.1-5
+</li>
+
+<li>
+
+3.1-7
+</li>
+
+</ul>
+
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

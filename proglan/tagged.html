@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>tagged</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Tagged Data
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="tagged.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ Tagged data
+
+<br/>
+</h2><!-- section ENDED -->
+
+Consider developing a complex number package. Remember there are two common
+representations of a complex number, polar and rectangular.
+How do we distinguish
+the two representations? For example, does the list
+
+<code>(2 3)</code>
+represent 2+3i (rectangular form) or 2r3 (polar form)? We can clarify the
+situation by using a symbol in the list (the symbol is known as a tag).
+For example
+
+<code>(Rectangular 2 3)</code>
+would refer to 2+3i while
+
+<code>(Polar 2 3)</code>
+would refer to 2r3.
+<br/>
+<br/>
+Here's a definition of two constructors which apply the appropriate
+tag.
+<br/>
+
+<pre>
+    (define (makeComplexR x y)
+        (list &#39;Rectangular x y)
+        )
+    (define (makeComplexP x y)
+        (list &#39;Polar x y)
+        )
+</pre>
+
+We will also need selectors, to access the type (representation) and the
+contents of a complex number.
+<br/>
+
+<pre>
+    (define (type a)
+        (car a)
+        )
+    (define (contents a)
+        (cdr a)
+        )
+</pre>
+
+Suppose I wish to add two complex numbers together. I could define four
+routines
+<br/>
+
+<ul>
+
+<li>
+
+ addComplexRR
+</li>
+
+<li>
+
+ addComplexRP
+</li>
+
+<li>
+
+ addComplexPR
+</li>
+
+<li>
+
+ addComplexPP
+</li>
+
+</ul>
+
+
+to handle each possible combination of representations. The first routine,
+for example, would expect both arguments in rectangular form while the
+third routine would expect a polar representation for the first argument
+and a rectangular representation for the second.
+<br/>
+<br/>
+Yes, I could define four routines but I would adding to the ugliness
+in the world. Better would be to make the addition function independent
+of the representation. I could implement <i>addComplex</i> as a case statement
+which performed the proper calculations based upon the types of the arguments
+(I would need four cases) but this is little better than the first
+attempt at a solution. The fact that addition is much easier if the complex
+numbers are in rectangular form suggests a nice solution. We will just
+assume that the arguments are in rectangular form. Here's a definition
+given that assumption.
+<br/>
+
+<pre>
+    (define (addComplex a b)
+        (makeComplexR
+            (+ (real a) (real b))
+            (+ (imag a) (imag b))
+            )
+        )
+</pre>
+
+If we design all our functions independent of the representation, then
+the fact that we chose to represent the resulting complex number in rectangular
+form will matter not a whit.
+<br/>
+<br/>
+Now we can define the selectors <i>real</i> and <i>imag</i>, which will
+pull out the real part of the number if it is in rectangular form and calculate
+the real part if it is in polar form.
+<br/>
+
+<pre>
+    (define (real a)
+        (if (eq? (type a) &#39;Polar)
+            (* (car (contents a)) (cos (cadr (contents a))))
+            (car (contents a))
+            )
+        )
+    (define (imag a)
+        (if (eq? (type a) &#39;Polar)
+            (* (car (contents a)) (sin (cadr (contents a))))
+            (cadr (contents a))
+            )
+        )
+</pre>
+
+While this solution is a good one, what happens if we wish to add more
+representations of complex numbers? Our implementations of <i>real</i>
+and <i>imag</i> would need to be modified to add the new representations.
+While this is not an onerous task, there is a better way through
+data-directed programming.
+<br/>
+<!-- section -->
+<h2>
+ Data directed programming
+<br/>
+</h2><!-- section ENDED -->
+
+Data-directed programming generally involves a table of functions which
+is (partially) indexed by data types. The proper function to be used to
+operate on the data is retrieved from the table based upon the types of
+the data to be operated upon. As the book claims, this is indeed a powerful
+way to program. Here is a data directed solution to the problem brought
+up at the end of the previous section.
+<br/>
+<br/>
+First we postulate the existence of a table to store these functions.
+We will use the function <i>put</i> to place functions into the table and
+the function <i>get</i> to retrieve functions. Here are the calls to <i>put</i>
+which place different versions of the real selector into the table
+<br/>
+
+<pre>
+    (put
+        &#39;real
+        &#39;(Rectangular)
+        (lambda (x) (car x))
+        )
+    (put
+        &#39;real
+        &#39;(Polar)
+        (lambda (x) (* (car x) (cos (cadr x))))
+        )
+</pre>
+
+Now we can redefine the real selector so that it calls a helper function
+which extracts the proper version of the selector out of the table and
+applies that function to the number.
+<br/>
+
+<pre>
+    (define (real a)
+        (apply-generic &#39;real a)
+        )
+    (define (imag a)
+        (apply-generic &#39;imag a)
+        )
+</pre>
+
+The fact that the call to <i>put</i> (to install the <i>real</i> selector)
+had 
+<code>&#39;real</code> as the first argument and the helper function <i>apply-generic</i>
+also had 
+<code>&#39;real</code> as its first argument is no accident. The table
+is indexed by the generic operator name (in this case 
+<code>&#39;real</code>) and
+a list of argument types. In this case the selector takes but a single
+argument. Hence the single type in the list passed as the second argument
+to <i>put</i>. The helper function <i>apply-generic</i> will retrieve the
+proper function using 
+<code>&#39;real</code> and a list of types derived from the
+remaining arguments. Here is the definition of <i>apply-generic</i>.
+<br/>
+
+<pre>
+    (define (apply-generic op . args)
+        (let*
+            ((types (map type args))
+             (f (get op types)))
+            (apply f (map contents args))
+            )
+        )
+</pre>
+
+The first variable in the <i>let*</i> is <i>types</i> and it is set to
+list of argument types via <i>map</i>. Once that list is constructed, the
+second variable <i>f</i> is set the function that was previously installed
+in the table. In the body of the <i>let*</i>, that function is applied
+to the contents part of the argument list.
+<br/>
+<br/>
+Now lets go back to the selector real. Suppose we make the following
+definitions
+<br/>
+
+<pre>
+    (define a (makeComplexR 3 4))
+    (define b (makeComplexP 5 6))
+</pre>
+
+and evaluate the following expressions
+<br/>
+
+<pre>
+    (real a)
+</pre>
+
+Using substitution, we get
+<br/>
+
+<pre>
+    (apply-generic real (Rectangular 3 4))
+</pre>
+
+Within <i>apply-generic</i>, <i>op</i> is bound to the symbol 
+<code>real</code>
+and <i>args</i> is bound to the list (Rectangular 3 4). The variable <i>types</i>
+is then bound to the list (Rectangular) and the <i>f</i> is bound the result
+of the call to <i>get</i>, which resolves to
+<br/>
+
+<pre>
+    (get real (Rectangular))
+</pre>
+
+The result of this binding gives <i>f</i> a value of
+<br/>
+
+<pre>
+    (lambda (x) (car x))
+</pre>
+
+Next the <i>apply</i> function is called as
+<br/>
+
+<pre>
+    (apply (lambda (x) (car x)) ((3 4)))
+</pre>
+
+This is converted by the interpreter to
+<br/>
+
+<pre>
+    ((lambda (x) (car x)) 3 4)
+</pre>
+
+which returns
+<br/>
+
+<pre>
+    3
+</pre>
+
+which is the real part of <i>a</i>. Whew! Evaluating
+<br/>
+
+<pre>
+    (real b)
+</pre>
+
+follows a similar path. Now imagine what happens if we add a new representation.
+All we need to do is define a new constructor (with an appropriate tag)
+and install the proper functions into the table. That's it. None of the
+other code needs to be changed at all!
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>parse</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Parsing
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="parse.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+Once you have developed an context-free grammar for your language, the
+next task to build a recognizer for your language via recursive descent
+parsing. A recognizer is a program which says whether the expressions
+(sentences) in your source code are syntactically legal. A recursive
+descent parser is composed of a set of parsing functions, each of which
+derives from a rule in the grammar. Not all grammars are suitable for
+recursive descent parsing. Suppose the grammar for your language is:
+<br/>
+
+<pre>
+    expression : unary
+               | expression operator expression
+
+    operator : PLUS | MINUS | TIMES | DIVIDE
+
+    unary : INTEGER
+          | VARIABLE
+          | VARIABLE OPAREN optExpressionList CPAREN
+          | OPAREN expression CPAREN
+
+    optExpressionList : expressionList | e
+
+    expressionList : expression
+                   | expression COMMA expressionList
+</pre>
+
+If a grammar rule is left-recursive, then the associated parsing function
+can, in some cases, fall into an infinite recursive loop. For example,
+the rule for <i>expression</i> is left-recursive (that is, in one branch of
+<i>expression</i>, the first thing is <i>expression</i>) so we will need to transform
+that rule to a right-recursive format. There is a formal technique for
+dealing with immediately left-recursive rules such as expression. Given
+a left recursive rule of the form:
+<br/>
+
+<pre>
+    a : a x | b
+</pre>
+
+where <i>a</i> and <i>b</i> are strings of terminals and non-terminals, an
+equivalent pair of rules is:
+<br/>
+
+<pre>
+    a : b r
+    r : x r | e
+</pre>
+
+Performing such a transformation on the expression rule yields
+<br/>
+
+<pre>
+    expression : unary expressionR
+
+    expressionR : operator expression expressionR | e
+</pre>
+
+These two rules, neither of which is left-recursive, replace the original
+expression rule. Unfortunately, the technique generates some non-intuitive
+rules. In this particular case, there is a more intuitive approach. We
+note that another way to look at the grammar rule:
+<br/>
+
+<pre>
+    expression : unary
+               | expression operator expression
+</pre>
+
+is that an expression is simply a number of primaries connected by
+operators. Thus we can rewrite the rule either as:
+<br/>
+
+<pre>
+    expression : unary
+               | unary operator expression
+</pre>
+
+or:
+<br/>
+
+<pre>
+    expression : unary
+               | expression operator unary
+</pre>
+
+We choose the first rewrite since it is not left recursive.
+<br/>
+<br/>
+Unfortunately, in both the formal and intuitive rewrite of the
+left-recursive rule, we end up implementing a right associative
+grammar. That is, expressions such as:
+<br/>
+
+<pre>
+    a - b - c - d
+</pre>
+
+will be recognized as:
+<br/>
+
+<pre>
+    (a - (b - (c - d)))
+</pre>
+
+which is contrary to the view of subtraction we have likely been taught
+in grammar school. Does this mean that recursive descent parsing can
+only be used for <i>right-associative</i> expressions? The answer is no,
+but it will take an engineering trick to accomplish that goal (more on
+associativity later). Transforming grammars
+<br/>
+<br/>
+Once all left recursion is eliminated, there is a straight-forward
+transformation from a grammar rule to a function which implements the
+grammar rule:
+<br/>
+
+<ul>
+
+<li>
+
+ each <i>lhs</i> side of a rule becomes a function definition with the <i>lhs</i> as the name of the function - the body of the function corresponds to <i>rhs</i>
+</li>
+
+<li>
+
+ in the body, each terminal on the <i>rhs</i> corresponds to a call to a function named match
+</li>
+
+<li>
+
+ in the body, each non-terminal on the <i>rhs</i> corresponds to a call to the function named by that non-terminal
+</li>
+
+<li>
+
+ in the body, different branches of the <i>rhs</i> correspond to calls to a function named check (or a pending function - more on that later)
+</li>
+
+</ul>
+
+
+A small number of lexical helper functions will be needed though, two
+of which are mentioned above . These helper functions are:
+<br/>
+<span class="indent">
+<table>
+<tr>
+<td style="text-align:left";> <b><i>function</i></b> </td><td style="text-align:left";> <b><i>purpose</i></b> </td>
+</tr>
+<tr>
+<td style="text-align:left";> <i>advance</i> </td><td style="text-align:left";> move to the next lexeme in the input stream </td>
+</tr>
+<tr>
+<td style="text-align:left";> <i>match</i> </td><td style="text-align:left";> insist that the current lexeme is of the given type</td>
+</tr>
+<tr>
+<td style="text-align:left";> </td><td style="text-align:left";> - if it is, advance is called</td>
+</tr>
+<tr>
+<td style="text-align:left";> </td><td style="text-align:left";> - otherwise an error is reported</td>
+</tr>
+<tr>
+<td style="text-align:left";> <i>check</i> </td><td style="text-align:left";> check whether or not the current lexeme is of the given type</td>
+</tr>
+</table>
+
+
+</span>
+
+<br/>
+They are consider lexical functions because they deal with the lexemes
+that make up the input stream. Here is a recursive descent parser which
+recognizes strings in the language specified by the above grammar. Note
+that the parser just recognizes, it does not build up a parse tree. Also
+note that good style insists that the grammar rule precede its associated
+parsing function. Implementing grammars via recursive descent
+<br/>
+Let's implement the right associative grammar rule:
+<br/>
+
+<pre>
+    expression : unary operator expression | unary
+</pre>
+
+as a recursive descent parsing function. Recall that each symbol to
+the left of the colon is called a <i>non-terminal</i>. Each non-terminal
+will correspond to a function. The right hand side of the rule,
+which the non-terminal heads, will correspond to the body of the
+function. Non-terminals on the right hand side correspond to a call to
+the function associated with that non-terminal. Here is the function
+corresponding to <i>expression</i>:
+<br/>
+
+<pre>
+    function expression()
+        {
+        unary();
+        if (operatorPending())
+            {
+            operator();
+            expression();
+            }
+        }
+</pre>
+
+Since an expression can be two things, a <i>unary</i> or a <i>unary</i> followed
+by an operator and then another expression, we use <i>operatorPending</i> to see
+if an operator is indeed pending. The function operatorPending abstracts
+a series of calls to check. If an operator is pending, then we know we
+have the second version of expression.
+<br/>
+<br/>
+Note that the function does not return anything. If the non-terminal
+functions are written in this manner, the resulting program can recognize
+sentences in the language, but cannot execute them. These types of
+programs are known as language recognizers or grammar checkers. Later
+we will use these functions to build parse trees and then manipulate
+those parse trees.
+<br/>
+<br/>
+For another example, consider the rule:
+<br/>
+
+<pre>
+    unary : INTEGER
+          | VARIABLE
+          | VARIABLE OPAREN optEexpressionList CPAREN
+          | OPAREN expression CPAREN
+</pre>
+
+Here is its implementation:
+<br/>
+
+<pre>
+    function unary()
+        {
+        if (check(NUMBER))
+            {
+            advance();
+            }
+        else if (check(VARIABLE))
+            {
+            // two cases!
+            advance();
+            if (check(OPAREN))
+                {
+                advance();
+                optArgumentList();
+                match(CPAREN);
+                }
+            }
+        else
+            {
+            match(OPAREN);
+            expression();
+            match(CPAREN);
+            }
+        }
+</pre>
+
+The function <i>advance</i> is used to advance the input to the next token
+in the stream. The function match is used to ensure that the current
+input token is the supplied terminal. If the input does not match, an
+error is reported. If it does, then <i>advance</i> is called to move to the
+next input token. In general, the function check and pending functions
+are used to implement decision points in the grammar rule, the function
+<i>advance</i> is used to skip past input that has already been analyzed, and
+the function match is used to ensure that terminals appear in the input
+in their proper places.
+<br/>
+<br/>
+Note the close correspondence between the function <i>unary</i> and the
+grammar rule headed by <i>unary</i>.
+<br/>
+<br/>
+In summary, each grammar rule corresponds to a function. Each non-terminal
+on the right-hand side corresponds to a function call to the function
+associated with that non-terminal. Each terminal corresponds to a call to
+match. Each "or" corresponds to a call to check or a pending function. It
+is as simple as that.
+<br/>
+<br/>
+Here is a complete parser for the set of grammar rules shown at the
+very top of this page. The parser assumes that top-level expressions
+are terminated with semicolons.
+<br/>
+
+<pre>
+    function parse()
+        {
+        // Start symbol is expression, terminator is SEMI
+
+        advance();
+        expression();
+        match(SEMI);
+        }
+
+    /////////// recursive descent parsing functions ///////////
+
+    // expression : unary op expression | unary
+
+    function expression()
+        {
+        unary();
+        if (operatorPending())
+            {
+            operator();
+            expression();
+            }
+        }
+
+    // operator : PLUS | MINUS | TIMES | DIV
+
+    function operator()
+        {
+        // must be an operator pending or would not have gotten here
+        // use advance instead of match since we don&#39;t know exactly
+        // which operator is pending
+
+        advance();
+        }
+
+    // unary : INTEGER
+    //         | VARIABLE
+    //         | VARIABLE OPAREN optArgumentList CPAREN
+    //         | OPAREN expression CPAREN
+
+    function unary()
+        {
+        if (check(INTEGER))
+            {
+            match(INTEGER);
+            }
+        else if (check(VARIABLE))
+            {
+            advance();
+            // two cases!
+            if (check(OPAREN))
+                {
+                advance();
+                optArgumentList();
+                match(CPAREN);
+                }
+            }
+        else // must be a parenthesized expression
+            {
+            match(OPAREN);
+            expression();
+            match(CPAREN);
+            }
+        }
+
+    // optArgumentList : argumentList | empty
+
+    function optArgumentList()
+        {
+        if (argumentListPending())
+            {
+            argumentList();
+            }
+        // else empty
+        }
+
+    // argumentLists: expression
+    //              | expression COMMA argumentList
+
+    function argumentList()
+        {
+        expression();
+        if (check(COMMA))
+            {
+            match(COMMA);
+            argumentList();
+            }
+        }
+
+
+    ////////////// first set functions ///////////////
+
+    function operatorPending()
+        {
+        return check(PLUS) || check(MINUS) || check(TIMES) || check(DIV);
+        }
+
+    function argumentListPending()
+        {
+        return expressionPending();
+        }
+
+    function expressionPending()
+        {
+        return unaryPending();
+        }
+
+    function unaryPending()
+        {
+        return check(INTEGER) || check(VARIABLE) || check(OPAREN);
+        }
+
+    /////////////// parser utility functions //////////////////
+
+    function advance()
+        {
+        var old = Current;
+
+        // get the next lexeme in the input stream
+
+        Current = lex();
+
+        return old;
+        }
+
+    function match(int type)
+        {
+        if (check(type))
+            {
+            return advance();
+            }
+
+        ParseException(&quot;Parse error: looking for %s, found %s instead\n&quot;,
+        TypeToStr(type), Current.display());
+
+        return null;
+        }
+
+    function check(int type)
+        {
+        return type == Current-&gt;type;
+        }
+</pre>
+
+Notice how closely the implementations of the grammar rules follow
+the rules themselves. Also, note that match is returning the matched
+lexeme. This is in preparation for building parse trees.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

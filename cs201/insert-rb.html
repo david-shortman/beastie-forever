@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>insert-rb</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+Red-Black Tree Insertion
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="insert-rb.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+Start out by using a regular binary search tree insertion.
+Color the newly inserted node red.
+Call <i>insertionFixUp</i>, passing a
+pointer to the newly inserted node.
+<br/>
+
+<pre>
+    function insertionFixUp(x)    // x is the newly inserted node
+        {
+        loop
+            {
+            if (x is root) exit the loop
+            if (parent is black) exit the loop
+            if (uncle is red)
+                {
+                color parent black
+                color uncle black
+                color grandparent red
+                x = grandparent
+                }
+            else
+                {
+                // uncle must be black
+
+                if (x and parent are not linear)
+                    {
+                    rotate x to parent
+                    x = old parent
+                    parent = old x
+                    }
+
+                color parent black
+                color grandparent red
+                rotate parent to grandparent
+                exit the loop
+                }
+            }
+
+        color root black
+        }
+</pre>
+
+Note that in this pseudocode,
+there are no references to leftness and rightness.
+This issue is deferred to the helper functions.
+For example, the <i>uncle is red</i> test could be implemented
+as:
+<br/>
+
+<pre>
+   color(uncle(x)) == RED
+</pre>
+
+where <i>uncle</i> is implemented as:
+<br/>
+
+<pre>
+    function uncle(x)
+        {
+        if (isLeftChild(parent(x)))
+            return rightChild(grandparent(x));
+        else
+            return leftChild(grandparent(x));
+        }
+</pre>
+
+The <i>color</i> function returns the color field of the given node, unless
+the given node is null, in which case it returns 
+<code>BLACK</code>:
+<br/>
+
+<pre>
+    function color(x)
+        {
+        if (isNull(x))
+            return BLACK;
+        else
+            return x.color;
+        }
+</pre>
+
+The parent of the root node should be null; thus
+the color of the parent of the root is BLACK.
+<br/>
+<br/>
+<b>Next:</b>
+<a href="delete-rb.html">
+Deleting from a red-black trees
+</a>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

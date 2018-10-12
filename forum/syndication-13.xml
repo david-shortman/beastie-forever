@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title><![CDATA[Forums - The master recurrence theorem]]></title>
+		<link>http://beastie.cs.ua.edu/forum/</link>
+		<description><![CDATA[Forums - http://beastie.cs.ua.edu/forum]]></description>
+		<pubDate>Fri, 12 Oct 2018 04:14:38 +0000</pubDate>
+		<generator>MyBB</generator>
+		<item>
+			<title><![CDATA[Test #2, Question 9]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=109</link>
+			<pubDate>Fri, 21 Sep 2018 22:27:37 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=109</guid>
+			<description><![CDATA[Why is the answer Case 1 instead of Case 3? The work at a level is n^2 (log (base 3) of 9) and the work of the recursion is nlogn.<br />
+<br />
+Nlogn can be simplified to n.<br />
+<br />
+So the work at a level is n^2 and the work of the recursion is just n. <br />
+<br />
+The work at a level is doing more work, so shouldn't it be case 3?]]></description>
+			<content:encoded><![CDATA[Why is the answer Case 1 instead of Case 3? The work at a level is n^2 (log (base 3) of 9) and the work of the recursion is nlogn.<br />
+<br />
+Nlogn can be simplified to n.<br />
+<br />
+So the work at a level is n^2 and the work of the recursion is just n. <br />
+<br />
+The work at a level is doing more work, so shouldn't it be case 3?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Test #2, Question 7]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=108</link>
+			<pubDate>Fri, 21 Sep 2018 22:10:54 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=108</guid>
+			<description><![CDATA[Why is the answer to question number 7 not Case 1?<br />
+<br />
+The equation is T(n) = 9T(n/4) + (n^2)logn<br />
+<br />
+This means that the runtime of work at a level is n^(~1.585) which is the log (base 4) of 9.<br />
+<br />
+If we compare their run times then n^(1.585) &lt; (n^2)log(n)<br />
+<br />
+This means that since the recursion has a higher growth rate, it contributes more work.<br />
+<br />
+So why isn't it case 1?]]></description>
+			<content:encoded><![CDATA[Why is the answer to question number 7 not Case 1?<br />
+<br />
+The equation is T(n) = 9T(n/4) + (n^2)logn<br />
+<br />
+This means that the runtime of work at a level is n^(~1.585) which is the log (base 4) of 9.<br />
+<br />
+If we compare their run times then n^(1.585) &lt; (n^2)log(n)<br />
+<br />
+This means that since the recursion has a higher growth rate, it contributes more work.<br />
+<br />
+So why isn't it case 1?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Test Attempt 1, #9]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=87</link>
+			<pubDate>Sun, 16 Sep 2018 20:48:46 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=87</guid>
+			<description><![CDATA[I'm having a hard time understanding #9<br />
+<br />
+In T(n) = 2T(n/2) + n log n, the answer says it falls between cases 2 and 3.<br />
+<br />
+But isn't the work done at recursion theta(n) and the work done at the level n log n? Why wouldn't it be case 3 since n is a faster run time than n log n?]]></description>
+			<content:encoded><![CDATA[I'm having a hard time understanding #9<br />
+<br />
+In T(n) = 2T(n/2) + n log n, the answer says it falls between cases 2 and 3.<br />
+<br />
+But isn't the work done at recursion theta(n) and the work done at the level n log n? Why wouldn't it be case 3 since n is a faster run time than n log n?]]></content:encoded>
+		</item>
+	</channel>
+</rss>

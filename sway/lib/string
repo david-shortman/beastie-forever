@@ -1,0 +1,74 @@
+function stringLibrary()
+    {
+    var p = println;
+    p("exceptSuffix(str,suffix) - return all of str except suffix");
+    p("exceptPrefix(str,prefix) - return all of str except prefix");
+    p("baseName(path,suffix)    - like UNIX basename command");
+    :done;
+    }
+
+/*
+ * exceptSuffix
+ *
+ * arg s: string with suffix
+ * arg end: suffix
+ *
+ * - returns all of s but the suffix
+ * - if s doesn't have the suffix, all of s is returned
+ *
+ */
+
+function exceptSuffix(s,end)
+    {
+    if (s == "" || s == end,"",s[0] + exceptSuffix(tail(s),end));
+    }
+
+/*
+ * exceptPrefix
+ *
+ * arg s: string with prefix
+ * arg begin: prefix
+ *
+ * - returns all of s after the prefix
+ * - if s doesn't have the prefix, all of s is returned
+ *
+ */
+
+function exceptPrefix(s,begin)
+    {
+    function match(t,b)
+        {
+	if (b == "",return t);
+	if (t == "",return s);
+	if (b[0] == t[0],return match(tail(t),tail(b)));
+	s;
+	}
+
+    match(s,begin);
+    }
+
+/* 
+ * baseName
+ *
+ * - similar to Unix basename command
+ *
+ */
+
+function baseName(str,ending)
+    {
+    var i;
+
+    while (str[length(str) - 1] == "/")
+        {
+	str = exceptSuffix(str,"/");
+	}
+    
+    i = stringUntil(str,"/");
+    while (i < length(str))
+        {
+	str = suffix(str,i + 1);
+	i = stringUntil(str,"/");
+	}
+
+    exceptSuffix(str,ending);
+    }

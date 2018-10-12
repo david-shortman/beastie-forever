@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:16 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Functions</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_10.html">
+  <img border="0" alt="Strings" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_12.html">
+  <img border="0" alt="More about Functions" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Functions</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Functions</h1>
+<p>Recall from 
+<a href="index_8.html">the chapter on assignment</a>
+the series of expressions we evaluated to find
+the <i>y</i>-value of a point on the line:
+</p>
+<pre>
+    y = 5x - 3
+</pre>
+<p>First, we assigned values to the slope,
+the <i>x</i>-value, and the <i>y</i>-intercept:
+</p>
+<pre>
+    int m = 5;
+    int x = 9;
+    int b = -3;
+</pre>
+<p>Once those variables have been assigned,
+we can compute the value of <i>y</i>:
+</p>
+<pre>
+    int y = m * x + b;
+</pre>
+<p>Now, suppose we wished to find the <i>y</i>-value corresponding to
+a different <i>x</i>-value or, worse yet, for a different <i>x</i>-value
+on a different line. All the work we did would have to be
+repeated. A <i>function</i> is a way to encapsulate all these operations
+so we can repeat them with a minimum of effort.
+</p>
+
+<h2><a name="id1">Encapsulating a series of operations</a></h2><p>
+First, we will define a not-too-useful function that
+calculates <i>y</i>, given a slope of 5,
+a <i>y</i>-intercept of -3, and an
+<i>x</i>-value of 9 (exactly
+as above). We do this by wrapping a function around
+the sequence of operations above.
+The return value of this function is the computed <i>y</i> value:
+</p>
+<pre>
+    int
+    getY(void)
+        {
+        int m = 5;
+        int x = 9;
+        int b = -3;
+        return m * x + b;
+        }
+</pre>
+<p>There are a few things to note. A function definition
+begins with a type such as <code>int</code>, <code>double</code>, or <code>char *</code>.
+This type 
+is known as the <i>return</i> <i>type</i>. In our example,
+the return type is <i>int</i>, meaning the function we are defining will
+return an integer.
+Following the return type
+is the name of the function; the name of this
+particular function is <i>getY</i>. The names of the things
+being sent to the function are given between the parentheses.
+If the function does not need any thing sent to it,
+we use
+the keyword <code>void</code> to signify this fact.
+Together, the return type, the name of the function, and
+the information about what needs to be sent to the function
+is known as the <i>function signature</i>.
+</p>
+<p>The stuff indented from the function signature 
+is called the <i>function body</i> and
+is the code that will be evaluated (or executed) when the
+function is used. You must remember this: <i>the function body
+is not evaluated until the function is actually used</i>.
+</p>
+<p>While in many languages the name of a function is a variable,
+in C the name of a function is a constant. It is, in fact, a
+pseudopointer, much like the name of a statically allocated
+array. Thus we cannot reassign <i>getY</i>, but we can create
+a pointer that points to what <i>getY</i> points to. This thing that
+<i>getY</i> points to is known as a <i>function object</i> or a <i>closure</i>.
+A true pointer that points to a function object is known as a
+<i>function pointer</i>. We will discuss function pointers in a later chapter.
+</p>
+<p>Here is a program that uses our function:
+</p>
+<pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include &lt;math.h&gt;
+    #include &lt;string.h&gt;
+
+    int getY(void);                     //function declarations go here
+
+    int
+    main(int argc,char **argv)
+        {
+        int result;
+
+        result = getY();                //function call
+
+        printf("getY returned %d\n",result);
+
+        return 0;
+        }
+
+    int                                 //function definitions go here
+    getY(void)
+        {
+        int m = 5;
+        int x = 9;
+        int b = -3;
+        return m * x + b;
+        }
+</pre>
+<p>There are a number of points to go over with respect to this program.
+</p>
+<ol><li>The first is we place all the signatures of the functions we write
+near the top of the file. The signatures must precede any calls (or uses)
+of the function. A function signature by itself
+is known as a <i>declaration</i>,
+as it tells the compiler that the function exists and is defined elsewhere.
+Another name for a function declaration is <i>prototype</i>.
+</li><li>Second, to call a function, we give the name of the
+function followed by a parenthesized list of the things we want to
+send to it. Since the function <i>getY</i> needs nothing, we send nothing,
+signified by the empty parentheses.
+</li><li>Third, we place our function definitions after the definition of <i>main</i>.
+</li></ol>
+<p>This placement of function definitions is not a hard and fast rule.
+We could have written our program like this:
+</p>
+<pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include &lt;math.h&gt;
+    #include &lt;string.h&gt;
+
+    int                                 //function definitions go here
+    getY(void)
+        {
+        int m = 5;
+        int x = 9;
+        int b = -3;
+        return m * x + b;
+        }
+
+    int
+    main(int argc,char **argv)
+        {
+        int result;
+
+        result = getY();                //function call
+
+        printf("getY returned %d\n",result);
+
+        return 0;
+        }
+</pre>
+<p>In this version, there is no need for separate function declarations
+since definitions include function signatures.
+Which style you use is a matter of choice.
+</p>
+<p>One final comment on the function declaration lines.  The use of these
+declarations
+is strongly encouraged.  Among other things, you will eventually
+encounter situations where they are mandatory.  For example, consider
+a <i>main</i> routine that calls functions <i>foo</i> and <i>bar</i>. 
+During execution, <i>foo</i> will occasionally make calls to <i>bar</i> for
+computations, and <tt>bar</tt> might also have to make a call to <i>foo</i>.
+It is impossible to identify an order to define <i>main</i> and <i>foo</i>
+and <i>bar</i> that the C compiler will accept without the use of 
+function declaration lines.
+</p>
+
+<h2><a name="id2">Passing arguments</a></h2><p>
+The <i>getY</i> function, as written above,
+is not too useful in that we cannot use it to compute
+similar things, such as the <i>y</i>-value for a different value of
+<i>x</i>.
+This is because we "hard-wired" the values of <i>b</i>, <i>x</i>, and <i>m</i>
+in the definition of the function.
+</p>
+<p>A hallmark of a good function is that it lets you compute
+more than one thing. We can modify our <i>getY</i> function to <i>take in</i> the
+value of <i>x</i> in which we are interested.
+In this way,
+we can compute more than one value of <i>y</i>.
+We do this by <i>passing</i> in 
+some information. This information that is passed to a function in a function
+call is known as
+an <i>argument</i><sup><a href="index_26.html#footnote-21">21</a></sup>, in this case, the value of <i>x</i>:
+</p>
+<pre>
+    int
+    getY(int x)
+        {
+        int slope = 5;
+        int intercept = -3;
+        return slope * x + intercept;
+        }
+</pre>
+<p>Note that we have moved the variable <i>x</i> from the body of the function
+to between the parentheses. We have also refrained from
+giving it a value since its value is to be sent to the function
+when the function is called.
+What we have done is to <i>parameterize</i> the function to make it more
+general and more useful. The variable <i>x</i> is now called a
+<i>formal parameter</i> since it sits between the parentheses in
+the first line of the function definition.
+</p>
+<p>Now we can compute <i>y</i> for an infinite number of <i>x</i>'s:
+</p>
+<pre>
+    int
+    main(int argc,char **argv)
+        {
+        int result;
+
+        result = getY(9);              
+        printf("getY(9) returned %d\n",result);     //should be: 42
+
+        result = getY(0);              
+        printf("getY(0) returned %d\n",result);     //should be: -3
+
+        result = getY(-2);              
+        printf("getY(-2) returned %d\n",result);    //should be: -13
+
+        return 0;
+        }
+</pre>
+<p>What if we wish to
+compute a <i>y</i>-value for a given <i>x</i> for a different
+line? One approach would be to pass in the <i>slope</i> and <i>intercept</i>
+as well as <i>x</i>:
+</p>
+<pre>
+    int
+    getY(int x,int m,int b)
+        {
+        int ans = m * x + b;
+        return ans;
+        }
+</pre>
+<p>If we wish to calculate using a different line, we just pass in the
+new <i>slope</i> and <i>intercept</i> along with our value of <i>x</i>.
+This certainly works as intended, but is not the best way. One problem
+is that we keep on having to type in the slope and intercept even if
+we are computing <i>y</i>-values on the same line. Anytime you
+find yourself doing the same tedious thing over and over,
+be assured that
+someone has thought of a way to avoid that particular tedium.
+If so, how do we
+customize our function so that we only have to enter the slope
+and intercept once per particular line? We'll have to postpone
+these thoughts until we learn about another data structure called
+<i>objects</i>.
+</p>
+<p>You should note that, in the last version of our <tt>getY</tt> function,
+we introduced a local variable <i>ans</i>.  We calculated an answer
+in <i>ans</i> and then that value was returned to the calling routine.
+The variable <i>ans</i> `disappears' when the function quits.  That is,
+the space that was allocated for it is freed and made available for
+other uses.
+</p>
+<p>In any case, the
+things you should take away, so far, about functions are:
+</p>
+<ul><li>functions encapsulate calculations
+</li><li>functions can be parameterized
+</li><li>functions are defined so that they may be called
+</li><li>any statically declared variables in the function
+are destroyed/released when the function completes
+</li><li>functions return values
+</li></ul>
+<p>This last point is very important.
+Whoever calls a function needs to handle the
+return value either by assigning it to a variable or by passing it
+immediately to another function (nested function calls).
+Here is an example of the former:
+</p>
+<pre>
+    y = square(x);
+    z = square(y);
+</pre>
+<p>and here is an example of both the former and the latter:
+</p>
+<pre>
+    z = square(square(x));
+</pre>
+<p>Both approaches yield identical results.
+</p>
+
+<h2><a name="id3">The Function and Procedure Patterns</a></h2><p>
+When a function calculates (or obtains) a value and returns it, we say
+that it implements the <i>function</i> pattern. If a function
+does not have a return value, we say it implements the
+<i>procedure</i> pattern.
+</p>
+<p>The <i>square</i> function mentioned in the previous section
+is an example of the <i>function</i> pattern:
+</p>
+<pre>
+    int
+    square(x)
+        {
+        return x * x;
+        }
+</pre>
+<p>This function takes a value, stores it in <i>x</i>, computes the square
+of <i>x</i> and returns the result of the computation.
+</p>
+<p>In contrast, here is an example of the <i>procedure</i> pattern:
+</p>
+<pre>
+    void
+    displayLine(int m,int b)
+        {
+        printf("y = %dx + %d",m,b);
+        return;
+        }
+</pre>
+<p>We use the <code>void</code> return type to indicate procedures. Also,
+we give no value for the return.
+</p>
+<p>Almost always,
+a function that implements the <i>function</i> pattern does not print
+anything, while a function that implements the procedure
+pattern often does<sup><a href="index_26.html#footnote-22">22</a></sup>.
+A mistake often made by beginning programmers is
+to print a calculated value rather than to return it. So, when defining
+a function, you should ask yourself, should I implement the function
+pattern or the procedure pattern?
+</p>
+<p>Most of the functions you will implement in this class follow the function
+pattern.
+</p>
+
+<h2><a name="id4">The dangers of functions and statically allocated arrays</a></h2><p>
+A common mistake mistake made by beginners to have a function define
+a statically allocated array and then attempt to return the array:
+</p>
+<pre>
+    int *
+    bundle3(int a,int b,int c)
+       {
+       int bundle[3];
+       bundle[0] = a;
+       bundle[1] = b;
+       bundle[2] = c;
+       return bundle;
+       }
+
+    ...
+    int *p = bundle3(x,y,z); //the returned array's memory may be reused!
+</pre>
+<p>Modern C compilers will flag this attempt to return <i>bundle</i>.
+The reason this is a bad idea is, once the function
+returns, the memory reserved for the statically allocated array is
+reclaimed by the system.  Remember that we had mentioned above that any
+statically declared variables are released/destroyed when a function completes.
+</p>
+<p>While the "array" <i>p</i>, in the example above, may appear normal
+for a while, once that memory allocated to <i>bundle</i> is reused, the
+elements of <i>p</i> will be corrupted.
+Note that this memory reuse only affects arrays statically allocated
+within a function; arrays statically allocated outside of functions
+last the lifetime of the program.
+</p>
+<p>The proper way to implement the <i>bundle3</i> function is to dynamically
+allocate the array:
+</p>
+<pre>
+    int *
+    bundle3(int a,int b,int c)
+       {
+       int *bundle = malloc(sizeof(int) * 3);
+       //check for malloc failure omitted
+       bundle[0] = a;
+       bundle[1] = b;
+       bundle[2] = c;
+       return bundle;
+       }
+
+    ...
+    int *p = bundle3(x,y,z); //the returned array's memory will NOT be reused!
+</pre>
+<p>Our function now returns a pointer to a location that contains three integers. 
+Since that location was allocated dynamically, it remains available after
+the function has completed.  The user can now reference the three values
+that were placed in <i>bundle</i>.  However, the user should also remember to
+<tt>free</tt> that memory when it is no longer needed.  Otherwise, repeated calls
+to this function will result in a memory leak that could cause issues over time.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_10.html">
+  <img border="0" alt="Strings" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_12.html">
+  <img border="0" alt="More about Functions" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Functions</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

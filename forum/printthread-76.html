@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> valgrind memory leak - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=80">valgrind memory leak</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  valgrind memory leak (<em>/showthread.php?tid=80</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>valgrind memory leak</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=17">oamohamed</a> -  <strong>09-15-2018</strong>
+<br />
+<br />
+to free CDA do we have to free the empty slots before freeing the object and it is supporting allocations?.<br />
+i have 56 bytes lost I am trying to find it,
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: valgrind memory leak</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=17">oamohamed</a> -  <strong>09-16-2018</strong>
+<br />
+<br />
+on stack display i tried to free a value from func getDA (the underline data structure), i just setDAfree to the stack free func.and this seems to solve some memory leak. if this sound logical I can't see where this function got called when dealing with stack?.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: valgrind memory leak</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=124">hashah</a> -  <strong>09-17-2018</strong>
+<br />
+<br />
+First of all, I am not sure why you are freeing anything in the stackDisplay.  stackFree() should call freeDa() and if there is a free func set in the stack, then you have to pass that free func  via setFreeDA. <br />
+<br />
+Remember to free the Stack object itself.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: valgrind memory leak</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=17">oamohamed</a> -  <strong>09-17-2018</strong>
+<br />
+<br />
+this is make lots of sense for what i was doing wrong(freeing in wrong places),<br />
+although i have no memory leak.<br />
+Thanks.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

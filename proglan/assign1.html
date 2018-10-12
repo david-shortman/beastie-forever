@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign1</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Assignment 1
+<br/>
+<br/>
+<span class="smaller">Version 2a</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="assign1.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Preliminary information
+<br/>
+</h2><!-- section ENDED -->
+
+This is your first Scam assignment.
+To run your code, use the following
+command:
+<br/>
+
+<pre>
+    scam FILENAME
+</pre>
+
+or
+<br/>
+
+<pre>
+    scam -r FILENAME
+</pre>
+
+where 
+<code>FILENAME</code> is replaced by the name of the program you wish to run.
+The 
+<code>-r</code> option will automatically run a no-argument function named 
+<code>main</code>
+on startup.
+<br/>
+<br/>
+All assignment submissions should supply a program named <i>author.scm</i>.
+This program should look like:
+<br/>
+
+<pre>
+    (define (main)
+        (println &quot;AUTHOR: Rita Recursion rrita@crimson.ua.edu&quot;)
+        )
+</pre>
+
+with the name and email replaced by your own name and email.
+<br/>
+<br/>
+For each numbered task (unless otherwise directed),
+you are to provide a
+program named
+<i>taskN.scm</i>,
+with the <i>N</i> corresponding to the task number, starting at one
+(as in <i>task1.scm</i>,
+<i>task2.scm</i>,
+and so on).
+For example, if task 5 is:
+<br/>
+<br/>
+<span class="indent">
+5. Implement factorial so that it implements a recursive process. Name your
+function <i>fact</i>. It will take a non-negative integer argument.
+</span>
+
+<br/>
+<br/>
+you should create a program file named <i>task5.scm</i>.
+The program should look like:
+<br/>
+
+<pre>
+    (define (main)
+        (setPort (open (getElement ScamArgs 1) &#39;read))
+        (println (apply fact (readExpr)))
+        )
+
+    (define (fact n)
+        (if (&lt; n 2) 1 (* n (fact (- n 1))))
+        )
+</pre>
+
+The expression beginning with <i>setPort</i> sets the input file pointer
+to the file named by the first command line argument. The file should contain
+a parenthesized list of the arguments to be passed to the <i>fact</i> function.
+The <i>readExpr</i> call in the second expression reads this list of arguments
+and returns them to the apply function, which passes these arguments to the
+<i>fact</i> function. Here is one way to run the <i>task5</i> program.
+<br/>
+
+<pre>
+    $ echo &quot;(5)&quot; &gt; task5.text
+    $ scam -r task5.scm task5.text
+    120
+    $
+</pre>
+
+The filename <i>task5.text</i> is the first command-line argument.
+The 
+<code>-r</code> option informs Scam to run the <i>main</i> function after the program
+has been loaded.
+<br/>
+<br/>
+For printing, it may be of use to know that you can have actual tabs and
+newlines within a string, as in:
+<br/>
+
+<pre>
+    (println &quot; 
+        The quick brown fox
+
+               m
+           u       p
+        j             e
+                        d
+
+        over the lazy dog
+    &quot;)
+</pre>
+
+which will print out as:
+<br/>
+
+<pre>
+    
+    The quick brown fox
+
+           m
+       u       p
+    j             e
+                    d
+
+    over the lazy dog
+</pre>
+
+A useful debugging function <i>inspect</i>. Here is an
+example usage:
+<br/>
+
+<pre>
+   (inspect (+ 2 3))
+</pre>
+
+which produces the output:
+<br/>
+
+<pre>
+    (+ 2 3) is 5
+</pre>
+
+Another useful debugging function is <i>pause</i>. It takes no arguments,
+stopping execution until a newline is entered from the keyboard.
+<br/>
+<br/>
+You may not use assignment
+in any of the code you write.
+Nor may you use any looping function such as <i>while</i> or <i>for</i>.
+You may not use lists or arrays, unless otherwise specified.
+Do not use the comment-out-the rest-of-the-file comment in your code.
+<br/>
+<!-- section -->
+<h2> Tasks
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Define a function, named <i>zeno</i>,
+that computes the price of a ticket
+for Zeno's Airline. The function is
+passed the distance <i>d</i> in stadion and the number of
+hops <i>n</i>.
+A passenger is charged <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>c</mi>		<mrow>			<msub>				<mi>log</mi>				<mn>2</mn>			</msub>			<mo form="prefix">(</mo>			<mi>h</mi>			<mo form="postfix">)</mo>		</mrow>	</msup></mrow></math> hemibool
+for each hop where <i>h</i> is the length of the hop.
+Note that the hop length
+is halved for each subsequent hop.
+For example, if the overall distance is 100 stadion, then
+the first hop is 50 stadion, the second hop is 25 stadion, the
+third hop is 12.5 stadion, and so on.
+When there is one hop left, the entire remaining distance is
+used to compute the fare.
+<br/>
+<br/>
+The other parameter passed to <i>zeno</i> is the hop charge factor
+<i>c</i>.
+<br/>
+<br/>
+Your <i>zeno</i> function should implement a recursive process.
+Expect real or integer numbers as arguments.
+Return the cost (a real number)
+in drachma.
+<br/>
+<br/>
+Your <i>main</i> function should look like this:
+<br/>
+
+<pre>
+    (define (main)
+        (setPort (open (getElement ScamArgs 1) &#39;read))
+        (println (apply zeno (readExpr)))
+        )
+</pre>
+
+Example:
+<br/>
+
+<pre>
+    $ echo &quot;(1 1 1)&quot; &gt; task1.args
+    $ scam -r task1.scm task1.args
+    0.0833333333
+    $
+</pre>
+
+Constraints: division should always be real number division.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Define a function, named <i>minMaxSum</i>,
+that returns the sum of the minimum value
+and the maximum value of three unique
+arguments.
+Example:
+<br/>
+
+<pre>
+     $ echo &quot;(1 2 3)&quot; &gt; task2.args
+     $ scam -r task2.scm task2.args
+     4
+     $
+</pre>
+
+Constraints: Your implementation should
+use the minimum number of comparisons,
+semantically speaking.
+You are only allowed to call the 
+<code>&lt;</code> function to do your comparisons
+and you must only pass two arguments.
+You may not use local defines.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ The Mandelbrot set (for examples,
+see
+<a href="http://www.atopon.org/mandel/" style="font-size:10px,font-family:'Lucida Console',monospace">http://www.atopon.org/mandel/</a>
+is a set of planar points,
+a point 
+<code>(x,y)</code> being in the set if the
+following iteration never diverges to infinity:
+<br/>
+<center>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>r</mi>	<mo>=</mo>	<mi>r</mi>	<mo>&times;</mo>	<mi>r</mi>	<mo>-</mo>	<mi>s</mi>	<mo>&times;</mo>	<mi>s</mi>	<mo>+</mo>	<mi>x</mi></mrow></math>
+</center>
+
+<br/>
+and
+<br/>
+<center>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>s</mi>	<mo>=</mo>	<mn>2</mn>	<mo>&times;</mo>	<mi>r</mi>	<mo>&times;</mo>	<mi>s</mi>	<mo>+</mo>	<mi>y</mi></mrow></math>
+</center>
+
+<br/>
+with
+<i>r</i> and <i>s</i> both starting out at 0.0.
+While we can't iterate
+forever to check for divergence,
+there is a simple condition
+which predicts divergence: if <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>r</mi>	<mo>&times;</mo>	<mi>r</mi>	<mo>+</mo>	<mi>s</mi>	<mo>&times;</mo>	<mi>s</mi>	<mo>&gt;</mo>	<mn>4</mn></mrow></math>
+is ever true,
+either <i>r</i>
+or <i>s</i> will tend to diverge to
+infinity.
+Processing of a point continues until
+divergence is detected or until some
+threshold number of iterations has been
+reached.
+If the threshold is reached,
+the point is considered to be in
+the Mandelbrot set.
+Obviously,
+the higher the threshold,
+the higher the confidence that the
+point actually is in the set.
+<br/>
+<br/>
+Define a function named <i>resistance</i>, that when
+given an <i>x</i>, a <i>y</i>, and a threshold <i>t</i>,
+returns the iteration count, returning 0 if the divergence
+test is immediately true and returning <i>t</i> if the
+iteration count reaches <i>t</i>.
+<br/>
+<br/>
+Points in the mandelbrot set are often colored black.
+The points <i>not</i> in the set can be categorized as to
+their resistance to
+divergence.
+When visualizing the Mandlebrot set,
+points are often colorized. Supposed one
+colored a point
+black
+if it is in the set, blue if it is very resistant to divergence,
+red if it immediately diverges, and somewhere in between
+red and blue for intermediate resistance.
+<br/>
+<br/>
+Consider colorizing a point not in the mandelbrot set
+so that the resistance to divergence corresponds to
+the spectrum (red, orange, yellow, green, and blue - indigo
+and violet can only be approximated on a traditional computer
+screen), with red values indicating low resistance and
+blue values indicating high resistance.
+Define a set of functions named <i>mred</i>, <i>mgreen</i>, and <i>mblue</i>,
+which, when given a iteration number <i>i</i> and a threshold <i>t</i>,
+return the corresponding red, green, and blue value, respectively,
+For red, the <i>mred</i> function should model a cosine wave
+that spans a quarter cycle from to the given threshold
+The call 
+<code>(mred i t)</code> should return 255
+when <i>i</i> is 0,
+0 when <i>i</i> is <i>t</i>-1,
+and 180 when <i>i</i> is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mrow>			<mi>t</mi>			<mo>-</mo>			<mn>1</mn>		</mrow>		<mn>2</mn>	</mfrac></mrow></math>.
+The <i>mblue</i> function should
+model a sine wave that spans a quarter cycle, as well.
+The call 
+<code>(mblue i t)</code> should return 0
+when <i>i</i> is 0, 255 when <i>i</i> is <i>t</i>-1,
+and 180 when <i>i</i> is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mrow>			<mi>t</mi>			<mo>-</mo>			<mn>1</mn>		</mrow>		<mn>2</mn>	</mfrac></mrow></math>.
+The <i>mgreen</i> function should model a sine wave that
+spans a half cycle.
+The call 
+<code>(mgreen i t)</code> should
+return 0 when <i>i</i> is 0, 0 when <i>i</i> is <i>t</i>-1,
+and 255 when <i>i</i> is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mrow>			<mi>t</mi>			<mo>-</mo>			<mn>1</mn>		</mrow>		<mn>2</mn>	</mfrac></mrow></math>.
+The three color functions should return zero when
+<i>i</i> is equal to <i>t</i>.
+In calculating color values,
+convert to an integer at the last moment
+by rounding.
+<br/>
+<br/>
+Example:
+<br/>
+
+<pre>
+    $ echo &quot;(0.0 0.0 100)&quot; &gt; task3.args
+    $ scam -r task3.scm task3.args
+    100 0 0 0
+    $
+</pre>
+
+Constraints: You are only allowed the following top-level functions:
+<i>main</i>, <i>resistance</i>, <i>mred</i>, <i>mgreen</i>, and <i>mblue</i>.
+They must be defined in the order given.
+The only local definitions allowed are functions definitions.
+You are only allowed to call each of these functions once.
+Use a value of 3.14159265358979323846 for <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&pi;</mi></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Everybody is familiar with square roots and their utility
+(Pythagorean theorem, anyone?) but <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>1</mn>	<msup>		<mn>2</mn>		<mrow>			<mi>t</mi>			<mi>h</mi>		</mrow>	</msup></mrow></math> roots
+also have their utility. In western music, the twelfth root
+of two is used for
+<a href="https://en.wikipedia.org/wiki/Equal_temperament">equal temperament</a>
+tuning of instruments.
+<br/>
+<br/>
+Define a function named <i>root12</i> which calculates the
+twelfth root of the given argument. Note that
+for a number <i>n</i> and a guess <i>y</i>, a better guess
+for the second root (square root) is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mrow>			<mi>y</mi>			<mo>+</mo>			<mfrac linethickness="1">				<mi>n</mi>				<mi>y</mi>			</mfrac>		</mrow>		<mn>2</mn>	</mfrac></mrow></math> and
+a better guess for the third root is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mrow>			<mn>2</mn>			<mo>&times;</mo>			<mi>y</mi>			<mo>+</mo>			<mfrac linethickness="1">				<mi>n</mi>				<mrow>					<msup>						<mi>y</mi>						<mn>2</mn>					</msup>				</mrow>			</mfrac>		</mrow>		<mn>3</mn>	</mfrac></mrow></math>.
+Extrapolate this pattern to figure out how to compute the
+twelfth root. The form of your solution should follow
+that in the text for square root.
+<br/>
+<br/>
+Example:
+
+<pre>
+    $ echo &quot;(1)&quot; &gt; task4.args
+    $ scam -r task4.scm task4.args
+    1.0000000000
+    $
+</pre>
+
+Constraints: Input is a positive number, either a real number or an integer.
+Test for convergence by comparing consecutive guesses to see if
+they are <i>close enough</i>;
+do not compare with strict equality.
+Your function <i>root12</i>
+should return a real number. Your <i>main</i> function should
+not do any special formatting when printing the result.
+You may only have two top level functions, <i>main</i> and
+<i>root12</i>.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ Define a function, named <i>pt</i>, that prints out <i>n</i>
+levels (given as the sole argument)
+of Pascal's triangle so that the output looks
+like a centered pyramid.
+For example 
+<code>(pt 1)</code> should print out:
+<br/>
+
+<pre>
+    1
+</pre>
+
+while 
+<code>(pt 3)</code> should print out:
+<br/>
+
+<pre>
+      1
+     1 1
+    1 2 1
+</pre>
+
+Don't worry if the triangle gets skewed to the right when entries become
+greater than 9.
+<br/>
+<br/>
+Example:
+<br/>
+
+<pre>
+    $ echo &quot;(1)&quot; &gt; task4.args
+    $ scam -r task4.scm task4.args
+    1
+    $
+</pre>
+
+Constraints: You are only allowed the following top-level functions:
+<i>main</i> and <i>pt</i>.
+The bottom row in your triangle should have no preceding spaces. Higher
+rows should be indented, as shown, with spaces.
+Your method for computing a single element in the triangle should
+implement a recursive process using the traditional recursive method.
+The <i>pt</i> function should return 
+<code>nil</code> after printing the rows of
+the triangle.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Partial function application is the process of providing
+the first <i>k</i> arguments to a function that takes <i>n</i> arguments.
+The result is a new function that takes the remaining <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>-</mo>	<mi>k</mi></mrow></math> arguments.
+Define a function, named <i>pfa</i>,
+that takes two arguments, a function to be partially applied
+and an integer specifying <i>k</i>. To make the task easier, <i>k</i>
+will limited
+to the values 1, 2, or 3.
+The <i>pfa</i> function will return a function that takes the <i>k</i> arguments.
+When called with the <i>k</i> arguments , the function that <i>pfa</i> returns
+will return a function that takes the remaining <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>-</mo>	<mi>k</mi></mrow></math> functions.
+As an example, the last two expressions should evaluate
+to the same result:
+<br/>
+
+<pre>
+    (define (f x y z) (+ x (* y z)))
+    (f a b c)
+    (((pfa f 2) a b) c)
+</pre>
+
+The function that takes the remaining arguments will need to be
+variadic. You will also need to use the <i>cons</i> function and
+the <i>apply</i> function (the same function as found in your main function).
+Here are
+some examples of a variadic function using <i>cons</i> and <i>apply</i>:
+<br/>
+
+<pre>
+   (define (plus0 @) (apply + @))
+   (define (plus1 a @) (apply + (cons a @)))
+   (define (plus2 a b @) (apply + (cons a (cons b @))))
+   (plus0 1 2 3 4 5)
+   (plus1 1 2 3 4 5)
+   (plus2 1 2 3 4 5)
+   (+ 1 2 3 4 5)
+</pre>
+
+The last four expressions should evaluate to the same result.
+<br/>
+<br/>
+Your <i>main</i> function will read four items: a function of three arguments,
+the argument list for <i>pfa</i>, the first set of arguments, and the
+second set of arguments:
+<br/>
+
+<pre>
+    (define (main)
+        (setPort (open (getElement ScamArgs 1) &#39;read))
+        (define f (readExpr))
+        (define first (readExpr))
+        (define second (readExpr))
+        (define third (readExpr))
+        (define f1 (apply pfa (cons (eval f this) first)))
+        (define f2 (apply f1 second))
+        (define f3 (apply f2 third))
+        (inspect (length (get &#39;parameters f1)))
+        (inspect (length (get &#39;parameters f2)))
+        (println f3)
+        )
+</pre>
+
+Example:
+<br/>
+
+<pre>
+    $ echo &quot;(define (f x y z) (+ x (* y z)))&quot; &gt; task6.args
+    $ echo &quot;(2)&quot; &gt;&gt; task6.args
+    $ echo &quot;(1 2)&quot; &gt;&gt; task6.args
+    $ echo &quot;(3)&quot; &gt;&gt; task6.args
+    $ scam -r task6.scm task6.args
+    (length (get (quote parameters) f1)) is 2
+    (length (get (quote parameters) f2)) is 1
+    7
+    $
+</pre>
+
+Constraints: You are only allowed the following top-level functions:
+<i>main</i> and <i>pfa</i>.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Define a function,
+named <i>zarp</i>,
+that computes
+the function described by the following recurrence:
+<br/>
+<center>
+
+<table>
+<tr>
+<td style="text-align:left";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="italic">		<mi>z</mi>		<mi>a</mi>		<mi>r</mi>		<mi>p</mi>	</mstyle>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>i</mi></mrow></math> </td><td style="text-align:left";> if <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>&lt;</mo>	<mn>3</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:left";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="italic">		<mi>z</mi>		<mi>a</mi>		<mi>r</mi>		<mi>p</mi>	</mstyle>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mstyle mathvariant="italic">		<mi>z</mi>		<mi>a</mi>		<mi>r</mi>		<mi>p</mi>	</mstyle>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>-</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mn>2</mn>	<mo>&times;</mo>	<mstyle mathvariant="italic">		<mi>z</mi>		<mi>a</mi>		<mi>r</mi>		<mi>p</mi>	</mstyle>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>-</mo>		<mn>2</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>-</mo>	<mstyle mathvariant="italic">		<mi>z</mi>		<mi>a</mi>		<mi>r</mi>		<mi>p</mi>	</mstyle>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>-</mo>		<mn>3</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math> </td><td style="text-align:left";> otherwise </td>
+</tr>
+</table>
+
+
+</center>
+
+<br/>
+The function <i>zarp</i> is only defined for non-negative
+integers.
+<br/>
+<br/>
+Example:
+<br/>
+
+<pre>
+    $ echo &quot;(0)&quot; &gt; task7.args
+    $ scam -r task7.scm task7.args
+    0
+    $
+</pre>
+
+Constraints: You are only allowed the following top-level functions:
+<i>main</i> and <i>zarp</i>.
+Your <i>zarp</i> function must implement an iterative process.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ The ancient
+Babylonians were quite sophisticated when
+it came to astronomy and mathematics,
+being able to predict lunar and solar eclipses.
+In fact,
+they were the ones to come up with dividing
+a day into 24 hours,
+an hour into 60 minutes,
+and a minute into 60 seconds.
+They also had an interesting method of multiplication
+based upon a table of squares.
+Since squaring is multiplication,
+it seems
+the Babylonians had a chicken-and-egg problem:
+to multiply,
+you need to square,
+but to
+square,
+you need to multiply.
+However,
+they managed to build their table of squares
+without resorting to multiplication.
+Instead,
+they used the following recurrence:
+<br/>
+<center>
+
+<table>
+<tr>
+<td style="text-align:left";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="italic">		<mi>s</mi>		<mi>q</mi>		<mi>u</mi>		<mi>a</mi>		<mi>r</mi>		<mi>e</mi>	</mstyle>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mn>1</mn></mrow></math> </td><td style="text-align:left";> if <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>i</mi>	<mo>=</mo>	<mn>1</mn></mrow></math></td>
+</tr>
+<tr>
+<td style="text-align:left";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle mathvariant="italic">		<mi>s</mi>		<mi>q</mi>		<mi>u</mi>		<mi>a</mi>		<mi>r</mi>		<mi>e</mi>	</mstyle>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mstyle mathvariant="italic">		<mi>s</mi>		<mi>q</mi>		<mi>u</mi>		<mi>a</mi>		<mi>r</mi>		<mi>e</mi>	</mstyle>	<mrow>		<mo form="prefix">(</mo>		<mi>i</mi>		<mo>-</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>i</mi>	<mo>+</mo>	<mi>i</mi>	<mo>-</mo>	<mn>1</mn></mrow></math> </td><td style="text-align:left";> otherwise</td>
+</tr>
+</table>
+
+
+</center>
+
+<br/>
+With a table of squares in hand,
+the multiplication of two numbers <i>a</i> and
+<i>b</i> would proceed via the following
+formula:
+<br/>
+<br/>
+<center>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>a</mi>	<mo>&times;</mo>	<mi>b</mi>	<mo>=</mo>	<mfrac linethickness="1">		<mrow>			<mo form="prefix">(</mo>			<msup>				<mrow>					<mo form="prefix">(</mo>					<mi>a</mi>					<mo>+</mo>					<mi>b</mi>					<mo form="postfix">)</mo>				</mrow>				<mn>2</mn>			</msup>			<mo>-</mo>			<msup>				<mi>a</mi>				<mn>2</mn>			</msup>			<mo>-</mo>			<msup>				<mi>b</mi>				<mn>2</mn>			</msup>			<mo form="postfix">)</mo>		</mrow>		<mn>2</mn>	</mfrac></mrow></math>
+</center>
+
+<br/>
+Thus,
+multiplication was performed via
+one addition,
+three table look-ups for
+squares,
+two subtractions,
+and a halving
+(again via a table look-up).
+<br/>
+<br/>
+Define a method named <i>babyl</i> that
+performs the aforementioned method
+of multiplying two <i>positive</i> numbers.
+Your
+implementation should provide a
+function for squaring based upon
+the given recurrence as well as
+a function for halving based upon
+an analogous recurrence.
+Name these functions <i>halve</i> and <i>square</i>.
+<br/>
+<br/>
+Your <i>main</i> function should look like this:
+<br/>
+
+<pre>
+    (define (main)
+        (setPort (open (getElement ScamArgs 1) &#39;read))
+        (define args (readExpr))
+        (println &quot;half of &quot; (car args) &quot; is &quot; (halve (car args)))
+        (println &quot;half of &quot; (cadr args) &quot; is &quot; (halve (cadr args)))
+        (println (car args) &quot; squared is &quot; (square (car args)))
+        (println (cadr args) &quot; squared is &quot; (square (cadr args)))
+        (println (apply babyl args))
+        )
+</pre>
+
+Example:
+<br/>
+
+<pre>
+    $ echo &quot;(21 42)&quot; &gt; task8.args
+    $ scam -r task8.scm task8.args
+    half of 21 is 10
+    half of 42 is 21
+    21 squared is 441
+    42 squared is 1764
+    882
+</pre>
+
+Constraints: You are only allowed the following top-level functions:
+<i>main</i>, <i>babyl</i>, <i>square</i>, and <i>halve</i>.
+The only built-in mathematical
+operations allowed are addition and subtraction.
+The functions <i>babyl</i>, <i>square</i> and <i>halve</i> should
+implement iterative processes.
+The <i>halve</i> function must run in sub-linear time.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ 
+Note: This problem is best viewed using the <a href="assign1.pdf">PDF version</a>.
+<br/>
+
+<br/>
+Many transcendental numbers can be represented as a
+continued fraction:
+<br/>
+
+<pre>
+    e = [2; 1,2,1, 1,4,1, 1,6,1, 1,8,1, 1,10,1, ...]
+</pre>
+
+In this notation, 2 is the augend and the remaining numbers
+represent the continued fraction addend. The numbers specify
+the denominators in the continued fraction (the numerators
+are all assumed to be one). For example, the list
+<br/>
+
+<pre>
+    [2; 1,2,3]
+</pre>
+
+is represented in fraction form as:
+<br/>
+<center>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mo>+</mo>	<mfrac linethickness="1">		<mn>1</mn>		<mrow>			<mn>1</mn>			<mo>+</mo>			<mfrac linethickness="1">				<mn>1</mn>				<mrow>					<mn>2</mn>					<mo>+</mo>					<mfrac linethickness="1">						<mn>1</mn>						<mn>3</mn>					</mfrac>				</mrow>			</mfrac>		</mrow>	</mfrac></mrow></math>
+</center>
+
+<br/>
+Consider this infinite equation:
+<br/>
+
+<pre>
+    [1; 1,1,1, 5,1,1, 9,1,1, 13,1,1, ...]
+</pre>
+
+Define a function called <i>mystery</i> that when given an integer
+argument <i>n</i>, computes the value of this equation to
+<i>n</i> terms (where each term is a group of three digits in
+the series above).
+<br/>
+<br/>
+For example, if <i>n</i> is 0, the function should return 1.
+For <i>n</i> equal to 1, it should return the value of the fraction [1; 1,1,1].
+For <i>n</i> equal to 2, it should return value of [1; 1,1,1, 5,1,1].
+<br/>
+<br/>
+Your function should compute its value using a recursive process.
+Define a second function named <i>imystery</i> with the same semantics
+but implementing an iterative process.
+<br/>
+<br/>
+Your program should give the result of <i>mystery</i>, <i>imystery</i>, and
+the symbolic value of the equation with
+an infinite number of terms. Hint, square the mystery results.
+<br/>
+<br/>
+Example:
+<br/>
+
+<pre>
+    $ echo &quot;(0)&quot; &gt; task9.text
+    $ scam -r task9.scm task9.text
+    mystery returns 1
+    imystery returns 1
+    ?
+    $
+</pre>
+
+The question mark in the last line of output, of course, should be replaced
+with the LaTeX math equation that represents the answer.
+For example, if the answer was <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&pi;</mi></mrow></math>, then
+the question mark would be replaced by 
+<code>$\pi$</code>. If the answer is
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>log</mi>	<mi>&pi;</mi></mrow></math>, then the question mark would be replaced by
+
+<code>$\log\pi$</code>.
+If there is more than one reasonable way to represent the answer,
+prefer the one with the fewer number of characters in the LaTeX
+expression.
+Do not share this answer in any way.
+<br/>
+Constraints: You are only allowed the following top-level functions:
+<i>main</i>, <i>mystery</i>, and <i>imystery</i>.
+The <i>mystery</i> function should
+implement a recursive process, while
+the <i>imystery</i> function should
+implement an iterative process.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ 
+Note: This problem is best viewed using the <a href="assign1.pdf">PDF version</a>.
+<br/>
+
+<br/>
+The famous Indian mathematician,
+Ramanujan, asked a question that no one else seemed to be able to
+answer: what is the value of:
+<br/>
+<br/>
+<center>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msqrt>		<mrow>			<mn>1</mn>			<mo>+</mo>			<mn>2</mn>			<mo>&sdot;</mo>			<msqrt>				<mrow>					<mn>1</mn>					<mo>+</mo>					<mn>3</mn>					<mo>&sdot;</mo>					<msqrt>						<mrow>							<mn>1</mn>							<mo>+</mo>							<mn>4</mn>							<mo>&sdot;</mo>							<msqrt>								<mrow>									<mn>1</mn>									<mo>+</mo>									<mn>5</mn>									<mo>&sdot;</mo>									<msqrt>										<mrow>											<mn>1</mn>											<mo>+</mo>											<mo>.</mo>											<mo>.</mo>											<mo>.</mo>										</mrow>									</msqrt>								</mrow>							</msqrt>						</mrow>					</msqrt>				</mrow>			</msqrt>		</mrow>	</msqrt></mrow></math>
+</center>
+
+<br/>
+carried out to infinity?
+This was before computers; with them you don't have to be a mathematical
+genius to compute a good guess at the answer.
+Define a function,
+named <i>ramanujan</i>,
+which takes as its sole
+argument the depth of a rational approximation to the above nested
+expression.
+For example,
+if the depth
+is 0,
+<i>ramanujan</i> should
+return 0.
+If the depth is 1,
+<i>ramanujan</i> should return
+the value of <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msqrt>		<mrow>			<mn>1</mn>			<mo>+</mo>			<mn>2</mn>		</mrow>	</msqrt></mrow></math>.
+If the depth is 2,
+the return value
+is the value of <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msqrt>		<mrow>			<mn>1</mn>			<mo>+</mo>			<mn>2</mn>			<mo>&sdot;</mo>			<msqrt>				<mrow>					<mn>1</mn>					<mo>+</mo>					<mn>3</mn>				</mrow>			</msqrt>		</mrow>	</msqrt></mrow></math>,
+and so on.
+Your function should implement
+a recursive
+process.
+Define a second function, named <i>iramanujan</i>, with the same
+semantics but implementing
+an iterative
+process.
+<br/>
+<br/>
+Your program should give the result of <i>ramanujan</i>, <i>iramanujan</i>, and
+the answer to Ramanujan's question.
+<br/>
+<br/>
+Example:
+<br/>
+
+<pre>
+    $ echo &quot;(0)&quot; &gt; task10.text
+    $ scam -r task10.scm task10.text ramanujan
+    ramanujan returns 0.000000e+00
+    iramanujan returns 0.000000e+00
+    ?
+    $
+</pre>
+
+The question mark in the last line of output, of course, should be replaced
+with the LaTeX math equation that represents the answer.
+For example, if the answer was <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&pi;</mi></mrow></math>, then
+the question mark would be replaced by 
+<code>$\pi$</code>. If the answer is
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>log</mi>	<mi>&pi;</mi></mrow></math>, then the question mark would be replaced by
+
+<code>$\log\pi$</code>.
+If there is more than one reasonable way to represent the answer,
+prefer the one with the fewer number of characters in the LaTeX
+expression.
+Do not share this answer in any way.
+<br/>
+<br/>
+Constraints: You are only allowed the following top-level functions:
+<i>main</i>, <i>ramanujan</i>, and <i>iramanujan</i>.
+The <i>ramanujan</i> function should
+implement a recursive process, while
+the <i>iramanujan</i> function should
+implement an iterative process.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- section -->
+<h2> Compliance
+<br/>
+</h2><!-- section ENDED -->
+
+Output format has to match exactly, spacing and all.
+There can be no whitespace other than a newline after the last
+printable character of each line in any output. No lines of output
+are indented, unless explicitly specified.
+<br/>
+<!-- section -->
+<h2> Handing in the tasks
+<br/>
+</h2><!-- section ENDED -->
+
+To submit assignments, you need to install the <i>submit system</i>:
+<br/>
+
+<ul>
+
+<li>
+
+ <a href="linux.html">Linux or Windows Bash instructions</a>
+</li>
+
+<li>
+
+ <a href="mac.html">Mac instructions</a>
+</li>
+
+</ul>
+
+
+For preliminary testing,
+send me all the files in your directory by running the command:
+<br/>
+
+<pre>
+    submit proglan lusth test1
+</pre>
+
+For your final submission, use the command:
+<br/>
+
+<pre>
+    submit proglan lusth assign1
+</pre>
+
+The <i>submit</i> program will bundle up all the files in your current
+directory and ship them to me.
+Thus it is very important that only the files
+related to the assignment
+are in your directory
+(you may submit
+test cases and test scripts).
+This includes subdirectories as well since
+all the files in any subdirectories will also be shipped to me,
+so be careful.
+You may submit as many times as you want before the deadline; new
+submissions replace old submissions.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

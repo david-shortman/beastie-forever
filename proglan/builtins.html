@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>builtins</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Adding Built-in Functions
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="builtins.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Simple, but ugly
+<br/>
+</h2><!-- section ENDED -->
+
+Here is a simple way to add built-in functions to your language. It's
+ugly, but it works. For example, let's add a <i>println</i> built-in.
+One does so by adding some tests to the <i>evalCall</i> function.
+Originally, this function looks like:
+<br/>
+
+<pre>
+    function evalCall(t,env)
+        {
+        //this code assumes a function call of the form f(x,y)
+        var name = getCallName(t);
+        var args = getCallArgs(t);
+        var eargs = evalArgs(args,env);
+        var closure = lookup(env,name);
+        var params = getClosureParams(closure);
+        var body = getClosureBody(closure);
+        var senv = getClosureEnvironment(closure);
+        var xenv = EnvExtend(senv,params,eargs);
+
+        return eval(body,xenv);
+        }
+</pre>
+
+We modify the function to check for a call to the built-in function:
+<br/>
+
+<pre>
+    function evalCall(t,env)
+        {
+        //this code assumes a function call of the form f(x,y)
+        var name = getCallName(t);
+        var args = getCallArgs(t);
+        var eargs = evalArgs(args,env);
+        //check for built-in functions here
+        if (stringEquals(name,&quot;println&quot;))
+            return evalPrintln(eargs);
+        else
+            {
+            var closure = lookup(name,env);
+            var params = getClosureParams(closure);
+            var body = getClosureBody(closure);
+            var senv = getClosureEnvironment(closure);
+            var xenv = EnvExtend(senv,params,eargs);
+
+            return eval(body,xenv);
+            }
+        }
+</pre>
+
+and dispatch to the appropriate handler for the built-in.
+Finally, add the <i>evalPrintln</i> function:
+<br/>
+
+<pre>
+    function evalPrintln(eargs)
+        {
+        while (eargs != null)
+            {
+            display(eargs.left);
+            eargs = eargs.right;
+            }
+        }
+</pre>
+
+You can perform similar actions for each of your built-ins.
+<br/>
+<!-- section -->
+<h2> A better way
+<br/>
+</h2><!-- section ENDED -->
+
+<i>To be written</i>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

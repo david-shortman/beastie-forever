@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign2</title>
+<link rel=stylesheet
+    href="201.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS201: Data Structures and Algorithms</span>
+<br/>
+<br/>
+Assignment 2
+<br/>
+<br/>
+<span class="smaller">Rough Draft</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller"><a href="assign2.pdf">Printable Version</a></span></span>
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Introduction
+<br/>
+</h2><!-- section ENDED -->
+
+You will compare the performance of green binary search trees versus
+red-black trees by reading in a corpus of text, storing the word and phrases
+therein
+into a search tree, and then performing operations on the resulting
+tree.
+A green tree is just like a regular binary search tree except that
+it can store duplicates in an efficient way.
+Your red-black tree will efficiently store
+duplicates as well.
+However, the plain binary search tree module upon which your green
+and red-black trees are based
+will not.
+<br/>
+<br/>
+The corpus will be stored in a file; phrases will be delineated
+by double quotes while tokens will be sequences of non-quote, non-whitespace
+characters. Whitespace consists primarily of the characters
+space, tab, and newline.
+<br/>
+<br/>
+Commands for manipulating the tree composed of corpus
+entities will be stored in a file as well.
+Here is a list of commands your application should handle:
+<br/>
+<span class="indent">
+<table>
+<tr>
+<td style="text-align:left";> 
+<code>i W</code> </td><td style="text-align:left";> insert word or phrase 
+<code>W</code> into the tree </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>d W</code> </td><td style="text-align:left";> delete word or phrase 
+<code>W</code> from the tree </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>f W</code> </td><td style="text-align:left";> report the frequency of word or phrase 
+<code>W</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>s</code> </td><td style="text-align:left";> show the tree </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>r</code> </td><td style="text-align:left";> report statistics </td>
+</tr>
+</table>
+
+
+</span>
+
+<br/>
+All words that are inserted into a tree
+should be composed of letters from the
+ASCII character set 
+<code>[a-z]</code>; phrases may possibly contain
+spaces as well.
+Both words and phrases should be <i>cleaned</i>.
+In the case of words, cleaning means all undesirable characters are to be
+removed and uppercase characters translated to lowercase.
+For example, the word 
+<code>Joy&#39;s.</code> would be rendered as 
+<code>joys</code>.
+The same is true for phrases, but after cleaning, any leading
+or trailing whitespace should be removed and any contiguous
+whitespace in the interior should be replaced by a single space.
+For example, the phrase 
+<code>&quot;  by  ,    and</code>&nbsp;&nbsp;&nbsp;
+<code>by&quot;</code> would become
+
+<code>&quot;by and by&quot;</code>.
+Do not insert empty words or phrases or phrases with only spaces
+into the tree.
+<br/>
+<br/>
+For green and red-black trees, inserting
+a word already in the tree would increase its frequency count by one. When
+deleting a word from the tree, its frequency count
+should be reduced by one.
+If the frequency count goes to zero, the
+corresponding node should be removed from the tree.
+<br/>
+<br/>
+When showing the tree, display the nodes with
+a breadth-first (left-first) traversal. All nodes at a given level
+should be on the same line of output. The level number should precede
+the display of the nodes at that level. Display each node according to
+the following format:
+<br/>
+
+<ul>
+
+<li>
+
+ an equals sign if the node is a leaf, followed by
+</li>
+
+<li>
+
+ the node value, followed by
+</li>
+
+<li>
+
+ a frequency count (if the count is greater than one), followed by
+</li>
+
+<li>
+
+ a balance factor, either 
+<code>+</code> or 
+<code>-</code>
+(if the balance factor is not zero), followed by
+</li>
+
+<li>
+
+ a parenthesized display of the parent, followed by
+</li>
+
+<li>
+
+ an 
+<code>X</code> if the node is the root,
+an 
+<code>L</code> if the node is a left child,
+and an 
+<code>R</code> otherwise
+</li>
+
+</ul>
+
+
+Your display function must run in linear time.
+Note that you will need to add a <i>displayBSTdecorated</i> method to
+your BST class in order to
+add the leaf, root, left child, and right
+child decorations to the level order display of the tree.
+You will need an red-black-specific and private display function
+(call it <i>adisplay</i>),
+which you will passed to the BST constructor.
+The <i>adisplay</i> function will
+handle the frequency count and balance factor decorations.
+It will also handle the actual display of the
+generic value by using
+the original display function passed to the red-black constructor.
+<br/>
+<br/>
+Note also that the parent of the root is itself.
+Green tree nodes do not have balance factors.
+Here is an example of a red-black tree:
+<br/>
+
+<pre>
+    0: beta(beta)X
+    1: =alpha(beta)L =gamma(beta)R
+</pre>
+
+Note that each value occurs once in the tree above.
+Note also, that this could also be a green tree display.
+Here is another:
+<br/>
+
+<pre>
+    0: beta-(beta-)X
+    1: =alpha(beta-)L gamma+(beta-)R
+    2: =delta&lt;2&gt;(gamma+)L 
+</pre>
+
+If the balance factor is a negative one, a minus sign is
+printed. If the balance factor is a positive one, a plus
+sign is printed.
+The corpus to generate such a tree might look like:
+<br/>
+
+<pre>
+    beta alpha
+      gamma
+          delta
+</pre>
+
+The words should be ordered within a tree in case-insensitive
+lexicographic ordering. Suppose the corpus was:
+<br/>
+
+<pre>
+    The &quot;quickity quick&quot; brown fox
+         jumped over the girl
+             and her lazy, lazy dog.
+</pre>
+
+found in a file named <i>data</i>. Suppose the file <i>commands</i>
+holds the command:
+<br/>
+
+<pre>
+    s
+</pre>
+
+Then a display of a green tree generated by this corpus would
+look like this:
+<br/>
+
+<pre>
+    $ trees -g data commands
+    0: the&lt;2&gt;(the&lt;2&gt;)X
+    1: quickity quick(the&lt;2&gt;)L
+    2: brown(quickity quick)L
+    3: =and(brown)L fox(brown)R
+    4: =dog(fox)L jumped(fox)R
+    5: girl(jumped)L over(jumped)R
+    6: =her(girl)R =lazy&lt;2&gt;(over)L
+
+</pre>
+
+When the corpus
+is inserted into a red-black tree, the resulting
+structure would look like this:
+<br/>
+
+<pre>
+    $ trees -r data commands
+    0: jumped(jumped)X
+    1: fox(jumped)L quickity quick+(jumped)R
+    2: brown(fox)L girl-(fox)R over+(quickity quick+)L =the&lt;2&gt;(quickity quick+)R
+    3: =and(brown)L =dog(brown)R =her(girl-)R =lazy&lt;2&gt;(over+)L
+</pre>
+
+The display of an empty tree should generate the following line of output:
+<br/>
+
+<pre>
+    EMPTY
+</pre>
+
+The statistics to be reported are:
+<br/>
+
+<ul>
+
+<li>
+
+ the number of duplicates in the tree
+</li>
+
+<li>
+
+ the number of nodes in the tree
+</li>
+
+<li>
+
+ the minimum depth, which is the distance from the root to the closest node with a null child pointer
+</li>
+
+<li>
+
+ the maximum depth, which is the distance from the root to the furthest node with a null child pointer
+</li>
+
+</ul>
+
+
+If the root had a null child, the minimum depth would be 0.
+Here is an example statistics report:
+<br/>
+
+<pre>
+    Duplicates: 2
+    Nodes: 8
+    Minimum depth: 2
+    Maximum depth: 4
+</pre>
+
+Here is an example frequency report:
+<br/>
+
+<pre>
+    Frequency of albatross: 5
+</pre>
+
+All output must be formatted as shown. Each line of output
+should have no leading whitespace, no trailing whitespace (except
+the mandatory newline), no interstitial whitespace except spaces,
+and no more than one space in a row.
+<br/>
+<!-- section -->
+<h2> Commands
+<br/>
+</h2><!-- section ENDED -->
+
+The commands will be read from a free format text file; individual
+tokens may be separated by arbitrary amounts of whitespace.
+For example, these three file contents
+are all legal and equivalent:
+<br/>
+
+<pre>
+    i spongebob
+    i &quot;Bikini Bottom&quot;
+    f Patrick
+    s
+</pre>
+
+or
+<br/>
+
+<pre>
+    i spongebob i &quot;Bikini Bottom&quot; f Patrick s
+</pre>
+
+or
+<br/>
+
+<pre>
+    i spongebob i
+        &quot;Bikini Bottom&quot; f
+
+        Patrick
+
+    s
+</pre>
+
+<!-- section -->
+<h2> Error handling
+<br/>
+</h2><!-- section ENDED -->
+
+You should ignore, but report
+an attempt to delete something that does
+not exist in the tree. Thus you ought to be able to randomly generate
+a large number commands and have your application run without failing.
+The error message printed when attempting to delete a value not in
+the tree should have the form:
+<br/>
+
+<pre>
+    Value x not found.
+</pre>
+
+There should be no quotes around the value.
+Normally,
+one would print error messages to <i>stderr</i>, but for testing purposes,
+print them to <i>stdout</i>.
+<br/>
+<!-- section -->
+<h2> Program organization
+<br/>
+</h2><!-- section ENDED -->
+
+The tree portion of your code should be composed of four modules:
+<br/>
+
+<ul>
+
+<li>
+
+<a href="http://beastie.cs.ua.edu/cs201/assign-tnode.html" style="font-size:10px,font-family:'Lucida Console',monospace">http://beastie.cs.ua.edu/cs201/assign-tnode.html</a>.
+<br/>
+</li>
+
+<li>
+
+<a href="http://beastie.cs.ua.edu/cs201/assign-bst.html" style="font-size:10px,font-family:'Lucida Console',monospace">http://beastie.cs.ua.edu/cs201/assign-bst.html</a>.
+<br/>
+</li>
+
+<li>
+
+<a href="http://beastie.cs.ua.edu/cs201/assign-gst.html" style="font-size:10px,font-family:'Lucida Console',monospace">http://beastie.cs.ua.edu/cs201/assign-gst.html</a>.
+<br/>
+</li>
+
+<li>
+
+<a href="http://beastie.cs.ua.edu/cs201/assign-rbt.html" style="font-size:10px,font-family:'Lucida Console',monospace">http://beastie.cs.ua.edu/cs201/assign-rbt.html</a>.
+</li>
+
+</ul>
+
+
+A <i>GST</i> object should use a <i>BST</i> object as a client,
+reusing as much of the <i>BST</i> methods as possible.
+Likewise, an <i>RBT</i> object should have a <i>GST</i> object
+as a client.
+As an example, the size method for
+<i>GST</i> should return
+the number of nodes via the <i>BST</i> size method
+and the size method for <i>RBT</i> should use the
+<i>GST</i> method.
+Another example is that a <i>GST</i> delete
+method should simply make a call to <i>deleteBST</i>.
+An <i>RBT</i> delete method, on the
+other hand, would
+make a call to <i>swapToLeafGST</i>, followed by a call to a
+deletion fixup routine, and finally followed by a call to <i>pruneLeafGST</i>.
+<br/>
+<br/>
+The <i>GST</i> will need its own value object
+to insert in a <i>BST</i>. This value object will
+hold the given generic value and a
+frequency count fields.
+Likewise, the
+<i>RBT</i> will need to a value object to add in
+a color field.
+In addition to the extra fields,
+these specialized value objects may need to pointers
+to the display and freeing methods of the generic object
+as well as the comparator.
+<br/>
+<!-- section -->
+<h2> Compliance
+<br/>
+</h2><!-- section ENDED -->
+
+The <i>swapToLeafBST</i> function should prefer swapping with a successor over
+swapping with a predecessor.
+<br/>
+<br/>
+The <i>pruneLeafBST</i> should not decrement the size of the BST. Only the
+<i>deleteBST</i> method should decrement the count. Therefore, the <i>deleteRBT</i>
+method will need to adjust the BST size.
+The <i>insertGST</i> and <i>deleteGST</i> methods should just
+use <i>insertBST</i> and <i>deleteBST</i>, respectively.
+<br/>
+<br/>
+The insertion and deletion fixup routines for <i>RBT</i> trees
+must follow the
+<a href="http://beastie.cs.ua.edu/red-black">pseudocode</a>
+found on the Beastie website.
+<br/>
+<br/>
+If a newline is to be printed, there can
+be no preceding qhitespace.
+No lines of output are indented.
+<br/>
+<br/>
+Note that during some tests, your <i>BST</i>, your <i>GST</i>, and your <i>RBT</i>
+module will be replaced. In others, your modules will be tested in
+isolation, so do not add any additional public interface
+methods or includes.
+<br/>
+<br/>
+You are required to use the <i>test2</i> drop box prior to submission.
+<br/>
+<br/>
+Reuse your code from previous assignments. Do not modify your
+library structures unless explicitly instructed.
+<br/>
+<!-- section -->
+<h2> Program invocation
+<br/>
+</h2><!-- section ENDED -->
+
+Your program will process a free-format corpus of text and a free-format
+file
+containing an arbitrary number of commands.
+The name of the corpus
+and the file of commands will be passed to the interpreter as a command
+line arguments. Switching
+between the two tree implementations is to be accomplished by providing
+the command line options -g (green tree) and -r (<i>RBT</i> tree). Here
+is an example call to your interpreter:
+<br/>
+
+<pre>
+    trees -g corpus commands
+</pre>
+
+where <i>corpus</i> is a file of text and <i>commands</i> is the name of a file which
+contains a sequence of commands. In executing this call, you would read
+the words found in <i>corpus</i>, store them into a simple binary search tree,
+and the process the sequence of commands found in <i>commands</i>. Both
+the corpus and the commands
+file may be empty.
+<br/>
+<br/>
+Your executable should handle a '-v' option. With this option, your executable
+should print the author's name and immediately exit with a zero error code,
+performing no other work.
+<br/>
+<br/>
+If no 
+<code>-g</code> or 
+<code>-r</code> function is given, you application should assume
+an <i>RBT</i> tree.
+<br/>
+<br/>
+Either the corpus or the commands may be empty, possibly both.
+<br/>
+<!-- section -->
+<h2> Program output
+<br/>
+</h2><!-- section ENDED -->
+
+All
+output should go to the console (stdout).
+When processing commands, only
+the result should be echoed;
+the command should not be
+echoed.
+<br/>
+<br/>
+The <i>insert</i> and <i>delete</i> commands
+do not have a printable result and therefore
+should be processed silently.
+<br/>
+<!-- section -->
+<h2> Documentation
+<br/>
+</h2><!-- section ENDED -->
+
+All code you hand in should be attributed to the author. Comment
+sparingly but well. Do explain the purpose of your program. Do not
+explain obvious code. If code is not obvious, consider rewriting the
+code rather than explaining what is going on through comments.
+<br/>
+<!-- section -->
+<h2> Project compilation
+<br/>
+</h2><!-- section ENDED -->
+
+You must implement your modules in C99.
+You must provide a file named <i>makefile</i>,
+which responds properly to the commands:
+<br/>
+
+<pre>
+    make 
+    make test
+    make clean
+    make valgrind
+</pre>
+
+The 
+<code>make</code> command compiles your program, which should compile
+cleanly with no warnings or errors
+at the highest level of error checking (the
+
+<code>-Wall and -Wextra options</code>).
+The 
+<code>make test</code> command should test your program and
+the 
+<code>make clean</code> command should remove object files and
+the executable.
+<br/>
+<br/>
+The compilation command
+must name the executable <i>trees</i> (not <i>trees.exe</i> for you
+poor Cygwin users).
+You may develop on any system you wish but
+your program will be compiled and tested on a Linux system.
+Only the most foolish
+students would not thoroughly test their implementations on
+a Linux system before submission.
+Note: depending on where you develop your code,
+uninitialized variables may have a
+tendency to start with a value of zero. Thus, a program with uninitialized
+variables may work on
+your system but fail when I run it.
+<br/>
+<br/>
+The correctness and efficiency of your makefile will be tested.
+You must have the correct dependencies and your makefile should not
+perform any unnecessary compilations.
+<br/>
+<!-- section -->
+<h2> Grading
+<br/>
+</h2><!-- section ENDED -->
+
+You must pass all tests for your program to be graded.
+<br/>
+<!-- section -->
+<h2> Handing in the application
+<br/>
+</h2><!-- section ENDED -->
+
+For preliminary testing,
+run a 
+<code>make clean</code> and then
+send me all the files in your directory by running the command:
+<br/>
+
+<pre>
+    submit cs201 lusth test2
+</pre>
+
+For your final submission, run a 
+<code>make clean</code> and use the command:
+<br/>
+
+<pre>
+    submit cs201 lusth assign2
+</pre>
+
+Again, your implementation may be developed on other hardware and
+operating systems, but it must also compile and run cleanly and
+correctly on a Linux system.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

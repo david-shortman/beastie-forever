@@ -1,0 +1,68 @@
+function print(@)
+    {
+    while (@ != :null)
+        {
+	display(string(head(@)));
+	@ = tail(@);
+	}
+    }
+
+function println(@)
+    {
+    apply(print,@);
+    display("\n");
+    }
+
+function +(x,y)
+    {
+    var + = shadowed(:+);
+    if (type(x) == :STRING)
+	{
+	x + string(y);
+	}
+    else 
+	{
+	x + y;
+	}
+    }
+
+function +=(a,b)
+    {
+    var += = shadowed(:+=);
+    if (type(a) == :STRING)
+	{
+	a += string(b);
+	}
+    else 
+	{
+	a += b;
+	}
+    }
+
+
+function string(x)
+    {
+    var newString = string;
+    var string = shadowed(:string);
+    var t = type(x);
+
+    if (t == :OBJECT && defined?(:toString,x))
+	{
+	x . toString();
+	}
+    else if (t == :ARRAY || t == :LIST)
+        {
+	var s = "[";
+	while (x != :null)
+	    {
+	    s = s + newString(head(x));
+	    x = tail(x);
+	    if (x != :null,s = s + ",");
+	    }
+	s + "]";
+	}
+    else
+	{
+	string(x);
+	}
+    }

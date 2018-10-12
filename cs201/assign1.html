@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign1</title>
+<link rel=stylesheet
+    href="201.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS201: Data Structures and Algorithms</span>
+<br/>
+<br/>
+Assignment 1b
+<br/>
+<br/>
+<span class="smaller">Version 1</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller"><a href="assign1.pdf">Printable Version</a></span></span>
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Introduction
+<br/>
+</h2><!-- section ENDED -->
+
+For your second programming assignment,
+you are to implement a maze creation algorithm and a
+maze solving algorithm using
+your stack and queue classes.
+<br/>
+<!-- section -->
+<h2> The executable
+<br/>
+</h2><!-- section ENDED -->
+
+Your executable must be named:
+<br/>
+
+<pre>
+    amaze
+</pre>
+
+This single executable will incorporate both algorithms.
+The executable will take command-line arguments
+and will create, solve, and/or display a maze.
+Here are some example invocations:
+<br/>
+
+<pre>
+    $ amaze -c 3 3 m.data        #create a maze, storing it in m.data
+    $ amaze -d m.data            #draw the maze in m.data
+    -------------
+        |       |
+    -   -   -   -
+    |       |   |
+    ---------   -
+    |            
+    -------------
+    $ amaze -s m.data m.solved   #solve, storing solution in m.solved
+    $ amaze -d m.solved          #draw the solved maze
+    -------------
+      0 | 3   4 |
+    -   -   -   -
+    | 1   2 | 5 |
+    ---------   -
+    |         6  
+    -------------
+    $ amaze -v
+    Written by Hailey Hackwell
+    $
+</pre>
+
+where 
+<code>$</code> is the system prompt. In the example,
+there are three rows and three columns for a total
+of nine cells;
+the following walls have been removed
+between cells:
+<br/>
+<br/>
+<span class="indent">
+the <i>bottom</i> wall of 
+<code>(0,0)</code>
+<br/>
+the <i>right</i> wall of 
+<code>(0,1)</code>
+<br/>
+the <i>bottom</i> wall of 
+<code>(0,1)</code>
+<br/>
+the <i>bottom</i> wall of 
+<code>(0,2)</code>
+<br/>
+the <i>right</i> wall of 
+<code>(1,0)</code>
+<br/>
+the <i>bottom</i> wall of 
+<code>(1,2)</code>
+<br/>
+the <i>right</i> wall of 
+<code>(2,0)</code>
+<br/>
+the <i>right</i> wall of 
+<code>(2,1)</code>
+<br/>
+the <i>right</i> wall of 
+<code>(2,2)</code>
+</span>
+
+<br/>
+Note that the left wall of cell 
+<code>(0,0)</code>, the entrance, and the right wall of
+the bottom right cell, the exit, are always missing.
+<br/>
+<br/>
+The executable must handle the following options:
+<table>
+<tr>
+<td style="text-align:left";> <i>option</i> </td><td style="text-align:left";> <i>action</i> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>-v</code> </td><td style="text-align:left";> give author's name;
+the program exits immediately after the name is printed </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>-s III OOO</code> </td><td style="text-align:left";> solve the maze in file 
+<code>III</code> placing solution in file 
+<code>OOO</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>-c RRR CCC MMM</code> </td><td style="text-align:left";> create a maze with 
+<code>RRR</code> rows and 
+<code>CCC</code> columns, placing the maze in file 
+<code>MMM</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>-r NNN</code> </td><td style="text-align:left";> seed a pseudo-random number generator with 
+<code>NNN</code>; if
+the 
+<code>-r</code> option is not given, use a random seed of 1 </td>
+</tr>
+<tr>
+<td style="text-align:left";> 
+<code>-d III</code> </td><td style="text-align:left";> draw the created maze (
+<code>-c</code>) or draw the solved maze (
+<code>-s</code>)
+found in file 
+<code>III</code> </td>
+</tr>
+</table>
+
+
+<br/>
+Options may be combined. The commands:
+<br/>
+
+<pre>
+    amaze -c 3 3 m -s m p -d p
+    amaze -d p -c 3 3 m -s m p
+    amaze -s m p -d p -c 3 3 m
+</pre>
+
+are all equivalent. In general, creation happens before solving,
+which happens before drawing.
+<br/>
+<br/>
+Here is a program that features some
+handy-dandy option-handling code that you
+may use verbatim without credit: <a href="options.c" style="font-size:10px,font-family:'Lucida Console',monospace">options.c</a>
+Options may come in any order,
+but there will be at most one create, one solve, and one
+draw command.
+<br/>
+<!-- section -->
+<h2> Approach
+<br/>
+</h2><!-- section ENDED -->
+
+You must create <i>MAZE</i> and <i>CELL</i> classes. If you do not,
+I won't help you figure out problems in your code.
+A <i>MAZE</i> object should hold the number of rows and columns
+plus a two dimensional array of <i>CELL</i>s, at a minimum.
+A <i>CELL</i> object should hold its location in the matrix
+(row, column) as well as information about its walls and
+what value the cell contains.
+<br/>
+<br/>
+In building a maze, perform a depth-first traversal of a completely
+walled-in maze. Remove the wall between the current location
+and a randomly-chosen, unvisited neighbor. Then traverse further from the
+chosen neighbor (and so on)
+until you find no unvisited neighbors.
+At this point,
+go back to the previous spot and try again (and so on).
+If you use a stack for this task, &lsquo;going back&rsquo;
+will happen automatically.
+<br/>
+<br/>
+In solving a maze, use a breadth-first search off the maze starting
+in the upper left corner. Continue searching until the lower right corner
+is reached. Mark the squares searched with step number (mod 10). The
+upper left corner is always marked with a zero. The solving process
+stops when the lower right-hand corner is reached. Use a queue for
+this task. If you have any cells left on the queue when the exit
+is reached and they have step numbers, you should remove the
+step numbers from those cells.
+<br/>
+<!-- section -->
+<h2> Constraints
+<br/>
+</h2><!-- section ENDED -->
+
+Use 
+<code>srandom</code> and 
+<code>random</code> to generate pseudo-random numbers.
+<br/>
+<br/>
+When adding a reachable neighbor in searching for a solution, add the
+neighbor
+with the lower row number. In the case of a tie in the row number,
+break the tie with the lower column number.
+<br/>
+<br/>
+When removing a wall in building a maze,
+use one random number
+(i.e. one call to 
+<code>random</code>)
+to index into an array (or equivalent) of
+sorted, eligible candidates.
+For example, if <i>count</i> is the number of candidates,
+then 
+<code>random() % count</code> would generate a random, but legal, index.
+Sort the candidates by lower row number
+(break ties with the lower column number).
+There can, at most, be four eligible candidates.
+<br/>
+<br/>
+The lowest row number is the index of the top row of the maze.
+The lower column number is the index of the leftmost column of the maze.
+<br/>
+<!-- section -->
+<h2> System requirements
+<br/>
+</h2><!-- section ENDED -->
+
+See the <a href="assign0.html">previous</a> assignment.
+<br/>
+<!-- section -->
+<h2> Testing
+<br/>
+</h2><!-- section ENDED -->
+
+I will be testing your maze implementation against my implementation.
+I will also be substituting my modules for your modules and vice versa.
+Therefore,
+it is important for you to adhere to the public interfaces found in
+any supplied 
+<code>.h</code> files.
+<br/>
+<!-- section -->
+<h2> Project compilation
+<br/>
+</h2><!-- section ENDED -->
+
+You must provide a file named <i>makefile</i>,
+which responds properly to the commands:
+<br/>
+
+<pre>
+    make 
+    make test
+    make clean
+    make valgrind
+</pre>
+
+The 
+<code>make</code> command compiles your program, which should compile
+cleanly with no warnings or errors
+at the highest level of error checking (the
+
+<code>-Wall and -Wextra options</code>).
+The 
+<code>make test</code> command should test your program,
+the 
+<code>make clean</code> command should remove object files, and
+the 
+<code>make valgrind</code> command should test an executable with
+<i>valgrind</i>. Valgrind should report no memory errors or leaks.
+<br/>
+<br/>
+The correctness and efficiency of your makefile will be tested.
+You must have the correct dependencies and your makefile should not
+perform any unnecessary compilations.
+<br/>
+<br/>
+You must implement your modules in C99
+and you must use the 
+<code>-std=C99</code> option
+to <i>gcc</i> in your makefile.
+<br/>
+<!-- section -->
+<h2> Documentation
+<br/>
+</h2><!-- section ENDED -->
+
+All code you hand in must be
+attributed to its author. Comment sparingly but well. Do explain the
+purpose of your program. Do not explain obvious code. If code is not
+obvious, consider rewriting the code rather than explaining what is
+going on through comments.
+<br/>
+<br/>
+<!-- section -->
+<h2> Submission
+<br/>
+</h2><!-- section ENDED -->
+
+You will hand in (electronically) your code for the
+preliminary assessment and for final testing with the
+commands:
+<br/>
+
+<pre>
+    submit cs201 lusth compile
+    submit cs201 lusth test1
+    submit cs201 lusth assign1
+</pre>
+
+<!-- section -->
+<h2> Change log
+<br/>
+</h2><!-- section ENDED -->
+
+
+<code>     1b    </code> clarified the termination condition to prevent an extra step
+<br/>
+
+<code>     1a    </code> changed termination condition for solving to lower right corner
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

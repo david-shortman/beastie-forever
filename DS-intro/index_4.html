@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Aug 18 09:08:14 2014 -->
+<head>
+<title>An Encyclop&aelig;dia of Elementary Data Structures -- An Introduction to Order Notation</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_3.html">
+  <img border="0" alt="Notes on Terminology" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_5.html">
+  <img border="0" alt="Arrays" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>An Introduction to Order Notation</h1>
+<p>Order notation is used to describe the run time of an
+algorithm.<sup><a href="index_20.html#footnote-1">1</a></sup>
+in a big-picture sort of way. We often use order notation to
+compare two algorithms or to compare a single algorithm to 
+some benchmark. For example, we might say:
+</p>
+<blockquote><i>f = O(n<sup>2</sup>)</i></blockquote>
+<p>This compares algorithm <i>f</i> to a benchmark named <i>n<sup>2</sup></i>
+and can be read as "algorithm <i>f</i> runs no worse than the square
+of the input size (times some constant) for arbitrary input
+above a certain problem size <i>n</i>".
+From this reading, we can deduce that <i>n</i> refers to the problem size
+and that big Oh (actually Omicron) refers to the concept
+<i>less than or equal to</i>.
+</p>
+<p>There are a number of letters from the Greek alphabet used to
+make these comparisons. They are:
+<i>&#920;</i>
+(theta), which means EQUIVALENT TO,
+<i>o</i> (little omicron), which means LESS THAN,
+<i>&#969;</i>
+(little omega), which means GREATER THAN,
+<i>O</i> (big omicron), which means LESS THAN OR EQUIVALENT TO,
+and
+<i>&#937;</i>
+(big omega), which means GREATER THAN OR EQUIVALENT TO.
+The adjectives <i>less</i> and <i>greater</i> are general terms
+whose meaning depends on the particular aspect
+of the program being investigated.
+If how fast a program runs is of interest,
+then less means "takes less time to complete (runs faster)".
+If how much space a program takes up when running is
+of interest,
+then less means "uses less space".
+For all these symbols, it is generally implied
+that the definitions hold only for the worst case
+and for sufficiently large input.
+Also, unless space or some other quantity is specified,
+time is assumed.
+</p>
+<p>As an example, consider two functions <i>f</i> and <i>g</i>
+that perform the same task.
+Consider also data sets that cause the functions
+<i>f</i> and <i>g</i> to exhibit worst case behavior (i.e., take
+the most time or use the most space).
+Under these conditions, the
+phrase
+<i>f = &#969;(g)</i>
+can be read as <i>f</i> is ALWAYS
+GREATER THAN <i>g</i> in the worst case
+and for sufficiently
+large input. 
+It can also be read as <i>g</i> is
+ALWAYS LESS THAN THAN <i>f</i> for
+sufficiently large input in the worst case.
+Suppose we are concerned with execution speed.
+If indeed
+<i>f = &#969;(g)</i>,
+then we can say without a doubt that
+function <i>f</i> will run slower than function <i>g</i> on the same
+data set, <i>provided</i> the data set is large enough and the data set
+forces both <i>f</i> and <i>g</i> to exhibit their worst case behavior.
+That is, as the sizes
+of these worst case data sets grow, the ratio of <i>g</i>'s running time
+to <i>f</i>'s running
+time will become smaller and smaller.
+Eventually,
+the data set sizes becomes large enough that <i>g</i> will run faster than <i>f</i> in
+an absolute sense (on a worst case data set) and the ratio of running
+times will be less than 1.
+Moreover, this ratio will diminish towards zero as the data sets
+get ever larger.
+</p>
+
+<h2><a name="id1">Comparing algorithms against benchmarks</a></h2><p>
+Here's another example. Let's say that by counting steps we see that
+function <i>r</i> takes exactly <i>n<sup>2</sup></i> steps in the worst case where <i>n</i> is
+representative of the input size.
+We would say that
+<i>r = &#920;(n<sup>2</sup>)</i>.
+If another function <i>s</i> compares to <i>r</i> this way:
+<i>s = &#969;(r)</i>,
+then we can also say that
+<i>s = &#969;(n<sup>2</sup>)</i>
+as well.
+This means that the number of steps that <i>s</i>
+takes is larger (by a non-constant amount).
+How much larger? This is
+unspecified, but example step counts might be <i>n<sup>3</sup></i> or <i>n<sup>2</sup>log n</i> or <i>2<sup>n</sup></i>.
+All of these counts are
+<i>&#969;(n<sup>2</sup>)</i>.
+</p>
+<p>The common benchmarks against which programs are often
+compared are:
+</p>
+<div align="center">
+<table><tbody><tr><td colspan="1" align="center">
+<p><i>benchmark</i> </td><td colspan="1" align="left"> <i>meaning</i></td></tr>
+<tr><td colspan="1" align="center">
+1 </td><td colspan="1" align="left"> constant</td></tr>
+<tr><td colspan="1" align="center">
+log <i>n</i> </td><td colspan="1" align="left"> logarithmic</td></tr>
+<tr><td colspan="1" align="center">
+<i>n</i> </td><td colspan="1" align="left"> linear</td></tr>
+<tr><td colspan="1" align="center">
+<i>n<sup>2</sup></i> </td><td colspan="1" align="left"> quadratic</td></tr>
+<tr><td colspan="1" align="center">
+<i>n<sup>3</sup></i> </td><td colspan="1" align="left"> cubic</td></tr>
+<tr><td colspan="1" align="center">
+<i>n log n</i> </td><td colspan="1" align="left"> log-linear</td></tr>
+<tr><td colspan="1" align="center">
+<i>2<sup>n</sup></i> </td><td colspan="1" align="left"> exponential</td></tr>
+<tr><td colspan="1" align="center">
+<i>n!</i> </td><td colspan="1" align="left"> factorial</td></tr>
+<tr><td colspan="1" align="center">
+</td></tr></tbody></table>
+</p>
+</div>
+
+<h2><a name="id2">Constants and lower order terms</a></h2><p>
+When using order notation, we ignore constants and lower order terms.
+Suppose an  program <i>f</i> takes time <i>4n<sup>2</sup> - 3n + 105</i>. For an input
+size <i>n = 4</i>, then <i>f</i> takes 157 units of time to complete.
+Suppose a program
+<i>g</i> takes time <i>5n<sup>2</sup> + 10n + 2</i>. For an input size <i>n = 4</i>, <i>g</i> takes
+122 units of time. Although <i>g</i> runs faster than <i>f</i> for small inputs and
+<i>f</i> runs faster than <i>g</i> for larger inputs,
+both <i>f</i> and <i>g</i> are
+<i>&#920;(n<sup>2</sup>)</i>.
+The reason is <i>g</i> is never slower than twice the run time of <i>f</i>.
+When <i>n = 100</i>, <i>f</i> takes 39,805 units of time, while <i>g</i> takes
+51,002 units of time. When <i>n = 10,000</i>,
+<i>f</i> takes <i>3.99701 * 10<sup>8</sup></i> units of time, while <i>g</i> takes
+<i>5.00100 * 10<sup>8</sup></i> units of time.
+Regardless of how big <i>n</i> gets, <i>g</i> never takes more time than
+twice the time <i>f</i> takes. Since their run times are within a 
+constant factor of each other (that constant is somewhat less
+than 2), that means that:
+</p>
+<blockquote><i>f = &#920;(g) </i></blockquote>
+<p>We can see that this is true by ignoring constants and
+lower order terms. The program <i>f</i> starts out as:
+</p>
+<blockquote><i>f = 
+&#920;(4n<sup>2</sup> -3n + 105) </i></blockquote>
+<p>Removing lower order terms yields:
+</p>
+<blockquote><i>f = 
+&#920;(4n<sup>2</sup>) </i></blockquote>
+<p>Ignoring constant factors yields:
+</p>
+<blockquote><i>f = 
+&#920;(n<sup>2</sup>) </i></blockquote>
+<p>By the same token
+</p>
+<blockquote><i>g = 
+&#920;(5n<sup>2</sup> + 1n + 2) </i></blockquote>
+<blockquote><i>g = 
+&#920;(5n<sup>2</sup>) </i></blockquote>
+<blockquote><i>g = 
+&#920;(n<sup>2</sup>) </i></blockquote>
+<p>Since both <i>f</i> and <i>g</i> are <i>
+&#920;(n<sup>2</sup>)</i>,
+they are <i>&#920;</i> of each other.
+</p>
+
+<h2><a name="id3">What order notation does not mean</a></h2><p>
+Suppose we have two algorithms, <i>f</i> and <i>g</i>, and that:
+</p>
+<blockquote><i>f = o(g)</i></blockquote>
+<p>While <i>f</i> will run faster than <i>g</i> when the input size is large enough
+and the input causes both <i>f</i> and <i>g</i> to exhibit worst case behavior,
+it does <i>not</i>
+mean that <i>f</i> runs faster than <i>g</i> in <i>all</i> cases. There
+may be small worst case data sets for which <i>g</i> runs faster. There may be
+rather large data sets for which <i>f</i> exhibits worst case behavior and
+<i>g</i> does not, leading <i>g</i> to again have a faster running time. The function
+<i>f</i> runs faster than <i>g</i> ONLY in the worst case <i>and</i> ONLY for sufficiently
+large inputs.
+A common mistake is to make the assumption that order notation holds
+for all inputs; it does not.
+</p>
+<p>Suppose instead that:
+</p>
+<blockquote><i>f = &#920;(g)</i></blockquote>
+<p>Does this mean that <i>f</i> has exactly the same running
+time as <i>g</i>?
+Again, no, not really.
+What 
+this does say is that <i>f</i> and <i>g</i> have running times within a constant
+factor of each other when worst case behavior is exhibited with
+sufficiently large inputs.
+</p>
+
+<h2><a name="id4">A pictorial view</a></h2><p>
+With the following Venn diagram, the definitions
+of the symbols used for order notation will become more
+intuitive
+(hopefully):
+</p>
+<div align="center">
+<img height=640 alt="" src="venn.jpg"/>
+</div>
+<p>Suppose:
+</p>
+<blockquote><i>f = &#937;(g) </i></blockquote>
+<p>Start by placing <i>g</i> in the <i>&#920;</i> region.
+Since <i>f</i> is <i>&#937;</i>, <i>f</i> can be placed in either the
+<i>&#920;</i> region or the <i>&#969;</i> region. Thus, <i>f</i> runs
+within a constant factor of <i>g</i> or slower, for sufficiently
+large input that forces worst case behavior.
+</p>
+<a name="ContentsOrder"></a>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_3.html">
+  <img border="0" alt="Notes on Terminology" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_5.html">
+  <img border="0" alt="Arrays" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

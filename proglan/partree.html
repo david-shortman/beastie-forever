@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>partree</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Parse Trees
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="partree.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ Parse trees
+
+<br/>
+</h2><!-- section ENDED -->
+
+Recall that the implementation of a grammar is called a <i>parser</i>. Recall
+also that a parser which skims through the input in order to see that the
+input is made of good sentences is designated a <i>recognizer</i>. A recognizer
+can be extended to format the input in a nicer or standard fashion. Such
+a program is called a <i>pretty</i> <i>printer</i>. However,
+in order to pretty print,the
+structure of the input sentences must somehow be preserved. An easy way
+to do this is to build a parse tree.
+<br/>
+<br/>
+Consider the implementation of the following right associative grammar
+as a recognizer:
+<br/>
+
+<pre>
+    expression : primary op expression | primary
+
+    op : PLUS | MINUS | TIMES | DIVIDE
+
+    primary : VARIABLE | NUMBER | OPAREN expression CPAREN | MINUS primary
+</pre>
+
+The function corresponding to <i>expression</i> is..
+<br/>
+
+<pre>
+    function expression()
+        {
+        primary();
+        if (opPending())
+            {
+            op();
+            expression();
+            }
+        }
+</pre>
+
+Note that while the <i>expression</i> function
+enforces the proper structure of an expression,
+it does not save the source code; all the lexemes are thrown away. In order
+to save the lexemes and to combine into a structure representative of
+the input, we will now take advantage of the fact that <i>match</i>
+returns lexemes.
+We will convert all of the
+parsing functions to return the structure that function has
+recognized, in the form of a tree of lexemes. It is assumed the lexem
+objects are outfitted with left and right pointers so that they can be
+assembled into binary trees. Here is the updated <i>expression</i> function.
+<br/>
+
+<pre>
+    function expression()
+        {
+        var tree;
+
+        tree = primary();
+        if (opPending())
+            {
+            var temp;
+            temp = op(); 
+            temp.left = tree;
+            temp.right = expression();
+            tree = temp;
+            }
+
+        return tree;
+        }
+</pre>
+
+The <i>expression</i> function now returns a tree whose root, in the case of a
+complex expression, is the operator and whose left and right subtrees hold
+the left-hand side and the right-hand side of the binary operation,
+respectively. In the case of a simple expression (primary only), the
+tree returned by the primary function is returned directly. The <i>op</i> and
+<i>primary</i> routines simply become:
+<br/>
+
+<pre>
+    function op()
+        {
+        return match(ANYTHING); //type ANYTHING matches all operator types
+        }
+
+    function primary() 
+        {
+        var tree;
+
+        if (check(VARIABLE)) 
+            {
+            tree = match(VARIABLE);
+            }
+        else if (check(NUMBER))
+            {
+            tree = match(NUMBER);
+            }
+        else if (check(OPAREN))
+            {
+            tree = match(OPAREN);
+            tree.left = null;
+            tree.right = expression();
+            }
+        else //unary minus
+            {
+            tree = match(MINUS);
+            tree.type = UMINUS; //rename!
+            tree.left = null;
+            tree.right = primary();
+            }
+
+        return tree;
+        }
+</pre>
+
+Note that the lexeme type in the unary minus case was renamed to reflect
+that the MINUS sign was overloaded at the lexical level.
+<br/>
+<!-- section -->
+<h2>
+ Building a pretty printer
+<br/>
+</h2><!-- section ENDED -->
+
+A pretty printer simply reformats the input. Since we've saved the input
+and its structure in a parse tree, it is a relatively
+simple task to regenerate
+the original input. Recall that lexemes are objects that can hold any
+kind of value in your language and that the component <i>ival</i> stores the
+value of integer lexemes and that the component <i>sval</i> stores the value
+of variable and string lexemes. One possible way of implementing the
+pretty printer is through a switch statement that steps through all the
+possible lexeme types:
+<br/>
+
+<pre>
+    function prettyPrint(tree)
+        {
+        switch (tree.type)
+            {
+            case NUMBER   { print(tree.nval);}
+            case VARIABLE { print(tree.sval); }
+            case STRING   { print(&#39;\&quot;&#39;, tree.sval, &#39;\&quot;&#39;); }
+            case OPAREN
+                {
+                print(&quot;(&quot;);
+                prettyPrint(tree.right);
+                print(&quot;)&quot;);
+                }
+            case UMINUS
+                {
+                print(&quot;-&quot;);
+                print(tree.right);
+                }
+            case PLUS
+                {
+                prettyPrint(tree.left);
+                print(&quot; + &quot;);
+                prettyPrint(tree.right);
+                }
+            .
+            .
+            .
+            else { print(&quot;bad expression!&quot;); }
+            }
+        }
+</pre>
+
+This pretty printer is pretty basic and not very pretty. In fact,
+it prints an entire expression on a single line, regardless of its
+size. More sophisticated pretty printers have additional arguments, the
+most useful of which is an indentation level. However, getting a pretty
+printer to print out beautiful looking code is a rather tedious process,
+involving much trial and error.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

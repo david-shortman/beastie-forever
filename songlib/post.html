@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: post.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Thu Mar 14 14:42:31 2013 -->
+<head>
+<title>Songlib: post-processing filters</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: post-processing filters<br /></h1>
+<h2 class="maketitle">written by: Song Li Buser</h2>
+<h3 class="maketitle">Revision Date: March 14, 2013</h3>
+</p>
+
+<h3><a name="id1"><a href="post.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Post-processing</a></h1><p>
+Once an audio file is created with the <i><b>songlib</b></i>&#32;library, you can enhance
+the audio via post-processing. The <i><b>songlib</b></i>&#32;package comes with a number of
+post-processing filters, some of which work natively with RRA files and
+some use <i>sox</i>.
+The <i>sox</i>-based filters can take RRA files as input, but convert
+them to WAV before <i>sox</i> processes them.
+</p>
+
+<h1><a name="id3">RRA-based filters</a></h1><p>
+Most RRA filters accept zero, one, or two file names, plus options. If
+given no file names, they read from <i>stdin</i> and write to <i>stdout</i>. If
+given one filename, they read from the given file and write to <i>stdout</i>.
+If given two filenames, they read from the first and write to the second.
+Filters marked <i>ABNORMAL</i> do not follow this pattern.
+</p>
+
+<h2><a name="id4">Format filters</a></h2>
+<dl><dt>rra2mp3,rra2ogg,rra2flac</dt><dd>
+batch convert RRA files to MP3, OGG, or FLAC -
+this filter requires one or more command-line arguments, all
+of which are the names of the RRA files to be converted;
+it produces similarly named files with 
+<code>.mp3</code>, <code>.ogg</code>, or <code>.flac</code> extensions,
+rather than with <code>.rra</code> extensions - <i>ABNORMAL</i>
+</dd><dt>flac2rra,flac2mp3,flac2ogg</dt><dd>
+batch convert FLAC files to RRA, MP3, or OGG -
+this filter requires one or more command-line arguments, all
+of which are the names of the FLAC files to be converted;
+it produces similarly named files with
+<code>.rra</code>, <code>.mp3</code>, or <code>.ogg</code> extensions,
+rather than with <code>.flac</code> extensions - <i>ABNORMAL</i>
+</dd><dt>ogg2rra,ogg2mp3,ogg2flac</dt><dd>
+batch convert OGG files to RRA, MP3, or FLAC -
+this filter requires one or more command-line arguments, all
+of which are the names of the OGG files to be converted;
+it produces similarly named files with
+<code>.rra</code>, <code>.mp3</code>, or <code>.flac</code> extensions,
+rather than with <code>.ogg</code> extensions - <i>ABNORMAL</i>
+</dd><dt>mp32rra,mp32ogg,mp32flac</dt><dd>
+batch convert MP3 files to RRA, OGG, or FLAC -
+this filter requires one or more command-line arguments, all
+of which are the names of the MP3 files to be converted;
+it produces similarly named files with
+<code>.rra</code>, <code>.ogg</code>, or <code>.flac</code> extensions,
+rather than with <code>.mp3</code> extensions - <i>ABNORMAL</i>
+</dd><dt>rra2wav,wav2rra</dt><dd>
+convert from RRA to WAV and vice versa
+</dd></dl>
+
+<h2><a name="id5">Effects filters</a></h2><p>
+Typically, effects filters are strung together in a pipeline:
+</p>
+<pre>
+   cat track1.rra | rraamplify -a 0.8 | rrachorus | rrareverb | rrastereo -r &gt; final1.rra
+</pre>
+<p>To see the options that a filter handles, use the <code>-h</code> option, as in:
+</p>
+<pre>
+    rraecho -h
+</pre>
+<dl><dt>rraamplify</dt><dd>
+increase or decrease the volume
+</dd><dt>rrachorus</dt><dd>
+add multiple voices to the incoming audio, some pitched a little bit higher 
+and some pitched a little bit lower
+</dd><dt>rraecho</dt><dd>
+add a prominent echo to the incoming audio - unlike <i>soxecho</i> (below),
+which adds a single echo,
+<i>rraecho</i> re-echos repeatedly,
+each subsequent echo fainter than the previous
+</dd><dt>rrafader</dt><dd>
+fade in and fade out the incoming audio
+</dd><dt>rrafastmixer</dt><dd>
+mix a number of audio files, given as command line arguments, into a single
+audio file - the output audio is assumed to be the last filename given as
+an argument - if the last argument is <code>-</code>, then the output audio is sent
+to stdout.
+</dd><dt>rraflanger</dt><dd>
+add a flanging effect to the incoming audio
+</dd><dt>rrahiss</dt><dd>
+add a hiss to the incoming audio
+</dd><dt>rramono</dt><dd>
+convert a multichannel audio to a single channel - a single channel from
+the input can be selected or all channels in the input can be merged into
+a single channel
+</dd><dt>rrareverb</dt><dd> add some reverb to the incoming audio -
+like <i>rraecho</i>, but the echo is delayed much less
+</dd></dl>
+
+<h1><a name="id6">Mastering filters</a></h1><p>
+These filters are useful for mastering vocals:
+</p>
+<dl><dt>rrasilence</dt><dd>
+reduces the volume on regions that appear to
+be silent - it is mainly used to remove
+recording hiss and background noises from vocals -
+try the default parameters and
+adjust if to much or too little signal is being removed
+</dd></dl>
+
+<h1><a name="id7">Sox-based filters</a></h1><p>
+The <i>sox</i>-based filters take zero, one, or two command-line arguments. 
+If no arguments are given, then the filter expects the input audio to 
+come from stdin and the output audio to go to stdout. The default is to
+expect a WAV as input and produces a WAV on output:
+</p>
+<pre>
+    cat song.wav | soxecho &gt; songecho.wav
+</pre>
+<p>This example uses the <i>soxecho</i> filter, but the behavior is the same for
+all <i>sox</i>-based filters.
+If the <code>-r</code> option is given, then the input on stdin is RRA:
+</p>
+<pre>
+    cat song.rra | soxecho -r &gt; songecho.wav
+</pre>
+<p>If the <code>-R</code> option is given, then an RRA is produced on stdout:
+</p>
+<pre>
+    cat song.wav | soxecho -R &gt; songecho.rra
+    cat song.rra | soxecho -r -R &gt; songecho.rra
+</pre>
+<p>When one command-line argument is given, it is assumed to be the name
+of the audio input file. Sox determines whether it is a WAV or RRA file
+by its extension. When two command-line arguments are given, the first
+is assumed to be the name of the audio input file and the output is written
+to a file named by the second command-line argument. Thus, the following
+three commands are equivalent:
+</p>
+<pre>
+    cat song.rra | soxecho -r -R &gt; songecho.rra
+    soxecho -R song.rra &gt; songecho.rra
+    soxecho song.rra songecho.rra
+</pre>
+<p>Finally, there is the generic <i>soxfilter</i>, which takes a <code>-e</code>
+option to
+specify the effect and a <code>-o</code> option to pass options to the effect.
+For example,
+the <i>soxecho</i> filter devolves to the following call to <i>soxfilter</i>:
+</p>
+<pre>
+    soxfilter -e echo -o 0.8 0.9 1000.0 0.3
+</pre>
+<dl><dt>soxecho</dt><dd>
+add a prominent echo to the incoming audio
+</dd><dt>soxchorus</dt><dd>
+add multiple voices to the incoming audio, some pitched a little bit higher 
+and some pitched a little bit lower
+</dd><dt>soxreverb</dt><dd>
+add some reverb to the incoming audio - like <i>soxecho</i>, but the echo is delayed
+much less
+</dd><dt>soxflanger</dt><dd>
+add a flanging effect to the incoming audio
+</dd><dt>soxbass</dt><dd>
+boost the bass of the incoming audio
+</dd><dt>soxtelephone</dt><dd>
+add a telephone effect to the incoming audio - the low bass and the high treble
+are removed to make the audio sound like it is coming over a telephone
+</dd><dt>soxfilter</dt><dd>
+the generic filter on which the above filters are based
+</dd></dl>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

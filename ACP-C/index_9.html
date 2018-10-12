@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:16 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Arrays</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_8.html">
+  <img border="0" alt="Assignment" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_10.html">
+  <img border="0" alt="Strings" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Arrays</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Arrays</h1>
+<p>In this chapter, we will study <i>arrays</i>, a device
+used for bringing related bits of data together underneath one
+roof, so to speak. Such a device is known as a data structure;
+an array is one of the most basic of data structures.
+</p>
+<p>An array is composed of <i>slots</i>.
+Each slot can hold one piece of data. If the array has ten slots, then
+it can hold 10 pieces of data.
+Each piece of data is known as an <i>element</i>.
+</p>
+<p>Depending upon the programming language, arrays can be
+<i>heterogeneous</i> or <i>homogeneous</i>.
+Orthogonally, they can be <i>fixed-size</i> or <i>dynamic</i>.
+The word
+<i>heterogeneous</i> means that a single array can hold multiple types
+of data. That is to say, one array could hold a string in one slot
+and an integer in another.
+Conversely, if an array is <i>homogeneous</i>, then each piece of data stored
+in the array must be the same type.
+A <i>fixed-size</i> array is given a specified number of slots at creation time; the number
+of slots cannot change while the program is running.
+On the other hand, a <i>dynamic</i> array
+can grow larger, if necessary, to accommodate additional data items.
+In C, arrays are homogeneous and fixed-sized.  Note that this fixed size can be
+determined while the program is running, but once you make the allocation then
+you can't change that size at a later date.
+</p>
+
+<h2><a name="id1">Arrays as data structures</a></h2><p>
+As stated previously, a <i>data</i>
+<i>structure</i> is simply a collection of
+bits of information<sup><a href="index_26.html#footnote-16">16</a></sup>
+that are
+somehow glued together into a single whole, along with
+a set of operations for manipulating said bits.
+Usually, the bits are somehow
+related, so the data structure is a convenient way
+to keep all these related bits nicely packaged together.
+</p>
+<p>At its most basic, a data structure supports the following actions:
+</p>
+<ul><li>creating the structure
+</li><li>putting data into the structure
+</li><li>taking data out of the structure
+</li></ul>
+<p>We will study these actions with an eye to how long each
+action is expected to take.
+</p>
+<p>An array is a data structure with the property that each
+individual piece of data can be accessed just as quickly as any of the
+others. In other words, the process of putting data in and
+taking data out takes a constant amount of time regardless of
+the size of the array and
+which slot is being used to store a data item<sup><a href="index_26.html#footnote-17">17</a></sup>.
+</p>
+
+<h3><a name="id2">Array creation</a></h3><p>
+There are two basic ways to create an array, statically and dynamically.
+Note that a dynamically created array is not the same thing as a dynamic array;
+a dynamically created array can only be fixed-size in C.
+</p>
+<p>A static array lasts as long as the function in which the array was created
+lasts (runs).  If you create a static array in <tt>main</tt> then it lasts for the duration
+of your program.
+Since creation of an array entails the allocation
+of memory somewhere to serve as slots, we refer to array creation as
+<i>array allocation</i>.
+</p>
+<p>To allocate a static array, one uses <i>bracket notation</i>:
+</p>
+<pre>
+    int a[10];
+</pre>
+<p>This statement creates a <i>constant</i>, named <i>a</i>, that refers to 10 slots in memory.
+Each of the slots can hold an integer.
+The size of the array (<i>i.e.</i> the number of slots) is placed between
+the brackets that follow the variable name.
+The reason <i>a</i> is a constant and not a variable is that the value of
+<i>a</i> cannot be changed.
+The value of <i>a</i> is a particular piece of memory
+where the ten slots are located;
+that value is forever fixed while <i>a</i> exists.
+</p>
+<p>Pictorially, we represent the constant created when an array is
+statically allocated like this:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-array1.png"/>
+</div>
+<p>We read this image as 
+"<i>a</i> holds a location in memory where one can find the first
+slot of an array".
+This is a bit wordy, so we often use the less precise shorthand,
+"the array <i>a</i>".
+</p>
+<p>Arrays created in this manner have what might be considered
+random values in each of the slots.
+Such an array is said to be <i>uninitialized</i>.
+We can also <i>initialize</i> arrays at allocation time:
+</p>
+<pre>
+    int b[3] = { 42, 13, 77 };
+</pre>
+<p>The initialization values are comma-separated and placed between braces. It is
+considered "bad style" to
+have a mismatch between the number of slots and the number of initializers<sup><a href="index_26.html#footnote-18">18</a></sup>.
+If you are bad at counting, you can have C count for you. The following
+statement is equivalent to the previous one.
+</p>
+<pre>
+    int b[] = { 42, 13, 77 };
+</pre>
+<p>In either case, we end up with a picture like this:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-array2.png"/>
+</div>
+<p>In the latter version,
+the number of slots is omitted. One must specify the number of slots, either
+explicitly using non-empty brackets, or implicitly, using initializers. It is an
+error to do neither. Thus, the statement:
+</p>
+<pre>
+    int c[];
+</pre>
+<p>will generate an error.
+</p>
+<p>Remember,
+if you allocate an array and do not give any initializers, the slots are filled
+with whatever random bits are lying around in the memory allocated. Such uninitialized
+slots are said to be filled with garbage, just like when a variable is created
+but not initialized.
+</p>
+
+<h2><a name="id3">Indexing into Arrays</a></h2><p>
+You can retrieve a value stored in an array by using <i>bracket notation</i>.
+With bracket notation, you specify exactly which element
+you wish to extract from the array. This specification is called an
+<i>index</i>. The first element of the array has index 0, the second
+index 1, and so on. The last element in an array with <i>n</i> slots has
+an index of <i>n-1</i>. This concept of having the first element having
+an index of zero is known as <i>zero-based counting</i>, a common concept
+in Computer Science. Here is some code that extracts the first element
+of an array. Note that the first interaction creates a <i>variable</i> named
+<i>items</i> that points to an array of three elements:
+</p>
+<pre>
+    //test
+    int sum;
+    int items[3] = { 7, 11, 711 };
+    printf("the first slot holds %d\n",items[0]);
+    printf("the second slot holds %d\n",items[1]);
+    printf("the third slot holds %d\n",items[2]);
+    sum = items[0] + items[1] + items[2];
+    printf("the sum of the three elements is %d\n",sum);
+</pre>
+<p>The first three print statements should produce, respectively:
+</p>
+<pre>
+   the first slot holds 7
+   the second slot holds 11
+   the third slot holds 711
+</pre>
+<p>Accessing an element in a slot
+does not remove the element. Thus, the last print statement yields:
+</p>
+<pre>
+    the sum of the three elements is 729
+</pre>
+<p>In the statement:
+</p>
+<pre>
+    sum = items[0] + items[1] + items[2];
+</pre>
+<p>the appearance of <code>items[0]</code>, <code>items[1]</code>, and <code>items[2]</code>
+to the right of
+the assignment operator means that they are rvalues. Thus, we use their
+values to compute the sum.
+</p>
+<p>We can also use an expression involving variables as an index. The following
+code gives exactly the print outs as previously:
+</p>
+<pre>
+    //test
+    int items[3] = { 7, 11, 711 };
+    int i = 0;
+    printf("the first slot holds %d\n",items[i]);
+    printf("the second slot holds %d\n",items[i+1]);
+    printf("the third slot holds %d\n",items[i+2]);
+    int sum = items[i] + items[i+1] + items[i+2];
+    printf("the sum of the three elements is %d\n",sum);
+</pre>
+<p>In addition to retrieving elements of an array, we can change existing
+elements as well, by using the assignment operator:
+</p>
+<pre>
+    //test
+    int a[3] = { 7, 11, 711 };
+    a[1] = 13;                                  // replace 11 with 13
+    printf("the second element is %d\n",a[1]);  //should print: the second element is 13
+</pre>
+<p>In the statement:
+</p>
+<pre>
+    a[1] = 13;
+</pre>
+<p>the expression <code>a[1]</code> is considered an rvalue and thus refers to a location
+in memory that is to be updated.
+As with retrieving values, we can use any arithmetic expression as an index when
+replacing elements.
+</p>
+
+<h2><a name="id4">Array indices that are out of bounds</a></h2><p>
+When we use an index that is too small (i.e. a negative index) or
+too large (i.e. an index greater than or equal to the size of the array),
+we say the array index is <i>out of bounds</i>.
+What actually happens if we use an out-of-bounds index?
+</p>
+<pre>
+    //test
+    int items[3] = { 7, 11, 711 };                   //only three slots!
+    printf("the fourth slot holds %d\n",items[3]);
+</pre>
+<p>We get a surprising result:
+</p>
+<pre>
+    the fourth slot holds 134513712
+</pre>
+<p>You may get a different number printed,
+but you will likely not get an error message,
+even though an error has clearly occurred.
+Why is this?
+</p>
+<p>C is designed to be a very fast language. Generally, a program written in
+C will run faster (by a stopwatch) than the equivalent program written in some
+other programming language. One reason for its speed is due to the fact that
+it does very little error checking. When an array is allocated, the slots are
+allocated consecutively in a block of memory. When we ask for a particular slot,
+C calculates how far into the block to look for the value in that slot. An index
+of zero refers to a slot at the beginning of the block, an index of one
+refers to the next slot in, and so on.
+Since
+no error checking is performed, asking for a slot beyond the last slot simply
+tells C to reference memory beyond the block allocated to the array. What
+is found there can be anything.
+</p>
+<p>Behavior of a program that retrieves or changes memory that is out of bounds
+is undefined.
+When one is lucky, the program crashes 
+immediately upon the out-of-bounds access. When one is less lucky, the program
+runs for a while before crashing, making the determination of what caused the
+crash much more difficult. If one is extremely unlucky, the program never crashes.
+In this last case, only
+thorough testing along with a very careful screening of the output reveals
+the existence of the error.
+</p>
+
+<h2><a name="id5">Arrays and aliases to arrays</a></h2><p>
+In programming, an array <i>alias</i> is a second variable referring to the same array
+as the first. In the following code, we want to configure <i>b</i> as an alias for <i>a</i>.
+To do this, we will have to properly define <i>b</i>.  However, for now, assume that
+<tt>...</tt> contains a definition of <i>b</i> (we'll formally define it in a few minutes).
+Let's see what should happen if we can establish <i>b</i> as an alias to <i>a</i>.
+</p>
+<pre>
+    double a[3] = { 2.7, 3.1, 1.4 };
+    ...
+    b = a;
+</pre>
+<p>If we were to change an element using <i>b</i>, we would see the new element using <i>a</i>:
+</p>
+<pre>
+    double a[3] = { 2.7, 3.1, 1.4 };
+    ...
+    b = a;
+    b[0] = 1.61;
+    printf("does a[0] == b[0]? %d\n",a[0] == b[0]);
+</pre>
+<p>The answer we would get is:
+</p>
+<pre>
+    does a[0] == b[0]? 1
+</pre>
+<p>Recall that a non-zero integer means true, so the 1 following the question
+mark means the equality test evaluated to true: the first element of <i>a</i>
+and the first element of <i>b</i> are the same.
+</p>
+<p>OK, now that you see how aliasing works, we need to figure out the proper technique
+for defining <i>b</i>.
+What is missing from the above code fragments is how to create the variable <i>b</i>.
+One would think we would have to create <i>b</i> as the same kind of array as <i>a</i>:
+</p>
+<pre>
+    double a[3] = { 2.7, 3.1, 1.4 };
+    double b[3];
+    b = a;
+</pre>
+<p>After all, it is only logical that <i>a</i> and <i>b</i>
+should have the same type if we are going to have them point to the same thing.
+Unexpectedly, we get the following error message when we compile:
+</p>
+<pre>
+    error: incompatible types when assigning to type 'double[3]' from type 'double *'
+</pre>
+<p>Why this error occurs will become clear in time,
+but for now,
+remember this rule:
+</p>
+<div class="quote">
+<i>For a statically allocated array,
+you cannot reassign its name.</i>
+</div>
+<p>If you declared a statically allocated array, it has a fixed location.  You can't 
+move it to a new location.  The statement <tt>b = a</tt> was trying to move a statically
+allocated array.
+</p>
+<p>If we look at the error message carefully we see that we are 
+<code>assigning to type 'double[3]'</code>.
+This makes sense because clearly the type of <i>b</i> is an array of three doubles.
+What is strange is the next part, <code>from type 'double *'</code>.
+Somehow, when we use the name of an array on the right-hand side of an assignment,
+its type morphs.
+Let's try again, changing the type of <i>b</i> to <code>double *</code>,
+the type that <i>a</i> appears
+to have become:
+</p>
+<pre>
+    //test
+    double a[3] = { 2.7, 3.1, 1.4 };
+    double *b;
+    b = a;
+    b[0] = 1.61;
+    printf("does a[0] == b[0]? %d\n",a[0] == b[0]); //should print true: 1
+</pre>
+<p>We see now that the program compiles correctly and, indeed, <i>b</i> appears to be an
+alias of <i>a</i>.
+Especially note that we use the same syntax to index
+a slot an array, whether we use the array name or a variable that has
+been assigned the array name.
+</p>
+<p>So why the <code>double *</code>? In C, when an asterisk appears in a type, it means a
+variable of that
+type will hold the address of a memory location. So a variable of type <code>double *</code>
+will hold the address of a memory location that stores a real number.
+Recall that, in our example, <i>a</i> is a memory location where
+the first slot of an array of doubles can be found.
+So if we want to store this memory location in another variable, the type of
+the other variable must be <code>double *</code>.
+Of course, if <i>a</i> instead referred to a statically allocated
+array of integers, then the type of <i>b</i> would have to be <code>int *</code>.
+</p>
+<p>A variable that holds a memory location <i>and</i> is of
+a type containing an asterisk is known as a <i>pointer</i>.
+In our example, both
+the constant <i>a</i> and variable <i>b</i> hold memory locations.
+We call the constant <i>a</i> a <i>pseudopointer</i> since its type is
+<code>double [3]</code>, not <code>double *</code>.
+The variable <i>b</i>, on the other hand,
+has type <code>double *</code>, so it is a true pointer.
+In all but a very few situations, pseudopointers are converted to
+pointers, so it is convenient to think of the constant <i>a</i> as a pointer.
+Assignment is one situation where the difference between pointers and pseudopointers
+becomes apparent .
+If we try to assign to <i>a</i>, the compiler rejects our attempt:
+</p>
+<pre>
+    //test
+    double a[3] = { 2.7, 3.1, 1.4 };
+    double *b;
+    b = a;                  // OK, can assign a pseudopointer to a pointer
+    a = b;                  // rejected, cannot assign to a pseudopointer
+</pre>
+<p>The last line generates the error:
+</p>
+<pre>
+    error: incompatible types when assigning to type 'double[3]' from type 'double *'
+</pre>
+<p>just like we saw before. When we refer to a pseudopointer as a value, the compiler
+converts it to a pointer (as in the next to the last line). When we refer to
+a pseudopointer as a location, in order to reassign it (as in the last line),
+the compiler says no.
+</p>
+<p>Other than assignment and one other difference, discussed in the next section,
+it is generally OK to think of a pseudopointer as a pointer.
+But don't be surprised by what happens if you don't keep these two exceptions in
+mind.
+</p>
+<p>Graphically, we represent a pointer with an arrow. So <i>b</i>, from our example, looks
+like this:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-array3.png"/>
+</div>
+<p>Suppose the array to which <i>a</i> refers starts at memory location 1958.
+Then, an alternate view of
+<i>b</i> would be:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-array4.png"/>
+</div>
+<p>In fact, you can see where <i>a</i> and <i>b</i>
+point by using the <code>%p</code> directive in the
+control string for <i>printf</i>:
+</p>
+<pre>
+    //test
+    double a[3] = { 2.7, 3.1, 1.4 };
+    double *b;
+    b = a;
+    printf("a points to %p\n",a);
+    printf("b points to %p\n",b);
+</pre>
+<p>Running this code will yield something like:
+</p>
+<pre>
+    a points to 0x96b0570
+    b points to 0x96b0570
+</pre>
+<p>Whatever memory locations are printed, they should match.
+We can also see that the <code>%p</code> directive causes the pointed-to location
+to be printed out in hexadecimal (hexadecimal numbers in C begin with <code>0x</code>).
+Note that from now on, we will use the terms <i>memory location</i>
+and <i>address</i> interchangeably. Thus, we will often say things like
+"variables <i>a</i> and <i>b</i> hold the address of the array".
+</p>
+
+<h2><a name="id6">Determining the length of an array</a></h2><p>
+One can compute the length of a statically allocated array using the <i>sizeof</i>
+operator:
+</p>
+<pre>
+    //test
+    double a[3] = { 2.7, 3.1, 1.4 };
+    printf("the size of a is %zu\n",sizeof(a));
+</pre>
+<p>Depending on your system, it yields something like:
+</p>
+<pre>
+    the size of a is 24
+</pre>
+<p>This appears to be incorrect; shouldn't the size of <i>a</i> be three?  There are three
+elements in <i>a</i>, but that is not the same thing as asking how much total size
+the array <i>a</i> takes in memory.
+</p>
+<p>The <i>sizeof</i> operator is working correctly,
+but it is not returning the number of slots in the array. Instead,
+it is returning the number of bytes<sup><a href="index_26.html#footnote-19">19</a></sup>
+allocated for the array. If one knew how many bytes made up a double, we could
+compute the number of slots. Luckily, the <i>sizeof</i> operator can tell us the number
+of bytes each double slot requires.
+By dividing the size of the array (in bytes) by the size of a slot (in bytes), we
+get the number of slots:
+</p>
+<pre>
+    //test
+    double a[3] = { 2.7, 3.1, 1.4 };
+    printf("the size of a is %zu\n",sizeof(a)/sizeof(double));
+</pre>
+<p>Now we get the desired result:
+</p>
+<pre>
+    the size of a is 3
+</pre>
+<p>You likely have noticed a new format specifier in the guide string
+in the above example: <code>%zu</code>. The <i>sizeof</i> operator
+returns
+a 64-bit integer on 64-bit computers and a 32-bit integer on
+32-bit computers.
+The specifier for 32-bit integers is <code>%d</code>, as we have seen before,
+but the specifier for 64-bit integers is <code>%ld</code>. In order to
+write portable code that runs on both kinds of computers, we use
+the generic <code>%zu</code> specifier that can hand both kinds of integers.
+</p>
+<p>Two quick questions for you at this point.  First, looking at the example above,
+it should be easy to modify that code so that you could figure out how much
+space an array of 50 integers required.  Can you do that?  Second, is this trick
+(sizeof the array divided by sizeof each element) required for strings (arrays of
+characters)?  Why or why not?
+</p>
+<p>We can simplify the process of finding the number of slots
+by using a <i>macro</i>:
+</p>
+<pre>
+    //test
+    #define SLOTS(t) (sizeof(t)/sizeof(*t))
+    double a[3] = { 2.7, 3.1, 1.4 };
+    printf("the size of a is %zu\n",SLOTS(a));
+</pre>
+<p>You can read more about C macros on the web. When we run this code,
+as before,
+we get the desired result:
+</p>
+<pre>
+    the size of a is 3
+</pre>
+<p>If we try to use <i>sizeof</i> to find the size of an array through an alias:
+</p>
+<pre>
+    //test
+    #define SLOTS(t) (sizeof(t)/sizeof(*t))
+    double a[3] = { 2.7, 3.1, 1.4 };
+    double *b = a;
+    printf("the size of a is %zu\n",SLOTS(b));
+</pre>
+<p>On a 32-bit machine, we get an incorrect answer:
+</p>
+<pre>
+    the size of a is 0
+</pre>
+<p>The reason is because <i>sizeof</i>, when applied to a true pointer variable, 
+returns the size of the variable, not the size of memory allocated.
+In this case, <code>sizeof(double *)</code> returns how many bytes it takes to store an
+address of a double.
+We can deduce that the size of
+a <code>double *</code> is less than the size of a <code>double</code>, on a 32-bit machine.
+Using integer division, we get a
+zero result.
+</p>
+
+<h2><a name="id7">Pointers and indexing</a></h2><p>
+Luckily, one can use the same notation to index into an array,
+whether using the name of the array or a pointer to the array.
+In fact a pseudopointer to an array is immediately converted
+into a pointer nearly every time we reference an array name.
+</p>
+<p>When we refer to a particular slot in an array, either through the
+array name or a pointer, as
+in:
+</p>
+<pre>
+    a[5]
+</pre>
+<p>a number of computations are made in finding the desired slot.
+First, if the array name is used, it is converted into a pointer.
+Second, the address stored in the pointer is extracted.
+This address is known
+as the <i>base address</i> and is the address of the first slot.
+Then, the value
+of the index, which refers to a slot number, is converted to an offset. The offset
+reflects how many bytes past the base address the desired slot resides.
+Suppose <i>a</i>, in
+the example above, points to an integer array.
+Then slot five is located
+<code>5 * sizeof(int)</code>
+bytes past the base address.
+If the array of integers
+starts at memory location 1000 and an integer is 4 bytes, then slot 5
+is located at memory location <i>1000 + 5 * 4</i> or 1020.
+</p>
+<p>You can also use pointer offsets directly
+to access a slot in an array. These two
+statements are equivalent:
+</p>
+<pre>
+    array[5] = 0;
+    *(array + 5) = 0;
+</pre>
+<p>The latter form is known as <i>star-notation</i> or <i>dereferencing</i>.
+In fact, C converts array access using brackets to star notation in
+computing offsets to the base address.
+</p>
+<p>The following four statements are also equivalent:
+</p>
+<pre>
+    array[0] = 5;
+    *(array + 0) = 5;
+    *(array) = 5;
+    *array = 5;
+</pre>
+<p>In fact, <code>*array</code> is often used as a short hand to the first element
+of an array, especially in dealing with arrays of characters.
+This form is known as <i>pointer dereferencing</i>.
+</p>
+
+<h2><a name="id8">The evils of statically allocated arrays</a></h2><p>
+Statically allocated arrays suffer from two problems. The first is
+that they cannot be returned from the function that created them.
+We haven't covered functions yet, but the following function definition
+is easy enough to understand:
+</p>
+<pre>
+    double *
+    newArrayOfThreeDoubles()
+        {
+        double a[3] = {0.0};
+        return a;
+        }
+</pre>
+<p>The function allocates a static array that can hold three doubles; each slot
+has been initialized to zero. As its final act, the function returns the
+address of this statically allocated array. 
+</p>
+<p>If we try to compile this function, we get the following warning:
+</p>
+<pre>
+    warning: function returns address of local variable [-Wreturn-local-addr]
+</pre>
+<p>The problem is the
+memory allocated to the array is expected to be of use while the function
+is executing; after the function returns, that memory is
+free to be reused. Once the memory was reused, the caller of the function
+now has an array whose slots appear to change at random.
+Back in the day, such warnings were only pipe dreams, so a program that
+contained such code would be happily compiled, so consider yourself 
+lucky you live in an age where the compiler looks after you so well.
+</p>
+<p>The second problem with static arrays is that their misuse accounts for
+a vast majority of the security holes found in the past and many of
+the security holes currently being uncovered. The reason is the C programming
+language is quite popular for writing the guts of software systems, since
+it is so fast.
+The reason it is so fast is that C does not check for out-of-bounds errors
+with regard to accessing array elements. It turns out that a large amount of
+the C code extant has been written by people not properly trained in
+Modern Computer Science theory and practice. The result is a perfect
+storm of vulnerable code, illustrated by the following, rather simple,
+code fragment:
+</p>
+<pre>
+    char buffer[512];               //create a static array of char
+    printf("What is your name? ");  //print a prompt for the user
+    scanf("%s",buffer);             //read the response into the array
+</pre>
+<p>What could possibly be wrong with this code? Surely, no one has a name
+longer than 511 characters? This issue, known as the 
+<i>buffer overflow problem</i>, will be discussed further in
+the chapter on input and output.
+</p>
+
+<h2><a name="id9">Dynamically allocated arrays</a></h2><p>We have discussed statically allocated arrays at length because they are the easiest
+version of arrays for beginners to learn. Yet, as a programmer gets
+more and more sophisticated, statically allocated arrays appear less and less in
+the programs he or she writes. This is mainly due to the two dangers listed in
+the previous section. Dynamically allocated arrays solve the first problem, returning
+a local array from a function.
+</p>
+<p>Dynamically allocated arrays exist for as long as the program runs, regardless of
+when or where they are allocated. Here is a template for dynamically allocated array.
+In this code, we are allocating an array of type <tt>XXXX</tt> with <tt>YYYY</tt> slots.
+The system call that finds a block of space and allocates that space is <i>malloc</i>.
+Note that <i>malloc</i> is configured to return a zero when it is unable to
+allocate the requested memory.  You should always check to make sure that any
+<i>malloc</i> you perform actually succeeds.
+</p>
+<pre>
+    XXXX *a;
+
+    a = malloc(sizeof(XXXX) * YYYY);
+    if (a == 0)
+        {
+        fprintf(stderr, "memory allocation failed\n");
+        exit(1);
+        }
+</pre>
+<p>In the template, <code>XXXX</code> is replaced by a type, say <code>int</code> or <code>double</code> or <code>char *</code>.
+<code>YYYY</code> is replaced by the number of slots desired.
+</p>
+<p>If we wish for an integer
+array with eight slots, we fill out the template like this:
+</p>
+<pre>
+    int *a;
+
+    a = malloc(sizeof(int) * 8);
+    if (a == 0)
+        {
+        fprintf(stderr, "memory allocation failed\n");
+        exit(1);
+        }
+</pre>
+<p>The function <i>malloc</i> does
+the actual allocation and it needs to know the number of bytes required. We compute
+that quantity with the <i>sizeof</i> operator,
+which we use to give us the number of bytes needed by one
+slot. We multiply that by the number of slots to get the total number of bytes.
+Note that arrays allocated in this manner are uninitialized; their slots are
+filled with garbage.
+</p>
+<p>Alternatively, we can ask the <i>sizeof</i>
+operator to compute the size of what a pointer points to:
+</p>
+<pre>
+    int *a;
+    a = malloc(sizeof(*a) * 8); //equivalent to malloc(sizeof(int) * 8);
+</pre>
+<p>If the memory cannot be allocated by <i>malloc</i> (maybe you're asking for too many slots),
+the function returns zero.
+</p>
+<p>We haven't talked about <i>if</i> statements yet, but the code following the allocation
+is easy enough to read.
+If the <i>malloc</i> function returns a zero rather than an address, we print
+an error message and exit the program.
+Recall that if <i>main</i> returns a non-zero value,
+an error is assumed.
+The <i>exit</i> function mimics <i>main</i> returning immediately with
+the given value.
+</p>
+<p>One other note on the above example.  The <tt>fprintf</tt> statement prints to
+<i>stderr</i>, which is by default associated with the console.  There are lots
+of cases where you might direct regular output (<i>stdout</i>) to a file rather
+than the console.  By writing to <i>stderr</i>, we can see error messages on the
+console even if the regular output from a program is being captured elsewhere.
+</p>
+<p>Once the array has been successfully allocated, you can use indexing just like with
+statically allocated arrays, both for retrieving and changing elements in the array.
+Moreover, the array will last until the program ends or until you free up the memory
+allocated to be used again. To free the array, you simply call the <i>free</i> function:
+</p>
+<pre>
+    free(a);
+</pre>
+<p>Be careful when you free things. You can only free things that have been allocated
+with <code>malloc</code> (or similar functions),
+you may not free the same thing more than once,
+and you may not refer to slots in an array you have previously freed.
+</p>
+<p>You have probably heard of <i>memory leaks</i>.  An example of a memory leak is a
+situation where a program that runs for a long time (when is the last time you turned your
+smartphone off?) consumes new memory as it processes requests but never releases those
+dynamically allocated resources.  Eventually, the system runs out of space to allocate
+additional resources (<i>malloc</i> returns a zero).  The issue of memory leaks is
+critical for applications that run for any amount of time.  While you don't have to
+worry about memory leaks for <tt>project0</tt>, this is a major issue for the writers of
+any modern operating system.
+</p>
+<p>Finally, for completeness, we note that
+the second problem with statically allocated arrays, the buffer overflow problem,
+can be solved with dynamically allocated arrays. You can use dynamically
+allocated arrays to
+simulate dynamic arrays (those arrays that grow as needed).
+We will cover this technique in a later chapter.
+</p>
+<p>There is a lot going on in this section that you likely don't understand at this point
+and that's OK. You should, however,
+be able to use this template if you are required to use dynamically allocated
+arrays in a program.
+</p>
+
+<h2><a name="ArraysPointersToStaticArrays">Pointers to static arrays</a></h2>
+<p>We have already discussed pointers to arrays of one dimension. Here is an 
+example:
+</p>
+<pre>
+    int a[10];    //a is a one-dimensional array
+    int *p = a;   //p points to the first slot of a
+</pre>
+<p>Although, we will not discuss them in detail until later, it is possible
+to have multi-dimensional static arrays:
+</p>
+<pre>
+    int b[10][12];          //a two-dimensional array, 10 rows and 12 columns
+    int c[50][60][40];      //a 3D array, 50 sheets, 60 rows, and 40 columns
+    int d[11][13][17][19];  //a 4D array, 11 ledgers, 13 sheets, 17 rows, and 19 columns
+</pre>
+<p>Based upon the array <i>a</i> and the pointer <i>p</i> above,
+one might think that a
+pointer to <i>b</i> would look like this:
+</p>
+<pre>
+    int b[10][12];
+    int **q = b;        //compiler warning, types do not match
+</pre>
+<p>Instead, we get a compiler warning. This is because when the pseudopointer
+<i>b</i> devolves into a pointer, only the first dimension becomes a pointer;
+the remaining dimensions remain arrays.
+The correct type for <i>q</i> would be:
+</p>
+<pre>
+    int b[10][12];
+    int (*q)[12] = b;
+</pre>
+<p>The parentheses are required since the brackets have a higher precedence
+than than the asterisk. Without the parentheses,
+<i>q</i> would be a one-dimensional array of integer pointers.
+With them, it is a pointer to a one-dimensional
+array of integers with length 12. Thus,
+the variable <i>q</i> points
+to the first set of 12 integers, while the expression <i>q+1</i> points to the
+second set of 12 integers.
+The expression <i>q+2</i> points to the third set of twelve integers, and so on.
+</p>
+<p>Pointers <i>r</i> and <i>s</i>,
+which are to point to arrays <i>c</i> and <i>d</i> above, respectively,
+would be defined as follows:
+</p>
+<pre>
+    int c[50][60][40]; 
+    int (*r)[60][40] = c;
+
+    int d[11][13][17][19];
+    int (*s)[13][17][19] = d;
+</pre>
+<p>Remember, when an array name devolves into a pointer, the type of
+that pointer can be generated by removing the first set of brackets
+and adding the asterisk and parentheses in its stead.
+</p>
+<p>The reason for this behavior is as follows. Consider our example
+of a two dimensional array:
+</p>
+<pre>
+    int b[10][12];          //10 rows, 12 columns
+    int (*q)[12] = b;
+    int **z = b;            //not really valid, but likely will compile
+</pre>
+<p>The expression <code>q[0]</code> refers to the first set of 12 integers, while
+<code>q[1]</code> refers to the second set of 12, and so on. Thus 
+<code>q[1][2]</code> refers to the third integer in the second set of 12, as expected.
+C needs to know how many integers it needs to skip over
+to move from row 0 to row 1. The answer is twelve and can be found in the
+types of both <i>b</i> and <i>q</i>.
+On the other hand, that information is missing in <i>z</i> and
+computations invoving elements of <i>z</i> invariably go wrong.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_8.html">
+  <img border="0" alt="Assignment" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_10.html">
+  <img border="0" alt="Strings" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Arrays</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

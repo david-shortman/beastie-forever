@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>storing</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Programming Languages</span>
+<br/>
+<br/>
+Storing Variable Values
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="storing.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Scope
+<br/>
+</h2><!-- section ENDED -->
+
+<i>
+This article assumes you have read
+<a href="https://mitpress.mit.edu/sicp/full-text/book/book-Z-H-21.html#%_sec_3.2">The Environment Model of Evaluation</a>.
+</i>
+<br/>
+<br/>
+The term <i>scope</i> refers to the set of variables which
+are accessible at any execution point in a computer program.
+Most modern programming languages use <i>static</i> scope,
+meaning, one can resolve a reference to a non-local variable
+simply by looking at a printout of the code. If a variable
+is not defined in the local scope, successive outer scopes
+are searched until the variable is found.
+<br/>
+<br/>
+One possible implementation of scope uses the <i>environment model</i>.
+An
+<i>environment</i> can be thought of as linked list of tables;
+each table (from front to back) holds the variables and
+their values for ever increasingly outer scopes.
+An environment can also be used during parsing to determine
+if a variable has been defined before use and to detect
+type errors in statically typed languages.
+<br/>
+<br/>
+There are five environment routines that are part of an
+<i>environment passing</i> language interpreter:
+<br/>
+
+<ul>
+
+<li>
+
+ 
+<code>insertEnv(e,v,w)</code>
+placing an variable <i>v</i> and its initial value <i>w</i>
+into the most local table of environment <i>e</i>
+</li>
+
+<li>
+
+ 
+<code>lookupEnv(e,v)</code>
+find the value of a variable <i>v</i> in environment <i>e</i>;
+tables are searched from most local to most
+outer; the value of the first occurrence of the variable is returned
+</li>
+
+<li>
+
+ 
+<code>updateEnv(e,v,w)</code>
+change the value of first occurrence of a variable <i>v</i> to <i>w</i>
+in environment <i>e</i>; tables are searched from most local
+to most outer
+</li>
+
+<li>
+
+ 
+<code>extendEnv(e,m,n)</code>
+extend the environment <i>e</i> with a list of variables <i>m</i>
+and a list of values <i>n</i>; a new environment is returned with the
+variables and values placed in a table in front of the given
+environment; the given environment is unmodified
+</li>
+
+<li>
+
+ 
+<code>create()</code>
+returns an empty environment; can be a wrapper for
+
+<code>extend(null,null,null)</code>
+</li>
+
+</ul>
+
+
+Other useful environment routines are:
+<br/>
+
+<ul>
+
+<li>
+
+ 
+<code>displayEnv(e)</code>
+display environment <i>e</i>; print out a readable version of
+each table in the given environment;
+if a value is an environment, do not recursively display it
+</li>
+
+<li>
+
+ 
+<code>displayLocalEnv(e)</code>
+Like <i>displayEnv</i>, but only prints out the most local table.
+</li>
+
+</ul>
+
+
+<!-- section -->
+<h2> Data Structures for Environments
+<br/>
+</h2><!-- section ENDED -->
+
+One possibility for implementing environments is to store the variables
+and values in a particular environment table as two parallel linked lists.
+Normally,
+such an approach is not ideal due to the linear time access of
+of variable values and the possibility that the
+parallel arrays getting out of sync. However, we will see
+that using parallel arrays allows us to implement function calls
+very efficiently.
+<br/>
+<br/>
+Continuing our standard approach of using <i>Lexeme</i> objects for
+just about everything, we will implement environments with lexemes. We
+postulate the existence of the lexical functions <i>cons</i>, <i>car</i>, <i>cdr</i>.
+which are analogues to the eponymous Scheme functions:
+<br/>
+
+<pre>
+    function cons(type,carValue,cdrValue) { return this; }
+    function car(cell) { return cell.carValue; }
+    function cdr(cell) { return cell.cdrValue; }
+</pre>
+
+In addition, we will add the functions
+<i>setCar</i> and <i>setCdr</i>, which destructively modify the head and
+tail of a list, respectively, and <i>type</i>, which returns the
+type of a cons cell:
+<br/>
+
+<pre>
+    function setCar(cell,value) { cell.carValue = value; }
+    function setCdr(cell,value) { cell.cdrValue = value; }
+    function type(cell) { return type; }
+</pre>
+
+<!-- section -->
+<h2> Implementing Environment Functions
+<br/>
+</h2><!-- section ENDED -->
+
+By implementing a table
+with with a cons cell version of a linked list and an environment as a cons
+cell version of a linked list of tables,
+the basic environment routines
+are rather straightforward to implement.
+<br/>
+<!-- subsection -->
+<h3> Creating environment structures
+<br/>
+</h3><!-- subsection ENDED -->
+
+After a parse tree is built from the source code, one <i>evaluates</i>
+the tree. When variable and function definitions are evaluated,
+changes to the current scope occur. In other words, the environment
+that is holding the current scope of the execution point is
+populated with variables and their values. Prior to that, however,
+there are no variables and no values. Therefore, at the start, one
+needs an empty environment to populate.
+<br/>
+<br/>
+Because an environment structure is a list of parallel lists,
+an empty environment structure has no bindings and thus can
+be represented by two empty lists joined together into a list
+of one item. An easy way
+to do this is to extend the null environment with a null
+variable list and a null value list:
+<br/>
+
+<pre>
+    function createEnv()
+        {
+        return extendEnv(null,null,null);
+        }
+</pre>
+
+We will implement <i>extendEnv</i> in the next section.
+<br/>
+<!-- subsection -->
+<h3> Extending an environment
+<br/>
+</h3><!-- subsection ENDED -->
+
+The <i>extendEnv</i> function is used to implement function
+calls. The list of variables passed to the function is
+the list of formal parameters of the function being called.
+The list of values passed is the evaluated list of arguments
+in the function call. The environment being extended is
+the environment under which the function being called was
+defined.
+<br/>
+<br/>
+To extend a given environment, we simply make a new table out
+of the given variable and value lists and
+<i>cons</i> it onto the front of the environment:
+step is performed for a function call;
+<br/>
+
+<pre>
+    function extendEnv(env,variables,values)
+        {
+        return cons(ENV,makeTable(variables,values),env);
+        }
+</pre>
+
+Note that we tag the returned structure with an 
+<code>ENV</code> type, so
+that we can easily identify environment structures. The
+<i>makeTable</i> function is just as simple:
+<br/>
+
+<pre>
+    function makeTable(variables,values)
+        {
+        return cons(TABLE,variables,values);
+        }
+</pre>
+
+<!-- subsection -->
+<h3> Looking up and updating the value of a variable
+<br/>
+</h3><!-- subsection ENDED -->
+
+When code being evaluated references a particular variable, the value
+of that variable in the current scope needs to be retrieved or
+updated, depending on the type of reference. When a value
+is needed, this is referred as an <i>r-value</i>. When a value
+needs to be updated, this is referred to as an <i>l-value</i>.
+<br/>
+<br/>
+Finding the <i>r-value</i> or the <i>l-value</i> of a variable simply means
+walking the variables list in the first table of
+a given environment until the variable is found. Its value
+is in the analogous position in the parallel list of values.
+If the variable is not found in that table, we
+scan the parallel lists in the second table, and so on. Using
+that strategy, the <i>lookupEnv</i> routine can be implemented as:
+<br/>
+
+<pre>
+    function lookupEnv(env,variable)
+        {
+        while (env != null)
+            {
+            var table = car(env);
+            var variables = car(table);
+            var vals = cdr(table);
+            while (variables != null)
+                {
+                if (sameVariable(variable,car(variables)))
+                    return car(values);
+                //walk the lists in parallel
+                vars = cdr(variables);
+                vals = cdr(values);
+                }
+            env = cdr(env);
+            }
+
+        Fatal(&quot;variable &quot;,variable,&quot; is undefined&quot;);
+
+        return null;
+        }
+</pre>
+
+The <i>update</i> function is similar, only <i>setCar</i> is used to set
+the appropriate car pointer of the values list.
+<br/>
+<br/>
+Consider the code statement:
+<br/>
+
+<pre>
+    x = 2 * y;
+</pre>
+
+Since the variable <i>y</i> is on the right-hand side of an assignment
+operator, it is an <i>r-value</i> and thus the <i>lookupEnv</i> routine is
+used to retrieve its value. Conversely, the variable <i>x</i> is on
+the left-hand side of the assignment and is therefore an <i>l-value</i>.
+Once the value of 2 * y is
+calculated, the <i>updateEnv</i> routine is used to change the value
+of <i>x</i> from its previous value.
+Technically speaking, the <i>l-value</i> of a variable is the location
+of its value in the values list.
+<br/>
+<!-- subsection -->
+<h3> Defining a Variable
+<br/>
+</h3><!-- subsection ENDED -->
+
+A variable is inserted into the local environment any time
+a simple variable is declared or a function defined. Note
+that the local environment is represented as the first two
+parallel lists in a list of tables. This makes the
+task quite easy:
+<br/>
+
+<pre>
+    function insert(variable,value,env)
+        {
+        var table = car(env);
+        setCar(table,cons(GLUE,variable,car(table)));
+        setCdr(table,cons(GLUE,value,cdr(table)));
+        return value;
+        }
+</pre>
+
+Notice that the new variable and its value are put on the
+front of the parallel lists, since this placement is much
+faster than placing them at the end of the parallel lists.
+The 
+<code>GLUE</code> type is used when there is no need to give the
+<i>cons</i> cell a specific type.
+The added advantage of this placement is that redefinitions
+in the same scope shadow previous definitions.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

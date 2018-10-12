@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>grammars</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Programming Languages</span>
+<br/>
+<br/>
+Grammars for Describing Programming Languages
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="grammars.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Introduction
+<br/>
+</h2><!-- section ENDED -->
+
+The set of rules that tell you whether a sentence is correctly structured
+is called a <i>grammar</i>.
+Here is a simple, and very incomplete, grammar for English:
+<br/>
+
+<pre>
+    sentence : nounPhrase verbPhrase PERIOD
+    nounPhrase : ARTICLE ADJECTIVE NOUN
+    verbPhrase : VERB nounPhrase
+</pre>
+
+In this description, the three lines are <i>grammar rules</i>. The
+token before the colon is the thing you want to build (or deconstruct).
+The tokens that appear
+after the token describe how one constructs or breaks down the thing
+to the left of the colon.
+The tokens that are all-caps, such as PERIOD and ARTICLE,
+refer to things that cannot be broken down further and, int
+this example, refer
+to English
+words and punctuation. The tokens that are all (or mostly) lowercase denote
+higher-level structures that can be broken down. The first of the three
+rules can be stated as:
+<br/>
+<br/>
+<span class="indent">
+<i>A sentence is a noun phrase followed by a verb phrase and terminated
+with a period</i>
+</span>
+
+<br/>
+Given these nouns,
+<br/>
+
+<pre>
+    cow
+    water
+    dog
+</pre>
+
+these articles,
+<br/>
+
+<pre>
+    the
+    a
+</pre>
+
+these verbs,
+<br/>
+
+<pre>
+    drank
+    chased
+</pre>
+
+and these adjectives,
+<br/>
+
+<pre>
+    large
+    cool
+    yappy
+</pre>
+
+we can generate a number of syntactically correct sentences, such as:
+<br/>
+
+<pre>
+    The large cow drank the cool water.
+    A yappy dog chased the large cow.
+    The cool water chased the cool dog.
+    The yappy water drank a large cow.
+</pre>
+
+Grammars can also be used to recognize syntactically correct
+sentences. For example, the sentence:
+<br/>
+
+<pre>
+    A large dog drank the cool water.
+</pre>
+
+can be fit to the grammar above in the following way:
+<br/>
+<br/>
+<span class="indent">
+<image src="parse.jpg">
+
+</span>
+
+<br/>
+Note that the grammar above does not allow for the sentence:
+<br/>
+
+<pre>
+    The large yappy dog drank the water.
+</pre>
+
+since the grammar requires a single adjective in a noun phrase. We can
+modify the grammar to allow sentences of this form (and still allow for
+the sentences that were allowed before modification):
+<br/>
+
+<pre>
+    sentence : nounPhrase verbPhrase PERIOD
+    nounPhrase : ARTICLE adjList NOUN          //ADJECTIVE changed to adjList
+    verbPhrase : VERB nounPhrase
+    adjList : ADJECTIVE | ADJECTIVE adjList
+</pre>
+
+The newly added rule, <i>adjList</i>, says that:
+<br/>
+<br/>
+<span class="indent">
+<i>An adjective list is an adjective or it is an adjective followed by more
+adjectives</i>
+</span>
+
+
+<br/>
+The symbol 
+<code>|</code> denotes a choice.
+<br/>
+<br/>
+We can also allow for sentences like:
+<br/>
+
+<pre>
+    The dog drank water.
+</pre>
+
+with a further modification:
+<br/>
+
+<pre>
+    sentence : nounPhrase verbPhrase PERIOD
+    nounPhrase : optArticle optAdjList NOUN    //modified
+    verbPhrase : VERB nounPhrase
+    optArticle : ARTICLE | *empty*             //modified
+    optAdjList : adjList | *empty*             //modified
+    adjList : ADJECTIVE | ADJECTIVE adjList
+</pre>
+
+The <i>optArticle</i> rule says that:
+<br/>
+<br/>
+<span class="indent">
+<i>An optional article is an article or is omitted</i>
+</span>
+
+<br/>
+<!-- section -->
+<h2> Syntax versus Semantics
+<br/>
+</h2><!-- section ENDED -->
+
+Syntax tells you if the sentence is constructed correctly. Semantics tells
+you whether a correctly structured sentence makes any sense. The sentence:
+<br/>
+
+<pre>
+    The box drank water.
+</pre>
+
+is correct syntactically speaking
+(subject then verb then object) but seems wrong since boxes don't
+normally drink.
+An oft-made mistake is to attempt to enforce semantics with a grammar,
+especially when developing grammars for programming languages.
+<br/>
+<!-- section -->
+<h2> Programming Language Grammars
+<br/>
+</h2><!-- section ENDED -->
+
+A grammar simply describes the structure of the sentences in a
+language. A source code program can be consider a collection
+of sentences, with the sentences corresponding to programming language
+expressions. Therefore, a grammar can be used to describe expressions.
+<br/>
+<br/>
+As an example, the expression that involves adding two numbers together
+might be described as: A sum is a 
+<code>NUMBER</code> followed by a 
+<code>PLUS</code> sign
+followed by another NUMBER. Noting that we can also add variables bound
+to numbers as well, we can make the description more general by using
+two descriptions or rules:
+<br/>
+<br/>
+<span class="indent">
+A <i>sum</i> is a <i>unary</i>
+followed by a 
+<code>PLUS</code> sign followed by another <i>unary</i>
+</span>
+
+and
+<span class="indent">
+A <i>unary</i> is a 
+<code>NUMBER</code> or a 
+<code>VARIABLE</code>
+</span>
+
+
+<br/>
+We use the name <i>unary</i> to denote something that is not
+a binary expression.
+We can formalize this concept of description and decide upon some
+conventions for specifying a grammar. The most common descriptive
+formalization for grammars is the Backus-Naur Form, or <span style="font-family: sans;">BNF</span>,
+originally
+developed to formally specify the grammar of FORTRAN. We will use a
+simplified subset of <span style="font-family: sans;">BNF</span>
+that is very easy to read and, when the time
+comes, easy to implement.
+<br/>
+<br/>
+<span style="font-family: sans;">BNF</span> is best described through a series of examples.
+The <i>sum</i> pattern described above would be rendered as follows
+in <span style="font-family: sans;">BNF</span>:
+<br/>
+
+<pre>
+    sum : unary PLUS unary
+      
+    unary : NUMBER 
+            
+    unary : VARIABLE
+</pre>
+
+In a rule, the item to the left of the colon is known as a <i>non-terminal</i>,
+that is to say, something that can be broken down into finer parts. How
+the non-terminal is broken down is described to the right of the
+colon. In this case, a sum can be broken down into a 
+<code>PLUS</code> sign and two
+primaries. When something cannot be broken down any further, it is denoted
+a <i>terminal</i>, that is to say, the breaking down process terminates. As a
+convention, non-terminals will be written in mostly lower-case letters,
+while terminals will be written in mostly upper-case letters. As another
+convention, the non-terminal to the left of the colon is thought of as the
+name of the rule. In the grammar above, we might say we have a
+<i>sum</i> rule and two <i>unary</i> rules.
+<br/>
+<br/>
+Note that both terminals and non terminals can appear
+on the right-hand-side of a rule. As a consequence, a non-terminal on the
+right-hand-side of a rule must necessarily appear on the left-hand-side
+of at least one rule.
+<br/>
+From the example, it can be seen the that the same non-terminal can
+name more than one rule. Multiple rules headed by the same non-terminal
+indicate a choice. In this case, a unary is a 
+<code>NUMBER</code> or it is a
+
+<code>VARIABLE</code>. Rather than have two <i>unary</i> rules, the rules can be combined
+using the vertical bar, or <i>pipe</i>, symbol:
+<br/>
+
+<pre>
+    unary : NUMBER | VARIABLE
+</pre>
+
+Note that the vertical bar has very low
+precedence. Rules with choices are often written to
+emphasize the low precedence of the vertical bar:
+<br/>
+
+<pre>
+    unary : NUMBER
+          | VARIABLE
+</pre>
+
+Concatenation (one thing following another) and alternation (one thing
+or another) are the only operators we will need from <span style="font-family: sans;">BNF</span>. Other
+operations such as the <i>Kleene star</i> and <i>Kleene plus</i>, which
+indicate zero or more of a thing and one or more of a thing, respectively,
+as well as parenthetical grouping, make for a more concise grammar,
+but can get in the way of turning the grammar into an actual program for
+determining whether a sequence of words are correctly ordered or not. For
+this reason, we will make do with concatenation and alteration alone.
+<br/>
+<!-- subsection -->
+<h3> Recognizing lists
+<br/>
+</h3><!-- subsection ENDED -->
+
+Consider the problem of finding a grammar rule for recognizing a comma
+separated list of items. With respect to programming languages, lists
+are often used to supply arguments in a function call. A list of three
+items is easy:
+<br/>
+
+<pre>
+    list : item COMMA item COMMA item
+</pre>
+
+as is a list of four, five,
+and six items. We can even write
+a rule for two or three items:
+<br/>
+
+<pre>
+    list : item COMMA item
+         | item COMMA item COMMA item
+</pre>
+
+We could continue this approach by limiting the number of items in a list
+and providing an alternative for each length under the limit. In addition
+to being tedious and inelegant, it would be a very poor programming
+language that restricts the number of arguments to a user defined
+function. A recursive grammar rule can bail us out of this dilemma,
+letting us have lists of arbitrary length:
+<br/>
+
+<pre>
+    list : item
+         | item COMMA list
+</pre>
+
+This rule reads literally as &ldquo;a list is either an item or it is an item
+followed by a comma followed by a list of items&rdquo;.
+<br/>
+Following in this vein of recognizing lists with respect to function
+calls, what about a function call of no arguments or one argument?
+Here is a rule giving three alternatives for function calls...
+<br/>
+
+<pre>
+    functionCall : VARIABLE OPEN_PAREN CLOSE_PAREN
+                 | VARIABLE OPEN_PAREN item CLOSE_PAREN
+                 | VARIABLE OPEN_PAREN list CLOSE_PAREN
+</pre>
+
+where 
+<code>OPEN_PAREN</code> and 
+<code>CLOSE_PAREN</code>
+are terminals describing open parenthesis and
+close parenthesis, respectively. Do we need separate rules for describing
+function calls of zero, one, or multiple arguments? Close inspection of
+the list grammar rule reveals that a list can be a single item, so the
+second alternative of <i>functionCall</i> is unnecessary. A convenient way to
+combine the first and third alternatives is to introduce the concept of
+an optional list, where an optional list is a list or no list at all.
+The rule for <i>functionCall</i> then becomes:
+<br/>
+
+<pre>
+    functionCall : VARIABLE OPEN_PAREN optionalList CLOSE_PAREN
+</pre>
+
+with <i>optionalList</i>
+defined as:
+<br/>
+
+<pre>
+    optionalList : list
+                 | *empty*
+</pre>
+
+The symbol 
+<code>*empty*</code> denotes empty or nothing.
+Literally, the <i>optionalList</i>
+rule says that &ldquo;an optional list is either a list or it is nothing
+at all&rdquo;.
+<br/>
+<!-- subsection -->
+<h3> Left versus Right Recursion
+<br/>
+</h3><!-- subsection ENDED -->
+
+Grammar rules themselves, at least the recursive ones, have a handed-ness.
+The recursive version of the <i>list</i> rule, given above,
+is <i>right recursive</i>, as the
+recursive part of the alternative is on the right.
+We could have written the <i>list</i> rule like this:
+<br/>
+
+<pre>
+    list : item
+         | list COMMA item
+</pre>
+
+or even like this:
+<br/>
+
+<pre>
+    list : item
+         | list COMMA list
+</pre>
+
+In the first of these rewrites, the non-terminal <i>list</i> appears immediately
+after a colon or a pipe.
+Since <i>list</i> appears leftmost on
+the right hand side of an alternative,
+we say the rule is <i>left recursive</i>. The second rewrite is both
+left and right recursive.
+<br/>
+<br/>
+Theoretically, it does not matter if a rule is left or right recursive,
+Practically,
+one way may be preferable to the other.
+When a grammar is used to build a structured
+version of the input, known as a <i>parse trees</i>,
+left recursion is preferable for left-associative
+operations, Similarly, right recursion is preferable for right-associative
+operations.
+On the other hand, it
+is extremely easy to implement
+code to build parse trees from
+a purely
+right recursive grammar,
+so when it becomes time to do that,
+we will transform any left recursive rules to right recursion.
+<br/>
+<br/>
+<!-- section -->
+<h2> A Programming Language Grammar
+<br/>
+</h2><!-- section ENDED -->
+
+Recall that expressions can serve as the sentences of a programming
+language. Once you have a grammar for expressions, 90 percent of the
+work in developing a language is done. We've already looked at one
+kind of expression, a sum of numbers. We also might like a product of
+numbers as well:
+<br/>
+
+<pre>
+    product : unary
+            | unary TIMES product
+</pre>
+
+where 
+<code>TIMES</code> is a terminal representing multiplication. Noticing the
+similarity between the product and sum grammar rules, we can generalize
+the two into:
+<br/>
+
+<pre>
+    expression : unary
+               | unary operator expression
+
+    operator : PLUS | TIMES
+</pre>
+
+An unintended, yet beneficial, consequence of this generalization is that
+we can now recognize expressions involving both 
+<code>PLUS</code> and 
+<code>TIMES</code>,
+as in: <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>4</mn>	<mo>+</mo>	<mn>3</mn>	<mo>*</mo>	<mn>2</mn></mrow></math>.
+The operator rule is also easily extended by adding alternatives
+for the terminals representing the subtraction and division operators.
+We can also extend the <i>unary</i> rule to encompass other things that
+can be combined by operators.
+<br/>
+
+<pre>
+    unary : NUMBER
+          | VARIABLE
+          | OPEN_PAREN expression CLOSE_PAREN
+          | MINUS unary
+</pre>
+
+The third alternative allows us to group expressions parenthetically,
+overriding any precedence of operators we wish to implement.
+The last alternative allows us to the negate the values of variables
+and other unaries, as in:
+<br/>
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo>-</mo>	<mi>a</mi>	<mo>+</mo>	<mo>-</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>b</mi>		<mo>*</mo>		<mo>-</mo>		<mi>c</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+
+<br/>
+For another example, consider expanding the unary rule so that
+expressions can involve function calls:
+<br/>
+
+<pre>
+    unary : NUMBER
+          | VARIABLE
+          | OPEN_PAREN expression CLOSE_PAREN
+          | MINUS unary
+          | VARIABLE OPEN_PAREN optExpressionList CLOSE_PAREN
+</pre>
+
+The third alternative describes
+a C-like function calls.
+<br/>
+<br/>
+The grammar rule and implementation of <i>optExpressionList</i> is similar the
+grammar rules for <i>list</i> seen earlier.
+<br/>
+<!-- subsection -->
+<h3> Conditionals
+<br/>
+</h3><!-- subsection ENDED -->
+
+The simplest conditional is the <i>if statement</i>. To simply things,
+we will force both the <i>then</i> clause and the <i>else</i> clause to be <i>blocks</i>
+which we will describe later.
+Finally,
+we will allow a generic expression to serve as the test expression.
+<br/>
+
+<pre>
+    ifStatement : IF OPEN_PAREN expression CLOSE_PAREN block optElse
+
+    optElse : ELSE block
+            | *empty*
+</pre>
+
+This grammar rule forces a chain of <i>if statements</i> to be nested:
+<br/>
+
+<pre>
+    if (a &lt; b)
+        {
+        result = a;
+        }
+    else
+        {
+        if (b &lt; c)
+            {
+            result = b;
+            }
+        else
+            {
+            result = c;
+            }
+        }
+</pre>
+
+A simple change to the <i>else</i> rule allows <i>if statements</i> to be chained:
+<br/>
+
+<pre>
+    optElse : ELSE block
+            | ELSE ifStatement
+            | *empty*
+</pre>
+
+Now, the above example could be rewritten as:
+<br/>
+
+<pre>
+    if (a &lt; b)
+        {
+        result = a;
+        }
+    else if (b &lt; c)
+        {
+        result = b;
+        }
+    else
+        {
+        result = c;
+        }
+</pre>
+
+<!-- subsection -->
+<h3> Iteration
+<br/>
+</h3><!-- subsection ENDED -->
+
+The simplest iterator is a <i>while loop</i>. Again, for simplicity's sake,
+we will the body of the
+<i>while loop</i> to be a <i>block</i>.
+<br/>
+
+<pre>
+    whileLoop : WHILE OPEN_PAREN expression CLOSE_PAREN block
+</pre>
+
+<!-- subsection -->
+<h3> Sequence
+<br/>
+</h3><!-- subsection ENDED -->
+
+A sequence of programming language statements is known as a <i>block</i>.
+Suppose we wish to enclose a block with braces, as is done in C-like
+languages. The <i>block</i> rule might look something like:
+<br/>
+
+<pre>
+    block : OPEN_BRACE statements CLOSE_BRACE
+</pre>
+
+A <i>statements</i> rule would look very similar to our <i>list</i> rule:
+<br/>
+
+<pre>
+    statements : statement
+               | statement statements
+</pre>
+
+Finally, a <i>statement</i> could be an expression, an if statement, or a
+<i>while loop</i>, at a minimum. In keeping with a C-like
+programming language, a <i>statement</i> rule might look like:
+<br/>
+
+<pre>
+    statement : expression SEMICOLON
+              | ifStatement
+              | whileLoop
+</pre>
+
+These rules allow code that looks like:
+<br/>
+
+<pre>
+    {
+    f(x);
+    if (a &lt; b) { min = a; } else { min = b; }
+    while (x &gt;= 0)
+        {
+        if (x &gt; 0)
+            {
+            t = t + 1;
+            }
+        x = x - 2;
+        }
+    }
+</pre>
+
+You can see that with a few rules, we can have quite complicated code!
+<br/>
+<!-- subsection -->
+<h3> Definitions
+<br/>
+</h3><!-- subsection ENDED -->
+
+The final major piece in our grammar is <i>definitions</i>. Programming
+languages often have two kinds of definitions, variable definitions
+and function definitions. A variable definition in a dynamically-typed,
+C-like language
+might look like:
+<br/>
+
+<pre>
+    varDef : VAR VARIABLE ASSIGN expression SEMICOLON
+</pre>
+
+where the keyword 
+<code>VAR</code> introduces a variable definition. In
+a statically-typed language, keywords representing type, such
+as 
+<code>TYPE_INT</code> or 
+<code>TYPE_STRING</code>, would substitute for 
+<code>VAR</code>. This rule
+would allow definitions like:
+<br/>
+
+<pre>
+    var a = 0;
+    var b = f(x) * (g(y) + z);
+</pre>
+
+The initializer could be made optional with a rule rewrite:
+<br/>
+
+<pre>
+    varDef : VAR VARIABLE ASSIGN expression SEMICOLON
+                  | VAR VARIABLE SEMICOLON
+</pre>
+
+An equivalent rewrite would be:
+<br/>
+
+<pre>
+    varDef : VAR VARIABLE optInit SEMICOLON
+
+    optInit : ASSIGN expression
+            | *empty*
+</pre>
+
+Function definitions are straightforward:
+<br/>
+
+<pre>
+    functionDef : FUNCTION VARIABLE OPEN_PAREN parameterList CLOSE_PAREN block
+</pre>
+
+where 
+<code>FUNCTION</code> is a keyword introducing a function definition
+and <i>parameterList</i> is a list of variables. Why is <i>parameterList</i>
+not a list of expressions?
+<br/>
+<!-- subsection -->
+<h3> Finishing out a grammar
+<br/>
+</h3><!-- subsection ENDED -->
+
+As stated earlier, non-terminals describe collections that can be broken
+down further. When writing a grammar, make heavy use (and re-use)
+of non-terminals. When you use a non-terminal in a rule, you must
+define it if you haven't already done so. When you have written a rule
+for your last non-terminal, you have finished your grammar.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

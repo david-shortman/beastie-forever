@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign3</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Assignment 3
+<br/>
+<br/>
+<span class="smaller">Version 3b</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="assign3.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Preliminary information
+<br/>
+</h2><!-- section ENDED -->
+
+This is your third Scam assignment.
+To run your code, use the following
+command:
+<br/>
+
+<pre>
+    scam FILENAME
+</pre>
+
+or
+<br/>
+
+<pre>
+    scam -r FILENAME
+</pre>
+
+where 
+<code>FILENAME</code> is replaced by the name of the program you wish to run.
+The 
+<code>-r</code> option will automatically run a no-argument function named 
+<code>main</code>
+on startup.
+<br/>
+<br/>
+All assignment submissions should supply a program named <i>author.scm</i>.
+This program should look like:
+<br/>
+
+<pre>
+    (define (main)
+        (println &quot;AUTHOR: Rita Recursion rrita@crimson.ua.edu&quot;)
+        )
+</pre>
+
+with the name and email replaced by your own name and email.
+<br/>
+<br/>
+For each numbered task (unless otherwise directed),
+you are to provide a
+program named
+<i>taskN.scm</i>,
+with the <i>N</i> corresponding to the task number, starting at one
+(as in <i>task1.scm</i>,
+<i>task2.scm</i>,
+and so on).
+<br/>
+<br/>
+You may use assignment,
+unless otherwise directed.
+You may not use a looping function such as <i>while</i> or <i>for</i>,
+unless otherwise directed.
+Do not use the comment-out-the rest-of-the-file comment in your code.
+Make sure you submit text files, not binary files.
+On any line of output, there should be no leading whitespace and no
+trailing whitespace other than a newline (except when otherwise directed).
+<br/>
+<!-- section -->
+<h2> Tasks
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+
+Define a function named <i>staticScope</i>, which, when
+given an object, displays all the bindings
+in the static chain of that procedure object.
+The variable <i>this</i> is always bound to the current static scope.
+The <i>cadr</i> of <i>this</i> yields the set of variables bound in
+the current scope, while the <i>caddr</i>
+yields the corresponding list of variable values.
+The <i>cadr</i> of the lit of values yields the enclosing static scope.
+<br/>
+<br/>
+For example, consider executing the following code:
+<br/>
+
+<pre>
+    (define (f x)
+        (define (g y)
+            (define zz 3)
+            (staticScope 3 this)
+            (+ x y)
+            )
+        g
+        )
+
+    (define z (f 3))
+
+    (z 4)
+</pre>
+
+The call to <i>staticScope</i> should produce (at least) the
+following output:
+<br/>
+
+<pre>
+    #[environment L0]
+        zz : 3
+        y : 4
+    #[environment L1]
+        g : #[user defined function (g y)]
+        x : 3
+    #[environment L2]
+        f : #[user defined function (f x)]
+</pre>
+
+There may be additional variables depending on what else is defined
+in the program.
+<br/>
+<br/>
+The first argument to the function gives the number of scope levels
+to be printed. Giving a 0 as the number of levels should result in
+all levels being printed.
+
+<code>L0</code> labels the innermost scope, while 
+<code>L1</code> labels the
+immediate enclosing scope, and so on.
+You should skip over the predefined variables and only list
+the explicitly defined local variables.
+Note there may be higher environments in your result.
+<br/>
+Example:
+
+<pre>
+    $ echo &quot;(define (f x) (staticScope 1 this))&quot; &gt; task1.args
+    $ echo &quot;(f 0)&quot; &gt;&gt; task1.args
+    $ scam -r task1.scm task1.args
+    #[environment L0]
+        x : 0
+    $
+</pre>
+
+Both expressions read in by <i>main</i> should be evaluated.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Define a function named <i>compile</i> that replaces all the
+non-local variables
+in a function body with the values found in the definition environment.
+Should any of those values be function objects themselves, those
+objects would need to be compiled as well.
+The <i>compile</i> function should return its modified argument.
+The behavior of the compiled function must be unchanged, except it should
+run faster.
+You can retrieve the body and definition environment of a function with:
+<br/>
+
+<pre>
+    (define body (get &#39;code square))
+    (define denv (get &#39;__context square))
+</pre>
+
+respectively.
+<br/>
+<br/>
+Here's an example. Suppose we have the following definitions:
+<br/>
+
+<pre>
+    (define (square x) (multiply x x))
+    (define (multiply a b) (* a b))
+</pre>
+
+Then:
+<br/>
+
+<pre>
+    (include &quot;pretty.lib&quot;)
+    (compile square)
+    (pretty square)
+    (pretty multiply)
+</pre>
+
+should output:
+<br/>
+
+<pre>
+    (define (square x)
+        (&lt;function multiply(a b)&gt; x x)
+        )
+    (define (multiply a b)
+        (&lt;built-in *(@)&gt; a b)
+        )
+</pre>
+
+You will need to test whether or not the value of a symbol is
+a user-defined function or not (use the <i>closure</i>? function).
+Note, that if <i>multiply</i>
+references a user-defined function, then that function would
+also be compiled.
+<br/>
+<br/>
+Use <i>eval</i>, <i>catch</i>, and <i>error</i>?
+to decide if a symbol in the function body
+is bound or free. If it is bound, leave the symbol in the body unchanged.
+Otherwise, replace the symbol with its value. You'll need to test
+for the existence of a symbol in the definition environment of the
+function being compiled. You need not worry about nested functions.
+Note: closures are also objects in Scam.
+<br/>
+<br/>
+You should use <i>set-car</i>! and <i>set-cdr</i>! to make replacements.
+<br/>
+<br/>
+Include the <i>pretty.lib</i> library
+to gain access to the <i>pretty</i> function.
+<br/>
+<br/>
+Note: a symbol in the body represents a variable if it is not
+wrapped in a call to <i>quote</i>.
+<br/>
+<br/>
+Example:
+<br/>
+
+<pre>
+    $ echo &quot;(define (f a b) (+ a b))&quot; &gt; task2.args
+    $ scam -r task2.scm task2.args
+    (define (f a b)
+        (&lt;built-in +(@)&gt; a b)
+        )
+    $
+</pre>
+
+Your <i>main</i> should evaluate and then compile the read-in expression.
+Finally, it should pretty print the compiled expression.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Define a function, named <i>bst</i>, that constructs a binary search tree.
+The object that the constructor returns should implement
+the basic BST methods: <i>size</i>, <i>insert</i>, <i>find</i>, <i>delete</i>, <i>root</i>, <i>walk</i>,
+and <i>next</i>.
+The <i>size</i> method should return the number of nodes in the tree.
+The <i>root</i> method should return the key stored at the root of the tree.
+The <i>find</i> method should return the value associated with the
+given key and nil if the key is not in the tree.
+The behavior of the <i>walk</i> method is to return the &ldquo;least&rdquo;
+value in the BST,
+according to the comparator passed to the constructor.
+The <i>next</i> method should return the next value
+in an in-order traversal of the tree, with subsequent nodes being visited
+with each successive call to <i>next</i>.
+The <i>next</i> method should return nil when the search is exhaused
+If an
+insertion or deletion occurs in the middle of the traversal,
+the behavior of <i>next</i> is unspecified.
+Note that having <i>find</i> and <i>next</i> return nil
+is a particularly bad design choice because it disallows nil values
+being stored in the tree (but it simplifies your task).
+<br/>
+<br/>
+For testing purposes,
+all methods should handle an empty tree without failure.
+For those methods for which an empty tree is inappropriate,
+the return value is unspecified.
+Here are some sample series calls:
+<br/>
+
+<pre>
+    (define tree (bst &lt;))           ; smaller keys to the left
+    (tree &#39;insert 3 &quot;mary&quot;)         ; return value not specified
+    (tree &#39;insert 2 &quot;jill&quot;)
+    (tree &#39;insert 6 &quot;mark&quot;)
+    (tree &#39;size)                    ; should return 3
+    (tree &#39;find 6 =)                ; should return &quot;mark&quot;
+    (tree &#39;find 5 =)                ; should return nil
+    (tree &#39;walk)                    ; should return &quot;jill&quot;
+    (tree &#39;next)                    ; should return &quot;mary&quot;
+    (tree &#39;next)                    ; should return &quot;mark&quot;
+    (tree &#39;next)                    ; should return nil
+    (tree &#39;delete 2 =)              ; should return &quot;jill&quot;
+    ((bst &lt;) &#39;delete 2 =)           ; return value not specified
+</pre>
+
+Your <i>main</i> function should insert each key-value pair supplied
+and then perform a complete walk of the newly made tree.
+It should then delete the root node of the tree and
+then do another complete walk.
+Each walk should be introduced with a print statement (shown
+in the example below).
+A complete walk of a tree should run in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi></mrow></math>(<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi></mrow></math>) time.
+<br/>
+<br/>
+Example:
+<br/>
+
+<pre>
+    $ echo &quot;((0 0) (1 1))&quot; &gt; task3.args
+    $ scam -r task3.scm task3.args
+    First walk:
+    0
+    1
+    Second walk:
+    1
+    $
+</pre>
+
+Note: keys and values may be any type and
+a walk on an empty tree produces no output.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Using the imperative style of the text,
+implement a constraint network for the
+formula for determining the velocity right before
+impact when an object is dropped from a given height. The formula is:
+<br/>
+<br/>
+<center>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>v</mi>	<mo>=</mo>	<msqrt>		<mrow>			<mn>2</mn>			<mi>g</mi>			<mi>h</mi>		</mrow>	</msqrt></mrow></math>
+</center>
+
+<br/>
+where <i>g</i> is the gravitational acceleration and <i>h</i> is the drop height.
+While <i>g</i> is specified/reported in SI units,
+<i>h</i> is specified/reported in feet and
+<i>v</i> should be specified/reported in furlongs per fortnight.
+The constant <i>g</i> determined from the latitude using the
+formula:
+<br/>
+<br/>
+<center>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>g</mi>	<mo>=</mo>	<msub>		<mi>g</mi>		<mn>45</mn>	</msub>	<mo>-</mo>	<mfrac linethickness="1">		<mn>1</mn>		<mn>2</mn>	</mfrac>	<mrow>		<mo form="prefix">(</mo>		<msub>			<mi>g</mi>			<mi>p</mi>		</msub>		<mo>-</mo>		<msub>			<mi>g</mi>			<mi>e</mi>		</msub>		<mo form="postfix">)</mo>	</mrow>	<mo>&times;</mo>	<mi>cos</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>2</mn>		<mo>&times;</mo>		<mstyle mathvariant="italic">			<mi>l</mi>			<mi>a</mi>			<mi>t</mi>		</mstyle>		<mo>&times;</mo>		<mfrac linethickness="1">			<mi>&pi;</mi>			<mn>180</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</center>
+
+where
+<br/>
+
+<ul>
+
+<li>
+
+ <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi>g</mi>		<mi>p</mi>	</msub>	<mo>=</mo>	<mn>9.832</mn>	<mfrac linethickness="1">		<mi>m</mi>		<mrow>			<msup>				<mi>s</mi>				<mn>2</mn>			</msup>		</mrow>	</mfrac></mrow></math>
+<br/>
+</li>
+
+<li>
+
+ <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi>g</mi>		<mn>45</mn>	</msub>	<mo>=</mo>	<mn>9.806</mn>	<mfrac linethickness="1">		<mi>m</mi>		<mrow>			<msup>				<mi>s</mi>				<mn>2</mn>			</msup>		</mrow>	</mfrac></mrow></math>
+<br/>
+</li>
+
+<li>
+
+ <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi>g</mi>		<mi>e</mi>	</msub>	<mo>=</mo>	<mn>9.780</mn>	<mfrac linethickness="1">		<mi>m</mi>		<mrow>			<msup>				<mi>s</mi>				<mn>2</mn>			</msup>		</mrow>	</mfrac></mrow></math>
+<br/>
+</li>
+
+<li>
+
+ <i>lat</i> = latitude (between -90 and 90 degrees)
+</li>
+
+</ul>
+
+
+<br/>
+Name your
+network constructor <i>speed</i>.
+Your network <i>speed</i> should take
+three connectors as arguments,
+the velocity,
+the latitude,
+and the height, in that order.
+<br/>
+<br/>
+Provide the following accessor and mutator functions
+<i>get-value</i>, <i>set-value!</i>, and <i>forget-value!</i>
+as described on page 289 of the text.
+Use a value of 3.14159265358979323846 for <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&pi;</mi></mrow></math>.
+Use a value of 6012.88475304223335719399 to convert
+meters per second to furlongs per fortnight.
+Use a value of 3.28083989501312335958 to convert from
+meters to feet.
+<br/>
+<br/>
+Example:
+<br/>
+
+<pre>
+    $ echo &quot;50000&quot; &gt; task4.args             #furlongs per fortnight
+    $ echo &quot;60&quot; &gt;&gt; task4.args               #latitude
+    $ scam -r task4.scm task4.args
+    the drop height should be around ??? feet
+    $
+</pre>
+
+Round the result to 12 decimal places. Hint: use the <i>fmt</i> function.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ Define a synchronization barrier object using
+using Scam's binary semaphore.
+Name this function <i>barrier</i>.
+You can use the <i>gettid</i> function to access the ID of the thread
+asking for the semaphore.
+<br/>
+<br/>
+Example calls:
+<br/>
+
+<pre>
+    (define b (barrier 3))  ; make a barrier for three threads
+    ...
+    ((b&#39;start))
+    ...
+    ((b&#39;finish))
+</pre>
+
+For this example, once three threads reach the starting point,
+the barrier is opened and the three threads (and only those three threads)
+can pass. When those three threads reach the finish line, three more
+threads can pass (and so on).
+<br/>
+<br/>
+Do not provide a main function for this task.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Define a variadic function named <i>pfs</i> that,
+when given some prime numbers <i>a</i>, <i>b</i>, ..., <i>z</i>,
+creates an infinite stream of integers whose only prime factors are
+<i>a</i>, <i>b</i>, ..., <i>z</i>. These integers should
+have the form <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>a</mi>		<mi>A</mi>	</msup>	<msup>		<mi>b</mi>		<mi>B</mi>	</msup>	<msup>		<mi>c</mi>		<mi>C</mi>	</msup>	<mo>.</mo>	<mo>.</mo>	<mo>.</mo>	<msup>		<mi>z</mi>		<mi>Z</mi>	</msup></mrow></math>, where <i>A</i>, <i>B</i>, <i>C</i>
+and so on range from 0 upwards (except the exponents cannot
+all be zero). The numbers in this infinite stream should
+appear in ascending order.
+<br/>
+<br/>
+Example:
+<br/>
+
+<pre>
+    $ # (stream-display 3 (pfs 2))
+    $ echo 3 &gt; task6.args
+    $ echo 2 &gt;&gt; task6.args
+    $ scam -r task6.scm task6.args
+    (2 4 8 ...)
+    $
+</pre>
+
+<br/>
+Constraints: <i>stream-display</i> should not print any whitespace after the
+closing parenthesis.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Define a function named
+<i>twinPrimes</i> that
+produces a stream of twin prime pairs.
+Two primes are twinned if they differ in magnitude by <i>n</i> or less.
+<br/>
+<br/>
+Example:
+<br/>
+
+<pre>
+    $ # (stream-display 4 (twinPrimes 3)) #display the first two twin prime pairs
+    $ echo 4 &gt; task7.args
+    $ echo 3 &gt;&gt; task7.args
+    $ scam -r task7.scm task7.args
+    ((2 3) (2 5) (3 5) (5 7) ...)
+    $
+</pre>
+
+Constraints: <i>stream-display</i> should not print any whitespace after the
+closing parenthesis. The twin primes should be ordered by increasing
+value of the first prime in the pair, with the second prime breaking ties.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+
+Consider this summation:
+<br/>
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<mstyle displaystyle="true">			<munderover>				<mo>&sum;</mo>				<mrow>					<mi>n</mi>					<mo>=</mo>					<mn>1</mn>				</mrow>				<mo>&infin;</mo>			</munderover>		</mstyle>		<msup>			<mrow>				<mo form="prefix">(</mo>				<mo>-</mo>				<mn>1</mn>				<mo form="postfix">)</mo>			</mrow>			<mrow>				<mi>n</mi>				<mo>+</mo>				<mn>1</mn>			</mrow>		</msup>		<mfrac linethickness="1">			<mi>x</mi>			<mrow>				<msup>					<mi>y</mi>					<mi>n</mi>				</msup>			</mrow>		</mfrac>	</mstyle></mrow></math>
+</span>
+
+<br/>
+
+Define a function named <i>sum</i> that
+returns the stream that holds the terms of the above series for a given <i>x</i>
+and <i>y</i>.
+Define a function named <i>psum</i> that produces the
+stream of partial sums of 
+<code>(sum x y)</code>. Define a function named
+<i>acc-psum</i> that accelerates <i>psum</i> stream using the Euler transform.
+Define a function named <i>super-acc-psum</i> that produces a super accelerated
+stream using a tableau of ever-accelerated partial sum streams. All of these
+function takes <i>x</i> and <i>y</i> as their arguments.
+<br/>
+<br/>
+Example:
+
+<pre>
+    $ echo 1 &gt;&gt; task8.args          # number of stream elements to display
+    $ echo 3 &gt;&gt; task8.args          # x
+    $ echo 5 &gt;&gt; task8.args          # y
+    $ scam -r task8.scm task8.args
+    sum returns (0.6000000000 ...)
+    psum returns (0.6000000000 ...)
+    acc-psum returns (0.5000000000 ...)
+    super-acc-psum returns (0.6000000000 ...)
+    $
+</pre>
+
+Constraints: <i>stream-display</i> should not print any whitespace after the
+closing parenthesis.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+
+Exercise 3.71 in the text. Define a function named <i>ramanujan</i> that
+produces a stream of Ramanujan numbers. The function takes no arguments.
+<br/>
+<br/>
+Example:
+
+<pre>
+    $ # (stream-display 1 (ramanujan))
+    $ echo 1 &gt; task9.args
+    $ scam -r task9.scm task9.args
+    (1729 ...)
+    $
+</pre>
+
+Constraints: <i>stream-display</i> should not print any whitespace after the
+closing parenthesis.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2> Handing in the tasks
+<br/>
+</h2><!-- section ENDED -->
+
+For preliminary testing,
+send me all the files in your directory by running the command:
+<br/>
+
+<pre>
+    submit proglan lusth test3
+</pre>
+
+For your final submission, use the command:
+<br/>
+
+<pre>
+    submit proglan lusth assign3
+</pre>
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

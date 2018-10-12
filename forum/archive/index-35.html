@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Exam question discussion</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-2.html">Prerequisite exam</a> &gt; Exam question discussion</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=58">Exam question discussion</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=58">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="multipage"><strong>Pages:</strong> <strong>1</strong> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-58-2.html">2</a> </div><div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">09-10-2018, 06:23 PM</div>
+</div>
+<div class="message">Explanations of particular question/answers go here.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=38">pspeegle</a></h2></div><div class="dateline">09-10-2018, 06:32 PM</div>
+</div>
+<div class="message">For question 30, I'm aware that any tree with two or more elements would become unbalanced. However, with the special case of 1 element, the tree stays balanced so I put false. Is this a reasonable argument?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></h2></div><div class="dateline">09-10-2018, 06:35 PM</div>
+</div>
+<div class="message">Question 27, does distinct tree mean distinct shape so answer is 5? <br />
+Question 30, what about BST with one single node?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">09-10-2018, 07:16 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (09-10-2018, 06:32 PM)</span>pspeegle Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=269#pid269">[ -> ]</a></cite>For question 30, I'm aware that any tree with two or more elements would become unbalanced. However, with the special case of 1 element, the tree stays balanced so I put false. Is this a reasonable argument?</blockquote><br />
+Not really. Since the tree is not specified, I could give you any tree. In any case, a tree of one node is completely unbalanced since there are n - 1 steps to the furthest leaf.<br />
+<br />
+(iIt is also balanced, since there are log(n) steps to the furthest leaf, though to get technical, since we have limited the size of the tree, it is a constant number of steps to the furthest leaf.)</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">09-10-2018, 07:18 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (09-10-2018, 06:35 PM)</span>sbcarp Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=270#pid270">[ -> ]</a></cite>Question 27, does distinct tree mean distinct shape so answer is 5? <br />
+Question 30, what about BST with one single node?</blockquote><br />
+#27. A distinct tree with a particular set of values must have a different shape than another tree with the same values. And yes, five distince trees.<br />
+<br />
+#30 See the previous post.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=28">Jake.Cloud</a></h2></div><div class="dateline">09-10-2018, 07:26 PM</div>
+</div>
+<div class="message">For question 20, why would the time complexity be n instead of nlog(n)?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">09-10-2018, 07:42 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (09-10-2018, 07:26 PM)</span>Jake.Cloud Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=274#pid274">[ -> ]</a></cite>For question 20, why would the time complexity be n instead of nlog(n)?</blockquote><br />
+Since the loops are not nested, their compexities are added to achieve the cummulative complexity. Since n dominates log(n), the overall complexity is linear.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=10">fdbostwick</a></h2></div><div class="dateline">09-10-2018, 10:41 PM</div>
+</div>
+<div class="message">Can you explain how the time complexity for selection sort for input sizes below 100 elements is constant please. Question 40 on 9711</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=3">amjohnson36</a></h2></div><div class="dateline">09-11-2018, 01:56 AM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (09-10-2018, 10:41 PM)</span>fdbostwick Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=276#pid276">[ -> ]</a></cite>Can you explain how the time complexity for selection sort for input sizes below 100 elements is constant please. Question 40 on 9711</blockquote><br />
+The most elements it could be is 100 so there is a set limit to the time it will take. It would be O(n^2) if there was no limit to how many entries because time complexities look at as n goes to infinity.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=27">zmweske</a></h2></div><div class="dateline">09-12-2018, 05:27 PM</div>
+</div>
+<div class="message">For number 16, I interpreted "tight lower bound" for little omega to indicate that tight meant it was less inclusive and loose would have meant it is more inclusive. Because little omega is not an inclusive bound I thought it would be called tight. If something is a loose bound, it would have looser restrictions and apply to a greater set. <br />
+<br />
+For number 17, it asks if theta is a tight lower bound, and the same principle applies. <br />
+The question could be interpreted as asking if it is a lower bound  <span style="font-style: italic;" class="mycode_i">exclusively</span>, which theta is not. <br />
+<br />
+I took both questions as a little ambiguous.</div>
+</div>
+<div class="multipage"><strong>Pages:</strong> <strong>1</strong> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-58-2.html">2</a> </div></div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-2.html">Prerequisite exam</a> &gt; Exam question discussion</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

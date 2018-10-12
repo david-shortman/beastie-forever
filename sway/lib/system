@@ -1,0 +1,235 @@
+function systemString(cmd)
+    {
+    var old,item,items,spot;
+
+    system(cmd + " > .sway_temp");
+    old = setPort(open(".sway_temp",:read));
+
+    item = readToken();
+
+    if (item == "",return :null);
+
+    items = spot = item join :null;
+
+    item = readToken();
+    while (item != "")
+        {
+	spot tail= item join :null;
+	spot = tail(spot);
+	item = readToken();
+	}
+    setPort(old);
+    system("rm -f .sway_temp");
+    items;
+    }
+
+function userAdd(login,name)
+    {
+    var cmd =
+        "useradd" +
+	" -m" + 
+        " -s /bin/bash" +
+	" -p '*'" +
+	" -c '" + name + "' " +
+	login
+	;
+    inspect(cmd);
+    system(cmd);
+    system("chmod 700 /home/" + login);
+    }
+
+/*
+ * password
+ *
+ * - generate a random password
+ *
+ */
+
+function password()
+    {
+    var pw;
+    var size = 8 + integer(random() * 3);
+
+    pw = "";
+    while (size > 0)
+	{
+	var ch = integer(random() * 64);
+	if (ch < 26)
+	    {
+	    pw = pw + char(ascii("a") + ch);
+	    }
+	else if (ch < 52)
+	    {
+	    pw = pw + char(ascii("A") + ch - 26);
+	    }
+	else if (ch < 62)
+	    {
+	    pw = pw + char(ascii("0") + ch - 52);
+	    }
+	else if (ch == 62)
+	    {
+	    pw = pw + ".";
+	    }
+	else
+	    {
+	    pw = pw + "/";
+	    }
+	size = size - 1;
+	}
+    pw;
+    }
+
+/*
+ * createAccounts
+ *
+ * - creates accounts for the users listed in the given filename
+ *
+ * - format of the file is:
+ *
+ *   blow,"Joe E. Blow"
+ *   keeg,"Janey A. Keeg"
+ *   uxcurl,"Lynne Uxcurl"
+ *
+ * - the first field is login, second is name
+ * 
+ * - home directory permissions are set to 700 (via userAdd)
+ *
+ */
+
+function createAccounts(accounts)
+    {
+    var in = open(accounts,:read);
+    var out = open("passwords",:write);
+    var aux = open(accounts + ".pass",:write);
+    var oldInput = setPort(in);
+    var oldOutput = setPort(out);
+
+    var login,name,pw;
+
+    system("chmod 600 passwords");
+    system("chmod 600 " + accounts + ".pass");
+
+    randomSeed(time());
+
+    readWhile(" \t\n");
+    login = readUntil(",");
+    while (login != "")
+        {
+	if (readChar() != ",",throw(:badFormat,"corrupt login/name file"));
+	name = readString();
+	pw = password();
+	println(login,":",pw);
+
+	setPort(aux);
+	println(name,"\t",login,"\t",pw);
+	setPort(out);
+
+	userAdd(login,name);
+
+	readWhile(" \t\n");
+	login = readUntil(",");
+	}
+
+    close(in);
+    close(out);
+    close(aux);
+
+    setPort(oldInput);
+    setPort(oldOutput);
+
+    system("cat passwords | chpasswd");
+
+    system("rm passwords");
+
+    :done;
+    }
+
+/*
+ * createAccount
+ *
+ * - creates accounts for the users listed in the given filename
+ *
+ * - the first argument is login, second (optional) is name
+ * 
+ * - home directory permissions are set to 700 (via userAdd)
+ *
+ */
+
+function createAccount(login,@)
+    {
+    var name = if (@ == :null,login,@ . 0);
+    var out = open("password",:write);
+    var aux = open(login + ".pass",:write);
+    var oldOutput = setPort(out);
+
+    var pw;
+
+    system("chmod 600 password");
+    system("chmod 600 " + login + ".pass");
+
+    randomSeed(time());
+
+    pw = password();
+    println(login,":",pw);
+
+    setPort(aux);
+    if (@ != :null)
+	{
+	println("name: ",name,"\t","login: ",login,"\t","password: ",pw);
+	}
+    else
+        {
+	println("login: ",login,"\t","password: ",pw);
+	}
+
+    setPort(out);
+
+    userAdd(login,name);
+
+    close(out);
+    close(aux);
+
+    setPort(oldOutput);
+
+    system("cat password | chpasswd");
+
+    system("rm password");
+
+    :done;
+    }
+
+function createRepos(accounts,name)
+    {
+    var login;
+    var in = open(accounts,:read);
+    var oldInput = setPort(in);
+
+    readWhile(" \t\n");
+    login = readUntil(",");
+    while (login != "")
+        {
+	if (readChar() != ",",throw(:badFormat,"corrupt accounts file"));
+
+	system("mkdir /home/" + login + "/subversion");
+	system("chown " + login + " /home/" + login + "/subversion");
+	system("chgrp " + login + " /home/" + login + "/subversion");
+	system("(cd /home/" + login + "/subversion" +
+	    "; svnadmin create " + name + ")") ;
+	system("(cd /home/" + login + "/subversion" +  
+	    "; find " + name + " -exec chown " + login + " {} \;)") ;
+	system("(cd /home/" + login + "/subversion" + 
+	    "; find " + name + " -exec chgrp " + login + " {} \;)") ;
+
+	readUntil("\n");
+	readWhile(" \t\n");
+	login = readUntil(",");
+	}
+
+    close(in);
+
+    setPort(oldInput);
+
+    :done;
+    }
+
+sway();

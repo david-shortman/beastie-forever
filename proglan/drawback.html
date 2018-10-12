@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>drawback</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on the Drawbacks of State
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="state.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ The drawbacks to state
+
+<br/>
+</h2><!-- section ENDED -->
+
+The book gives a nice example to the drawbacks of state.
+Consider our <i>functional</i>
+(functional implies no state) version of factorial.
+<br/>
+
+<pre>
+    (define (factorial n)
+        (define (iter result count)
+            (if (= count 0)
+                result
+                (iter (* result count) (- count 1))
+                )
+            )
+        (iter 1 n)
+        )
+</pre>
+
+Written in the style of a procedural language, factorial looks something
+like:
+<br/>
+
+<pre>
+    function factorial(n)
+        {
+        return fact_iter(n, 1);
+        }
+
+    function fact_iter(count,result)
+        {
+        if (count == 0)
+            return result;
+     
+        return fact_iter(count - 1, count * result);
+        }
+</pre>
+
+Now let's look at an <i>imperative</i> version (imperative implies the
+changing of state) which we will generate by optimizing away the tail recursion
+in <i>fact_iter</i>.
+<br/>
+
+<pre>
+    function fact_iter(count,result)
+        {
+        TOP:
+     
+        if (count == 0)
+            return result;
+     
+        count = count - 1;
+        result = count * result;
+        goto TOP;
+        }
+</pre>
+
+Notice we now have assignment where we did not before. Notice further that
+our optimization broke the iterator. It now returns zero for any positive
+number! Why? We should have updated <i>result</i> before we decremented
+<i>count</i>, as in:
+<br/>
+
+<pre>
+    function fact_iter(count,result)
+        {
+        TOP:
+     
+        if (count == 0)
+            return result;
+     
+        result = count * result; //must do this first!
+        count = count - 1;       //must do this second!
+        goto TOP;
+        }
+</pre>
+
+When one messes with state, the order in which things are done matters
+greatly.
+In a purely functional world, the concept of time order does not exist.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

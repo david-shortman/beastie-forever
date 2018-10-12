@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Assignment description</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Assignment description</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=3&amp;page=3">Assignment description</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=3&amp;page=3">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="multipage"><strong>Pages:</strong> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-3-1.html">1</a> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-3-2.html">2</a> <strong>3</strong> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-3-4.html">4</a> </div><div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-27-2018, 01:12 PM</div>
+</div>
+<div class="message">Sorry about that. Should be open now.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">08-27-2018, 06:44 PM</div>
+</div>
+<div class="message">Cda.h still has functions to insert and remove from either the front or the back of the CDA, but they're not mentioned in the method behavior section. Are we supposed to use them?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></h2></div><div class="dateline">08-27-2018, 08:21 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-27-2018, 06:44 PM)</span>jdtubbs3 Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=76#pid76">[ -> ]</a></cite>Cda.h still has functions to insert and remove from either the front or the back of the CDA, but they're not mentioned in the method behavior section. Are we supposed to use them?</blockquote><br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><span style="color: #d4d4d4;" class="mycode_color"><span style="font-family: Consolas,;" class="mycode_font"><span style="color: #c586c0;" class="mycode_color">#define</span> <span style="color: #dcdcaa;" class="mycode_color">insertCDAfront</span><span style="color: #569cd6;" class="mycode_color">(</span><span style="color: #9cdcfe;" class="mycode_color">items, value</span><span style="color: #569cd6;" class="mycode_color">) </span><span style="color: #dcdcaa;" class="mycode_color">insertCDA</span><span style="color: #569cd6;" class="mycode_color">(items, </span><span style="color: #b5cea8;" class="mycode_color">0</span><span style="color: #569cd6;" class="mycode_color">, value)</span><br />
+<span style="color: #c586c0;" class="mycode_color">#define</span> <span style="color: #dcdcaa;" class="mycode_color">insertCDAback</span><span style="color: #569cd6;" class="mycode_color">(</span><span style="color: #9cdcfe;" class="mycode_color">items, value</span><span style="color: #569cd6;" class="mycode_color">) </span><span style="color: #dcdcaa;" class="mycode_color">insertCDA</span><span style="color: #569cd6;" class="mycode_color">(items, </span><span style="color: #dcdcaa;" class="mycode_color">sizeCDA</span><span style="color: #569cd6;" class="mycode_color">(items), value)</span></span></span></blockquote>
+Yes, the behavior of insertCDAfront is insertCDA with index 0, similar for insertCDAback. You don't need to care about those functions as long as your insertCDA and removeCDA running properly.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=7">andrasveto</a></h2></div><div class="dateline">08-28-2018, 01:13 AM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite>Quote:</cite>sizeDA - The size method returns the number of items stored in the array. It should run in <span style="font-weight: bold;" class="mycode_b">amortized </span>constant time.</blockquote>
+Are we not supposed to store the size and capacity of the da as members of the struct itself?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=124">hashah</a></h2></div><div class="dateline">08-28-2018, 11:45 AM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-28-2018, 01:13 AM)</span>andrasveto Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=85#pid85">[ -> ]</a></cite><blockquote class="mycode_quote"><cite>Quote:</cite>sizeDA - The size method returns the number of items stored in the array. It should run in <span style="font-weight: bold;" class="mycode_b">amortized </span>constant time.</blockquote>
+Are we not supposed to store the size and capacity of the da as members of the struct itself?</blockquote><br />
+YES, we are supposed to store them as members!</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=7">andrasveto</a></h2></div><div class="dateline">08-28-2018, 02:55 PM</div>
+</div>
+<div class="message">In that case, wouldn't it be constant time to return the size member? I'm just confused as to where amortization comes in.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-28-2018, 04:04 PM</div>
+</div>
+<div class="message">If I do <span style="font-style: italic;" class="mycode_i">n</span> insertions in a row and then ask for the size, then I have done <span style="font-style: italic;" class="mycode_i">n</span>+1 amount of work (<span style="font-style: italic;" class="mycode_i">n</span> updates to size - one for each insertion - and one retrieval of size). Average that total work over all inserts, and you get an average of one unit of work per operation.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">08-28-2018, 06:16 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-27-2018, 08:21 PM)</span>sbcarp Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=80#pid80">[ -> ]</a></cite><blockquote class="mycode_quote"><cite>Quote:</cite><span style="color: #d4d4d4;" class="mycode_color"><span style="font-family: Consolas,;" class="mycode_font"><span style="color: #c586c0;" class="mycode_color">#define</span> <span style="color: #dcdcaa;" class="mycode_color">insertCDAfront</span><span style="color: #569cd6;" class="mycode_color">(</span><span style="color: #9cdcfe;" class="mycode_color">items, value</span><span style="color: #569cd6;" class="mycode_color">) </span><span style="color: #dcdcaa;" class="mycode_color">insertCDA</span><span style="color: #569cd6;" class="mycode_color">(items, </span><span style="color: #b5cea8;" class="mycode_color">0</span><span style="color: #569cd6;" class="mycode_color">, value)</span><br />
+<span style="color: #c586c0;" class="mycode_color">#define</span> <span style="color: #dcdcaa;" class="mycode_color">insertCDAback</span><span style="color: #569cd6;" class="mycode_color">(</span><span style="color: #9cdcfe;" class="mycode_color">items, value</span><span style="color: #569cd6;" class="mycode_color">) </span><span style="color: #dcdcaa;" class="mycode_color">insertCDA</span><span style="color: #569cd6;" class="mycode_color">(items, </span><span style="color: #dcdcaa;" class="mycode_color">sizeCDA</span><span style="color: #569cd6;" class="mycode_color">(items), value)</span></span></span></blockquote>
+Yes, the behavior of insertCDAfront is insertCDA with index 0, similar for insertCDAback. You don't need to care about those functions as long as your insertCDA and removeCDA running properly.</blockquote><br />
+So, when inserting an item at index 0 or index 3, for example, our function has to use the internal view mentioned in the getCDA description, right? Inserting at 0 means inserting at the front of the CDA, but not necessarily at index 0.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></h2></div><div class="dateline">08-28-2018, 06:20 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-28-2018, 06:16 PM)</span>jdtubbs3 Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=98#pid98">[ -> ]</a></cite><blockquote class="mycode_quote"><cite><span> (08-27-2018, 08:21 PM)</span>sbcarp Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=80#pid80">[ -> ]</a></cite><blockquote class="mycode_quote"><cite>Quote:</cite><span style="color: #d4d4d4;" class="mycode_color"><span style="font-family: Consolas,;" class="mycode_font"><span style="color: #c586c0;" class="mycode_color">#define</span> <span style="color: #dcdcaa;" class="mycode_color">insertCDAfront</span><span style="color: #569cd6;" class="mycode_color">(</span><span style="color: #9cdcfe;" class="mycode_color">items, value</span><span style="color: #569cd6;" class="mycode_color">) </span><span style="color: #dcdcaa;" class="mycode_color">insertCDA</span><span style="color: #569cd6;" class="mycode_color">(items, </span><span style="color: #b5cea8;" class="mycode_color">0</span><span style="color: #569cd6;" class="mycode_color">, value)</span><br />
+<span style="color: #c586c0;" class="mycode_color">#define</span> <span style="color: #dcdcaa;" class="mycode_color">insertCDAback</span><span style="color: #569cd6;" class="mycode_color">(</span><span style="color: #9cdcfe;" class="mycode_color">items, value</span><span style="color: #569cd6;" class="mycode_color">) </span><span style="color: #dcdcaa;" class="mycode_color">insertCDA</span><span style="color: #569cd6;" class="mycode_color">(items, </span><span style="color: #dcdcaa;" class="mycode_color">sizeCDA</span><span style="color: #569cd6;" class="mycode_color">(items), value)</span></span></span></blockquote>
+Yes, the behavior of insertCDAfront is insertCDA with index 0, similar for insertCDAback. You don't need to care about those functions as long as your insertCDA and removeCDA running properly.</blockquote><br />
+So, when inserting an item at index 0 or index 3, for example, our function has to use the interval view mentioned in the getCDA description, right? Inserting at 0 means inserting at the front of the CDA, but not necessarily at index 0.</blockquote>Right.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=114">mdrobinson4</a></h2></div><div class="dateline">08-29-2018, 09:46 PM</div>
+</div>
+<div class="message">In the integer.c file, the structs passed in the methods are cast with the Integer struct datatype. Should we do that when we pass a STACK struct to a DA method? EX: displayDA((DA *)items, fp);  // in stack.c</div>
+</div>
+<div class="multipage"><strong>Pages:</strong> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-3-1.html">1</a> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-3-2.html">2</a> <strong>3</strong> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-3-4.html">4</a> </div></div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Assignment description</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

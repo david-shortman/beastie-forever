@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>dynamic</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Analysis of Algorithms
+<br/>
+<br/>
+<span class="bigger">Dynamic Programming</span>
+<br/>
+
+<span class="smaller"><span class="smaller">
+<a href="dynamic.pdf">Printable Version</a>
+</span></span>
+<br/>
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+
+<!-- section -->
+<h2> <b>Concept:</b> <i>memoization</i>
+<br/>
+</h2><!-- section ENDED -->
+
+Assume zero-based indexing.
+<br/>
+<br/>
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Consider memoizing this function:
+
+<pre>
+    function f(x)
+        {
+        if (x == 0)
+            return 0;
+        else if (x == 1)
+            return 1;
+        else
+            return f(x-1) + f(x-2);
+        }
+</pre>
+
+<b>T</b> or <b>F</b>:
+Even though there is only one formal parameter,
+you will need a two dimensional memoization table
+because you call recursively call the function twice.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ <b>T</b> or <b>F</b>:
+With zero-based indexing, the size of a table dimension is
+always one more than the largest value used to
+index into that dimension.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ <b>T</b> or <b>F</b>:
+Continuing with the previous question,
+the memoization table's size has to be the original value of <i>x</i>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ <b>T</b> or <b>F</b>:
+Continuing with the previous question,
+the memoization table's size has to be <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&times;</mo>	<mi>x</mi></mrow></math>, using the
+original value of <i>x</i>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ <b>T</b> or <b>F</b>:
+If the formal parameter is getting smaller in the recursive calls,
+the table will be filled out from smaller to larger indices.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ <b>T</b> or <b>F</b>:
+If the formal parameter is getting larger in the recursive calls,
+the table will be filled out from smaller to larger indices.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ <b>T</b> or <b>F</b>:
+The number of formal parameters in the function is
+always equal to the dimension of the dynamic programming table.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ <b>T</b> or <b>F</b>:
+It is necessary to initialize a dynamic
+programming table with base case values.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ <b>T</b> or <b>F</b>:
+In converting a recursive function to a dynamic programming solution,
+base cases can be moved to a table lookup function.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ Consider memoizing this function:
+
+<pre>
+    function f(x)
+        {
+        if (x == 0) return 0;
+        if (x == 1) return 1;
+        return f(x-2) + f(x-1);
+        }
+</pre>
+
+What would be memoization table's largest index/indices,
+where <i>x</i> refers to the original value of <i>x</i>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> - 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> - 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> and <i>x</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>x</i> + 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> + 1 and <i>x</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 6 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> + 1 and <i>x</i> + 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 7 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> + 1 and <i>x</i> - 1
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ Consider memoizing this function:
+
+<pre>
+    function g(x,items,y)
+        {
+        if (x == 0) return 1;
+        if (x &lt; 0) return 0;
+        if (y == items.size) return 0;
+        return minimum(g(x-items[y],items,y),g(x,items,y+1));
+        }
+</pre>
+
+Assuming the smallest memoization table possible,
+What would be the memoization table's largest index/indices,
+where <i>x</i> refers to the original value of <i>x</i>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> - 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> - 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> and <i>items.size</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> + 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> + 1 and <i>items.size</i> + 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 6 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>x</i> and <i>items.size - 1</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 7 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> and <i>items.size </i> + 1
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> Dynamic programming
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ Consider using dynamic programming to improve the efficiency of
+the following function:
+<br/>
+
+<pre>
+    function f(a,b,c,d,e)
+        {
+        if (a == 0) return 0;
+        if (a &lt; 0) return -INFINITY;
+        if (d == e) return 0;
+        return
+            max(
+               f(a,b,c,d+1,e),
+               f(a-b[d],b,c,d,e) + c[d]
+               );
+        }
+</pre>
+
+What would be the dimensionality of the dynamic programming table?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 6
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ Consider using dynamic programming to improve the efficiency of
+the following function:
+
+<pre>
+    function f(a,b,c,d,e)
+        {
+        if (a == 0) return 0;
+        if (a &lt; 0) return -INFINITY;
+        if (d == e) return 0;
+        return
+            max(
+               f(a,b,c,d+1,e),
+               f(a-b[d],b,c,d,e) + c[d]
+               );
+        }
+</pre>
+
+How would the dynamic programming table be filled, using <i>a</i> as an index?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> smaller <i>a</i> to larger <i>a</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>a</i> is not used as an index
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> larger <i>a</i> to smaller <i>a</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ Consider using dynamic programming to improve the efficiency of
+the following function:
+
+<pre>
+    function f(a,b,c,d,e)
+        {
+        if (a == 0) return 0;
+        if (a &lt; 0) return -INFINITY;
+        if (d == e) return 0;
+        return
+            max(
+               f(a,b,c,d+1,e),
+               f(a-b[d],b,c,d,e) + c[d]
+               );
+        }
+</pre>
+
+How would the dynamic programming table be filled, using <i>b</i> as an index?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>b</i> is not used as an index
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> smaller <i>b</i> to larger <i>b</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> larger <i>b</i> to smaller <i>b</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ Consider using dynamic programming to improve the efficiency of
+the following function:
+
+<pre>
+    function f(a,b,c,d,e)
+        {
+        if (a == 0) return 0;
+        if (a &lt; 0) return -INFINITY;
+        if (d == e) return 0;
+        return
+            max(
+               f(a,b,c,d+1,e),
+               f(a-b[d],b,c,d,e) + c[d]
+               );
+        }
+</pre>
+
+How would the dynamic programming table be filled, using <i>d</i> as an index?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> smaller <i>d</i> to larger <i>d</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>d</i> is not used as an index
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> larger <i>d</i> to smaller <i>d</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ Consider using dynamic programming to improve the efficiency of
+the following function:
+
+<pre>
+    function f(a,b,c,d,e)
+        {
+        if (a == 0) return 0;
+        if (a &lt; 0) return -INFINITY;
+        if (d == e) return 0;
+        return
+            max(
+               f(a,b,c,d+1,e),
+               f(a-b[d],b,c,d,e) + c[d]
+               );
+        }
+</pre>
+
+What is wrong, if anything,
+about the following loop for filling out the dynamic programming table?
+
+<pre>
+    for (a = 0; a &lt; max_a; ++a)
+        for (d = 0; d &lt; max_d; ++d)
+           t[a][d] = max(getTable(a,d+1,e),getTable(a-b[d],d,e) + c[d]);
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> there should be three nested loops
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the table is filled out correctly
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of the other answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> one or more of the loop indices is incorrect
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>a</i> loop goes in the wrong direction
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>d</i> loop goes in the wrong direction
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 6 -->
+<!-- answer -->
+<!-- answer -->
+<li> there should only be one loop (no nesting)
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ Consider dynamically programming the following function,
+what should the dimensionality of the table be?
+<br/>
+
+<pre>
+    !!change this to an actual problem
+    function f(a,b,c,d,e)
+        {
+        if(a == e)
+            return c/d;
+        else if(b &lt; d)
+            return 0;
+        return f(a,log(2^b),c%8,d + 1,e - 1)	
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> None of these answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+
+For the following questions, consider dynamically programming
+a function <i>f</i> to implement the <i>dice
+rolling</i> algorithm, which calculates total number of ways
+to reach a sum <i>z</i>, rolling <i>x</i> dice, with each die
+having <i>y</i> sides (sides are number from 1 to <i>y</i>).
+So if you have five dice each with six sides and
+desire to find the number of ways to achieve a sum of 1,
+then 
+<code>f(1,5,6)</code> should return 0.
+<br/>
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ What is the dimesionality of the table?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of these answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ What is/are the parameter/parameters that fill the entries of the table?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>y</i> only
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>z</i> only
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> and <i>y</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>z</i> and <i>y</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>z</i> and <i>x</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> only
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 6 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of these answers are correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 7 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i>, <i>y</i>, and <i>z</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ What is/are the largest index/indices into the dynamic programming table?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i>, <i>y</i>, and <i>z</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> - 1, <i>y</i> - 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> none of these answers are correct
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> + 1 and <i>z</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> + 1, <i>y</i> + 1, and <i>z</i> + 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>z</i> and <i>x</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 6 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 7 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>x</i> + 1 and <i>y</i> + 1
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

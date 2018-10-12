@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign-gst</title>
+<link rel=stylesheet
+    href="201.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+A GREEN Binary Search Tree Class
+<br/>
+<span class="smaller">Rough Draft</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller"><a href="assign-gst.pdf">Printable Version</a></span></span>
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- subsection -->
+<h3> The green search tree module
+<br/>
+</h3><!-- subsection ENDED -->
+
+A green search tree (<i>GST</i>) is a binary search tree
+that can handle duplicate values.
+Here is a conforming <i>gst.h</i> file:
+<br/>
+
+<pre>
+    /*** green binary search tree class ***/
+
+    #ifndef __GST_INCLUDED__
+    #define __GST_INCLUDED__
+
+    #include &lt;stdio.h&gt;
+    #include &quot;tnode.h&quot;
+
+    typedef struct gst GST;
+
+    extern GST   *newGST(int (*c)(void *,void *));
+    extern void   setGSTdisplay(GST *t,void (*d)(void *,FILE *));
+    extern void   setGSTswapper(GST *t,void (*s)(TNODE *,TNODE *));
+    extern void   setGSTfree(GST *t,void (*)(void *));
+    extern TNODE *getGSTroot(GST *t);
+    extern void   setGSTroot(GST *t,TNODE *replacement);
+    extern void   setGSTsize(GST *t,int s);
+    extern TNODE *insertGST(GST *t,void *value);
+    extern void  *findGST(GST *t,void *key);
+    extern TNODE *locateGST(GST *t,void *key);
+    extern int    deleteGST(GST *t,void *key);
+    extern TNODE *swapToLeafGST(GST *t,TNODE *node);
+    extern void   pruneLeafGST(GST *t,TNODE *leaf);
+    extern int    sizeGST(GST *t);
+    extern void   statisticsGST(GST *t,FILE *fp);
+    extern void   displayGST(GST *t,FILE *fp);
+    extern int    debugGST(GST *t,int level);
+    extern void   freeGST(GST *t);
+
+    /* extensions of BST */
+    extern void   *getGSTvalue(TNODE *n);
+    extern int    freqGST(GST *g,void *key);
+    extern int    duplicatesGST(GST *g);
+
+    #endif
+</pre>
+
+Here are some of the behaviors your methods should have. This listing
+is not exhaustive; you are expected, as a computer scientist, to
+complete the implementation in the best possible and most logical manner.
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newGST</i> -
+Similar to <i>newBST</i>.
+<br/>
+</li>
+
+<li>
+
+ <i>freqGST</i> -
+This method returns the frequency of the searched-for key. If
+the key is not in the tree, the method should return zero.
+<br/>
+</li>
+
+<li>
+
+ <i>findGST</i> -
+This method returns the value stored with the given key.
+It returns null if the key is not in the tree.
+<br/>
+</li>
+
+<li>
+
+ <i>locateGST</i> -
+This method returns the tree node holding the searched-for key.
+If the key is not in the tree, the method should return null.
+<br/>
+</li>
+
+<li>
+
+ <i>insertGST</i> -
+This method attempts to inserts a generic value in the tree. If the value to be inserted is already in
+the tree, the frequency count of the value in the tree is incremented, the value passed to the insert
+method is perhaps freed, and a null pointer is returned. If the
+generic value is not in the tree, it is inserted and the tree node that holds the value is returned.
+The passed-in generic value should be freed if it is a duplicate <i>and</i> a freeing function has been
+passed to the tree via <i>setGSTfree</i>.
+<br/>
+</li>
+
+<li>
+
+ <i>deleteGST</i> -
+The method starts by finding the generic value stored in
+the tree that matches the given value.
+If the value is not in the tree, -1 is returned.
+Otherwise the resulting frequency is returned.
+If the frequency count of the stored value is
+greater than one,
+this method reduces the frequency.
+If the frequency count is one, however, the <i>GST</i> value
+is removed from the tree (i.e. zero is returned).
+<br/>
+</li>
+
+<li>
+
+ <i>sizeGST</i> -
+This method returns the number of nodes currently in the tree. It
+should run in amortized constant time.
+<br/>
+</li>
+
+<li>
+
+ <i>duplicatesGST</i> -
+This method returns the number of duplicate values
+currently in the tree. It
+should run in amortized constant time. This should be equal
+to the net number of <i>GST</i> insertions minus the number of
+nodes in the underlying BST.
+<br/>
+</li>
+
+<li>
+
+ <i>statisticsGST</i> -
+This method should display the
+number of duplicates. Then the method calls the
+BST statistics method.
+<br/>
+</li>
+
+<li>
+
+ <i>displayGST</i>
+The method calls the tree using a level-order traversal,
+via the decorated display method of the underlying data structure.
+<br/>
+</li>
+
+<li>
+
+ <i>debugGST</i>
+The method calls the display method of the underlying data
+structure.
+<br/>
+</li>
+
+<li>
+
+ <i>getGSTVALUE</i>
+This method, when passed a node <i>n</i>, extracts the <i>GST</i> value. From
+that extracted value, it returns the generic value that is wrapped by
+the <i>GST</i> value.
+</li>
+
+</ul>
+
+
+Some of these methods will be wrappers for the similarly named
+<i>BST</i> methods, while others will add some functionality. You will
+need a private function to swap values.
+It should look something like:
+<br/>
+<br/>
+The <i>swapper</i> function is passed as the third argument to the
+<i>BST</i> constructor.
+<br/>
+<br/>
+The only local includes a <i>GST</i> module should have are <i>gst.h</i>,
+<i>bst.h</i>, and <i>tnode.h</i>.
+<br/>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>encap</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Bindings
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="encap.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ Object-orientation
+
+<br/>
+</h2><!-- section ENDED -->
+
+Here is one way to achieve one of the hallmarks of object-orientation,
+<i>encapsulation</i>.
+The idea is to use the first class nature of functions to provide a wrapper
+for data and a means for penetrating that wrapper. For example, a constructor
+for rational numbers in this paradigm might look like:
+<br/>
+
+<pre>
+    (define (Rational numerator denominator)
+        ; the formal parameters numerator and denominator are the members
+        ; member functions / selectors go here
+        (define type &#39;Rational)
+            (define (convert object)
+                (cond
+                    ((number? object)(Rational object 1))
+                    (else &#39;())
+                    )
+                )
+        (define (show)
+            (display numerator) (display &quot;/&quot;) (display denominator)
+            )
+        (define (add b)
+            (Rational
+               (+ (* numerator (b &#39;denominator)) (* (b &#39;numerator) denominator))
+                  (* denominator (b &#39;denominator))
+                  )
+            )
+        ; function which handles components / selectors / member functions
+        ; is returned here
+        (define (rat msg . args)
+            (cond
+                ((eq? msg &#39;numerator) numerator)
+                ((eq? msg &#39;denominator) denominator)
+                ((eq? msg &#39;convert) (convert (car args)))
+                ((eq? msg &#39;add) (add (car args)))
+                ((eq? msg &#39;type) &#39;Rational)
+                ((eq? msg &#39;show) show)
+                )
+            )
+        rat
+        )
+</pre>
+
+Consider the following definition:
+<br/>
+
+<pre>
+    (define a (Rational 3 4))
+</pre>
+
+If we wish to select the numerator, we simply type the expression:
+<br/>
+
+<pre>
+    (a &#39;numerator)
+</pre>
+
+To select the denominator, we type
+<br/>
+
+<pre>
+    (a &#39;denominator)
+</pre>
+
+To show <i>a</i>,
+we need to recall that the &ldqo;object&rdquo; will return the function
+show; to execute it, we need to evaluate that function
+like so:
+<br/>
+
+<pre>
+    ((a &#39;show))
+</pre>
+
+<!-- section -->
+<h2>
+ Generic operators and object orientation
+<br/>
+</h2><!-- section ENDED -->
+
+The
+<a href="http://beastie.cs.ua.edu/proglan/datadriv.html">data-driven approach</a>
+is one method for writing
+generic procedures. But rather than installing functions into a table,
+let's take an object-oriented approach in which the objects carry along
+their functions with them. Let's look at the operator +. Can we write a
+generic form of + which not only adds numbers but adds objects (like Rationals
+and Complexes) as well? Try it! <b><i>Hint: don't use get and put - don't
+use the table method at all!</i></b>
+<br/>
+<br/>
+To begin, we save the original version of 
+<code>+</code>:
+<br/>
+
+<pre>
+    (define basic-plus +)
+</pre>
+
+Then we need to write an oveload of 
+<code>+</code> so that it calls the add function
+for &ldquo;objects&rdquo;.
+<br/>
+
+<pre>
+    (define (+ a b)
+        (cond
+            ((and (number? a) (number? b))
+                (basic-plus a b))
+            ((number? a) ; b must be an object
+                (b &#39;add (b &#39;convert a)))
+            ((number? b)
+                (a &#39;add (a &#39;convert b)))
+            ((eq? (a &#39;type) (b &#39;type))
+                (a &#39;add b))
+            ((a&#39;convert b)
+                (a &#39;add (a&#39;convert b)))
+            ((a&#39;convert b)
+                (a &#39;add (a&#39;convert b)))
+            )
+        )
+</pre>
+
+Note that the convert function is used to coerce unlike objects to the
+same type. As long as every &ldquo;class&rdquo; that wishes to overload 
+<code>+</code> supplies
+appropriate <i>add</i> and <i>convert</i> functions, then our redefinition
+of 
+<code>+</code> is completely general (at least for two arguments). The drawback
+is that every class has to know about every other class. When adding a
+new type of number, every other class needs modification, adding the appropriate
+clauses to the add and convert routines. A better way uses a
+<a href="href=http://beastie.cs.ua.edu/proglan/datadriv.htm">
+data driven approach
+</a>. In this approach adding a new type requires no modification
+of the existing types.
+<br/>
+<br/>
+Note also that the &ldquo;members&rdquo; of a Rational object are complete walled
+off from the rest of the world. The only way to access them is through
+the &ldquo;access functions&rdquo;. We have thus provided the first leg of the object
+oriented paradigm, encapsulation. We'll look at the other two legs, polymorphism
+and inheritance, later.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

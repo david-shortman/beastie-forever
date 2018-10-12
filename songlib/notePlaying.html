@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: notePlaying.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Jan 14 18:38:38 2015 -->
+<head>
+<title>songlib: note playing</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: note playing<br /></h1>
+<h2 class="maketitle">John C. Lusth</h2>
+<h3 class="maketitle">Revision Date: January 14, 2015</h3>
+</p>
+
+<h3><a name="id1"><a href="notePlaying.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Note-playing functions</a></h1><p>The major note-playing functions/families are:
+</p>
+<ul><li><a href="play.html">play</a>
+</li><li><a href="chord.html">chord</a>
+</li><li><a href="bend.html">bend</a>
+</li><li><a href="trill.html">trill</a>
+</li><li><a href="draw.html">draw/resolve</a>
+</li><li><a href="rest.html">rest</a>
+</li></ul>
+<p>Most functions have alternative forms. For example, the main note playing
+function is <i>play</i>, but there are the following alternative forms:
+<i>nplay</i>, <i>rplay</i>, and <i>dplay</i>.
+</p>
+<p>The 'n' version of a function means the note is specified by a numbered
+note rather than an octave/pitch pair. For example, these calls are
+all equivalent:
+</p>
+<pre>
+play(Hd,guitar,3,C);
+nplay(Hd,guitar,C3);
+play(Hd,guitar,C3 / NOTES,C3 % NOTES);
+nplay(HD,guitar,3 * NOTES + C);
+</pre>
+<p>The 'r' version of a function indicates that an RRA object is passed
+rather than an octave/pitch specification. These three calls are
+equivalent:
+</p>
+<pre>
+play(Hd,guitar,3,C);
+rplay(Hd,getNote(guitar,3,C));
+rplay(Hd,getNumberedNote(guitar,C3));
+</pre>
+<p>The 'd' version of a function indicates that raw amplitude data is passed
+as an integer array and a length. The following calls to play and dplay
+are equivalent:
+</p>
+<pre>
+RRA *r = getNote(guitar,3,C);
+play(Hd,guitar,3,C);
+dplay(Hd,r-&gt;data[0],r-&gt;samples);
+</pre>
+<p>See also: <a href="noteNotations.html">noteNotations</a>,<a href="rra.html">rra</a>
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

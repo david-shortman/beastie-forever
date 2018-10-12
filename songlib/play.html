@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: play.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Nov  7 10:35:37 2011 -->
+<head>
+<title>songlib: play</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: play<br /></h1>
+<h2 class="maketitle">John C. Lusth</h2>
+<h3 class="maketitle">Revision Date: November 7, 2011</h3>
+</p>
+
+<h3><a name="id1"><a href="play.pdf">Printable Version</a></a></h3><p><hr />The play family of functions is the primary method for playing
+samples with <i><b>songlib</b></i>:
+</p>
+<pre>
+    void play(double duration,int instrument,int octave,int pitch);
+    void nplay(double duration,int instrument,int numberedNote);
+    void rplay(double duration,RRA * r);
+    void dplay(double duration,int *data,int length);
+    void splay(double duration,int instrument,int octave,int pitch);
+    void snplay(double duration,int instrument,int numberedNote);
+    void drum(double duration,int instrument,int numberedNote);
+</pre>
+<p>Functions in the
+<i>play</i> family play a given note for the given duration. The duration
+is specified in <a href="keepingTime.html">beats</a>.
+The note to be played is specified by
+an instument/octave/pitch triplet, an instrument/numbered note pair,
+an <a href="rra.html">RRA</a> object, or an array of amplitude data.
+Note that the play family follows the n,r,d convention.
+</p>
+<p>The instrument is an integer returned by the <a href="readingSamples.html">readScale</a> function.
+</p>
+<p>The actual length of the duration depends on the tempo given
+in a <a href="keepingTime.html">setTime</a> call.
+</p>
+<p>For example, if the note is to be played for two beats and
+the number of beats per minute is 132 and the sample rate
+is 44,100 samples per second, then...
+</p>
+<pre>
+    2 * 1/132 * 60 * 44100
+</pre>
+<p>...or...
+</p>
+<pre>
+    3272
+</pre>
+<p>...samples from the beginning of the given note
+will be added into the output buffer starting
+at the current location. Moreover, additional
+samples beyond the 3727th will be added in,
+at ever-diminishing amplitiudes, so that
+the note does not end abrubtly.
+The number of additional
+samples added to the output is governed by
+the current value of <a href="controlFunctions.html">sustain</a>.
+</p>
+<p>The exception to the above behavior are the
+<i>splay</i>, <i>snplay</i> and <i>drum</i> functions.
+These functions play the entire note and then
+rewind the song (using 
+<a href="movements.html">getLocation</a> and 
+<a href="movements.html">setLocation</a>)
+so that it appears as if only the requested number of
+beats has elapsed. The <i>splay</i> and <i>snplay</i> functions
+are useful for playing instruments whose notes
+always have a fixed duration (such as drums).
+The function drum randomly adds a little variation
+to the amplitude, timing, and pitch of the
+note being played.
+</p>
+<p>The <i>play</i> function and its alternatives
+update the current location
+in the output.
+</p>
+<p>Here is an example <i><b>songlib</b></i> program that plays a single note:
+</p>
+<hr /><pre>
+#include "songlib.h"
+
+int
+main()
+    {
+    int inst;
+
+    initSong();
+    setTime(132,4);
+    setSustain(0.99995);
+
+    openOutput("song.rra",44100,16);
+
+    inst = readScale("../../../samples/guitar","note_");
+
+    play(2.0,inst,3,C);
+
+    closeOutput();
+
+    return 0;
+    }
+</pre>
+<p><hr />See also:
+<a href="keepingTime.html">keepingTime</a>,
+<a href="controlFunctions.html">controlFunctions</a>,
+<a href="readingSamples.html">readingSamples</a>,
+<a href="movements.html">movements</a>
+<address><a href="mailto:lusth@cs.ua.edu">lusth@cs.ua.edu</a></address><br />
+</body></html>

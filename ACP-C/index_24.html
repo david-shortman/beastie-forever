@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:17 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Comparing Recursion and Looping</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_23.html">
+  <img border="0" alt="Recursion Patterns" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_25.html">
+  <img border="0" alt="Matrices" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Comparing Recursion and Looping</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Comparing Recursion and Looping</h1>
+<p>You can download the functions defined or used in this chapter with the
+following commands:
+</p>
+<pre>
+    wget troll.cs.ua.edu/ACP-C/recursionLoop.c
+    wget troll.cs.ua.edu/ACP-C/recursionLoop.h
+</pre>
+<p>These files will help you run the test code listed in this chapter.
+</p>
+
+<h2><a name="id1">Converting Recursions to Iterative loops</a></h2><p>
+In previous chapters, we learned about repeatedly
+evaluating the same code using both recursion and loops.
+Now we compare and contrast the two techniques by
+implementing the three mathematical functions from
+<a href="index_22.html">the chapter on recursion</a>:
+<i>factorial</i>, <i>fibonacci</i>, and <i>gcd</i>, with loops.
+</p>
+
+<h3><a name="id2">Factorial</a></h3><p>
+Recall that the factorial function, written recursively,
+looks like this:
+</p>
+<pre>
+    int
+    factorial(int n)
+        {
+        if (n == 0)
+            return 1;
+        else
+            return n * factorial(n - 1);
+        }
+</pre>
+<p>We see that is a form of the <i>accumulate</i> pattern. So our factorial
+function using a loop should look something like this:
+</p>
+<pre>
+    int
+    factorialLoop(int n)
+        {
+        int i;
+        int total = ???;
+        for (i = ???; i &lt; ???; i += ???)
+            {
+            total *= ???;
+            }
+        return total;
+        }
+</pre>
+<p>Since we are accumulating a product, it makes sense
+that <i>total</i> should be initialized to 1.
+Also,
+since we need to multiply all the values from
+from 1 to <i>n</i> to compute the factorial,
+it makes sense to have the loop variable <i>i</i>
+take on all those values:
+</p>
+<pre>
+    int
+    factorialLoop(int n)
+        {
+        int i;
+        int total = 1;
+        for (i = 1; i &lt; n+1; ++i)
+            {
+            total *= ???;
+            }
+        return total;
+        }
+</pre>
+<p>Finally, we accumulate <i>i</i> into the total:
+</p>
+<pre>
+    int
+    factorialLoop(int n)
+        {
+        int i;
+        int total = 1;
+        for (i = 1; i &lt; n+1; ++i)
+            {
+            total *= i;
+            }
+        return total;
+        }
+</pre>
+<p>The limit on the for loop is set to <i>n+1</i> instead of <i>n</i> because
+we want <i>n</i> to be included in the total.
+</p>
+<p>Now, compare the loop version to the recursive version. Both contain
+about the same amount of code, but the recursive version is easier
+to ascertain as correct.
+</p>
+
+<h3><a name="id3">The greatest common divisor </a></h3><p>
+Here is a slightly different version of the <i>gcd</i> function, built using
+the following recurrence:
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="left">
+<i>gcd</i>(<i>a</i>,<i>b</i>) </td><td colspan="1" align="center"> is </td><td colspan="1" align="left"> <i>a</i> </td><td colspan="1" align="left"> if <i>b</i> is zero</td></tr>
+<tr><td colspan="1" align="left">
+<i>gcd</i>(<i>a</i>,<i>b</i>) </td><td colspan="1" align="center"> is </td><td colspan="1" align="left"> <i>gcd</i>(<i>b</i>,<i>a</i> &#37; <i>b</i>) </td><td colspan="1" align="left"> otherwise </td></tr></tbody></table>
+</p>
+</div>
+<p>The function allows one more recursive call than the 
+<a href="index_22.html#RecursionGCD">version shown previously</a>.
+By doing
+so, we eliminate the need for the local variable <i>remainder</i>. Here is
+the implementation:
+</p>
+<pre>
+    int
+    gcd(int a,int b)
+        {
+        if (b == 0)
+            return a;
+        else
+            return gcd(b,a % b);
+        }
+</pre>
+<p>Let's turn it into a looping function. This style of
+recursion doesn't fit any of the patterns we know, so
+we'll have to start from scratch. We do know that 
+<i>b</i> becomes the new value of <i>a</i> and <i>a</i> &#37; <i>b</i> becomes 
+the new value of <i>b</i>
+on every recursive call,
+so the same thing must happen on every evaluation of
+the loop body.
+We stop when <i>b</i> is equal to zero so we should continue looping
+while <i>b</i> is <i>not</i> equal to zero. These observations lead us
+to this implementation:
+</p>
+<pre>
+    int
+    gcdLoop(int a,int b)
+        {
+        while (b != 0)
+            {
+            a = b;
+            b = a % b;
+            }
+        return a;
+        }
+</pre>
+<p>Unfortunately, this implementation is faulty, since we've lost
+the original value of <i>a</i> by the time we perform the modulus 
+operation. Reversing the two statements in the body of the loop:
+</p>
+<pre>
+    {
+    b = a % b;
+    a = b;
+    }
+</pre>
+<p>is no better; we lose the original value of <i>b</i> by the time we
+assign it to <i>a</i>. What we need to do is temporarily save the
+original value of <i>b</i> before we assign <i>a</i>'s value. Then
+we can assign the saved value to <i>a</i> after <i>b</i> has been reassigned:
+</p>
+<pre>
+    int
+    gcdLoop(int a,int b)
+        {
+        while (b != 0)
+            {
+            int temp = b;
+            b = a % b;
+            a = temp;
+            }
+        return a;
+        }
+</pre>
+<p>Now the function is working correctly. But why did we temporarily
+need to save a value in the loop version and not in the recursive
+version? The answer is that the recursive call does not perform
+any assignments so no values were lost. On the recursive call,
+new versions of the formal parameters <i>a</i> and <i>b</i> received the
+computations performed for the function call. The old versions
+were left untouched.
+</p>
+
+<h3><a name="id4">The Fibonacci sequence</a></h3><p>
+Recall the recursive implementation for finding the <i>n<sup>th</sup></i> Fibonacci
+number:
+</p>
+<pre>
+    int
+    fibonacci(int n)
+        {
+        if (n &lt; 2)
+            return n;
+        else
+            return fibonacci(n - 1) + fibonacci(n - 2);
+        }
+</pre>
+<p>For brevity, we have collapsed the two base cases into
+a single base case. If <i>n</i> is zero, zero is returned and if
+<i>n</i> is one, one is returned, as before.
+</p>
+<p>Let's try to implement <i>fib</i>
+using an iterative loop. As before, this doesn't seem
+to fit a pattern, so we start by reasoning about this.
+If we let <i>a</i> be the first Fibonacci number, zero, and <i>b</i>
+be the second Fibonacci number, one, then the third fibonacci
+number would be <i>a + b</i>, which we can save in a variable 
+named <i>c</i>.
+At  this point, the fourth Fibonacci number would be <i>b + c</i>,
+but since we are using a loop, we need to have the code be
+the same for each iteration of the loop. If we let <i>a</i> have the
+value of <i>b</i> and <i>b</i> have the value of <i>c</i>, then the fourth Fibonacci
+number would be <i>a + b</i> again.
+This leads to our implementation:
+</p>
+<pre>
+    int
+    fibonacciLoop(int n)
+        {
+        int i;          //the loop variable
+        int a = 0;      //the first Fibonacci number
+        int b = 1;      //the second Fibonacci number
+        for (i = 0; i &lt; n; ++i) //n steps
+            {
+            int c = a + b;
+            a = b;
+            b = c;
+            }
+        return a;
+        }
+</pre>
+<p>In the loop body, we see that <i>fibonacciLoop</i> is much like <i>gcdLoop</i>;
+the second number becomes the first number and some combination of
+the first and second number becomes the second number.
+In the case of <i>gcdLoop</i>, the combination was the remainder and, in the
+case of <i>fib</i>, the combination is sum.
+A rather large question remains, why does the function return <i>a</i>
+instead of <i>b</i> or <i>c</i>? The reason is, suppose <i>fib</i> was
+called with a value of zero, which is supposed to generate
+the first Fibonacci number. The loop does not run in this case
+and the value of <i>a</i> is returned, which is zero, as required.
+If a value of one is passed to <i>fib</i>, then the loop runs exactly
+once and <i>a</i> gets the original value of <i>b</i>, which is
+one. The loop exits and
+this time, one is returned, as required. So, empirically, it
+appears that the value of <i>a</i> is the correct choice of return value.
+As with factorial, hitting on the right way to proceed iteratively
+is not exactly straightforward, while the recursive version
+practically wrote itself.
+</p>
+
+<h2><a name="id5">Transforming loops into recursions</a></h2><p>
+Transforming a recursive function to a loop sometimes takes a
+good deal of thought, but going the other way is somewhat easier.
+To transform an iterative loop into a
+recursive loop, one first identifies those variables
+that exist outside the loop but are referenced by the loop;
+these variable will become formal parameters in the recursive
+function. One then builds a helper function that has these
+"outside" variables as formal parameters. Finally, one
+builds a wrapper function that calls the helper with the
+initial values of the "outer" variables.
+</p>
+
+<h3><a name="id6">Fibonacci</a></h3><p>
+For an example conversion, the <i>fibonacciLoop</i> function defined
+previously has a loop; that loop has four
+"outside" variables that
+are referenced by the <i>for</i> loop:
+<i>a</i>, <i>b</i>, <i>i</i>
+<sup><a href="index_26.html#footnote-50">50</a></sup>,
+and <i>n</i>.
+The variable <i>c</i> is used only inside the loop and thus is
+ignored.
+</p>
+<p>Given this, we start out
+our recursive function like so:
+</p>
+<pre>
+    int
+    fibonacciHelper(int a,int b,int i,int n)
+        {
+        ...
+        }
+</pre>
+<p>If our original function was named <i>XXX</i>, we will name this
+new function <i>XXXHelper</i>.
+The original loop test becomes an <i>if</i> test in the body of
+the <i>fibonacciHelper</i> function:
+</p>
+<pre>
+    int
+    fibonacciHelper(int a,int b,int i,int n)
+        {
+        if (i &lt; n)
+            ...
+        else
+            ...
+        }
+</pre>
+<p>The <i>if-true</i> block becomes the recursive call.
+The arguments to the recursive call encode the updates
+to the loop variables. On the other hand,
+the <i>if-false</i> block becomes the value the loop attempted to
+calculate:
+</p>
+<pre>
+    int
+    fibonacciHelper(int a,int b,int i,int n)
+        {
+        if (i &lt; n)
+            return fibonacciHelper(b,a + b,i + 1,n);
+        else
+            return a;
+        }
+</pre>
+<p>Remember, <i>a</i> gets the value of <i>b</i> and <i>b</i> gets the value of
+<i>c</i> which is <i>a + b</i>. Since we are performing recursion
+with no assignments, we don't need the variable <i>c</i> anymore.
+The loop variable <i>i</i> is incremented
+by one each time. Because <i>n</i> is unchanged by the original loop,
+is is unchanged in the recursive call.
+</p>
+<p>Next, we define a function with the same signature as the original
+function. We change the name, affixing the number 2, to remind us
+that this version works via  a different sort of recursion compared
+to the original recursive <i>fibonacci</i> function.
+The body of this new function
+returns a call to the helper function:
+</p>
+<pre>
+    int
+    fibonacci2(int n)
+        {
+        return fibonacciHelper(???,???,???,n);
+        }
+</pre>
+<p>To complete our task, we fill out
+the arguments to the helper function with
+the initial
+values of the variables referenced by the original loop:
+</p>
+<pre>
+    int
+    fibonacci2(int n)
+        {
+        return fibonacciHelper(0,1,0,n);
+        }
+</pre>
+<p>Since <i>a</i> starts at 0,
+<i>b</i> starts at 1, and <i>i</i> starts at zero for the
+original loop, we pass those values in the initial call
+to the helper function. As before, since <i>n</i> never changes,
+we simply pass <i>n</i> along to the helper.
+</p>
+<p>Note that this recursive function looks nothing like our
+original <i>fibonacci</i>.
+However, it suffers from none of the inefficiencies
+of the original version and yet it performs no assignments.<sup><a href="index_26.html#footnote-51">51</a></sup> The reason for its efficiency is that it performs
+the exact calculations and number of calculations as the
+iterative loop-based function.
+</p>
+
+<h3><a name="id7">Factorial</a></h3><p>
+For more practice, let's convert the iterative version of
+<i>factorial</i> into a recursive function using this method.
+We'll again end up with a different recursive function
+than before. For convenience, here is the loop version:
+</p>
+<pre>
+    int
+    factorialLoop(int n)
+        {
+        int i;
+        int total = 1;
+        for (i = 1; i &lt; n+1; ++i)
+            {
+            total *= i;
+            }
+        return total;
+        }
+</pre>
+<p>We start, as before, by working on the helper function.
+In this case,
+only three outside variables are referenced by the loop:
+<i>total</i>, <i>i</i>, and <i>n</i>:
+</p>
+<pre>
+    int
+    factorialHelper(int total,int i,int n)
+        {
+        ...
+        }
+</pre>
+<p>Next, we write the <i>if</i> statement:
+</p>
+<pre>
+    int
+    factorialHelper(int total,int i,int n)
+        {
+        if (i &lt; n + 1)
+            return factorialHelper(total * i,i + 1,n);
+        else
+            return total;
+        }
+</pre>
+<p>Next, we define the recursive <i>factorial</i> function, which calls
+the helper:
+</p>
+<pre>
+    int
+    factorial2(int n)
+        {
+        return factorialHelper(1,1,n);
+        }
+</pre>
+
+<h2><a name="id8">Which way to go?</a></h2><p>
+The moral of this story is that any iterative loop can be rewritten
+as a recursion and any recursion can be rewritten as
+an iterative loop. Moreover, in <i>good</i> languages,<sup><a href="index_26.html#footnote-52">52</a></sup>
+there is no reason to prefer one way over the other,
+either in terms of the time it takes or the space used
+in execution. To reiterate,
+use a recursion if that makes the implementation
+more clear, otherwise, use an iterative loop.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_23.html">
+  <img border="0" alt="Recursion Patterns" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_25.html">
+  <img border="0" alt="Matrices" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Comparing Recursion and Looping</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

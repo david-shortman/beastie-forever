@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: outlining.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Aug  8 13:10:07 2012 -->
+<head>
+<title>Super Outlining</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Super Outlining<br /></h1>
+<h2 class="maketitle">John C. Lusth</h2>
+<h3 class="maketitle">Revision Date: August 8, 2012</h3>
+</p>
+
+<h3><a name="id1"><a href="outlining.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Introduction</a></h1><p>
+Outlining, like flowcharts for programming, is becoming a lost art.
+Unlike flowcharts, however, outlining has not been replaced by
+superior approaches. Through proper outlining, a document essentially
+writes itself, resulting in a concise, logical, and compelling
+narrative.
+</p>
+<p>The method described herein was invented independently by me, but
+I have found subsequently that bits and pieces of my approach have
+been suggested before.  My take was that writing a paper ought
+to be much like writing a program using <i>stepwise refinement</i><sup><a href="outlining_1.html#footnote-1">1</a></sup>.
+With stepwise refinement, one starts out by defining a <i>main</i>
+function; the <i>main</i> simply calls a series of subfunctions which do not yet
+exist. The <i>step</i> in stepwise refinement is to
+define these
+subfunctions, which, in turn, may call other functions that
+may or may not yet exist. The process ends when all functions
+are defined.
+</p>
+<p>The <i>main</i> function of a program looks much like the outline of
+a paper, with the sections of the paper corresponding to the
+subfunctions the <i>main</i> function calls. Thus, it should be possible
+to apply the technique of stepwise refinement to writing a paper,
+should one start with an outline.
+When stepwise refinement is applied to an outline,
+each section heading of the outline is expanded
+to a short description.
+The description is then expanded to a series of
+paragraph topics. The topics are, in turn,
+expanded to partial paragraphs. Finally,
+the partial paragraphs
+are expanded to complete paragraphs.
+I call the combination of outlining and stepwise refinement,
+<i>super outlining</i>. Because of the individual
+steps taken during the process, super outlining leads to
+coherent documents that flow well.
+</p>
+
+<h1><a name="id3">Phase I</a></h1><p>
+The initial phase of the super-outlining method is to map out the
+overall structure of the document, down to the subsection level.
+For a research paper documenting an experiment,
+the initial outline might look like this:
+</p>
+<ul><li>Introduction
+</li><li>Background
+</li><li>Experimental Procedures
+</li><li>Results and Analysis
+</li><li>Conclusions
+</li></ul>
+<p>Of course, the section names will vary from discipline to discipline and
+whether the paper is experimental, theoretical, or descriptive.
+For example, a paper performing a literature review, which is essentially a
+<i>Background</i> section expanded into a full paper, might have the following
+top-level sections:
+</p>
+<ul><li>Introduction
+</li><li>Early work
+</li><li>Seminal discoveries
+</li><li>Refinements
+</li><li>Remaining Challenges
+</li></ul>
+<p>Many times, a section is involved enough that subsections are warranted. For
+example, an <i>Experimental Procedures</i> section might be further divided:
+</p>
+<ul><li>Experimental Procedures
+<ul><li>Design
+</li><li>Fabrication
+</li><li>Test
+</li></ul>
+</li></ul>
+<p>Typically, a traditional outline, as shown in the examples above,
+is as far as most people get in the outlining
+process.
+Unfortunately,
+while this level of outlining guides the overall structure of
+the document, it
+gives no insight on how the individual sections and subsections
+might be written. So to address this problem,
+each section/subsection heading is annotated
+with a three-sentence description.
+The prose of these paragraphs will not generally appear
+in the final document, so it can be casual or instruction-based.
+For example, the paragraph describing the <i>Introduction</i>
+might look like:
+</p>
+<ul><li>Introduction
+<p><i>
+I'll start by stating that inheritance becomes much more
+complex within the context of non-local references, supplying
+references from Touretzky, Ungar/Smith, and some other
+references concerning the D programming language.
+I'm going to use the examples of Meyer and Taivalsaari to
+motivate the need for solving the problem.
+Then I'm going to give a hint about a possible inheritance
+approach using scope, rather than self-reference, in an attempt
+to simply and clarify the semantics of inheritance.
+</i>
+</p>
+</li></ul>
+<p>The example here uses ideas from Computer Science, but don't
+let that get in the way of this guiding principle that applies to
+all documents: each section is
+annotated with a three-sentence paragraph describing the ideas that
+will be expressed within the section.
+</p>
+<p>A big draw of super-outlining depends on the theory that spending more
+time up front organizing your thoughts
+will reduce the overall time writing
+the full paper.
+By writing the section descriptions,
+it then becomes
+a simple matter to expand the outline further in Phase II.
+</p>
+
+<h1><a name="id4">Phase II</a></h1><p>
+In Phase II, one envisions the paragraphs needed to flesh out the
+section descriptions. After each description, one places a list of
+one-sentence paragraph topics; if you will need five paragraphs to
+succinctly implement the section, then you should place a list
+of five sentences following the section description. Deciding on
+the number and topics of the paragraphs is usually a back-and-forth
+process, with the number of paragraphs growing and shrinking as
+you decide on the paragraph topics. Be sure to reserve the
+last paragraph in a section as an introduction to the next
+section, if appropriate.
+</p>
+<p>For example, a paragraph topic list for <i>Introduction</i> might look like:
+</p>
+<ul><li>Introduction
+<p><i>
+I'll start by stating that inheritance becomes much more
+complex within the context of non-local references, supplying
+references from Touretzky, Ungar/Smith, and some other
+references concerning the D programming language.
+I'm going to use the examples of Meyer and Taivalsaari to
+motivate the need for solving the problem.
+Then I'm going to give a hint about a possible inheritance
+approach using scope, rather than self-reference, in an attempt
+to simply and clarify the semantics of inheritance.
+</i>
+</p>
+<ol><li>What is inheritance and what are the formal approaches to describing
+inheritance?
+</li><li>How are non-local references in an ancestor class handled under
+the formal descriptions?
+</li><li>Should non-locals be handled differently and, if so, what are
+the advantages and disadvantages of doing so?
+</li><li>Posit the theory that manipulating scope is simpler than self-reference
+and handles non-local references correctly.
+</li><li>Describe the rest of the paper, indicating the existence and purpose
+of each of the following sections.
+</li></ol>
+</li></ul>
+<p>Although you may not know much about CS inheritance, you can see from
+the example the beginnings of flow. Notice how the topic sentences 
+lead from the description of the problem to its solution.
+</p>
+<p>During Phase II, it is common to return to Phase I and modify the
+section descriptions. In fact, it would be rather unusual <i>not</i>
+to do so.
+</p>
+
+<h1><a name="id5">Phase III</a></h1><p>
+In Phase III, each paragraph topic is augmented with the introductory
+and closing sentences of the paragraph. This will further cement
+the 
+'flow'
+of the document;
+care should be taken that the closing sentence of a paragraph should
+serve as a transition to the next paragraph, if appropriate. Indeed,
+after adding these bracketing sentences,
+one should be able to read the entire document as a
+coherent whole.
+</p>
+<p>As an example, a Phase III
+'paragraph'
+might look like this:
+</p>
+<div class="quote">
+If an object truly inherits the <i>functionality</i> of its ancestor,
+then non-local references in ancestor methods should reflect
+the point of view of the actual object, not the view of an ancestor object
+which does not even exist.
+...<i>Should non-locals be handled differently and, if so, what are
+the advantages and disadvantages of doing so?</i>...
+The traditional handling of non-locals likely stems from an
+ease-of-implementation issue; is there an equally simple implementation
+that handles non-locals properly?
+</div>
+
+<h1><a name="id6">Writing the paper</a></h1><p>
+At this point, the full paper can be attempted. While
+filling out the middles of the partial paragraphs of Phase III,
+one should
+move each paragraph description to precede the paragraph
+it describes.
+One should also set off
+the section descriptions and the moved paragraph descriptions in a different
+font.
+For the final edit, the section and paragraph descriptions are not
+deleted, but set off as non-printing notes within the document.
+</p>
+
+<h1><a name="id7">Other considerations</a></h1><p>
+Any document that is intended to be widely read should tell a story.
+That is to say, an <i>Abstract</i>, if required,
+should give a synopsis of the entire story,
+while the <i>Introduction</i> should set up, in a compelling way, 
+the problem that needs to be solved. Concrete examples of how the
+problem manifests itself should also be included in the <i>Introduction</i>.
+The <i>Background</i>, could give a chronological history of how
+the problem arose, if appropriate.
+The middle sections describe the meat-and-potatos version of the
+problem solution.
+Finally, the <i>Conclusions</i> section should recap the problem,
+its solution, and the strength and weaknesses of the solution.
+</p>
+<p>Another rule the successful writer should use, if possible,
+is the <i>Rule of Three</i>. The <i>Rule of Three</i> states that 
+any complex idea, thought, or approach, should be broken down
+into three components. If any of the components is still too
+complex to be described succinctly, it too should be broken
+down into three subcomponents, and so. Resist the attempt to use
+four or more subcomponents and <i>never</i> use two.
+The <i>Rule of Three</i>
+also states that the most important aspects of the document,
+typically the problem and its solution, should be repeated 
+three times within the document. Given that the <i>Abstract</i> and
+the <i>Conclusions</i> both summarize the work described in
+the document, the desired repetition of the key points should
+happen naturally.
+</p>
+<p>Lastly, in the final editing of the document, a critical eye
+is placed on each paragraph, each sentence and on each word of the document.
+Each item should only be present if it contributes in an original way
+to the overall story told by the document; otherwise, it should
+be removed. Typically, via super-outlining, each paragraph is serving
+a purpose, but often sentences repeat information or are awkward
+and inelegant.
+Questions to ask are:
+</p>
+<ul><li>Does this sentence repeat information that has already been
+stated?
+</li><li>If not, is the sentence absolutely necessary for purpose of the
+paragraph?
+</li><li>Is each word absolutely necessary for the purpose of the
+sentence? In other words, can the sentence be shortened
+but still retain its meaning?
+</li></ul>
+<p>By looking critically at the word and sentence level, a document
+can both be shortened and become more elegantly written.
+</p>
+<address><a href="lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - insertDA/removeDA Shifting of Items</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; insertDA/removeDA Shifting of Items</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=10">insertDA/removeDA Shifting of Items</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=10">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">08-25-2018, 05:20 PM</div>
+</div>
+<div class="message">Is the array supposed to shift items until it finds an empty index, or until it reaches the end of the array?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">08-25-2018, 06:38 PM</div>
+</div>
+<div class="message">I might rescind the question. I don't think there is a situation where you would have an empty index in the middle of two occupied indexes.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-25-2018, 07:33 PM</div>
+</div>
+<div class="message">Correct. The filled portion is contiguous (literally for DA and virtually for CDA).</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=106">humblebeast</a></h2></div><div class="dateline">08-27-2018, 05:15 AM</div>
+</div>
+<div class="message">But since you can insert at any index, you could have gaps, right? eg the array doubles from capacity 4 to 8 and then you add insert at index 7, indices 0-3 and 7 would be full but 4-6 would be empty.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">08-27-2018, 05:33 AM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-27-2018, 05:15 AM)</span>humblebeast Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=67#pid67">[ -> ]</a></cite>But since you can insert at any index, you could have gaps, right? eg the array doubles from capacity 4 to 8 and then you add insert at index 7, indices 0-3 and 7 would be full but 4-6 would be empty.</blockquote><br />
+You can only insert from 0 to size, inclusive.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-27-2018, 01:14 PM</div>
+</div>
+<div class="message">^ Correct. Dynamic arrays generally have only contiguous filled regions.</div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; insertDA/removeDA Shifting of Items</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

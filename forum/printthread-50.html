@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> DA failed tests due to getDA assertion - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=103">DA failed tests due to getDA assertion</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  DA failed tests due to getDA assertion (<em>/showthread.php?tid=103</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>DA failed tests due to getDA assertion</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=105">cmtudor</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+Hey y'all, I failed a <span style="text-decoration: line-through;" class="mycode_s">couple</span> few <span style="text-decoration: line-through;" class="mycode_s">of</span> tests (8, 18, and 28) in my DA class due to the assertion required of getDA: <br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><ul class="mycode_list"><li><span style="font-style: italic;" class="mycode_i">getDA</span> - The index shall be greater than or equal to zero and less than the size. <br />
+</li>
+</ul>
+</blockquote>
+<br />
+My issue, I've found, is when the user tries to get the value at index 0 in an empty array. It passes the first assertion (that index &gt;= 0) but fails the second assertion (that index &lt; sizeDA(items)). Changing the assertion to "the index shall be greater than or equal to zero and less than <span style="font-style: italic;" class="mycode_i">or equal to</span> the size would fix my issue, but would fail to meet project specifications. Is there something I'm missing here or is the spec not correct?<br />
+Thanks.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: DA failed tests due to getDA assertion</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=106">humblebeast</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+The user shouldn't be trying to get anything in an empty array
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: DA failed tests due to getDA assertion</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-20-2018</strong>
+<br />
+<br />
+^ correct.<br />
+<br />
+So likely your size is not being kept up to date correctly.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

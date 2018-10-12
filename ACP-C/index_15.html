@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:16 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Scope</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_14.html">
+  <img border="0" alt="Input and Output" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_16.html">
+  <img border="0" alt="Loops" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Scope</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Scope</h1>
+<p>A <i>scope</i> holds the current set of variables and their values.
+In C, there is something called the <i>global scope</i>.
+The global scope holds all the values of the built-in variables
+and function names (remember, a function name is  a pseudopointer,
+similar to a variable).
+</p>
+<p>When you analyze a C program, either by compiling and running it
+or by reading it,
+you start out in the global scope.
+As you come across definitions of variables<sup><a href="index_26.html#footnote-28">28</a></sup> and functions, their names and their values are added
+to the global scope.
+</p>
+<p>Both variables and functions can be defined in the global scope.
+Processing of the following code adds the names <i>x</i> and <i>main</i>
+to the global scope:
+</p>
+<pre>
+    #include &lt;stdio.h&gt;
+
+    //this is the global scope
+
+    int x = 3;                  //x is bound to 3
+
+    int
+    main(int argc,char **argv)  //main is bound to a function object
+        {
+        ...
+        return 0;
+        }
+</pre>
+<p>This interaction adds two names to the global scope:
+</p>
+<pre>
+    //this is the global scope
+    int y = 4;
+
+    int
+    negate(int z)
+        {
+        return -z;
+        }
+</pre>
+<p>What are the two names?
+Highlight the following line to see the answer:
+</p>
+<div class="quote">
+<i>The two names added to the global scope are</i> <font color="#ffffff"> y and negate.</font>
+</div>
+<p>Indeed, since functions are defined in the global scope,
+and the name <i>negate</i>
+is being bound to a function object, it becomes clear that
+this binding is occurring in the
+global scope, just like <i>y</i> being bound to 4.
+</p>
+<p>Scopes in C can be identified by <i>block nesting level</i>.
+The global scope holds all variables defined with an nesting
+level of zero or, in other words, not within a block.
+Recall that when functions are defined, the body of the function
+is contained in a block.
+Thus, the function body is code that is nested within the global
+scope and constitutes
+a new scope, with a nesting level of one.
+We can identify to which scope a variable belongs by
+looking at the pattern of nesting.
+In particular,
+we label variables as 
+either <i>local</i> or <i>non-local</i>
+with respect to a particular scope.
+Moreover, we can label non-local variables as <i>in scope</i> or
+<i>out of scope</i>.
+</p>
+
+<h2><a name="id1">In Scope or Out</a></h2><p>
+The nesting pattern of a program can tells us where
+variables are visible (in scope) and where they are
+not (out of scope).
+We begin by first learning to recognizing the scopes in which variables
+are defined.
+</p>
+
+<h3><a name="id2">The Local Variable Pattern</a></h3><p>
+All variables <i>defined</i> at a particular
+nesting level or scope are considered
+<i>local</i> to that nesting level or scope.
+In C, if one defines a variable, that variable
+must be local to the current scope.
+An exception are the formal parameters of a function definition;
+these
+belong to the scope that is identified with
+the function body. 
+So within a function body, the local variables are the formal
+parameters plus any variables defined immediately within the function body.
+</p>
+<p>Let's look at an example.
+Note,
+you do not need to completely understand the examples presented in
+the rest of the chapter in order 
+to identify whether names are local and non-local.
+</p>
+<pre>
+    //this is the global scope
+    int
+    theta(int a,int b)
+        {
+        //this is a non-global scope
+        int c,d;
+        c = a + b;
+        c = kappa(c) + X;
+        d = c * c + a;
+        return d * b;
+        }
+</pre>
+<p>In this example, we can immediately say the 
+formal parameters,
+<i>a</i> and <i>b</i>,
+are local with respect to the scope of the body of function <i>theta</i>.
+Furthermore, variables
+<i>c</i> and <i>d</i>
+are defined in the function body
+so they are local as well,
+with respect to the scope of the body of function <i>theta</i>.
+It is rather wordy to say "local with respect to the
+scope of the body of the function <i>theta</i>", so Computer Scientists
+will almost always shorten this to "local with respect to <i>theta</i>"
+or just "local"
+if it is clear the discussion is about a particular function or scope.
+We will use this shortened phrasing from here on out.
+Thus <i>a</i>, <i>b</i>, <i>c</i>, and <i>d</i> are local with respect to <i>theta</i>.
+The function name <i>theta</i> is local to the global scope since the function
+<i>theta</i> is defined in the global scope.
+</p>
+
+<h3><a name="id3">The Non-local Variable Pattern</a></h3><p>
+In the previous section, we determined the local
+variables of the function.
+By the process 
+of elimination, that means the names
+<i>kappa</i>, and <i>X</i> are non-local.
+The name of function itself is non-local with respect
+to its body. The name <i>theta</i>, if it is referenced with the body of
+<i>theta</i> is non-local as well.
+</p>
+<p><i>In a function body, any variable that is not a formal parameter
+and is also not defined immediately within the function body must be non-local.</i>
+</p>
+
+<h3><a name="id4">The Visible Variable Pattern</a></h3><p>
+A variable is accessible or <i>visible</i> with respect to
+a particular scope if it is <i>in scope</i>.
+A variable is in scope if it is local or
+was defined in a scope that
+<i>encloses</i> the particular scope.
+Some scope
+<i>A</i> encloses some other scope <i>B</i>
+if, by moving (perhaps repeatedly) leftward from
+scope B, scope A can be reached.
+Here is example:
+</p>
+<pre>
+    int Z = 5;
+
+    int
+    iota(int x)
+       {
+       return x + Z;
+       }
+</pre>
+<p>The variable <i>Z</i> is local with respect to the global scope
+and is non-local with respect to <i>iota</i>. However, we can
+move leftward from the scope of <i>iota</i> one nesting level and
+reach the global scope where <i>Z</i> is defined.
+Therefore, the global scope encloses the scope of <i>iota</i> and
+thus <i>Z</i> is visible from <i>iota</i> and its value 
+can be accessed within <i>iota</i>..
+Indeed, the global scope encloses all other scopes and this
+is why the built-in functions are accessible at any nesting
+level.
+</p>
+<p>Here is another example that has two enclosing scopes:
+</p>
+<pre>
+    int X = 3;
+
+    int
+    phi(int a)
+        {
+        int Y = a - 1;
+        if (isEven(a))
+            {
+            int b = X + 1;
+            return a * b;
+            }
+        else
+            {
+            return X * Y;
+            }
+        }
+</pre>
+<p>The global scope locally defines two names, <i>X</i> and <i>phi</i>.
+If we look at function <i>phi</i>, we see that it has two local
+variables, the formal parameter <i>a</i> and the locally defined
+variable <i>Y</i>. In the <i>if</i> statement, we see that the true
+branch is a block. This block is a new nesting level and
+therefore a new scope.
+This new scope has the locally defined variable <i>b</i>,
+but references the non-local variable <i>X</i>.
+The false branch is also a block and a new scope, but
+it has no local variables.
+However, it references the non-local variables
+<i>X</i> and <i>Y</i>. 
+</p>
+<p>Are all these non-local variables accessible?
+Consider the first non-local reference to <i>X</i>.
+Moving leftward from the true branch of the <i>if</i>,
+we reach the body of <i>phi</i>,
+so the scope of <i>phi</i> encloses the scope of the true branch.
+Moving leftward again, we reach the global scope, where <i>X</i> is
+defined. Therefore, the global scope encloses (transitively) the
+scope of the true branch, so X is visible and accessible within
+the true branch.
+For the same reasons, both <i>X</i> and <i>Y</i> are visible and
+accessible within the false branch of the <i>if</i>.
+</p>
+<p>In the next section, we explore how a variable can be
+inaccessible.
+</p>
+
+<h3><a name="id5">The Tinted Windows Pattern</a></h3><p>
+The scope of local variables is like a car with tinted
+windows, with the variables defined within riding in
+the back seat.
+If you are outside the scope, you cannot
+peer through the car windows  and see those variables.
+You might try and buy some x-ray glasses, but they
+probably wouldn't work.
+Here is an example:
+</p>
+<pre>
+    int
+    alpha(int a)
+        {
+        if (isEven(a))
+            {
+            int b = a + 1;
+            printf("%d\n",a * b);
+            }
+        printf("%d\n",b * 2);
+        }
+</pre>
+<p>The print statement at the end of the function causes an error:
+</p>
+<pre>
+    error: 'b' undeclared (first use in this function)
+         printf("%d\n",b * 2);
+                       ^
+</pre>
+<p>The rule for figuring out which variables are in scope and
+which are not is:
+<i>you</i> <b>cannot</b> <i>see into an enclosed scope</i>.
+In the example, the scope of the <i>if</i> is enclosed by the
+scope of <i>alpha</i>. Therefore, in <i>alpha</i>, any references to variables
+local to the <i>if</i> block are invalid.
+Contrast this with the non-local pattern:
+In the <i>if</i> block, any references to variables 
+local to <i>alpha</i> (and the global scope, by transitivity)
+are valid.
+</p>
+
+<h3><a name="id6">Tinted Windows with Parallel Scopes</a></h3><p>
+The tinted windows pattern also applies to parallel scopes.
+Consider this code:
+</p>
+<pre>
+    int
+    gamma(int a)
+        {
+        return a + delta(a);
+        }
+
+    int
+    delta(int x)
+        {
+        // starting point 1
+        printf("the value of a is %d\n",a); //x-ray!
+        return x + 1;
+        }
+</pre>
+<p>Note that the global scope encloses both the scope of <i>gamma</i> and
+the scope of <i>delta</i>. However, the scope of <i>gamma</i> does
+not enclose the scope of <i>delta</i>. Neither does
+the scope of <i>delta</i> enclose the scope of <i>gamma</i>.
+</p>
+<p>One of these functions references a variable that is not in scope.
+Can you guess which one?
+Highlight the following line to see the answer:
+</p>
+<div class="quote">
+<i>The function</i> <font color="#ffffff"> delta</font> <i>references a variable not in scope.</i>
+</div>
+<p>Let's see why by first examining <i>gamma</i> to see whether or
+not its non-local references are in scope.
+The only local variable of function <i>gamma</i> is
+<i>a</i>. The only referenced non-local is <i>delta</i>.
+Moving leftward from the body of <i>gamma</i>, we reach the
+global scope where where both <i>gamma</i> and <i>delta</i> are defined.
+Therefore, <i>delta</i>
+is visible with respect to <i>gamma</i> since it is defined in a scope
+(the global scope) that encloses <i>gamma</i>.
+</p>
+<p>Now to investigate <i>delta</i>. The only local variable of
+<i>delta</i> is <i>x</i>
+and the only non-local that <i>delta</i> references is <i>a</i>.
+Moving outward to the global scope, we see that there is
+no variable <i>a</i> defined there,
+therefore the variable <i>a</i> is not in scope with
+respect to <i>delta</i>.
+</p>
+<p>When we actually run the code,
+we get an error similar to the following when running this program:
+</p>
+<pre>
+    error: 'a' undeclared (first use in this function)
+        printf("the value of a is %d\n",a); //x-ray!
+                                        ^
+</pre>
+<p>`
+The lesson to be learned here is
+that we cannot see into
+the local scope of the body of function <i>gamma</i>,
+<i>even if we are at a similar nesting level</i>.
+Nesting level doesn't matter. We can only see variables
+in our own scope and those in <i>enclosing</i> scopes.
+All other variables cannot be seen.
+</p>
+<p>Therefore, if you ever see a variable-not-defined error,
+you either have spelled the variable name wrong 
+or you are trying to use x-ray vision
+to see somewhere you can't. 
+</p>
+
+<h2><a name="id7">Alternate terminology</a></h2><p>
+Sometimes, enclosed scopes are referred to as <i>inner</i> scopes while
+enclosing scopes are referred to as <i>outer</i> scopes. In addition,
+both locals and any non-locals found in enclosing scopes are considered
+<i>accessible</i> or <i>visible</i> or <i>in scope</i>,
+while non-locals that are not
+found in an enclosing scope are considered <i>inaccessible</i>, or 
+<i>not visible</i> or <i>out of scope</i>.
+We will use all these terms in the remainder of the text book.
+</p>
+
+<h2><a name="id8">Three Scope Rules</a></h2><p>
+Here are three simple rules you can use to help you
+figure out the scope of a particular variable:
+</p>
+<ul><li>Formal parameters go in
+</li><li>The function name goes out 
+</li><li>You can see out but you can't see in (tinted windows).
+</li></ul>
+<p>The first rule is shorthand for the fact that formal parameters
+belong to the scope of the function body. Since the function body
+is "inside" the function definition, we can say the formal parameters
+go in.
+</p>
+<p>The second rule reminds us that function names are defined
+in the global scope, so they go out with respect to
+the function body.
+</p>
+<p>The third rule tells us all the variables that belong to 
+ever-enclosing scopes are accessible and therefore
+can be referenced by the innermost scope. The opposite is
+not true. A variable in an enclosed scope can not be referenced
+by an enclosing scope. If you forget the directions of this
+rule, think of tinted windows. You can see out of a tinted
+window, but you can't see in.
+</p>
+
+<h2><a name="id9">Shadowing</a></h2><p>
+Consider the rule that
+says that references to variables or names in an outer scope
+are visible.
+There is one exception to that rule;
+consider the following code fragment:
+</p>
+<pre>
+    int a = 4;
+
+    void
+    epsilon(int a)
+        {
+        printf("a is %d\n",a);
+        return;
+        }
+    ...
+    epsilon(13);
+    ...
+</pre>
+<p>In this example, the global scope defines two names,
+<i>a</i> and <i>epsilon</i>.
+The scope of the body of <i>epsilon</i> defines the name <i>a</i>.
+When <i>epsilon</i> is called with some argument (in the example,
+13), what is printed for the value of <i>a</i>, the value passed
+in and bound to the formal parameter <i>a</i> or the value of the
+global variable <i>a</i>?
+</p>
+<p>If we write a program around this code fragment, we see the
+following output:
+</p>
+<pre>
+    a is 13
+</pre>
+<p>Clearly, the C compiler preferred the formal parameter over
+the global version. The reason is, when resolving the
+value of a variable, the most local scope is searched for
+a binding for that name. Should the local scope not hold
+a binding, the immediate enclosing scope is searched.
+If no binding is found there, the enclosing scope of <i>that</i>
+scope is search and so on, until the global scope is reached.
+Should no binding be found in the global scope, an undefined variable error
+is generated by the compiler.
+</p>
+<p>In the example, a binding for variable <i>a</i> is found in the local scope
+and the value found there is retrieved for the print statement.
+As a consequence, it is impossible to retrieve the value of the
+global binding for <i>a</i>. It is said that the formal parameter
+<i>shadows</i> the global variable. Being in the shadow of the formal
+parameter means it cannot be seen.
+In general, when a more local variable has the same name as a 
+less local variable
+that is also in scope, the more local variable 
+shadows the less local version.
+</p>
+<p>In the example,
+if you wished to reference both the global <i>a</i> and the formal parameter
+<i>a</i>, you would need to rename the formal parameter.
+</p>
+
+<h2><a name="id10">Multiple definitions and declarations</a></h2><p>
+C does not allow multiple definitions having the same name. Thus, one
+cannot have two (or more) functions named the same or two variables in
+the same scope with the same name.
+On the other hand, one
+can have multiple declarations. For example, it is perfectly legal
+to repeat a function prototype/signature/declaration:
+</p>
+<pre>
+    char *f(int,double);
+    char *f(int,double); //duplicative, but OK
+</pre>
+<p>In contrast, the compiler complains about:
+</p>
+<pre>
+    int square(int x) { return x * x; }
+    int square(int x) { return x * x; } //duplicative and illegal
+</pre>
+<p>Variables work the same way, except there is a slight wrinkle in C.
+In the global scope, the following is legal in C:
+</p>
+<pre>
+    int x;
+    int x; //duplicative, but OK in the global scope
+</pre>
+<p>The C compiler interprets one of the lines as a declaration and
+the other as a definition. However, if the above lines were found in
+a non-global scope, say a function body, the compiler would complain
+about multiple definitions:
+</p>
+<pre>
+    int almostSquare(int y)
+        {
+        int x;
+        int x;        //duplicative and illegal
+        x = y - 1;
+        return x * y;
+        }
+</pre>
+<p>Within a non-global scope, both lines are considered definitions, thus
+violating the multiple definition rule for C.
+One can avoid the multiple definition error in a non global scope by
+explicitly stating that one of the lines is a declaration. This is
+accomplished with the <code>extern</code> keyword:
+</p>
+<pre>
+    int almostSquare(int y)
+        {
+        int x;
+        extern int x;        //OK
+        x = y - 1;
+        return x * y;
+        }
+</pre>
+<p>Initializing a variable forces the compiler to treat a potential declaration
+as a definition. In the global scope:
+</p>
+<pre>
+   int x = 13;   //definition
+   int x;        //declaration
+</pre>
+<p>the first line must be interpreted as a definition as the variable is
+initialized. To avoid a multiply defined variable error, the compiler
+interprets the second line as a declaration. However, the following
+is illegal in all scopes:
+</p>
+<pre>
+    int x = 13; //definition
+    int x = 13; //also a definition, therefore illegal
+</pre>
+<p>Do not tag a variable as <code>extern</code> and initialize it at the same time:
+</p>
+<pre>
+    extern int x = 100; //don't ever do this
+</pre>
+<p>If you do this, you are telling the compiler this is only a declaration,
+not a definition
+(via <code>extern</code>), but at the same time, you are telling the compiler this is
+a definition (via the initialization). 
+</p>
+<p>You might be thinking, this is really a non-issue since nobody in
+his or her right mind would define/declare the same variable
+in the same scope. Such a situation, it turns out, happens quite
+commonly. Suppose a file named <i>c.h</i> contains the following line:
+</p>
+<pre>
+    int x;
+</pre>
+<p>and both module <i>a.c</i> and <i>b.c</i> include <i>c.h</i>.
+Then <i>a.c</i> and <i>b.c</i> are compiled
+together to make the executable:
+</p>
+<pre>
+    gcc -Wall a.c b.c
+</pre>
+<p>To the compiler, definitions in both a.c and b.c are all in the global
+scope, so the compiler sees two declarations of <i>x</i>, since <i>c.h</i> is
+included in both. The compiler turns one of those declarations into
+a definition and everything works.
+However, if the line in <i>c.h</i> is changed to:
+</p>
+<pre>
+    int x = 100;
+</pre>
+<p>then the compiler, when compiling <i>a.c</i> and <i>b.c</i> together, sees
+two definitions of <i>x</i> and emits a compiler error.
+</p>
+<p>To sum all this up in two simple rules, we have:
+</p>
+<ol><li>Never initialize a variable in a <i>.h</i> file
+</li><li>If a global variable is used across modules, only
+initialize the variable in one module.
+</li></ol>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_14.html">
+  <img border="0" alt="Input and Output" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_16.html">
+  <img border="0" alt="Loops" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Scope</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

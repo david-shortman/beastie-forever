@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>church</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Programming Languages</span>
+<br/>
+<br/>
+The Lambda Calculus and Church Numerals
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="church.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Computability
+<br/>
+</h2><!-- section ENDED -->
+
+It is thought that a Turing machine is capable of computing
+anything that is computable. An alternative to Turing machines,
+derived at roughly the same time, was Church's <i>lambda calculus</i>.
+The lambda calculus is easy to describe syntactically:
+
+<pre>
+    expression : IDENTIFIER
+               | (lambda (IDENTIFIER) expression)
+               | (expression expression)
+</pre>
+
+It is also easy to describe semantically. The first alternative form
+of an expression, 
+<code>IDENTIFIER</code>, is just a symbol. The second alternative
+corresponds to a function definition, while the third alternative
+corresponds to a function call. These simple rules describe a programming
+language that is thought to be capable, like a Turing machine, of computing
+anything that is computable.
+<br/>
+<br/>
+From the calculus, we can see that functions can only take one
+argument and that the body of a function is composed of a single
+expression. A striking feature of the calculus is the lack of
+numbers. Numbers seem rather critical to many computations, but
+have no fear. Church came up with a clever way to represent numbers
+(integers) using the lambda calculus.
+<br/>
+<!-- section -->
+<h2> Church numerals
+<br/>
+</h2><!-- section ENDED -->
+
+Here are the first three Church numerals, that represent the integers
+<i>zero</i>, <i>one</i>, and <i>two</i>:
+
+<pre>
+    (lambda (f) (lambda (x) x))
+    (lambda (f) (lambda (x) (f x)))
+    (lambda (f) (lambda (x) (f (f x))))
+</pre>
+
+We can see that these numerals take two arguments, <i>f</i> and <i>x</i>,
+with the first one <i>f</i> being curried.
+The argument <i>f</i> is a function, while the argument <i>x</i> is a suitable
+argument to <i>f</i> itself. We can also see that <i>zero</i>, the first
+expression, calls the function <i>f</i> zero times, while <i>one</i> calls
+<i>f</i> once and <i>two</i> calls it twice, feeding the result of the
+first call into the second. By extrapolation, we might guess that
+the Church numeral <i>three</i> would be equivalent to the expression:
+
+<pre>
+    (lambda (f) (lambda (x) (f (f (f x)))))
+</pre>
+
+and we would be right. If we think of <i>x</i> as some base value and
+<i>f</i> as an <i>incrementing</i> function, then we can interpret the
+Church numeral <i>three</i> as incrementing some base value three times.
+We call the successive applications of the incrementor to the base value a
+<i>rendering</i>. We can actually see a rendering of a Church numeral
+in action.
+Suppose we
+define both <i>three</i> and an incrementing function in
+Scheme:
+
+<pre>
+    (define three (lambda (f) (lambda (x) (f (f (f x))))))
+    (define (inc z) (+ z 1))
+</pre>
+
+Using an integer 0 as our base value, we can force a rendering
+of <i>three</i> to show that it is indeed
+a representation of the integer 3. This expression:
+
+<pre>
+    (inspect ((three inc) 0))
+</pre>
+
+prints out:
+
+<pre>
+    ((three inc) 0) is 3
+</pre>
+
+By calling any Church numeral (it is a function!) with an incrementor
+and a base value, we force a rendering.
+<br/>
+<!-- section -->
+<h2> Manipulating Church numerals
+<br/>
+</h2><!-- section ENDED -->
+
+Using the Scheme, we can define lambda calculus-like
+mathematical functions that manipulate
+Church numerals. Here is the successor function:
+
+<pre>
+    (define succ 
+        (lambda (n)
+            (lambda (f)
+                (lambda (x)
+                    (f ((n f) x))          ; ((n f) x) is a rendering of n
+                    )
+                )
+            )
+        )
+</pre>
+
+We can test our successor function by using the above-defined incrementor
+function and a base value of integer 0. The expression:
+
+<pre>
+    (inspect (((succ three) inc) 0))
+</pre>
+
+prints out:
+
+<pre>
+    (((succ three) inc) 0) is 4
+</pre>
+
+as expected. The successor function works because we apply the incrementor
+one more time to the rendering of the original number.
+<br/>
+<br/>
+We can also add two Church numerals:
+
+<pre>
+    (define add
+        (lambda (a)
+            (lambda (b)
+                (lambda (f)
+                    (lambda (x)
+                        ((a f) ((b f) x))    ; ((b f) x) is a rendering of b
+                        )
+                    )
+                )
+            )
+        )
+</pre>
+
+Here, we render the addend <i>b</i> and use that rendering as the base value
+for the augend <i>a</i>. Thus, in a rendering of the sum, the original base
+value gets incremented <i>b</i> times and then is further incremented <i>a</i>
+times, for a total of <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>a</mi>	<mo>+</mo>	<mi>b</mi></mrow></math> increments over the base value.
+<br/>
+<br/>
+Church numerals repeatedly apply a function to a base value. We can
+use this fact to run <i>any</i> single-argument function repeatedly
+on <i>any</i> value. This is what a multiplication function does:
+
+<pre>
+
+    (define mul
+        (lambda (a)
+            (lambda (b)
+                (lambda (f)
+                    (lambda (x)
+                        ((((a (add b)) zero) f) x)     ; ((a (add b)) zero) renders a Church numeral
+                        )
+                    )
+                )
+            )
+        )
+</pre>
+
+Here, we render <i>a</i> with a curried version of <i>add</i> on the Church
+numeral <i>zero</i>. The <i>add</i> function normally takes two arguments, but
+by currying the first argument, we turn in into a one argument
+function. If <i>a</i> was the Church numeral <i>one</i>, we would
+apply the curried <i>add</i> function once to <i>zero</i>, yielding:
+
+<pre>
+    ((add b) zero)
+</pre>
+
+which would give us just <i>b</i>. If <i>a</i> was <i>two</i>, we would apply
+the curried <i>add</i> function twice:
+
+<pre>
+    ((add b) ((add b) zero))
+</pre>
+
+If <i>a</i> were <i>three</i>, we'd get:
+
+<pre>
+    ((add b) ((add b) ((add b) zero)))
+</pre>
+
+Notice in each of these cases, we add in <i>b</i>, starting with <i>zero</i>,
+<i>a</i> number of times, yielding the expected product. Once all the
+repeated addition is completed, we render the resulting Church numeral
+with the incrementor <i>f</i> and base value <i>x</i>.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

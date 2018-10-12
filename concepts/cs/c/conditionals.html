@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Concept Inventory</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Computer Science Fundamentals
+<br/>
+<span class="smaller">(C Language Version)</span>
+<br/>
+<br/>
+<span class="bigger">Boolean Expressions and Conditionals</span>
+<br/>
+<br/>
+
+</center>
+</div>
+
+
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>if statements</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 1 1 -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Consider this code:
+
+<pre>
+    if (P)
+        printf(&quot;A\n&quot;);
+    else
+        printf(&quot;B\n&quot;);
+</pre>
+
+Mark the true statement.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>Either 
+<code>A</code> or 
+<code>B</code> will be printed, but not both
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> It is possible that neither 
+<code>A</code> nor 
+<code>B</code> is printed
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> It is possible that 
+<code>A</code> and 
+<code>B</code> can both be printed
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Consider this code:
+
+<pre>
+    if (P)
+        printf(&quot;A\n&quot;);
+    if (Q)
+        printf(&quot;B\n&quot;);
+</pre>
+
+Mark the false statement.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> It is possible that neither 
+<code>A</code> nor 
+<code>B</code> is printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>Only one of 
+<code>A</code> and 
+<code>B</code> can be printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> It is possible that only 
+<code>A</code> is printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> It is possible that 
+<code>A</code> and 
+<code>B</code> can both be printed
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 9 questions in this selection -->
+<!-- 3 items needed -->
+<!-- selection array: 1 1 1 0 0 0 0 0 0 -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Consider the following code:
+
+<pre>
+    if (P)
+        printf(&quot;A\n&quot;);
+    else if (Q) 
+        printf(&quot;B\n&quot;);
+    else
+        printf(&quot;C\n&quot;);
+</pre>
+
+Mark the true statement.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is possible that 
+<code>A</code> and 
+<code>B</code> can both be printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>it is possible that 
+<code>C</code>, but not 
+<code>B</code>, is printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is possible that 
+<code>B</code> and 
+<code>C</code> can both be printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is possible that no values are printed
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is possible that 
+<code>A</code>, 
+<code>B</code>, and 
+<code>C</code> can all be printed
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Consider the following code:
+
+<pre>
+    if (P)
+        printf(&quot;A\n&quot;);
+    if (Q) 
+        printf(&quot;B\n&quot;);
+    else
+        printf(&quot;C\n&quot;);
+</pre>
+
+Mark the true statement.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is possible that 
+<code>A</code>, 
+<code>B</code>, and 
+<code>C</code> can all be printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is possible that 
+<code>B</code> and 
+<code>C</code> can both be printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>it is possible that 
+<code>A</code> and 
+<code>B</code> can both be printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is possible that no values are printed
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ Consider the following code:
+
+<pre>
+    if (P)
+        printf(&quot;A\n&quot;);
+    else if (Q) 
+        printf(&quot;B\n&quot;);
+    else
+        printf(&quot;C\n&quot;);
+</pre>
+
+Mark the true statement.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> two or three values will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> one, two, or three values will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> one or two values will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>one value will be printed in total
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Consider the following code:
+
+<pre>
+    if (P)
+        printf(&quot;A\n&quot;);
+    if (Q) 
+        printf(&quot;B\n&quot;);
+    else
+        printf(&quot;C\n&quot;);
+</pre>
+
+Mark the true statement.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>one or two values will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> zero or two values will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> one, two, or three values will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> two or three values will be printed in total
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Consider the following code:
+
+<pre>
+    if (P)
+        printf(&quot;A\n&quot;);
+    if (Q) 
+        printf(&quot;B\n&quot;);
+    if (R)
+        printf(&quot;C\n&quot;);
+</pre>
+
+Mark the true statement.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> one, two, or three values will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>zero, one, two, or three values will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> zero or three values will be printed in total
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> one or two values will be printed in total
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ Consider the following code:
+
+<pre>
+    if (P)
+        printf(&quot;A\n&quot;);
+    else if (Q) 
+        printf(&quot;B\n&quot;);
+    else if (R)
+        printf(&quot;C\n&quot;);
+</pre>
+
+Mark the true statement.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> one, two, or three values will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>zero values or one value will be printed in total
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> zero, one, two, or three values will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> one or two values will be printed in total
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ Consider the following code:
+
+<pre>
+    if (P)
+        printf(&quot;A\n&quot;);
+    else if (Q) 
+        printf(&quot;B\n&quot;);
+    else if (R)
+        printf(&quot;C\n&quot;);
+</pre>
+
+Mark the false statement.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>exactly one value will be printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is possible that 
+<code>C</code> is printed if 
+<code>A</code> and 
+<code>B</code> are not
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is possible that no values will be printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> it is possible that only one value will be printed
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ Consider the following code:
+
+<pre>
+    if (P)
+        {
+        if (Q) 
+            printf(&quot;A\n&quot;);
+        }
+</pre>
+
+Mark the true statement.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> no values will be printed in total if P is true
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>zero values or one value will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> one value will be printed in total if P is true
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> one value will be printed in total if P is false
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ Consider the following code:
+
+<pre>
+    if (P)
+        {
+        if (Q) 
+            printf(&quot;A\n&quot;);
+        else
+            printf(&quot;B\n&quot;);
+        }
+</pre>
+
+Mark the true statement.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> one value will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>zero values or one value will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> zero or two values will be printed in total
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> one or two values will be printed in total
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ What is the possible output of this code fragment after
+the input statement is performed?
+
+<pre>
+    x = readInt(stdin);
+    if (x % 2 == 0)
+        printf(&quot;even&quot;);
+    printf(&quot;done&quot;);
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>even </code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>done</code> then 
+<code>even</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>even</code> then 
+<code>done</code> or just 
+<code>done</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> nothing is printed
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ What is the possible output of the 
+<code>if</code> statement?
+
+<pre>
+    x = readInt(stdin);
+    if (x % 2 == 0)
+        printf(&quot;even&quot;);
+    else
+        printf(&quot;odd&quot;);
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>even </code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> both 
+<code>even</code> and 
+<code>odd</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>even</code> or 
+<code>odd</code>, but not both
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>odd </code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ What is <i>not</i> a possible output of the 
+<code>if</code> statements?
+
+<pre>
+    x = readInt(stdin);
+    if (x &lt; 100)
+        printf(&quot;smaller&quot;);
+    if (x &lt; 1000)
+        printf(&quot;bigger&quot;);
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>bigger</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> nothing is printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> both 
+<code>smaller</code> and 
+<code>bigger</code> are printed (in that order)
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>smaller</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

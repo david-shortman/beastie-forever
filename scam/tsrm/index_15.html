@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Sep  5 20:07:22 2016 -->
+<head>
+<title>The Scam Reference Manual -- Encapsulation, Inheritance and Polymorphism</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_14.html">
+  <img border="0" alt="Objects" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_16.html">
+  <img border="0" alt="Parameter Passing" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Encapsulation, Inheritance and Polymorphism</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Encapsulation, Inheritance and Polymorphism</h1>
+
+<h2><a name="id1">A formal view of object-orientation</a></h2><p>
+Scam is a fully-featured object-oriented language. What does
+that mean exactly? Well, to begin with, a programming language
+is considered object-oriented if it has these
+three features:
+</p>
+<ol><li>encapsulation
+</li><li>inheritance
+</li><li>polymorphism
+</li></ol>
+<p>Encapsulation in this sense means that a programmer
+can bundle <i>data</i> and <i>methods</i> into a single entity.
+We've seen that a Scam function can
+have local variables and local functions.
+So, if we consider local variables (including the formal
+parameters) as data and local
+functions as methods, we see that Scam can encapsulate
+in the object-oriented sense.
+</p>
+<p>Inheritance is the ability to use the data and methods
+of one kind of object by another as if they were defined
+in the other object to begin with.
+</p>
+<p>Polymorphism means that an object that inherits appears
+to be both kinds of object, the kind of object it is
+itself and the kind of object from which it inherits.
+</p>
+
+<h2><a name="id2">Simple encapsulation</a></h2><p>
+The previous chapter was concerned with encapsulation;
+let us review.
+</p>
+<p>A notion that simplifies encapsulation in Scam is to use
+environments themselves as objects. Since an environment can be thought
+of as a table of the variable names currently in scope, along with their
+values, and an object can be thought of as a table of instance variables
+and method names, along with their values, the association of these two
+entities is not unreasonable.
+</p>
+<p>Thus, to create an object, we need only cause a new scope to come into
+being. A convenient way to do this is to make a function call. The call
+causes a new environment to be created, in which the arguments to the
+call are bound to the formal parameters and under which the function body
+is evaluated. Our function need only return a pointer to the current
+execution environment to create an object.  Under such a scenario, we
+can view the the function definition as a class definition with the
+formal parameters serving as instance variables and locally defined
+functions serving as instance methods.  
+</p>
+<p>Scam 
+allows the current execution environment
+to be referenced and returned.
+Here is an example of object creation in Scam:
+</p>
+<pre>
+    (define (bundle a b)
+        (define (total base) (+ base a b))
+        (define (toString) (string+ "a:" a ", b:" b))
+        this    ;return the execution environment
+        )
+
+    (define obj (bundle 3 4))
+
+    (inspect ((obj 'display)))  ;call the display function
+    (inspect ((obj 'total) 0))  ;call the total function
+</pre>
+<p>The variable <i>this</i> is always bound to the current execution
+enironment or scope. Since, in Scam, objects and environments the same,
+this can be roughly thought of as a self reference to an object. The
+the object can be called as if it were a function as long as the arguments
+in the call resolve to field names.
+The <i>inspect</i> function prints the unevaluated argument followed by
+its evaluation.
+</p>
+<p>Running the above program yields the following output:
+</p>
+<pre>
+    ((obj 'display)) is a:3, b:4
+    ((obj 'total) 0) is 7
+</pre>
+<p>It can be seen from the code and the output that encapsulation via this
+method produces objects that can be manipulated in an intuitive manner.
+</p>
+<p>It should be stated that encapsulation is considered merely a device for
+holding related data together; whether the capsule is transparent or
+not is not considered important for the purposes of this paper. Thus,
+in the above example, all components are publicly visible. 
+</p>
+
+<h2><a name="id3">Three common types of inheritance</a></h2><p>
+Any specification of inheritance semantics must be (relatively)
+consistent with the afore-mentioned intuition about inheritance.
+With regards to inheritance behavior pragmatics, there seems to be three
+forms of inheritance behavior that make up this intuition.  Taking the
+names given by Bertrand Meyer in "The Many Faces of Inheritance: 
+A Taxonomy of Taxonomies",
+the three are <i>extension</i>,
+<i>reification</i>, and <i>variation</i>.  In extension inheritance,
+the heir simply adds features in addition to the features of the
+ancestor; the heir is indistinguishable from the ancestor, modulo the
+original features.  In reification inheritance, the heir completes,
+at least partially, an incompletely specified ancestor.  An example of
+reification inheritance is the idea of an abstract base class in Java.
+In variation inheritance, the heir adds no new features but overrides
+some of the ancestor's features. Unlike extension inheritance, the heir
+is distinguishable from the ancestor, modulo the original features. The
+three inheritance types are not mutually exclusive; as a practical matter,
+all three types of inheritance could be exhibited in a single instance
+of general inheritance.  Any definition of inheritance should capture
+the intent of these forms.
+As it turns out, it is very easy to implement these three forms
+of inheritance in Scam.
+</p>
+<p>Scam uses a novel approach to inheritance. Other languages 
+processors pass
+a pointer to the object in question to all object methods.
+This pointer is known as a self-reference. This passing of
+a self-reference may be hidden from the programmer or may
+be made explicit. In any case, Scam displenses with self-references
+and implements inheritance through the manipulation of scope.
+</p>
+
+<h3><a name="id4">Extension inheritance</a></h3><p>
+In order to provide inheritance by manipulating scope, it must be
+possible to both get and set the static scope, at runtime, of objects
+and function closures.  There are two functions that will help us
+perform those tasks. They are
+<i>getEnclosingScope</i> and <i>setEnclosingScope</i> and are defined
+in the supplemental library, <i>inherit.lib</i>.
+While at first
+glance it may seem odd to change a static scope at runtime,
+these functions translate into getting and setting
+the<i>&#95;&#95;context</i> pointer of an environment (or closure).
+</p>
+<p>Recall that in extension inheritance, the subclass strictly adds
+new features to a superclass and that a subclass object and a
+superclass object are indistinguishable, behavior-wise, with regards
+to the features provided by the superclass.  
+Consider two objects, <i>child</i> and <i>parent</i>. The extension
+inheritance of <i>child</i> from <i>parent</i> can be implemented with
+the following pseudocode:
+</p>
+<pre>
+    setEnclosingScope(parent,getEnclosingScope(child));
+    setEnclosingScope(child,parent);
+</pre>
+<p>As a concrete example, consider the following Scam program:
+</p>
+<pre>
+    (include "inherit.lib")
+
+    (define (c) "happy")
+    (define (parent)
+        (define (b) "slap")
+        this
+        )
+    (define (child)
+        (define (a) "jacks")
+        (define temp (parent))
+        (setEnclosingScope temp (getEnclosingScope this))
+        (setEnclosingScope this temp)
+        this
+        )
+
+    (define obj (child))
+
+    (inspect ((obj 'b)))
+    (inspect ((obj 'a)))
+    (inspect ((obj 'c)))
+</pre>
+<p>Running this program yields the following output:
+</p>
+<pre>
+    ((obj 'a)) is jacks
+    ((obj 'b)) is slap
+    ((obj 'c)) is happy
+</pre>
+<p>The call to <i>a</i> immediately finds the child's method.  The call to
+<i>b</i> results in a search of the child. Failing to find a binding
+for <i>b</i> in <i>child</i>, the enclosing scope of <i>child</i> is
+searched. Since the enclosing scope of <i>child</i> has been reset to <i>parent</i>, <i>parent</i> is searched for <i>b</i> and a binding is found.
+In the final call to <i>c</i>, a binding is not found in either the
+child or the parent, so the enclosing scope of <i>parent</i> is searched.
+That has been reset to <i>child</i>'s enclosing scope. There a binding
+is found. So even if the parent object is created in a scope different
+from the child, the correct behavior ensues.
+</p>
+<p>For an arbitrarily long inheritance chain, <i>p1</i> inherits from <i>p2</i>, which inherits from <i>p3</i> and so on, the most distant ancestor
+of the child object receives the child's enclosing scope:
+</p>
+<pre>
+    setEnclosingScope(pN,getEnclosingScope(p1))
+    setEnclosingScope(p1,p2);
+    setEnclosingScope(p2,p3);
+    ...
+    setEnclosingScope(pN-1,pN)
+</pre>
+<p>It should be noted that the code examples in this and the next subsections
+hard-wire the inheritance manipulations. As will be seen further on,
+Scam automates these tasks.
+</p>
+
+<h3><a name="id5">Reification inheritance</a></h3><p>
+As stated earlier, reification inheritance concerns a subclass fleshing
+out a partially completed implementation by the superclass. A consequence
+of this finishing aspect is that, unlike extension inheritance, the
+superclass must have access to subclass methods.  A typical approach
+to handling this problem is rather inelegant, passing a reference to
+the original object as hidden, or not so hidden,
+parameter to all methods.  Within method
+bodies, method calls are routed through this reference. Inheritance in
+Python is done just this way; the object reference is bound to the
+first formal parameter in all object methods.
+</p>
+<p>That said, our approach for extension inheritance
+does not work for reification inheritance. Suppose a parent method
+references a method provided by the child. In Scam,
+when a function definition is encountered, a closure is
+created and this closure holds a pointer to the definition environment. It
+is this pointer that implements static scoping in such interpreters.
+</p>
+<p>For parent methods, then, the enclosing scope is the parent.  When the
+function body of the method is being evaluated, the reference to the
+method supplied by the child goes unresolved, since it is not found in
+the parent method. The enclosing scope of the parent method, the parent
+itself, is searched next.  The reference remains unresolved. Next the
+enclosing scope of the parent is searched, which has been reset to the
+enclosing scope of the child. Again, the reference goes unresolved (or
+resolved by happenstance should a binding appear in some enclosing scope
+of the child).
+</p>
+<p>The solution to this problem is to reset the enclosing scopes of the
+parent methods to the child. In pseudocode:
+</p>
+<pre>
+    setEnclosingScope(parent,getEnclosingScope(child));
+    setEnclosingScope(child,parent);
+    for each method m of parent
+        setEnclosingScope(m,child)
+</pre>
+<p>Now, reification inheritance works as expected. Here is an example:
+</p>
+<pre>
+    (include "inherit.lib")
+
+    (define (parent)
+        (define (ba) (string+ (b) (a)))
+        (define (b) "slap")
+        this
+        )
+    (define (child)
+        (define (a) "jacks")
+        (define temp (parent))
+        (setEnclosingScope temp (getEnclosingScope this))
+        (setEnclosingScope this temp)
+        (setEnclosingScope (temp 'ba) this)
+        this
+        )
+
+    (define obj (child))
+
+    (inspect ((obj 'ba)))
+</pre>
+<p>The output of this program is:
+</p>
+<pre>
+    ((obj 'ba)) is "slapjacks"
+</pre>
+<p>As can be seen, the reference to <i>a</i> in the function <i>ba</i> is
+resolved correctly, due to the resetting of <i>ba</i>'s enclosing scope
+by <i>child</i>.
+</p>
+<p>For longer inheritance chains, the pseudocode of the previous subsection
+is modified accordingly:
+</p>
+<pre>
+    setEnclosingScope(pN,getEnclosingScope(p1))
+    setEnclosingScope(p1,p2);
+    for each method m of p2: setEnclosingScope(m,p1)
+    setEnclosingScope(p2,p3);
+    for each method m of p3: setEnclosingScope(m,p1)
+    ...
+    setEnclosingScope(pN-1,pN)
+    for each method m of pN: setEnclosingScope(m,p1)
+</pre>
+<p>All ancestors of the child has the enclosing scopes of their methods reset.
+</p>
+
+<h3><a name="id6">Variation inheritance</a></h3><p>
+Variation inheritance captures the idea of a subclass overriding a
+superclass method. If functions are naturally virtual (as in Java),
+then the overriding function is always called preferentially over the
+overridden function.
+</p>
+<p>If <i>child</i> is redefined as follows:
+</p>
+<pre>
+    (define (child)
+        (define (b) "jumping")
+        (define (a) "jacks")
+        (define temp (parent))
+        (setEnclosingScope temp (getEnclosingScope this))
+        (setEnclosingScope this temp)
+        (setEnclosingScope (temp 'ab) this)
+        this
+        )
+</pre>
+<p>then the new version of <i>b</i> overrides the parent version.  The output
+now becomes:
+</p>
+<pre>
+    ((obj 'ba)) is jumpingjacks 
+</pre>
+<p>This demonstrates that both reification and variation inheritance can be
+implemented using the same mechanism.  Another benefit is that instance
+variables and instance methods are treated uniformly. Unlike virtual
+functions in Java and C++, instance variables in those languages shadow
+superclass instance variables of the same name, but only for subclass
+methods.  For superclass methods, the superclass version of the instance
+variable is visible, while the subclass version is shadowed.  With this
+approach, both instance variables and instance methods are virtual,
+eliminating the potential error of shadowing a superclass instance
+variable. Here is an example:
+</p>
+<pre>
+    (include "inherit.lib")
+
+    (define (parent)
+        (define x 0)
+        (define (toString) (string+ "x:" x))
+        this
+        )
+    (define (child)
+        (define x 1)
+        (define temp (parent))
+        (setEnclosingScope temp (getEnclosingScope this))
+        (setEnclosingScope this temp)
+        (setEnclosingScope (temp 'toString) this)
+        this
+        )
+
+    (define p-obj (parent))
+    (define c-obj (child))
+
+    (inspect ((p-obj 'toString)))
+    (inspect ((c-obj 'toString)))
+</pre>
+<p>The output:
+</p>
+<pre>
+    ((p-obj 'toString)) is x:0
+    ((c-obj 'toString)) is x:1
+</pre>
+<p>demonstrates the virtuality of the instance variable <em>x</em>.  Even
+though the program calls the superclass version of <em>toString</em>,
+the subclass version of <em>x</em> is referenced.
+</p>
+
+<h3><a name="id7">Implementing Inheritance in Scam</a></h3><p>
+Since environments are objects in Scam, implementing the <i>getEnclosingScope</i> and <i>setEnclosingScope</i> functions are trivial:
+</p>
+<pre>
+    (define (setEnclosingScope a b) (set '__context b a))
+    (define (getEnclosingScope a) (a '__context))
+</pre>
+<p>Moreover, the task of resetting the enclosing scopes of the parties
+involved can be automated. Scam provides a library, 
+named <i>inherit.lib</i>, written in Scam that
+provides a number of inheritance mechanisms. The first (and simplest)
+is ad-hoc inheritance. Suppose we have objects <i>a</i>, <i>b</i>, and<i>c</i>
+and we wish
+<i>a</i> to inherit from <i>b</i> and <i>c</i>
+(and if both <i>b</i> and <i>c</i> provide functionality,
+we prefer <i>b</i>'s implementation).
+To do so, we call the <i>mixin</i> function:
+</p>
+<pre>
+    (mixin a b c)
+</pre>
+<p>A definition of <i>mixin</i> could be:
+</p>
+<pre>
+    (define (mixin object @)  ; @ points to a list of remaining args
+        (define outer (getEnclosingScope object))
+        (define spot object)
+        (while (not (null? (cdr @)))
+            (define current (car @))
+            (resetClosures current object)
+            (setEnclosingScope spot current)
+            (assign spot current)
+            (assign @ (cdr @)
+            )
+        (setEnclosingScope (car @) outer)
+        (resetClosures (car @) object)
+        )
+</pre>
+<p>The other type of inheritance emulates the <i>extends</i> operation in
+Java.  For this type of inheritance, the convention is that an object
+must declare a parent. In the constructor for an object, the parent
+instance variable is set to the parent object, usually obtained via the
+parent constructor.  Here is an example:
+</p>
+<pre>
+    (define (b)
+        (define parent nil)
+        ...
+        this
+        )
+    (define (a)
+        (define parent (b))     ;setting the parent 
+        ...
+        this
+        )
+</pre>
+<p>Now, to instantiate an object, the <i>new</i> function is called:
+</p>
+<pre>
+    (define obj (new (a)))
+</pre>
+<p>The <i>new</i> function follows the parent pointers to reset the enclosing
+scopes appropriately. Here is a possible implementation of <i>new</i>,
+which follows the definition of <i>mixin</i> closely:
+</p>
+<pre>
+    (define (new object)
+        (define outer (getEnclosingScope object))
+        (define spot object)
+        (define current (spot 'parent))
+        (while (not (null? current))
+            (resetClosures current object)
+            (setEnclosingScope spot current)
+            (assign spot current)
+            (define current (spot 'parent))
+            )
+        (setEnclosingScope spot outer)
+        (resetClosures spot object)
+        )
+</pre>
+<p>Other forms of inheritance are possible as well. The flexibility of this
+approach does not require inheritance to be built into the language.
+</p>
+
+<h3><a name="id8">Darwinian versus Lamarckian Inheritance</a></h3><p>
+The behavior of the inheritance scheme implemented in this paper differs
+from the inheritance schemes of the major industrial-strength languages
+in one important way.  In Java, for example, if a superclass method
+references a variable defined in an outer scope (this can happen
+with nested classes), those references are resolved the same way,
+<i>whether or not</i> an object of that class was instantiated as a
+stand-alone object or as part of an instantiation of a subclass object.
+This is remeniscent of the inheritance theory of Jean-Baptiste Lamarck,
+who postulated that the environment influences inheritance. In Java,
+the superclass retains traces of its environment which can influence
+the behavior of a subclass object.
+</p>
+<p>With selfless inheritance, the static scopes of the superclass objects
+are replaced with the static scope of the subclass object, a purely
+Darwinian outcome. The superclass objects contributes the methods
+and instance variables (say, the genes of the superclass) but none of
+the environmental influences.  Thus, the subclass object must provide
+bindings for the non-local references either through its own definitions
+or in its definition environment.
+</p>
+
+<h2><a name="id9">Polymorphism</a></h2><p>
+Polymorphism is a word that literally means "having multiple shapes".
+With regards to object-orientation, polymorphism means one kind of object
+can look like another kind of object. One concrete example of this
+involves inheritance: if object <i>child</i> inherits from object <i>parent</i>,
+does the <i>child</i> look like a <i>parent</i> object
+as well as a <i>child</i> object? In
+other words, can a variable that points to a parent object also
+point to a child object? This question is of critical importance
+for statically typed languages such as C++ and Java, but is not
+so important for dynamically-typed languages like Scam.
+This is because a Scam variable can point to any type of entity,
+so the question of whether a variable can point to either a child
+or a parent is moot.
+</p>
+<p>That said, it is often useful in an dynamically-typed, object-oriented
+language to ask whether or not a variable points to an object that
+looks like some other object. The <i>is?</i> function, introduced in the
+previous chapter, can answer these questions. Consider this set
+of constructors:
+</p>
+<pre>
+    (include "inherit.lib")
+
+    (define (p)
+        (define parent nil)
+        this
+        )
+
+    (define (c)
+        (define parent (p))
+        this
+        )
+</pre>
+<p>Here, we have <i>b</i> inheriting from <i>a</i>.
+If we create an <i>a</i> object and a <i>b</i> object using <i>new</i>:
+</p>
+<pre>
+    (define p-obj (new (p)))
+    (define c-obj (new (c)))
+</pre>
+<p>we can now ask what kinds of objects they are:
+</p>
+<pre>
+    (inspect (is? p-obj 'p))
+    (inspect (is? c-obj 'c))
+</pre>
+<p>As expected, the output is:
+</p>
+<pre>
+    (is? p-obj 'p) is #t
+    (is? c-obj 'c) is #t
+</pre>
+<p>However, a typical view in the object-oriented world is that a
+child object <i>is also</i> a parent object,
+since it inherits all the fields and
+methods of the <i>parent</i>. The <i>is?</i> function conforms to this idea:
+</p>
+<pre>
+    (is? c-obj 'p)
+</pre>
+<p>evaluates to true.
+Conversely, the typical view is that the parent object <i>is not</i>
+a child object. The expression:
+</p>
+<pre>
+    (is? p-obj 'c)
+</pre>
+<p>evaluates to false.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_14.html">
+  <img border="0" alt="Objects" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_16.html">
+  <img border="0" alt="Parameter Passing" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Encapsulation, Inheritance and Polymorphism</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

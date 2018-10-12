@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Assignment description</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Assignment description</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=3">Assignment description</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=3">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="multipage"><strong>Pages:</strong> <strong>1</strong> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-3-2.html">2</a> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-3-3.html">3</a> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-3-4.html">4</a> </div><div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-22-2018, 08:14 PM</div>
+</div>
+<div class="message">Post your corrections and suggestions in this thread...<br />
+<br />
+<span style="text-decoration: line-through;" class="mycode_s">Version 1a is current.</span><br />
+Version 1b is current.<br />
+<br />
+Always refresh your web page as above version number may be out of date.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a></h2></div><div class="dateline">08-22-2018, 09:26 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-22-2018, 08:14 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=5#pid5">[ -> ]</a></cite>Post your corrections and suggestions in this thread...</blockquote><br />
+I guess I'll start.<br />
+<br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><span style="font-style: italic;" class="mycode_i"><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">insertDA</span></span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"> - The insert method places the given item at the slot named by given index. The previous item at that slot shifts to the next higher slot (and so on). If there is no room for the insertion, the array grows by doubling. <span style="font-weight: bold;" class="mycode_b">It should run in amortized constant time when inserting an item a constant distance from the back and in linear time otherwise. </span></span></span></span></blockquote>
+I can't tell what exactly is meant by this last part, as any index is always a "constant distance from the back". The only other case I can think of is when the array is already full and needs to grow. Do we assume that <span style="font-family: Courier New;" class="mycode_font">realloc</span> runs in linear time or manually do a <span style="font-family: Courier New;" class="mycode_font">malloc</span> and copy?<br />
+<br />
+Also noticed that  <span style="font-family: Courier New;" class="mycode_font">extractDA</span> is described but not declared in the public interface.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=24">bdgerszewski</a></h2></div><div class="dateline">08-22-2018, 09:34 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-22-2018, 08:14 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=5#pid5">[ -> ]</a></cite>Post your corrections and suggestions in this thread...</blockquote><br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><span style="font-style: italic;" class="mycode_i"><span style="color: #000000;" class="mycode_color"><span style="font-size: xx-large;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">displayDA</span></span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: xx-large;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"> - This visualizing method prints out the filled region, enclosed in brackets and separated by commas, followed by the size of the unfilled region, enclosed in brackets. If the integers 5, 6, 2, 9, and 1 are stored in the array (listed from index 0 upwards) and the array has capacity 8, the method would generate this output:</span></span></span><br />
+<br />
+<span style="color: #115555;" class="mycode_color"><span style="font-size: x-small;" class="mycode_size">    [5,6,2,9,1]</span></span></blockquote>
+<br />
+The sample output does not have the size of the unfilled region in brackets while the description says to do so. Should displaying the size of the unfilled region only be a behavior of the debug method?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=95">Bphightower</a></h2></div><div class="dateline">08-22-2018, 09:56 PM</div>
+</div>
+<div class="message">The only question I have is that under the dynamic Array instructions it describes a "extractDA" function that returns a shrunken C array where the size matches its capacity, but it isn't defined in the "da.c" file. Are we supposed to use it in our implementation, and if so where would we need to use it?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=6">sbcarp</a></h2></div><div class="dateline">08-23-2018, 01:32 AM</div>
+</div>
+<div class="message">Will displayDA print a new line after output?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=51">william_jiang</a></h2></div><div class="dateline">08-23-2018, 02:04 AM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-22-2018, 08:14 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=5#pid5">[ -> ]</a></cite>Post your corrections and suggestions in this thread...</blockquote><br />
+An empty array should have a capacity of 1. <br />
+<br />
+The array should never have a capacity of 1. <br />
+<br />
+<br />
+<br />
+I took this from the "A Dynamic Array Class" page on beastie. Can you make this more clear? Something like "The array should never have a capacity of 1, unless it is empty", if that's indeed what you intended to convey?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-23-2018, 12:27 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-22-2018, 09:26 PM)</span>magarwal Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=6#pid6">[ -> ]</a></cite><blockquote class="mycode_quote"><cite><span> (08-22-2018, 08:14 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=5#pid5">[ -> ]</a></cite>Post your corrections and suggestions in this thread...</blockquote><br />
+I guess I'll start.<br />
+<br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><span style="font-style: italic;" class="mycode_i"><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">insertDA</span></span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"> - The insert method places the given item at the slot named by given index. The previous item at that slot shifts to the next higher slot (and so on). If there is no room for the insertion, the array grows by doubling. <span style="font-weight: bold;" class="mycode_b">It should run in amortized constant time when inserting an item a constant distance from the back and in linear time otherwise. </span></span></span></span></blockquote>
+I can't tell what exactly is meant by this last part, as any index is always a "constant distance from the back". The only other case I can think of is when the array is already full and needs to grow. Do we assume that <span style="font-family: Courier New;" class="mycode_font">realloc</span> runs in linear time or manually do a <span style="font-family: Courier New;" class="mycode_font">malloc</span> and copy?<br />
+<br />
+Also noticed that  <span style="font-family: Courier New;" class="mycode_font">extractDA</span> is described but not declared in the public interface.</blockquote><br />
+Consider these two calls:<br />
+<br />
+insertDA(items,sizeDA(items)/2,x);<br />
+insertDA(items,sizeDA(items)-5,x);<br />
+<br />
+The latter inserts a constant distance from the back, while the former does not.<br />
+<br />
+I've removed references to extractDA.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-23-2018, 12:29 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-22-2018, 09:34 PM)</span>bdgerszewski Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=7#pid7">[ -> ]</a></cite><blockquote class="mycode_quote"><cite><span> (08-22-2018, 08:14 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=5#pid5">[ -> ]</a></cite>Post your corrections and suggestions in this thread...</blockquote><br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><span style="font-style: italic;" class="mycode_i"><span style="color: #000000;" class="mycode_color"><span style="font-size: xx-large;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">displayDA</span></span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: xx-large;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"> - This visualizing method prints out the filled region, enclosed in brackets and separated by commas, followed by the size of the unfilled region, enclosed in brackets. If the integers 5, 6, 2, 9, and 1 are stored in the array (listed from index 0 upwards) and the array has capacity 8, the method would generate this output:</span></span></span><br />
+<br />
+<span style="color: #115555;" class="mycode_color"><span style="font-size: x-small;" class="mycode_size">    [5,6,2,9,1]</span></span></blockquote>
+<br />
+The sample output does not have the size of the unfilled region in brackets while the description says to do so. Should displaying the size of the unfilled region only be a behavior of the debug method?</blockquote><br />
+Yes, only if the debug flag for the object is set should the remaining capacity be printed. I removed the reference to capacity in the display description.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-23-2018, 12:30 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-23-2018, 01:32 AM)</span>sbcarp Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=9#pid9">[ -> ]</a></cite>Will displayDA print a new line after output?</blockquote><br />
+No. See the style guidelines.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-23-2018, 01:24 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-23-2018, 02:04 AM)</span>william_jiang Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=10#pid10">[ -> ]</a></cite><blockquote class="mycode_quote"><cite><span> (08-22-2018, 08:14 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=5#pid5">[ -> ]</a></cite>Post your corrections and suggestions in this thread...</blockquote><br />
+An empty array should have a capacity of 1. <br />
+<br />
+The array should never have a capacity of 1. <br />
+<br />
+<br />
+<br />
+I took this from the "A Dynamic Array Class" page on beastie. Can you make this more clear? Something like "The array should never have a capacity of 1, unless it is empty", if that's indeed what you intended to convey?</blockquote><br />
+I meant an array should never have a capacity of zero. Without this restriction, an array could shrink to zero capacity otherwise.</div>
+</div>
+<div class="multipage"><strong>Pages:</strong> <strong>1</strong> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-3-2.html">2</a> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-3-3.html">3</a> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-3-4.html">4</a> </div></div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Assignment description</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

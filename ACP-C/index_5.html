@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:15 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Literals</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_4.html">
+  <img border="0" alt="Testing code examples" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_6.html">
+  <img border="0" alt="Variables" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Literals</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Literals</h1>
+<p>C works by figuring out the meaning or value of some code.
+This is true for the tiniest pieces of code to the largest
+programs. The process of finding out the meaning of code
+is known as <i>evaluation</i>.
+</p>
+<p>The things whose values are the things themselves are known as
+<i>literals</i>. The literals of C can be categorized by the following
+types:
+<i>integers</i>, <i>real</i> <i>numbers</i>, <i>characters</i>, and
+<i>strings</i>.
+</p>
+
+<h2><a name="id1">Integers</a></h2><p>
+Integers are numbers without any fractional parts.
+Examples of integers are:
+</p>
+<pre>
+    3
+    -5
+    0
+</pre>
+<p>Integers must begin with a digit or a minus sign. The initial minus sign
+must immediately be followed by a digit.
+</p>
+<p>The integer type in C is <code>int</code>. There are other integer types that
+we will not get to in this book. You can find them by searching the
+interwebs for "C integral types".
+</p>
+<p>It is important to realize that there are limits to what can be stored in an integer.
+As mentioned above, C has several different types of integers that are designed
+for specific situations.  For example, if a developer only ever store values in the range of
+0 to 100 then that person could use a smaller version of an integer that saves space.
+In this class, you should always use the default <code>int</code> class unless you are told
+otherwise.
+</p>
+<p>It is recommended that you search the interwebs to determine the maximum (and
+minimum) value that you can store in an integer in C.
+</p>
+
+<h2><a name="id2">Real Numbers</a></h2><p>
+Reals are numbers that do have a fractional part (even if that fractional
+part is zero!). Examples of real numbers are:
+</p>
+<pre>
+    3.2
+    4.000
+    5.
+    0.3
+    .3
+    3.2e-4
+    3e4
+    .000000987654321
+</pre>
+<p>Real numbers must start with a digit or a minus sign or a decimal
+point. An initial minus sign must immediately be followed by a digit or a
+decimal point. An initial decimal point must immediately be followed by
+a digit. C accepts real numbers in scientific notation. For example,
+<i>3.3 * 10<sup>-11</sup></i> would be entered as 3.3e-11. The "e" stands for exponent and
+the 10 is understood, so <code>e-11</code> means multiply whatever precedes the
+<code>e</code> by <i>10<sup>-11</sup></i>.
+</p>
+<p>The real number type in C is <code>double</code>. This is short for
+<i>double precision floating point number</i>. There is another real
+number type called <i>float</i>, which is short for
+<i>single precision floating point number</i>, but it is not used very much.
+</p>
+<p>As with integers, there are limits to how bit (and small) a number can be
+stored in a <i>double</i>.  It is recommended that you do another interwebs search
+to learn the limits on real numbers.  You might find it useful to compare
+the limits of a <i>double</i> and a <i>float</i> as that will help you understand
+why most programmers simply use <i>double</i>.
+</p>
+
+<h2><a name="LiteralsCharacters">Characters</a></h2>
+<p>In C, characters
+generally are single letters, digits, or symbols
+delineated by single quotes:
+</p>
+<pre>
+    'a'
+    'Z'
+    '&amp;'
+    '9'
+    ' '
+</pre>
+<p>The last character in the above list is the space character. There are
+also a number of two-character characters, some of which are:
+</p>
+<pre>
+    '\n'
+    '\t'
+    '\0'
+    '\''
+    '\\'
+</pre>
+<p>The first symbol in these two-character characters
+is the <i>backslash</i>; symbols preceded by
+a backslash are said to have been
+<i>escaped</i>.
+Escaping a symbol will often
+change its meaning.
+For example, the character
+<i>n</i>, in a string refers to the letter <i>n</i> while the character sequence
+<code>\n</code>
+refers
+to the <i>newline</i> character. A backslash also changes the meaning of the
+letter <i>t</i>,
+converting it into a tab character.
+An escaped zero is the null character which used to terminate strings.
+To specify the single quote character or a backslash,
+one needs to escape them with a backslash, otherwise the C compiler
+will get confused. Are you
+confused?
+Don't worry. It'll become natural after a while.
+</p>
+<p>The character type in C is <code>char</code>. There is a great debate
+on how to properly pronounce "char'.
+Three groups have emerged, those who know how to pronounce "char" properly (these
+folks say "care" as in "careful") and those who don't (these folks say "char" as
+in "char" as in "charcoal"). The third group takes a more Southern
+approach to the pronunciation, (these folks say "car" as in "cartoon").
+Who knows who is right?
+</p>
+<p>A character is one byte (8 bits).  If you want to see how the various
+characters (<code>'a'</code>, <code>'$'</code>, <code>'Z'</code>, <i>etc.</i>) are stored, do a search on the
+interwebs for ASCII tables.
+</p>
+
+<h2><a name="LiteralsStrings">Strings</a></h2>
+<p>Strings are sequences of characters delineated by double quotation marks:
+</p>
+<pre>
+    "hello, world!"
+    "x\nx"
+    "\"z\""
+    ""
+</pre>
+<p>Like characters, the symbols
+in a string can be <i>escaped</i>
+with the backslash character,
+You can also escape double quotes with backslashes
+so that you can include them in a string.
+A string with no characters
+between the double quotes is known as an empty string.
+</p>
+<p>The string type in C is <code>char *</code>, pronounced "char-star".
+This is because strings are actually arrays of characters and,
+as you will learn later, an asterisk can be used to indicate
+an array. So <code>char *</code> can be read as "array of <code>char</code>".
+We will
+delve into arrays in a later chapter.
+</p>
+
+<h2><a name="id5">B<font size="-1">OOLEAN</font>s</a></h2><p>
+Many languages have an additional kind of literal that C
+does not have, the B<font size="-1">OOLEAN</font>&#32;literals
+<code>True</code> and <code>False</code>.
+B<font size="-1">OOLEAN</font>s are used to 
+guide the flow of a program.
+The term B<font size="-1">OOLEAN</font>&#32;is derived from the last name of George Boole, who,
+in his 1854 paper <i>An Investigation of the Laws of Thought, on which are
+founded the Mathematical Theories of Logic and Probabilities</i>, laid one
+of the cornerstones of the modern digital computer. The so-called B<font size="-1">OOLEAN</font>&#10;logic or B<font size="-1">OOLEAN</font>&#32;algebra is concerned with the rules of combining truth
+values (i.e., true or false). As we will see, knowledge of such rules will
+be important for making C programs behave properly. In particular,
+B<font size="-1">OOLEAN</font>&#32;expressions will be used to control conditionals and loops.
+</p>
+<p>Even though C has no explicit B<font size="-1">OOLEAN</font>s, the integers serve double-duty,
+both as numbers and as B<font size="-1">OOLEAN</font>&#32;literals.
+In C, the integer zero serves as <code>False</code>
+and any other integer or integer-like
+value serves as <code>True</code>. Novices sometimes make the mistake that
+only the number 1 is <i>True</i>.
+It is <code>True</code>, but it is not the only <code>True</code>. For example,
+2384, -12, and
+42 are also <code>True</code>.
+</p>
+
+<h2><a name="id6">Activities</a></h2><p>
+Note: all activities in assume a Unix-style system, either Linux, Mac OSX, or Cygwin on Windows.
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="left">
+<i>name</i> </td><td colspan="1" align="left"> <i>purpose</i> </td></tr>
+<tr><td colspan="1" align="left">
+<a href="activities/literals-activity.html">literals</a> </td><td colspan="1" align="left">
+practicing with C literals </td></tr>
+<tr><td colspan="1" align="left">
+</td></tr></tbody></table>
+</p>
+</div>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_4.html">
+  <img border="0" alt="Testing code examples" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_6.html">
+  <img border="0" alt="Variables" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Literals</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

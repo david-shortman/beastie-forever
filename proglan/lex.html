@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>lex</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Lexical Analyisis
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="lex.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Introduction
+<br/>
+</h2><!-- section ENDED -->
+
+The first thing one needs to do in implementing a language is to figure
+what the words are in that language. For example, consider teaching
+someone to read English. You might start out by explaining the grammar
+of English and beginning a discourse on nouns and verbs and so on. But
+there is a more fundamental level that needs explanation first and that
+is the morphology of the language.
+<br/>
+Morphology is the study of shapes and, surprising though it may seem,
+all languages have shape. This is why it is easy for non-French speakers
+to recognize spoken and written French (apologies to E. A. Poe and The
+Murders in the Rue Morgue). English prose is composed of sentences and
+we know when a sentence ends and another begins when we see some special
+shapes (punctuation). We also know that a sentence is composed of words and we
+know that blank spaces separate the words in a sentence. Finally, we know
+that words can be categorized as to their parts of speech and we learn
+to recognize certain words as nouns, verbs, adjectives, and other arcane
+types. All these rules must be understood before one can understand the
+grammar of a language.
+<br/>
+<!-- section -->
+<h2> Lexical analysis
+<br/>
+</h2><!-- section ENDED -->
+
+Lexical analysis is the process
+of breaking up a language stream into its words and categorizing those
+words as to their types. For example, were we to perform lexical analysis
+on the sentence:
+<br/>
+
+<pre>
+    The large cow drank the cool water.
+</pre>
+
+we might produce the following output:
+<br/>
+
+<pre>
+    ARTICLE The
+    ADJECTIVE large
+    NOUN cow
+    VERB drank
+    ARTICLE the
+    ADJECTIVE cool
+    NOUN water
+    PERIOD
+</pre>
+
+where the part of speech precedes the actual word. These parts of speech
+/ word pairs are known as lexemes. Formally, a lexical analyzer transforms a
+stream of characters into a stream of lexemes. The lexeme for a period
+needs no associated 'word' since there is only one kind of period.
+<br/>
+Suppose we wish to implement a simple, whitespace delimited, calculator
+language. Here are some example sentences in the language:
+<br/>
+
+<pre>
+    define a;
+    define zeta;
+    a = 64 * 2;
+    zeta = log(a*a,2);
+    print(&quot;the value of zeta is &quot;, zeta);
+</pre>
+
+The parts of speech in this language are keywords, variables, punctuation,
+operators, and numbers (in order of appearance). A scanner
+is a program that lexically analyzes a character stream and outputs
+a stream of lexemes. It uses a function named lex, which is responsible
+for determining the next lexeme in the input. Here is an example
+scanner:
+<br/>
+
+<pre>
+    function scanner()
+        {
+        var lexeme;
+
+        lexeme = lex();
+        while (lexeme.type != END)
+            {
+            lexeme.display();
+            newline();
+            lexeme = lex();
+            }
+        }
+</pre>
+
+The <i>lex</i> function grabs a character at a time from the input and when
+enough characters have been read, returns a lexeme. Here is an example
+<i>lex</i> (the implementations of <i>skipWhiteSpace</i>, <i>lexNumber</i>,
+<i>lexVariable</i>, and <i>lexString</i> and the implementations of the
+<i>Lexeme</i> and <i>Input</i> classes are left up to the student):
+<br/>
+
+<pre>
+    function lex()
+        {
+        define ch;
+
+        skipWhiteSpace();
+
+        ch = Input.getCharacter();
+
+        if (Input.failed) return new Lexeme(END);
+
+        switch(ch)
+            {
+            // single character tokens
+            case &#39;(&#39;:
+                return new Lexeme(OPAREN);
+            case &#39;)&#39;:
+                return new Lexeme(CPAREN);
+            case &#39;,&#39;:
+                return new Lexeme(COMMA);
+            case &#39;+&#39;:
+                return new Lexeme(PLUS);
+            case &#39;*&#39;:
+                return new Lexeme(TIMES);
+            case &#39;-&#39;:
+                return new Lexeme(MINUS);
+            case &#39;/&#39;:
+                return new Lexeme(DIVIDES);
+            default:
+                // multi-character tokens
+                // (only numbers, variables/keywords, and strings)
+                if (isdigit(ch))
+                    {
+                    Input.pushback(ch);
+                    return lexNumber();
+                    }
+                else if (isalpha(ch))
+                    {
+                    Input.pushback(ch);
+                    return lexVariable();  //and keywords!
+                    }
+                else if (ch == &#39;\&quot;&#39;)
+                    {
+                    Input.pushback(ch);
+                    return lexString();
+                    }
+            }
+
+        return new Lexeme(BAD_CHARACTER, ch);
+        }
+</pre>
+
+The tokens 
+<code>END</code>, 
+<code>PLUS</code>, 
+<code>MINUS</code>, 
+<code>etc</code>.
+are constants that fill out the type
+component of a lexeme.
+<br/>
+Given the input:
+<br/>
+
+<pre>
+    define zeta;
+    zeta = 5;
+    print(&quot;zeta is &quot;, zeta);
+</pre>
+
+the scanner might print out something like:
+<br/>
+
+<pre>
+    DEFINE
+    VARIABLE zeta
+    SEMICOLON
+    VARIABLE zeta
+    ASSIGN
+    NUMBER 5
+    SEMICOLON
+    PRINT
+    OPAREN
+    STRING &quot;zeta is &quot;
+    COMMA
+    VARIABLE zeta
+    CPAREN
+    SEMICOLON
+    END
+</pre>
+
+Given the input:
+<br/>
+
+<pre>
+    define zeta#
+    zeta  = 5;
+    print(&quot;zeta is &quot;, zeta);
+</pre>
+
+the scanner might generate:
+<br/>
+
+<pre>
+    DEFINE
+    VARIABLE zeta
+    BAD_CHARACTER &#39;#&#39;
+    VARIABLE zeta
+    ...
+</pre>
+
+assuming an octothorpe is not legal for a variable name.
+<br/>
+How does the function <i>lex</i> decide the type of a particular token? Through
+its morphology. A variable, for example may have the following shape:
+<br/>
+
+<pre>
+    VARIABLE: a letter followed by any number of letters or digits
+</pre>
+
+An integer has more restrictive shape:
+<br/>
+
+<pre>
+    INTEGER : a digit followed by any number of digits
+</pre>
+
+Often, in a language, a keyword has the same general shape as a variable,
+yet its specific shape is different. For example, the keyword define
+has the following exact shape:
+<br/>
+
+<pre>
+    DEFINE : a &#39;d&#39; followed by &#39;e&#39;, &#39;f&#39;, &#39;i&#39;, &#39;n&#39;, &#39;e&#39; in that order
+</pre>
+
+In the implementation of lex given above, the function <i>lexVariable</i> is
+charged with looking for the specific shapes of the keywords.
+If it finds one, it returns a keyword lexeme instead of a variable
+lexeme.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

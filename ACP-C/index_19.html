@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:17 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Nodes</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_18.html">
+  <img border="0" alt="Structures" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_20.html">
+  <img border="0" alt="Lists" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Nodes</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Nodes</h1>
+<p>You can download the functions defined or used in this chapter with the
+following commands:
+</p>
+<pre>
+    wget troll.cs.ua.edu/ACP-C/nodes.c
+    wget troll.cs.ua.edu/ACP-C/nodes.h
+</pre>
+<p>These files will help you run the test code listed in this chapter.
+</p>
+
+<h2><a name="id1">The Node Structure</a></h2><p>
+A <i>list</i> is a data structure that has some benefits over arrays,
+the main one being it grows with hardly any effort. As such, it is
+useful for storing data that can grow without bound.
+Lists, at their very core, are composed of chains of <i>nodes</i>,
+so we will start our investigation into lists by first
+exploring nodes.
+</p>
+<p>A node is a simple structure that bundles together two
+variables.
+The first variable holds a value; this value may be an integer,
+a real number, a pointer to a string or a record, or a myriad of other types.
+The second variable points to the next node
+in the list. So, a list is merely a chain of nodes,
+each node holding a value.
+Graphically, nodes are represented as a box with two arrows.
+The downward pointing arrow typically leads to the value,
+while
+the rightward pointing arrow points to another node.
+While the right arrow is truly a pointer, as it points to another
+node, the down arrow may or may not be a pointer. Typically,
+if the value of a node is a pointer, the down arrow will point
+to a box of some kind (or zero). Regardless, an arrow is used
+to point to a value; one uses context to decide whether the
+value is a pointer or a basic value.
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-node1.png"/>
+</div>
+<p>When we chain a series of nodes together, we get a list:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-node2.png"/>
+</div>
+<p>where <i>items</i> is a variable that points to the first node,
+<i>v1</i> through <i>v4</i> are the values held in the list,
+and <i>null</i> represents the null pointer
+signifying the end of the list.
+In C, zero is used to signify the null pointer.
+</p>
+<p>Nodes are described with the C structure mechanism. Here is one possible
+description of a node.
+</p>
+<pre>
+    typedef struct node
+        {
+        int value;
+        struct node *next;
+        } Node;
+</pre>
+<p>The <i>next</i>
+variable is a pointer to
+a node structure, as expected<sup><a href="index_26.html#footnote-33">33</a></sup>.
+The <i>value</i> variable, on the other hand,
+is given the type of values we wish to place in the list.
+In this case, we will use nodes to hold integer values.
+</p>
+<p>Like all structures, we can allocate a node both statically and
+dynamically. As stated earlier, we will focus on dynamic allocation.
+To make our code easier to read, we will define a constructor whose
+task it is to dynamically allocate a node.
+</p>
+
+<h2><a name="id2">Node constructors, accessors, and mutators</a></h2><p>
+In the previous chapter, we learned that using constructors,
+accessors, and mutators allow us to abstract away the internal
+details of structures. We can do the same for nodes.
+Node constructors could be defined as:
+</p>
+<pre>
+    Node *
+    newEmptyNode(void)
+        {
+        Node *p = malloc(sizeof(Node));     //check for malloc failure omitted
+        p-&gt;value = 0;                       //set to empty
+        p-&gt;next = 0;                        //set to the null pointer
+        return p;
+        }
+</pre>
+<p>and:
+</p>
+<pre>
+    Node *
+    newNode(int v,Node *n)
+        {
+        Node *p = malloc(sizeof(Node));     //check for malloc failure omitted
+        p-&gt;value = v;
+        p-&gt;next = n;
+        return p;
+        }
+</pre>
+<p>with accessors and mutators:
+</p>
+<pre>
+    int getNodeValue(Node *n) { return n-&gt;value; }
+    Node *getNodeNext(Node *n) { return n-&gt;next; }
+    void setNodeValue(Node *n,int v) { n-&gt;value = v; return; }
+    void setNodeNext(Node *n,Node *p) { n-&gt;next = p; return; }
+</pre>
+<p>Given these constructors, accessors, and mutators,
+we can now assemble a chain of nodes.
+</p>
+
+<h2><a name="id3">Assembling nodes into a list</a></h2><p>
+Let us now define a function that reads integer values from a file
+and stores them into a list:
+</p>
+<pre>
+    Node *
+    readIntegers(FILE *fp)
+        {
+        int x;
+        Node *items;
+
+        items = 0; //items starts out as null
+
+        //employ the standard reading pattern
+        x = readInt(fp);
+        while (!feof(fp))
+            {
+            items = newNode(x,items);
+            x = readInt(fp);
+            }
+        return items;
+        }
+</pre>
+<p>Assume the file <i>data.txt</i> exists with the following 
+values:
+</p>
+<pre>
+    1 2 3
+    4 5 6
+    7 8
+</pre>
+<p>The first value read is a 1. With this value,
+a
+new node is constructed.
+Since <i>items</i> has an initial value of zero,
+this new node's <i>next</i> pointer
+is null.
+When
+this newly constructed node is assigned back to <i>items</i>,
+we have this situation:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-node3.png"/>
+</div>
+<p>As stated earlier, the value field is not an integer pointer in this
+case, but the down arrow points to the value for visual convenience.
+</p>
+<p>Next, the value 2 is read, the <i>while</i> test succeeds,
+a new node is constructed,
+and that node is assigned to <i>items</i>.
+This time, the newly constructed node's next pointer points to
+the old value of <i>items</i>, which was the node holding the 1.
+The situation now looks like:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-node4.png"/>
+</div>
+<p>When new nodes are added to the <i>items</i> list, they are placed on
+the front of the growing list. So after the next integer is read
+and node created, we have:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-node5.png"/>
+</div>
+<p>Once we have collected all the integers in the file into a list,
+we see that the values in the list are in the opposite order
+as found in the file! That is,
+the last value read is the first value in the list<sup><a href="index_26.html#footnote-34">34</a></sup>.
+The strange order of the values in the list may bother you, but there
+are many situations where the order of the values in the list do
+not matter. For example, if we were to sum the values in the list,
+does the order the values appear matter? The answer is no.
+</p>
+<p>Now that we have all our values in a list, how might we display them?
+Here is a function that moves through the list, using the <i>getNodeValue</i>
+and <i>getNodeNext</i>
+functions to access each of the values of the list in turn.
+</p>
+<pre>
+    void
+    displayList(Node *items)
+        {
+        while (items != 0)
+            {
+            printf("{%d}",getNodeValue(items));
+            items = getNodeNext(items);
+            }
+        printf("\n");
+        }
+</pre>
+<p>The <i>while</i> loop runs as long as <i>items</i> isn't null.
+Inside the loop, the value of the first node in the list is printed.
+Then, <i>items</i> is reset to point to the next node in the list and the
+process repeats.
+</p>
+<p>Now, to test our code:
+</p>
+<pre>
+    //test 
+    #include "scanner.h"
+    #include "nodes.h"
+    FILE *fp;
+    if ((fp = fopen("data.txt","r")) == 0)
+        {
+        fprintf(stderr,"data.txt missing\n");
+        exit(-1);
+        }
+    Node *items = readIntegers(fp);
+    displayList(items);
+</pre>
+<p>Assuming <i>data.txt</i> exists as described above, we get the following output:
+</p>
+<pre>
+    {8}{7}{6}{5}{4}{3}{2}{1}
+</pre>
+<p>Note the line:
+</p>
+<pre>
+    if ((fp = fopen("data.txt","r")) == 0)
+</pre>
+<p>This is a common idiom for assigning a value and then testing it.
+The variable <i>fp</i> gets assigned the return value of <i>fopen</i> within the
+parentheses; after it is assigned, it is checked to see if its
+newly assigned value is zero (signifying that the open failed).
+</p>
+<p>Our next step is to
+define
+some functions that will make it easier to manipulate lists.
+We do that in the next chapter.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_18.html">
+  <img border="0" alt="Structures" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_20.html">
+  <img border="0" alt="Lists" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Nodes</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

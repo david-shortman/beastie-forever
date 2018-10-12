@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>lsort</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Analysis of Algorithms
+<br/>
+<br/>
+<span class="bigger">Linear Selection and Linear Sorting</span>
+<br/>
+
+<span class="smaller"><span class="smaller">
+<a href="lsort.pdf">Printable Version</a>
+</span></span>
+<br/>
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+
+<!-- section -->
+<h2> <b>Concept:</b> <i>linear selection</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Suppose you wish to find both the minimum and maximum values in an
+array of <i>n</i> values, <i>n</i> being odd. Consider this algorithm:
+<ol type="i">
+
+<li>
+
+ Make a pass through the array and find the minimum
+</li>
+
+<li>
+
+ Make a pass through the array and find the maximum
+</li>
+
+<li>
+
+ Report the minimum and the maximum at termination
+</li>
+
+</ol>
+
+
+What is the minimum number of key comparisons
+that this algorithm needs to
+perform?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>n</mi>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>n</mi>	<mo>-</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>n</mi>	<mo>+</mo>	<mn>2</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>n</mi>	<mo>+</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Suppose you wish to find both the minimum and maximum values in an
+array <i>A</i> of <i>n</i> values, <i>n</i> being odd. Consider this algorithm:
+<ol type="i">
+
+<li>
+
+ Set the maximum and minimum to the first value in the array
+</li>
+
+<li>
+
+ Make a pass through the array 
+<code>(i = 1; i &lt; n; i += 2)</code>
+</li>
+
+<li>
+
+ Compare A[i] with A[i+1]
+</li>
+
+<li>
+
+ Update the minimum if the smaller of the two is less
+</li>
+
+<li>
+
+ Update the maximum if the larger of the two is greater
+</li>
+
+<li>
+
+ Report the minimum and the maximum at loop termination
+</li>
+
+</ol>
+
+
+What is the minimum number of key comparisons
+that this algorithm needs to
+perform?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mi>n</mi>	<mo>-</mo>	<mn>3</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mi>n</mi>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mfrac linethickness="1">		<mrow>			<mi>n</mi>			<mo>-</mo>			<mn>1</mn>		</mrow>		<mn>2</mn>	</mfrac>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mi>n</mi>	<mo>-</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mfrac linethickness="1">		<mrow>			<mi>n</mi>			<mo>-</mo>			<mn>1</mn>		</mrow>		<mn>2</mn>	</mfrac></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Consider running the linear selection algorithm on an array of
+<i>n</i> unique elements.
+What is a tight lower bound on the number of elements less than
+the median of medians?
+Assume the median of medians is found with groups of
+five and that there are an odd number of groups.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>5</mn>	</mfrac>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>5</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>10</mn>	</mfrac>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mrow>			<mn>3</mn>			<mi>n</mi>			<mo>+</mo>			<mn>5</mn>		</mrow>		<mn>10</mn>	</mfrac></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>5</mn>	</mfrac>	<mo>+</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>5</mn>	</mfrac>	<mo>+</mo>	<mn>3</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>10</mn>	</mfrac>	<mo>+</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 6 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>5</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>10</mn>	</mfrac>	<mo>+</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 7 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>5</mn>	</mfrac>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Consider running the linear selection algorithm on an array with <i>n</i>
+unique elements.
+What is a tight lower bound on the number of elements less than
+the median of medians?
+Assume the median of medians is found with groups of
+three and that there are an odd number of groups.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>6</mn>	</mfrac>	<mo>+</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>3</mn>	</mfrac>	<mo>+</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>6</mn>	</mfrac>	<mo>+</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>n</mi>		<mn>3</mn>	</mfrac>	<mo>+</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>n</mi>		<mn>3</mn>	</mfrac></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>6</mn>	</mfrac>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 6 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>2</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>3</mn>	</mfrac>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 7 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>6</mn>	</mfrac>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ Consider running the linear selection algorithm on an array with <i>n</i>
+unique elements.
+What is a tight lower bound on the number of elements less than
+the median of medians?
+Assume the median of medians is found with groups of
+seven and that there are an odd number of groups.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>7</mn>	</mfrac>	<mo>+</mo>	<mn>2</mn></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>11</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>14</mn>	</mfrac>	<mo>+</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>14</mn>	</mfrac>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>11</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>14</mn>	</mfrac>	<mo>+</mo>	<mn>2</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mrow>			<mn>2</mn>			<mi>n</mi>			<mo>+</mo>			<mn>7</mn>		</mrow>		<mn>7</mn>	</mfrac></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mrow>			<mn>2</mn>			<mi>n</mi>			<mo>+</mo>			<mn>28</mn>		</mrow>		<mn>14</mn>	</mfrac></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 6 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>14</mn>	</mfrac>	<mo>+</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 7 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>3</mn>	<mfrac linethickness="1">		<mi>n</mi>		<mn>7</mn>	</mfrac>	<mo>+</mo>	<mn>3</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Consider running the linear selection algorithm on an array with <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>=</mo>	<msup>		<mn>7</mn>		<mi>k</mi>	</msup></mrow></math>
+unique elements.
+What is a reasonable recurrence equation to describe the
+running time of the algorithm?
+Assume the median of medians is found with groups of
+seven.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>7</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>10</mn>				<mi>n</mi>			</mrow>			<mn>14</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>7</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>4</mn>				<mi>n</mi>			</mrow>			<mn>14</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>7</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>4</mn>				<mi>n</mi>			</mrow>			<mn>7</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>7</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>6</mn>				<mi>n</mi>			</mrow>			<mn>7</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>7</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>11</mn>				<mi>n</mi>			</mrow>			<mn>14</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>7</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>5</mn>				<mi>n</mi>			</mrow>			<mn>7</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Consider running the linear selection algorithm on an array with <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>=</mo>	<msup>		<mn>3</mn>		<mi>k</mi>	</msup></mrow></math>
+unique elements.
+What is a reasonable recurrence equation to describe the
+running time of the algorithm?
+Assume the median of medians is found with groups of
+three.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>3</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>6</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>3</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>5</mn>				<mi>n</mi>			</mrow>			<mn>6</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>3</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>2</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>3</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>2</mn>				<mi>n</mi>			</mrow>			<mn>5</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>3</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>3</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>3</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>2</mn>				<mi>n</mi>			</mrow>			<mn>3</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ Consider running the linear selection algorithm on an array with <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>=</mo>	<msup>		<mn>5</mn>		<mi>k</mi>	</msup></mrow></math>
+unique elements.
+What is a reasonable recurrence equation to describe the
+running time of the algorithm?
+Assume the median of medians is found with groups of
+five.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>5</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>2</mn>				<mi>n</mi>			</mrow>			<mn>5</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>5</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>2</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>5</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>9</mn>				<mi>n</mi>			</mrow>			<mn>10</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>5</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>7</mn>				<mi>n</mi>			</mrow>			<mn>10</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>5</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>3</mn>				<mi>n</mi>			</mrow>			<mn>5</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mi>n</mi>			<mn>5</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mfrac linethickness="1">			<mrow>				<mn>4</mn>				<mi>n</mi>			</mrow>			<mn>5</mn>		</mfrac>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ <b>T</b> or <b>F</b>:
+If the linear selection algorithm uses groups of three to find the
+median of medians, the asymptotic run time is still <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ <b>T</b> or <b>F</b>:
+If the linear selection algorithm uses groups of seven to find the
+median of medians, the asymptotic run time is still <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>decision trees</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ In proving a tight lower bound for a class of algorithms, one tries to
+establish, over all possible algorithms:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the best possible worst case
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the worst possible best case
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the worst possible worst case
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the best possible best case
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 0 -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ In an efficient decision tree for comparison sorts of <i>n</i> numbers,
+what is the smallest possible depth of a leaf, in the best case?
+Assume the root is at depth 0.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> approximately <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>log</mi>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>!</mo></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> approximately <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mi>log</mi>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ In an efficient decision tree for comparison sorts of <i>n</i> numbers,
+what is the largest possible depth of a leaf, in the worst case?
+Assume the root is at depth 0.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> approximately <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>log</mi>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>-</mo>	<mn>1</mn></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>approximately <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mi>log</mi>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>!</mo></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ In an efficient decision tree for comparison sorts of <i>n</i> numbers,
+what does the shortest path from the root to a leaf represent?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the best case behavior of the sort
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the worst case behavior of the sort
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the average case behavior of the sort
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> nothing, the longest path is what's important
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ An efficient decision tree for comparison sorts of <i>n</i> numbers
+has how many leaves?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mi>log</mi>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>log</mi>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>!</mo></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mi>n</mi>	</msup></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ Deriving a tight lower time bound for comparison sorts, based upon an
+efficient decision tree, yields:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Omega;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Omega;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&omega;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> unbounded
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>linear sorting fundamentals</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ Stability in a sort means:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the sort can work on any kind of number (integers, reals, etc.)
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the asymptotic run time does not vary upon the input
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the order of ties in the output reflects the input
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ The best case behavior for insertion sort is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> exponential
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ <b>T</b> or <b>F</b>:
+A linear-time sort does not compare entire keys with one another.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ <b>T</b> or <b>F</b>:
+A linear-time sort must always compare entire keys with one another.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>linear sorting -- counting</i>
+<br/>
+</h2><!-- section ENDED -->
+
+For counting sort, assume array <i>A</i> holds the data to be sorted,
+array <i>B</i> holds the sorted data, and array <i>C</i> holds the counts.
+The index <i>i</i> is used to sweep arrays <i>A</i> and <i>B</i> and the
+index <i>j</i> is used to sweep array <i>C</i>.
+<br/>
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+ Counting sort is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> always unstable
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+stable if higher indexed elements from the input array
+are transferred to higher indexed elements in the output array.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> always stable
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+stable if lower indexed elements from the input array
+are transferred to higher indexed elements in the output array.
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+ Suppose you are to sort <i>n</i> numbers using counting sort.
+What size should the <i>C</i> array be?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> equal to <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> greater than <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>there's not enough information
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> less than <i>n</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 1 1 0 -->
+<!-- QA -->
+<ol type="1" start="23">
+<li>
+ Consider using a counting sort to sort the input array
+
+<code>[2,5,0,3,2,0,3,3]</code>.
+After the first phase, when 
+<code>C[i]</code> holds the number of
+elements equal to <i>i</i>, the array <i>C</i> looks like:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>[0,0,2,2,3,3,3,5]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>[2,2,4,7,7,8]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>[2,0,2,3,0,1]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>[2,0,5,2,3,0,3,3]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>[2,2,4,6,7,8]</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="24">
+<li>
+ Consider using a counting sort to sort the input array
+
+<code>[2,5,0,3,2,0,3,3]</code> with auxiliary array <i>C</i>.
+After the second phase, when 
+<code>C[i]</code> holds the number of
+elements less than or equal to <i>i</i>, the array <i>C</i> looks like:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>[2,2,4,7,7,8]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>[2,0,2,3,0,1]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>[2,2,4,6,7,8]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>[2,0,5,2,3,0,3,3]</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>[0,0,2,2,3,3,3,5]</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="25">
+<li>
+ Consider using a stable counting sort to sort the input array
+
+<code>[2,5,0,3,2,0,3,3]</code> with destination array <i>B</i>.
+At start of phase three, using a right to left placement,
+the first element to be placed in <i>B</i> is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4, at index 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>3, at index 6
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1, at index 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0, at index 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2, at index 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5, at index 7
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="26">
+<li>
+ Let <i>n</i> be the count of numbers in a collection of base<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi></mi>		<mn>10</mn>	</msub></mrow></math> numbers.
+Suppose zero is the minimum number and
+<i>k</i> is the maximum number in the collection.
+The time complexity of counting sort is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mi>n</mi>			<mi>k</mi>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo>+</mo>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="27">
+<li>
+ Let <i>n</i> be the count of numbers in a collection of base<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi></mi>		<mn>10</mn>	</msub></mrow></math> numbers.
+Suppose zero is the minimum number and
+<i>k</i> is the maximum number in the collection.
+If <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<mi>k</mi>	<mo>=</mo>	<mi>o</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	</mrow></math>, then the time complexity of
+counting sort is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mi>n</mi>			<mn>2</mn>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mi>k</mi>			<mn>2</mn>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>k</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="28">
+<li>
+ <b>T</b> or <b>F</b>:
+Suppose the
+lower bound of some numbers to be sorted is not zero.
+Counting sort can still be used without changing its
+fundamental time bounds.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="29">
+<li>
+ <b>T</b> or <b>F</b>:
+Suppose the
+lower bound of some numbers to be sorted, 
+<code>LB</code>, is not zero.
+Counting sort can still be used without changing its
+fundamental time bounds, if, among other changes, the
+statement 
+<code>C[A[i]] += 1</code> is changed
+to 
+<code>C[A[i]-LB] += 1</code>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="30">
+<li>
+ <b>T</b> or <b>F</b>:
+Suppose the
+lower bound of some numbers to be sorted, 
+<code>LB</code>, is not zero.
+Counting sort can still be used without changing its
+fundamental time bounds, if, among other changes, the
+statement 
+<code>B[C[A[i]]-1] = A[i]</code> is changed
+to 
+<code>B[C[A[i-LB]]-1] = A[i]</code>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="31">
+<li>
+ <b>T</b> or <b>F</b>: Counting sort can be used to
+sort <i>n</i> decimal numbers uniformly distributed
+over the range of zero to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mn>5</mn>	</msup></mrow></math> in linear time.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="32">
+<li>
+ Consider using counting sort to
+sort <i>n</i> numbers uniformly distributed
+over the range of zero to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mi>k</mi>	</msup></mrow></math>.
+The asymptotic complexity of the sort will be
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mi>n</mi>			<mi>k</mi>		</msup>		<mo>+</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo>+</mo>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>k</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>linear sorting -- radix</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="33">
+<li>
+ Suppose the recurrence equation
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>p</mi>		<mo>,</mo>		<mi>q</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>p</mi>		<mo>,</mo>		<mi>q</mi>		<mo>-</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>p</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+is used to describe radix sort.
+Considering only the sorting of the numbers on a particular digit,
+which sort is consistent with that equation?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>counting sort
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> selection sort
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> mergesort sort
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> radix sort
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="34">
+<li>
+ Suppose the recurrence equation
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>p</mi>		<mo>,</mo>		<mi>q</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>p</mi>		<mo>,</mo>		<mi>q</mi>		<mo>-</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>p</mi>		<mi>log</mi>		<mi>p</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+is used to describe radix sort.
+Considering only the sorting of the numbers on a particular digit,
+which sort is consistent with that equation?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> radix sort
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> counting sort
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>mergesort sort
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> selection sort
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="35">
+<li>
+ Suppose the recurrence equation
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>p</mi>		<mo>,</mo>		<mi>q</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>p</mi>		<mo>,</mo>		<mi>q</mi>		<mo>-</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mi>p</mi>			<mn>2</mn>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+is used to describe radix sort.
+Considering only the sorting of the numbers on a particular digit,
+which sort is consistent with that equation?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> mergesort sort
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>selection sort
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> counting sort
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> radix sort
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="36">
+<li>
+ Suppose the recurrence equation
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>p</mi>		<mo>,</mo>		<mi>q</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<mi>T</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>p</mi>		<mo>,</mo>		<mi>q</mi>		<mo>-</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow>	<mo>+</mo>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>p</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+is used to describe radix sort.
+Which variable in the equation refers to the number of digits?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>d</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>p</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>q</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 1 1 0 -->
+<!-- QA -->
+<ol type="1" start="37">
+<li>
+ Consider using radix sort for sorting the following numbers:
+
+<pre>
+    558
+    354
+    318
+    622
+</pre>
+
+After the first pass, the order of the numbers is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>  622, 558, 318, 354 
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 622, 354, 558, 318 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>  318, 354, 558, 622 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>  622, 354, 318, 558 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>  622, 558, 354, 318 
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>  354, 318, 558, 622 
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="38">
+<li>
+ Let <i>n</i> be the count of numbers in a collection of positive,
+base<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi></mi>		<mn>10</mn>	</msub></mrow></math> numbers.
+Let <i>m</i> be the number of digits in the largest number in the
+collection. Suppose the auxiliary sort works in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math> time.
+Then radix sorting takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>m</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="39">
+<li>
+ Let <i>n</i> be the count of numbers in a collection of positive,
+base<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi></mi>		<mn>10</mn>	</msub></mrow></math> numbers.
+Let <i>m</i> be the number of digits in the largest number in the
+collection. Suppose the auxiliary sort works in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+time. Then radix sorting takes time:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mo form="prefix">(</mo>		<mi>m</mi>		<mo>+</mo>		<mi>n</mi>		<mo form="postfix">)</mo>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>m</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mo form="prefix">(</mo>		<mi>m</mi>		<mi>n</mi>		<mo form="postfix">)</mo>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>m</mi>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 -->
+<!-- QA -->
+<ol type="1" start="40">
+<li>
+ <b>T</b> or <b>F</b>:
+Suppose during one pass of radix sort, there is a tie between two numbers.
+Since they are considered the same number,
+it does not matter if those two numbers swap positions.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="41">
+<li>
+ Consider the sort used for each pass of radix sort.
+Must the auxiliary sort be stable?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> Yes, because swapping ties can undo the work of future passes
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>Yes, because swapping ties can undo the work of previous passes
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> No, because there can be no ties in radix sort.
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> No, because radix sort works even if the auxilliary sort is unstable.
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="42">
+<li>
+ <b>T</b> or <b>F</b>: Radix sort can be used to
+sort <i>n</i> decimal numbers uniformly distributed
+over the range of zero to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mn>5</mn>	</msup></mrow></math> in linear time.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> <b>Concept:</b> <i>linear sorting -- bucket</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="43">
+<li>
+ <b>T</b> or <b>F</b>: If bucket sort uses equally-sized buckets,
+then the distribution of the incoming numbers need not be
+uniform for the sort to run in expected linear time.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 7 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 0 0 0 1 0 1 0 -->
+<!-- QA -->
+<ol type="1" start="44">
+<li>
+ Consider using bucket sort to sort
+<i>n</i> numbers evenly distributed over the
+range 0 to <i>m</i>. Roughly, how many buckets should you use?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>m</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>m</mi>		<mi>n</mi>	</mfrac></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>n</mi>		<mi>m</mi>	</mfrac></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="45">
+<li>
+ Consider using bucket sort to sort
+<i>n</i> numbers evenly distributed over the
+range 0 to <i>m</i>. Roughly, what size bucket should you use?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>m</mi>		<mi>n</mi>	</mfrac></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>n</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>n</mi>		<mi>m</mi>	</mfrac></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>m</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="46">
+<li>
+ Consider using bucket sort to sort
+<i>n</i> non-negative numbers evenly distributed over the
+range 0 to <i>m</i>. The range of the first bucket should be:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<mn>0</mn>	</mrow></math> to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<mfrac linethickness="1">		<mi>m</mi>		<mi>n</mi>	</mfrac>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0 to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>n</mi>		<mi>m</mi>	</mfrac></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<mfrac linethickness="1">		<mi>m</mi>		<mi>n</mi>	</mfrac>	</mrow></math> to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>		<mn>2</mn>	<mfrac linethickness="1">		<mi>m</mi>		<mi>n</mi>	</mfrac>	</mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>n</mi>		<mi>m</mi>	</mfrac></mrow></math> to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mrow>			<mn>2</mn>			<mi>n</mi>		</mrow>		<mi>m</mi>	</mfrac></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="47">
+<li>
+ Consider using bucket sort to sort
+<i>n</i> non-negative numbers evenly distributed over the
+range 0 to <i>m</i>. The average count of numbers in a bucket is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>m</mi>		<mi>n</mi>	</mfrac></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 0
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>n</mi>		<mi>m</mi>	</mfrac></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>1
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="48">
+<li>
+ Consider a bucket sort that uses insertion sort to sort the
+individual buckets.
+Suppose you could bound the maximum count of numbers in a
+bucket to a constant <i>C</i>. Then the asymptotic running time
+to sort one bucket would be:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>, because insertion sort is log-linear in the average case
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<msup>			<mi>n</mi>			<mn>2</mn>		</msup>		<mo form="postfix">)</mo>	</mrow></mrow></math>, because insertion sort is quadratic in the worst case
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>, because insertion sort is linear in the best case
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="49">
+<li>
+ Consider using bucket sort to sort
+<i>n</i> non-negative numbers evenly distributed over the
+range 0 to <i>m</i>. The <i>expected</i> running time is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> log-linear
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="50">
+<li>
+ Consider using bucket sort to sort
+<i>n</i> non-negative numbers in the
+range 0 to <i>m</i> with no a priori knowledge of the
+distribution of the numbers. Using insertion sort as
+the auxilliary sort, the worst case running time is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> cubic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>quadratic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="51">
+<li>
+ <b>T</b> or <b>F</b>: Bucket sort can be used to
+sort <i>n</i> decimal numbers uniformly distributed
+over the range of zero to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mn>5</mn>	</msup></mrow></math> in linear time.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

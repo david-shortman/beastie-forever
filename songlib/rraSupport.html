@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: rraSupport.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Thu Feb  9 15:43:15 2012 -->
+<head>
+<title>songlib: rra support</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: rra support<br /></h1>
+<h2 class="maketitle">written by: Song Li Buser</h2>
+<h3 class="maketitle">Revision Date: February 9, 2012</h3>
+</p>
+
+<h3><a name="id1"><a href="rraSupport.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">A sample program</a></h1><p>
+Here is a typical program for manipulating an RRA file. This program
+clips the audio so that no value exceeds the preset level:
+</p>
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdarg.h&gt;
+#include &lt;string.h&gt;
+#include &lt;math.h&gt;
+#include &lt;assert.h&gt;
+#include &lt;songlib/util.h&gt;
+#include &lt;songlib/rra.h&gt;
+
+#define CLIP_LEVEL 3000
+
+/* change PROGRAM_NAME and PROGRAM_VERSION appropriately */
+
+char *PROGRAM_NAME = "clip";
+char *PROGRAM_VERSION = "0.01";
+
+static int clip = CLIP_LEVEL;
+static int amplify = 32768 / CLIP_LEVEL;
+
+static int processOptions(int,char **);
+
+int
+main(int argc,char **argv)
+    {
+    int argIndex = 1;
+
+    int i,j;
+    int amp;
+    FILE *in,*out;
+    RRA *h;
+
+    argIndex = processOptions(argc,argv);
+
+    if (argc-argIndex == 0)
+        {
+        in = stdin;
+        out = stdout;
+        }
+    else if (argc-argIndex == 1)
+        {
+        in = OpenFile(argv[argIndex],"r");
+        out = stdout;
+        }
+    else if (argc-argIndex == 2)
+        {
+        in = OpenFile(argv[argIndex],"r");
+        out = OpenFile(argv[argIndex+1],"w");
+        }
+    else
+        {
+        printf("usage: clip -aN -cN [&lt;input rra file&gt; [&lt;output rra file&gt;]]\n");
+        exit(-1);
+        }
+
+    h = newRRAHeader();
+    
+    readRRAHeader(in,h,0);
+
+    writeRRAHeader(out,h,"modifiedBy: clip",0);
+
+    for (i = 0; i &lt; h-&gt;samples; ++i)
+        for (j = 0; j &lt; h-&gt;channels; ++j)
+            {
+            amp = readRRAAmplitude(in,out,h-&gt;bitsPerSample,0);
+            if (amp &lt; - clip)
+                fprintf(out,"%d\n",- clip * amplify);
+            else if (amp &gt; clip)
+                fprintf(out,"%d\n",clip * amplify);
+            else
+                fprintf(out,"%d\n",amp * amplify);
+            }
+
+    fclose(in);
+    fclose(out);
+
+    return 0;
+    }
+
+/* only -oXXX  or -o XXX options */
+
+static int
+processOptions(int argc, char **argv)
+{
+    int argIndex;
+    int argUsed;
+    int separateArg;
+    char *arg;
+
+    argIndex = 1;
+
+    while (argIndex &lt; argc &amp;&amp; *argv[argIndex] == '-')
+        {
+        separateArg = 0;
+        argUsed = 0;
+
+        if (argv[argIndex][2] == '\0')
+            {
+            arg = argv[argIndex+1];
+            separateArg = 1;
+            }
+        else
+            arg = argv[argIndex]+2;
+
+        switch (argv[argIndex][1])
+            {
+            case 'a':
+                amplify = atof(arg);
+                argUsed = 1;
+                break;
+            case 'c':
+                clip = atoi(arg);
+                argUsed = 1;
+                break;
+            case 'h':
+                printf("clip options:\n");
+                printf("  -a N   set amplification level to N\n");
+                printf("         default value is %d\n",amplify);
+                printf("  -c N   set clip level to N\n");
+                printf("         default value is %d\n",clip);
+                printf("  -h     help\n");
+                exit(0);
+                break;
+            case 'v':
+                printf("%s version %s\n", PROGRAM_NAME, PROGRAM_VERSION);
+                exit(0);
+                break;
+            default:
+                Fatal("option %s not understood\n",argv[argIndex]);
+            }
+
+        if (separateArg &amp;&amp; argUsed)
+            ++argIndex;
+
+        ++argIndex;
+        }
+
+    return argIndex;
+    }
+</pre>
+<p>One might use this program to create a set of fuzzy guitar notes from
+a set of clean notes:
+</p>
+<pre>
+    slbuser@songlib:~/notes$ for s in clean*.rra
+    &gt; do
+    &gt; cat $s | clip -t1000 -a15 &gt; out.rra
+    &gt; mv out.rra $s
+    &gt; done
+</pre>
+
+<h1><a name="id3">An analysis of the program</a></h1><p>
+The first RRA-specific function to be called in the above program is:
+</p>
+<pre>
+    RRA *newRRAHeader(void);
+</pre>
+<p>This function returns an empty RRA object. We use the variable <i>h</i> to
+point to the newly created object:
+</p>
+<pre>
+    h = newRRAHeader();
+</pre>
+<p>The next RRA function called is:
+</p>
+<pre>
+    void readRRAHeader(FILE *,RRA *,void (*)(RRA *,char *,void *));
+</pre>
+<p>Its job is to read the header information from the input file and
+place it into the empty RRA object;
+</p>
+<pre>
+    readRRAHeader(in,h,0);
+</pre>
+<p>The last argument of the function is the handler for attributes that
+<i>readRRAHeader</i> doesn't recognize. A zero argument means that the default
+unknown attribute handler is used. These attribute value pairs are placed
+by the default handler
+in a field called <i>items</i>.
+</p>
+<p>The next function called is:
+</p>
+<pre>
+    void writeRRAHeader(FILE *,RRA *,char *,void (*)(FILE *,RRA *));
+</pre>
+<p>This call begins the output of the transformed RRA file. In the program
+above, the call:
+</p>
+<pre>
+    writeRRAHeader(out,h,"modifiedBy: clip",0);
+</pre>
+<p>writes the header information in <i>h</i>,
+adds an additional <i>modifiedBy</i> field value,
+and indicates that any non-standard attribute-value pairs
+be written out by the default
+unknown attribute handler, as indicated by the zero value.
+</p>
+<p>Finally, we have
+the read/write loop that processes the amplitude values in the input
+RRA file:
+</p>
+<pre>
+for (i = 0; i &lt; h-&gt;samples; ++i)
+    for (j = 0; j &lt; h-&gt;channels; ++j)
+        {
+        amp = readRRAAmplitude(in,out,h-&gt;bitsPerSample,outputComment);
+        if (amp &lt; - clip)
+            fprintf(out,"%d\n",- clip * amplify);
+        else if (amp &gt; clip)
+            fprintf(out,"%d\n",clip * amplify);
+        else
+            fprintf(out,"%d\n",amp * amplify);
+        }
+</pre>
+<p>The function:
+</p>
+<pre>
+    (int) readRRAAmplitude(FILE *,FILE *,int,void (*)(FILE *,FILE *));
+</pre>
+<p>is used to read in RRA amplitude values. Since these values can be either
+integer or real and can contain comments, the <i>readRRAAmplitude</i> function
+is preferred over:
+</p>
+<pre>
+    fscanf(in,"%d",&amp;amp);
+</pre>
+<p>The first argument to the function is the input file pointer, the second
+is the output file pointer (used by the last argument), the third argument
+is the number of bits per sample, and the last argument is the comment
+handler. The number of bits per sample is used to convert a
+real amplitude (generally in the range from -1.0 to 1.0) to an
+integer value. In the example program, the actual call is:
+</p>
+<pre>
+    amp = readRRAAmplitude(in,out,h-&gt;bitsPerSample,outputComment);
+</pre>
+<p>The <i>outputComment</i> function is used to immediately write any comments
+encountered to output. If one wished to change the clipping level
+on the fly, a custom comment handler would be passed instead of
+<i>outputComment</i>. This custom handler would read in the comment and,
+if it was meant for the clipping program, parse it and modify the
+clipping level. If the comment was not meant for the clipping program,
+the custom handler should write the comment to output.
+</p>
+<p>There are other functions for manipulating RRAs. They are:
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="left">
+<i>function&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+</td><td colspan="1" align="left"> <i>purpose</i></td></tr>
+<tr><td colspan="1" align="left">
+<code>RRA *newRRA(int,int,int,int)</code>
+</td><td colspan="1" align="left"> create/return an empty RRA object with a data portion - the first argument
+is the sample rate, the second is the number of bits per sample, the third is
+the number of channels, and the fourth is the number of samples per channel</td></tr>
+<tr><td colspan="1" align="left">
+<code>RRA *readRRA(FILE *,void (*)(RRA *,char *,void *))</code>
+</td><td colspan="1" align="left"> read an RRA file/return an RRA object -
+the first argument is the input file pointer,
+the second is a comment handler (you can pass in zero to get the default
+handler)</td></tr>
+<tr><td colspan="1" align="left">
+<code>void createRRAData(RRA *)</code>
+</td><td colspan="1" align="left"> adds a data portion to an RRA header -
+the argument is an RRA header that has had the number of channels and the
+number of samples per channel set; the size of the data portion will
+be the number of channels times the number of samples per channel</td></tr>
+<tr><td colspan="1" align="left">
+<code>void clearRRAData(RRA *)</code>
+</td><td colspan="1" align="left"> set all sample values to zero -
+the argument is the RRA object to be cleared</td></tr>
+<tr><td colspan="1" align="left">
+<code>voidfreeRRA(RRA *)</code> </td><td colspan="1" align="left"> free an RRA object,
+including the data portion -
+the argument is the RRA object to be cleared</td></tr>
+<tr><td colspan="1" align="left">
+<code>RRA *cloneRRA(RRA *,RRA_TAG *(*)(RRA_TAG *))</code>
+</td><td colspan="1" align="left"> clones an RRA object - 
+the first argument is the RRA object to be cloned,
+the second is a handler which processes non-standard tags
+(you can pass in zero to get the default tag handler, which
+just copies the non-standard tags)</td></tr>
+<tr><td colspan="1" align="left">
+</td></tr></tbody></table>
+</p>
+</div>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

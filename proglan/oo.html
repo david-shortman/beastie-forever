@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>oo</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Evaluating Object Orientation
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="oo.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ Object orientation
+
+</h2><!-- section ENDED -->
+
+An object oriented language provides for encapsulation, inheritance, and
+polymorphism. First, we focus on encapsulation.
+<br/>
+<!-- section -->
+<h2>
+ Encapsulation
+</h2><!-- section ENDED -->
+
+Recall that in Scheme,
+one can encapsulate by returning a dispatch function,
+which essentially serves
+as an intermediary between the user of the &ldquo;object&rdquo; and the local
+environment where the instance variables and methods are stored.
+The dispatch function
+translates messages to function calls and variable
+accesses.
+With Scam, one dispenses with the dispatch function and lets the user
+of the object deal with the local environment directly. It does so
+by revising
+the <i>evalFuncCall</i> function to insert a variable
+named <i>this</i> whose value is the local environment.
+Note
+that the local environment is the extended environment under which the
+body of the function is evaluated:
+<br/>
+
+<pre>
+    function evalFuncCall(t,env)
+        {
+        var closure = eval(getFuncCallName(t),env);
+        var args = getFuncCallArgs(t);
+        var params = getClosureParams(closure);
+        var body = getClosureBody(closure);
+        var senv = getClosureEnvironment(closure);
+        var eargs = evalArgs(args,env);
+        var xenv = EnvExtend(senv,params,eargs);
+        
+        //insert a variable that points to xenv
+        EnvInsert(xenv, new Lexeme(ID,&quot;this&quot;), xenv);
+
+        return eval(body,xenv);
+        }
+</pre>
+
+Now functions can return the local environment. Here is a simple <i>node</i>
+class written in the same style as our pseudocode:
+<br/>
+
+<pre>
+    function node(value,next)
+        {
+        this;
+        }
+
+    var n = node(5, null);
+</pre>
+
+The variable <i>n</i> is bound to the return value of the function,
+which is the local environment in which <i>value</i> and <i>next</i> are bound.
+This environment is also known as an <i>object</i>.
+Functions that return this are known as constructors as well as
+classes.
+<br/>
+<br/>
+What
+is needed now is a way to access the local variables contained in
+an object. Assume the <i>dot</i>
+operator performs this function, as in:
+<br/>
+
+<pre>
+    println(n . value);
+</pre>
+
+The left hand side of the dot operator should evaluate to an object,
+while the right hand side should be a variable name. Here is a version
+of <i>evalDot</i> which treats the expression as a value (rather than as
+a place to assign):
+<br/>
+
+<pre>
+    //precondition: lhs evals to object, rhs is a variable
+    function evalDot(t, env)
+        {
+        var object = eval(getLHS(t), env);
+        return eval(getRHS(t), object); // objects == environments!
+        }
+</pre>
+
+One has to update the assignment operator to handle the case when the dot operator expression is used as a location:
+<br/>
+
+<pre>
+    function evalAssignment(t, env)
+        {
+        var result = eval(getRHS(t),env);
+        if (getLHS(t).type == VARIABLE)
+            EnvUpdate(env,getLHS(t),result);
+        else if (getLHS(t).type == DOT)
+            {
+            var object = eval(getLHS(getLHS(t)),env);
+            EnvUpdate(object,getLHS(getRHS(t)),result);
+            }
+        else
+            fatal(&quot;bad assignment!&quot;);
+
+        return result;
+        }
+</pre>
+
+With these changes, your language has added encapsulation to its feature
+set.
+<br/>
+<!-- section -->
+<h2>
+ Adding inheritance
+</h2><!-- section ENDED -->
+
+Inheritance can be handled using functions written in your language by
+manipulating the static scopes of your objects and their methods.
+Let:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>A</mi>	<mo>&rarr;</mo>	<mi>B</mi>	<mo>&rarr;</mo>	<mi>C</mi>	<mo>&rarr;</mo>	<mi>D</mi></mrow></math>
+</span>
+
+<br/>
+be an inheritance hierarchy with <i>A</i> being the most sub-class
+(the <i>child</i>
+class) and
+<i>D</i> being the most super class.
+Assume, in addition to the constructors <i>A</i> through <i>D</i>, we
+have the built-in functions <i>getEnclosingScope</i> and <i>setEnclosingScope</i> with
+semantics suggested by their names.
+Let's also assume we have four objects <i>a</i>, <i>b</i>, <i>c</i>, and <i>d</i>
+which are objects
+created by constructors <i>A</i>, <i>B</i>, <i>C</i>, and <i>D</i>, respectively.
+<br/>
+<br/>
+To implement the inheritance hierarchy, we need to perform the
+following actions:
+<br/>
+<ol type="i">
+
+<li>
+
+ set the enclosing scope of <i>d</i> to the enclosing scope of <i>a</i>
+</li>
+
+<li>
+
+ set the enclosing scope of <i>a</i> to <i>b</i>,
+<i>b</i> to <i>c</i>, and <i>c</i> to <i>d</i>
+</li>
+
+<li>
+
+ set the definition pointers of the function objects/closures
+contained in <i>b</i>, <i>c</i>, and <i>d</i> to <i>a</i>
+</li>
+
+</ol>
+
+
+What step 2 does is to allow us to reference functions and variables
+defined in <i>b</i>, <i>c</i>, and <i>d</i> from <i>a</i>.
+Suppose we wish to reference a variable <i>g</i> via <i>a</i>, as in:
+<br/>
+
+<pre>
+    a . g;
+</pre>
+
+If <i>a</i> does not contain a binding for <i>g</i>, then its enclosing scope is
+checked. Since the enclosing scope of <i>a</i> has been set to <i>b</i>,
+<i>b</i> is then searched, then <i>c</i>, and then <i>d</i>. By virtue of step 1,
+the original enclosing scope of <i>a</i> is searched if a binding
+for <i>g</i> is not found in any of the objects.
+<br/>
+<br/>
+Step 3 is required so that variables referenced in
+functions defined in the super classes
+always refer to definitions in the most base class. For example, suppose all
+four objects, <i>a</i>, <i>b</i>, <i>c</i>, and <i>d</i>,
+define a function named <i>f</i>. Suppose further that <i>d</i> defines
+a function <i>g</i> that calls a function <i>f</i>. When the hierarchy is
+completed, consider a call to <i>g</i> via <i>a</i>:
+<br/>
+
+<pre>
+    h = a . g;
+    h();
+</pre>
+
+Since <i>g</i> calls <i>f</i>, with many candidates for <i>f</i>,
+whose version of <i>f</i> should <i>g</i> call? In most modern languages,
+<i>a</i>&apos;s version is the desired version. By virtue of step three,
+the definition environment of <i>g</i> has been switched from <i>d</i> to <i>a</i>.
+Thus, the new environment that comes into being from calling <i>g</i> will
+point to <i>a</i>. When the variable <i>f</i> needs to be resolved, <i>a</i>
+will
+be the first place a binding for <i>f</i> will be found. Without this step,
+<i>d</i>&apos;s version of <i>f</i> would be found instead when the body of <i>g</i>
+is executed.
+<br/>
+<!-- section -->
+<h2>
+ Generalizing the construction of inheritance hierarchies
+<br/>
+</h2><!-- section ENDED -->
+
+Scam has a function named <i>mixin</i> that is found in <i>inherit.lib</i>.
+The <i>mixin</i> function can be used to
+create the hierarchy in the previous section by making the following call:
+<br/>
+
+<pre>
+    a = mixin(list(A(),B(),C(),D()));
+</pre>
+
+where the list function collects the given items in a list.
+The calls to <i>A</i>, <i>B</i>, <i>C</i>, and <i>D</i>,
+create the objects referred to by
+<i>a</i>, <i>b</i>, <i>c</i>, and <i>d</i> in the previous section.
+<br/>
+<br/>
+The <i>mixin</i> function might something like this
+in our pseudocode:
+<br/>
+
+<pre>
+    function mixin(objects)
+        {
+        var child = car(objects);
+        setEnclosingScope(last(objects),child);          ;step 1
+        chainScopes(child,cdr(objects));                 ;step 2
+        setDefinitionScopes(cdr(objects),child);         ;step 3
+        child;
+        }
+</pre>
+
+Note that the <i>mixin</i> function is written in your language, not
+the host language, and that it uses the built-in functions
+<i>car</i>, <i>cdr</i>, and <i>setEnclosingScope</i> (which are
+implemented in your host language).
+<br/>
+<br/>
+The first expression after the definition of <i>child</i> implements
+step 1 of the previous section. The <i>chainScopes</i> function implements
+step 2 and looks something like:
+<br/>
+
+<pre>
+    function chainScopes(first,rest)
+        {
+        while (rest != NULL)
+            {
+            setEclosingScope(first,car(rest));
+            chainScopes(car(first),cdr(rest));
+            rest = cdr(rest);
+            }
+        }
+</pre>
+
+It is also written in your language.
+Finally, the <i>setDefinitionScopes</i> function implements step 3:
+<br/>
+
+<pre>
+    function setDefinitionScopes(scopes,child)
+        {
+        while (scopes != NULL)
+            {
+            var current = car(scopes);
+            var vars = getLocalVariables(current);   
+            var vals = getLocalValues(current);
+            while (valid? vars)
+                {
+                if (closure?(car(vars)))
+                    {
+                    setDefiningScope(car(vars),child);
+                    }
+                vars  = cdr(vars);
+                vals  = cdr(vals);
+                }
+            scopes = cdr(scopes);
+            }
+        }
+</pre>
+
+where the <i>closure?</i> predicate determines whether or not
+a variable value is a function object/closure and
+where <i>setDefiningScope</i> resets the definition scope pointer
+of a single function object/closure. The actual implementation
+of <i>setDefiningScope</i> is dependent on the structure of
+the object/closure.
+The functions <i>car</i>, <i>cdr</i>,
+<i>setDefiningScope</i>,
+<i>getLocalVariables</i>, and <i>getLocalValues</i>
+are built-in, implemented in your host language.
+<br/>
+<!-- section -->
+<h2>
+ Generating implicit hierarchies
+</h2><!-- section ENDED -->
+
+The <i>mixin</i> function requires that the inheritance hierarchy be
+explicitly passed. One can provide for an implicit generation
+of the hierarchy by requiring object to define a <i>parent</i> pointer.
+For example, the definition of <i>A</i> might be look like:
+<br/>
+
+<pre>
+    (define (A)
+        (define parent (B))
+        ...
+        this
+        )
+</pre>
+
+The definition of <i>B</i> would likewise contain a parent pointer that
+points to an object constructed by <i>C</i> and so on.
+With the parent pointers in place, one simply needs to pass an
+<i>A</i> object to a function that extracts the inheritance hierarchy by
+following the parent pointers. This function
+then passes the resulting chain of
+objects to <i>mixin</i>. Scam calls this function <i>new</i> and
+it could be implemented as:
+<br/>
+
+<pre>
+    function new(child)
+        {
+        var chain = followParentPointers(child);
+        mixin(chain);
+        child;
+        }
+</pre>
+
+The <i>followParentPointers</i> function might look like:
+<br/>
+
+<pre>
+    function followParentPointers(current)
+        {
+        if (current == NULL)
+            {
+            &quot;ok&quot;;
+            }
+        else
+            {
+            cons(current,followParentPointers(current . parent));
+            }
+        }
+</pre>
+
+where <i>cons</i> is a built-in function.
+Note that the parent pointers serve as alternative way to specify that
+one class inherits from another (as with <i>extends</i> in Java), but without
+the burden of additional syntax.
+<br/>
+<!-- section -->
+<h2>
+ Polymorphism
+</h2><!-- section ENDED -->
+
+Since your language is dynamically, not statically typed, polymorphism
+comes for free and you do not need to do anything else to
+implement it.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Concept Inventory</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Recursive and Iterative Processes
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="process.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+ Key ideas
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+
+<ul>
+
+<li>
+
+ recursive functions
+</li>
+
+<li>
+
+ recursive processes
+</li>
+
+<li>
+
+ iterative processes
+</li>
+
+<li>
+
+ tail recursion
+</li>
+
+<li>
+
+ recognizing tail recursion
+</li>
+
+<li>
+
+ optimizing tail recursion
+</li>
+
+</ul>
+
+
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Recursive processes - performing exponentiation
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Let's write a Scheme procedure for computing the raising of a number by
+an exponent. Scheme (nominally) has no looping constructs, so we use
+recursion
+instead. It's almost always a good thing to write a set of recurrence
+relations
+first. Here's a set for exponentiation.
+<br/>
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>b</mi>	<mi>a</mi>	<mi>s</mi>	<msup>		<mi>e</mi>		<mn>0</mn>	</msup>	<mo>=</mo>	<mn>1</mn></mrow></math>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>b</mi>	<mi>a</mi>	<mi>s</mi>	<msup>		<mi>e</mi>		<mi>exp</mi>	</msup>	<mo>=</mo>	<mi>b</mi>	<mi>a</mi>	<mi>s</mi>	<mi>e</mi>	<mo>*</mo>	<mi>b</mi>	<mi>a</mi>	<mi>s</mi>	<msup>		<mi>e</mi>		<mrow>			<mi>e</mi>			<mi>x</mi>			<mi>p</mi>			<mo>-</mo>			<mn>1</mn>		</mrow>	</msup></mrow></math>
+</span>
+
+<br/>
+Remember, we must have a terminating case, otherwise the recurrence
+goes
+on forever. Recurrence relations are easily translated into Scheme:
+<br/>
+
+<pre>
+    (define (raise base exp)
+        (if (= exp 0)
+            1
+            (* base (raise base (- exp 1)))
+            )
+        )
+</pre>
+
+Let's investigate the evaluation of the expression:
+<br/>
+
+<pre>
+    (raise 2 3)
+</pre>
+
+First the interpreter evaluates:
+<br/>
+
+<pre>
+    (raise 2 3)
+</pre>
+
+To do so, it needs to compute the expression:
+<br/>
+
+<pre>
+    (* 2 (raise 2 2))
+</pre>
+
+which in turns requires evaluation of:
+<br/>
+
+<pre>
+    (* 2 (* 2 (raise 2 1)))
+</pre>
+
+and:
+<br/>
+
+<pre>
+    (* 2 (* 2 (* 2 (raise 2 0))))
+</pre>
+
+At this point, the interpreter can directly calculate (raise 2 0) and
+in
+the normal scheme of things, places that return value on the stack in
+the
+right place, yielding:
+<br/>
+
+<pre>
+    (* 2 (* 2 (* 2 1)))
+</pre>
+
+The expression shortens as the interpreter bounds up the stack
+<br/>
+
+<pre>
+    (* 2 (* 2 2))
+</pre>
+
+followed by:
+<br/>
+
+<pre>
+    (* 2 4)
+</pre>
+
+and finally:
+<br/>
+
+<pre>
+    8
+</pre>
+
+which is the value the interpreter returns.
+Note that the number of recursive calls is proportional to the
+exponent,
+so the procedure executes in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math> time, where n
+is
+the size of the exponent. It also uses <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math> space, since
+each of the recursive calls takes up successive space on the stack.
+Compare
+this to a loop-based implementation in a procedural language, which
+takes
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+time (here the time is dominated by the number of multiplications) but
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+space. Next time we'll look at a Scheme implementation that uses <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+space as well.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Iterative processes - performing exponentiation
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Last time, we developed a version of the exponentiation function that
+was
+not only a recursive function, but implemented a recursive process as
+well:
+<br/>
+
+<pre>
+    (define (raise base exp)
+        (if (= exp 0)
+            1
+            (* base (raise base (- exp 1)))
+            )
+        )
+</pre>
+
+Here is an alternate version which implements an iterative process:
+<br/>
+
+<pre>
+    (define (raise base exp)
+        (define (inner_raise total base count)
+            (if (= count 0)
+                total
+                (inner_raise (* total base) base (- count 1))
+                )
+            )
+        (inner_raise 1 base exp)
+        )
+</pre>
+
+Let's investigate again the evaluation of the expression:
+<br/>
+
+<pre>
+    (raise 2 3)
+</pre>
+
+First
+the
+interpreter evaluates
+<br/>
+
+<pre>
+    (raise 2 3)
+</pre>
+
+Now, it needs to compute the expression:
+<br/>
+
+<pre>
+    (inner_raise 1 2 3)
+</pre>
+
+which in turns requires evaluation of:
+<br/>
+
+<pre>
+    (inner_raise 2 2 2)
+</pre>
+
+and then:
+<br/>
+
+<pre>
+    (inner_raise 4 2 1)
+</pre>
+
+and finally:
+<br/>
+
+<pre>
+    (inner_raise 8 2 0)
+</pre>
+
+At this point, the interpreter returns 8. Because no data is needed
+from
+the previous call to <i>inner_raise</i>,
+the current call to <i>inner_raise</i>
+can completely overlay the previous call on the call stack. Thus the
+call
+stack does not grow and the function executes in constant space. Of
+course,
+the compiler or interpreter must implement the overlay process. Scheme
+does so while C, C++, and Java compilers do not. This is known as tail
+recursion and is one of the things that makes Scheme so efficient.
+You can hand-optimize procedural code, however. Here is <i>inner_raise</i>,
+written as an recursive process in a C.
+<br/>
+
+<pre>
+    long
+    inner_raise(long total, int base, int count)
+        {
+        if (count == 0)
+            return total;
+
+        return inner_raise(total*base, base, count-1);
+        }
+</pre>
+
+Since C does not optimize tail recursion, this process runs in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+space. We can hand optimize <i>inner_raise</i>, however. We simply
+place
+a label at the top, update the formal parameters, and
+then jump to the top. Here is the optimized code:
+<br/>
+
+<pre>
+    long
+    inner_raise(long total, int base, int count)
+        {
+    TOP:
+        if (count == 0)
+            return total;
+
+        total = total*base
+        count = count-1;
+        goto TOP;
+        }
+</pre>
+
+This simulates overwriting the formal parameters on the stack. We have
+converted <i>inner_raise</i> from implementing a recursive process to
+implementing
+an iterative process. Of course, normally we would write this as a
+loop.
+The point to be gained here is that if you prefer to write code in a
+recursive
+style, Scheme allows you to do so without loss of efficiency. Another
+point
+to be gained is that there is actually no difference between loops and
+recursion; they are one and the same.
+<br/>
+Here is another example of a recursive calculation that can be
+implemented
+as a recursive or an iterative process. The task is to calculate the
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mrow>			<mi>t</mi>			<mi>h</mi>		</mrow>	</msup></mrow></math>
+Fibonacci number.
+<br/>
+
+<pre>
+    (define (fibr n)
+        (cond
+            ((= n 0) 0)
+            ((= n 1) 1)
+            (else (+ (fibr (- n 2)) (fibr (- n 1))))
+            )
+        )
+</pre>
+
+and
+<br/>
+
+<pre>
+    (define (fibi n)
+        (define (inner_fib last current count)
+            (if (= count 0)
+                last
+                (inner_fib current (+ last current) (- count 1))
+                )
+            )
+        (inner_fib 0 1 n)
+        )
+</pre>
+
+At this point, you ought to be able to tell the nature of the process
+each
+function implements.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Recognizing tail recursion
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Tail recursion is easy to recognize. If the last thing a function does
+before exiting is a recursive call, then that <i>particular</i> call
+is a tail recursive
+call. In <i>fibr</i>, the last thing that is done before leaving <i>fibr</i>
+is an addition, so <i>fibr</i> is not tail recursive. However, the
+last
+thing <i>inner_fib</i> does before exiting is call <i>inner_fib</i>.
+Therefore,
+<i>inner_fib</i> is tail recursive. Since the last thing <i>fibi</i>
+does
+is call <i>inner_fib</i>, since <i>inner_fib</i> is tail recursive, <i>fibi</i>
+is tail recursive as well.
+<br/>
+Note, it is possible for a function to be
+sometimes
+tail recursive and sometimes not, as in this example:
+<br/>
+
+<pre>
+    (define (f x)
+        (cond
+            ((= x 0)
+                0
+                )
+            ((= x 1)
+                1
+                )
+            ;; tail recursive call
+            ((= (remainder x 2) 0)
+                (f (- x 1))
+                )
+            ;; non-tail recursive call
+            (else
+                (+ (f (- x 1)) (f (- x 2)))
+                )
+            )
+        )
+</pre>
+
+Here is another interesting example:
+<br/>
+
+<pre>
+    (define (app a b)
+        (cond
+            ((null? a) b)
+            ((null? b) a)
+            (else (app (cdr a) (app (cdr a) (cdr b))))
+            )
+        )
+</pre>
+
+Although the outer recursive call to <i>app</i> is tail recursive, the
+inner recursive call is not. Thus <i>app</i> generates a recursive process.
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

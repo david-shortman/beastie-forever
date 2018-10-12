@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - CDA Logic</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; CDA Logic</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=21">CDA Logic</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=21">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">08-29-2018, 06:06 PM</div>
+</div>
+<div class="message">Since we're always shifting when necessary with regard to insertCDA and removeCDA, is it even possible to have the front of the array start anywhere other than index 0?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">08-29-2018, 06:35 PM</div>
+</div>
+<div class="message">Yes. Consider<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>items = newCDA();<br />
+insertCDA(items,0,x);<br />
+insertCDA(items,1,y);<br />
+insertCDA(items,2,z);<br />
+removeCDA(items,0);</code></div></div><br />
+At this point, index 0, from the user's point of view, is at index 1, from the internal view; the call getCDA(items,0) should return y. Index 0, in the internal view, is part of the unfilled portion.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">08-29-2018, 07:29 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-29-2018, 06:35 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=107#pid107">[ -> ]</a></cite>At this point, index 0, from the user's point of view, is at index 1, from the internal view; the call getCDA(items,0) should return y. Index 0, in the internal view, is part of the unfilled portion.</blockquote><br />
+But after removeCDA, wouldn't the other items shift to the left? So from the internal view, index 0 is filled?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a></h2></div><div class="dateline">08-29-2018, 09:52 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-29-2018, 07:29 PM)</span>jdtubbs3 Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=109#pid109">[ -> ]</a></cite><blockquote class="mycode_quote"><cite><span> (08-29-2018, 06:35 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=107#pid107">[ -> ]</a></cite>At this point, index 0, from the user's point of view, is at index 1, from the internal view; the call getCDA(items,0) should return y. Index 0, in the internal view, is part of the unfilled portion.</blockquote><br />
+But after removeCDA, wouldn't the other items shift to the left? So from the internal view, index 0 is filled?</blockquote><br />
+We don't shift to left after removal in CDA.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">08-29-2018, 10:51 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-29-2018, 09:52 PM)</span>magarwal Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=114#pid114">[ -> ]</a></cite>We don't shift to left after removal in CDA.</blockquote><br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><span style="font-style: italic;" class="mycode_i"><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">removeCDA</span></span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"> - This remove method removes and returns the item named by the given index. The item at the next higher slot shifts to that slot (and so on)</span></span></span></blockquote>
+<br />
+Might need version 1f of cda.<br />
+<br />
+Edit: I think there would have to be some level of shifting to keep it virtually contiguous.<br />
+<br />
+|X|X|X|X| | | | | | | |X|X|X|X|X| This should be valid.<br />
+<br />
+|X| |X|X| | | | | | | |X|X| | |X|  This wouldn't be valid, right?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a></h2></div><div class="dateline">08-30-2018, 07:11 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-29-2018, 10:51 PM)</span>jdtubbs3 Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=117#pid117">[ -> ]</a></cite><blockquote class="mycode_quote"><cite><span> (08-29-2018, 09:52 PM)</span>magarwal Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=114#pid114">[ -> ]</a></cite>We don't shift to left after removal in CDA.</blockquote><br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><span style="font-style: italic;" class="mycode_i"><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">removeCDA</span></span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"> - This remove method removes and returns the item named by the given index. The item at the next higher slot shifts to that slot (and so on)</span></span></span></blockquote>
+<br />
+Might need version 1f of cda.<br />
+<br />
+Edit: I think there would have to be some level of shifting to keep it virtually contiguous.<br />
+<br />
+|X|X|X|X| | | | | | | |X|X|X|X|X| This should be valid.<br />
+<br />
+|X| |X|X| | | | | | | |X|X| | |X|  This wouldn't be valid, right?</blockquote><br />
+I was only referring to the example above in which the very first element is removed. We don't need to shift to left for that case, we can just change the index. So it would be something like:<br />
+<br />
+|x|y|z|  |   (BEFORE)<br />
+|  |y|z|  |   (AFTER removing index 0)<br />
+<br />
+Correct me if I'm wrong.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">08-30-2018, 07:35 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-30-2018, 07:11 PM)</span>magarwal Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=127#pid127">[ -> ]</a></cite>I was only referring to the example above in which the very first element is removed. We don't need to shift to left for that case, we can just change the index. So it would be something like:<br />
+<br />
+|x|y|z|  |   (BEFORE)<br />
+|  |y|z|  |   (AFTER removing index 0)<br />
+<br />
+Correct me if I'm wrong.</blockquote><br />
+ Ah, my bad. I agree. I think someone posted the correct constraints earlier, but it probably is: If removing from the front or back, don't shift.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a></h2></div><div class="dateline">08-30-2018, 07:54 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (08-30-2018, 07:35 PM)</span>jdtubbs3 Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=128#pid128">[ -> ]</a></cite>Ah, my bad. I agree. I think someone posted the correct constraints earlier, but it probably is: If removing from the front or back, don't shift.</blockquote>I think the shifting is pretty simple actually: shift the side that is less costly. So in an array with, say, 8 indices, if you remove index 1, then you can move index 0 to the right but if you remove index 4, then you'd have to move indices 5, 6 and 7 to the left.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">09-01-2018, 09:54 PM</div>
+</div>
+<div class="message">The spec doesn't specify the direction of the shift. However, other constraints will force a particular shifting strategy (as noted in the previous post).</div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; CDA Logic</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

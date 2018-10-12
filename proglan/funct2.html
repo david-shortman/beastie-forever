@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Concept Inventory</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Combining Functions
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="funct2.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+ Key idea
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+building functions with functions (as opposed to calling functions
+from functions)
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Combination of functions
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Most procedural languages allow for the combination of data. For example,
+Pascal has records, C has structs, and C++ has classes. Since functions are
+first class objects in Scheme, they also can be combined much like data.
+Consider the function <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>f</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>x</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>=</mo>	<msup>		<mi>x</mi>		<mn>3</mn>	</msup>	<mo>-</mo>	<mn>2</mn>	<msup>		<mi>x</mi>		<mn>2</mn>	</msup>	<mo>+</mo>	<mn>1</mn></mrow></math>.
+We can easily represent that function in Scheme.
+<br/>
+
+<pre>
+    (define (f x) 
+        (+ (* 1 x x x) (* -2 x x) 1) 
+        )
+</pre>
+
+Note the new notation for 
+<code>+</code> and 
+<code>*</code>.
+We normally think of these operators as
+binary, but in Scheme they are multi-ary or <i>variadic</i>.
+Now suppose we wish to calculate the derivative of this function at a
+point. Numerically, we can shift right a tiny amount and evaluate the function
+at this new point as well as the original point. Then the value of the derivative
+at the original point is roughly equal to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mrow>			<mi>f</mi>			<mrow>				<mo form="prefix">(</mo>				<mi>x</mi>				<mo>+</mo>				<mi>&Delta;</mi>				<mo form="postfix">)</mo>			</mrow>			<mo>-</mo>			<mi>f</mi>			<mrow>				<mo form="prefix">(</mo>				<mi>x</mi>				<mo form="postfix">)</mo>			</mrow>		</mrow>		<mi>&Delta;</mi>	</mfrac></mrow></math>,
+where <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Delta;</mi></mrow></math> is the amount of the shift. Using this
+equation, we can naturally define a Scheme function:
+<br/>
+
+<pre>
+    (define (derivative f point delta) 
+        (/ 
+            (- (f (+ point delta)) (f point))
+            delta
+            ) 
+        )
+</pre>
+
+We would call our general purpose function thusly:
+<br/>
+
+<pre>
+    (derivative f 5 .00001)
+</pre>
+
+However,
+our natural inclinations are wrong in this case because of our procedural
+upbringing. The proper approach is to create a new function out
+of old functions. Consider a rewrite
+which returns the function that computes the derivative:
+<br/>
+
+<pre>
+    (define (deriv f delta) 
+        (lambda (x) (/ (- (f (+ x delta)) (f x)) delta))
+        )
+</pre>
+
+Now we can bind this new function to a name:
+<br/>
+
+<pre>
+    (define fprime (deriv f .00001))
+</pre>
+
+and use it:
+<br/>
+
+<pre>
+    (fprime 6)
+</pre>
+
+to compute the slope of <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>f</mi></mrow></math> at <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>=</mo>	<mn>6</mn></mrow></math>.
+<br/>
+The function <i>fprime</i> is a function which is built from a simpler function.
+The analogy in C++ and Java (using data) is a more complex class has been built from
+a simpler class. The first attempt, <i>derivative</i>, uses the passed function
+as a client (analogous to composition in C++ and Java)
+while the second version, <i>deriv</i>, returns
+a function that is literally built on the passed function (analogous to inheritance
+in C++ and Java).
+Now consider writing a function that finds the second derivative. Using
+a procedural style, we are forced to write
+<br/>
+
+<pre>
+    (define (derivative2 f point delta) 
+        (/
+            (-
+                (derivative f (+ point delta) delta)
+                (derivative f point delta)
+                ) 
+            delta
+            ) 
+        )
+</pre>
+
+Note how similar the body of <i>derivative2</i> is to <i>derivative</i>.
+Using a functional approach, we do not need to write <i>derivative2</i> at all;
+<i>deriv</i> suffices:
+<br/>
+
+<pre>
+    (define fp (deriv f .00001)) 
+    (define fpp (deriv fp .00001))
+</pre>
+
+Scheme allows us to treat the derivative of a function as it really is, a
+function. In the procedural example, we treat the derivative as a single point.
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

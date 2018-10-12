@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title><![CDATA[Forums - Order statistics]]></title>
+		<link>http://beastie.cs.ua.edu/forum/</link>
+		<description><![CDATA[Forums - http://beastie.cs.ua.edu/forum]]></description>
+		<pubDate>Fri, 12 Oct 2018 04:14:34 +0000</pubDate>
+		<generator>MyBB</generator>
+		<item>
+			<title><![CDATA[Test Attempt 1, #3]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=86</link>
+			<pubDate>Sun, 16 Sep 2018 20:42:30 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=86</guid>
+			<description><![CDATA[For test attempt one, number 3 asks which statements are always true: <br />
+All algorithms are w(1)<br />
+All algorithms are O(n^n)<br />
+<br />
+The answer says neither.<br />
+I understand why the first one would be false, but I thought n^n was the worst possible run time, so wouldn't all algorithms be better than or equal to O(n^n)?]]></description>
+			<content:encoded><![CDATA[For test attempt one, number 3 asks which statements are always true: <br />
+All algorithms are w(1)<br />
+All algorithms are O(n^n)<br />
+<br />
+The answer says neither.<br />
+I understand why the first one would be false, but I thought n^n was the worst possible run time, so wouldn't all algorithms be better than or equal to O(n^n)?]]></content:encoded>
+		</item>
+	</channel>
+</rss>

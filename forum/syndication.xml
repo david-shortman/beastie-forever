@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title><![CDATA[Forums - All Forums]]></title>
+		<link>http://beastie.cs.ua.edu/forum/</link>
+		<description><![CDATA[Forums - http://beastie.cs.ua.edu/forum]]></description>
+		<pubDate>Fri, 12 Oct 2018 04:12:33 +0000</pubDate>
+		<generator>MyBB</generator>
+		<item>
+			<title><![CDATA[Test server no './amaze' file]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=154</link>
+			<pubDate>Fri, 12 Oct 2018 03:36:55 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=154</guid>
+			<description><![CDATA[<span style="font-size: small;" class="mycode_size"><span style="font-family: Arial;" class="mycode_font">I'm having an issue getting my project to run successfully on the test server. I can test the compilation and the project compiles with no problems. However, when I submit to the test server all the tests that require ./amaze fail with the error: <span style="font-weight: bold;" class="mycode_b"><span style="font-style: italic;" class="mycode_i">timeout: failed to run command ‘./amaze’: No such file or directory.</span></span></span></span><br />
+<br />
+<span style="font-size: small;" class="mycode_size"><span style="font-family: Arial;" class="mycode_font">I am able to compile/run my project on my own computer without problems, except for when I use "make test". When I run "make test" on my computer it gets and error "make: *** [test] Error 255" when it tries to run ./amaze without any command line arguments. If I run ./amaze with arguments it runs fine.</span></span><br />
+<br />
+<span style="font-family: Arial;" class="mycode_font"><span style="font-size: small;" class="mycode_size">I'm sure the problems are likely related but ultimately not sure what is causing the problem. I've been changing around my makefile but nothing has fixed the issue. </span></span><br />
+<br />
+<span style="font-family: Arial;" class="mycode_font"><span style="font-size: small;" class="mycode_size">If anyone has had a similar problem or any pointers I would appreciate it. </span></span>]]></description>
+			<content:encoded><![CDATA[<span style="font-size: small;" class="mycode_size"><span style="font-family: Arial;" class="mycode_font">I'm having an issue getting my project to run successfully on the test server. I can test the compilation and the project compiles with no problems. However, when I submit to the test server all the tests that require ./amaze fail with the error: <span style="font-weight: bold;" class="mycode_b"><span style="font-style: italic;" class="mycode_i">timeout: failed to run command ‘./amaze’: No such file or directory.</span></span></span></span><br />
+<br />
+<span style="font-size: small;" class="mycode_size"><span style="font-family: Arial;" class="mycode_font">I am able to compile/run my project on my own computer without problems, except for when I use "make test". When I run "make test" on my computer it gets and error "make: *** [test] Error 255" when it tries to run ./amaze without any command line arguments. If I run ./amaze with arguments it runs fine.</span></span><br />
+<br />
+<span style="font-family: Arial;" class="mycode_font"><span style="font-size: small;" class="mycode_size">I'm sure the problems are likely related but ultimately not sure what is causing the problem. I've been changing around my makefile but nothing has fixed the issue. </span></span><br />
+<br />
+<span style="font-family: Arial;" class="mycode_font"><span style="font-size: small;" class="mycode_size">If anyone has had a similar problem or any pointers I would appreciate it. </span></span>]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[CreateMaze Exit]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=153</link>
+			<pubDate>Thu, 11 Oct 2018 20:08:05 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=153</guid>
+			<description><![CDATA[So when I create my maze, should I consider the exit as a neighbor of Cell[cols-1][rows-1], or should I just automatically 'open' it? This is important, because it changes the way the pseudo-random maze would be written.]]></description>
+			<content:encoded><![CDATA[So when I create my maze, should I consider the exit as a neighbor of Cell[cols-1][rows-1], or should I just automatically 'open' it? This is important, because it changes the way the pseudo-random maze would be written.]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Passing free functions to setSTACKfree/setQUEUEfree]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=152</link>
+			<pubDate>Thu, 11 Oct 2018 16:42:52 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=152</guid>
+			<description><![CDATA[Whenever I pass my freeMAZE function to setSTACKfree or setQUEUEfree, I get a warning "incompatible pointer types passing 'void (MAZE *)' to parameter of type 'void (*)(void *)'. I am passing the function in the way assign0 specified. Do I need a wrapper function in order to silence this warning, change my MAZE * to void * in my freeMAZE function, or something else?]]></description>
+			<content:encoded><![CDATA[Whenever I pass my freeMAZE function to setSTACKfree or setQUEUEfree, I get a warning "incompatible pointer types passing 'void (MAZE *)' to parameter of type 'void (*)(void *)'. I am passing the function in the way assign0 specified. Do I need a wrapper function in order to silence this warning, change my MAZE * to void * in my freeMAZE function, or something else?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Largest Possible Maze]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=151</link>
+			<pubDate>Thu, 11 Oct 2018 03:36:20 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=151</guid>
+			<description><![CDATA[<blockquote class="mycode_quote"><cite>Quote:</cite>No limit on number of rows and number of columns.</blockquote>
+When I try ./amaze -d test -c 10000 10000 test -s test test,<br />
+it ate over 16GB memory and then showed "Segmentation fault (core dumped)"<br />
+<br />
+What is the largest possible maze during grading? Is there a limit of memory used for the program? Thanks.<br />
+<br />
+Updated 10/11/2018: I have optimized my code and it can handle 10000 * 10000 maze now, which consumes 9.3GB memory, occupies 2.23GB disk space, takes 11.87 mins to run includes printing.]]></description>
+			<content:encoded><![CDATA[<blockquote class="mycode_quote"><cite>Quote:</cite>No limit on number of rows and number of columns.</blockquote>
+When I try ./amaze -d test -c 10000 10000 test -s test test,<br />
+it ate over 16GB memory and then showed "Segmentation fault (core dumped)"<br />
+<br />
+What is the largest possible maze during grading? Is there a limit of memory used for the program? Thanks.<br />
+<br />
+Updated 10/11/2018: I have optimized my code and it can handle 10000 * 10000 maze now, which consumes 9.3GB memory, occupies 2.23GB disk space, takes 11.87 mins to run includes printing.]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Help debugging my neighbors array]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=150</link>
+			<pubDate>Wed, 10 Oct 2018 17:18:23 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=150</guid>
+			<description><![CDATA[Hi, could anyone help debug why the count of my neighbors array (the number of neighbors for any particular cell) is not being updated, even when it seemingly is?<br />
+<br />
+A picture of what my debugger output looks like is attached. You can see in my helper function "setCELLNeighbors" that each cell is being read into the function and has the correct number of neighbors (testing with a 3x3 matrix--I went through by hand and verified that each cell should have the number of neighbors that my program is outputting). However, when I want to find an eligible neighbor to remove its wall, my findNeighbor function is claiming that the CELL argument has a neighbor count of 0... the first cell to be passed to the findNeighbor function is the cell at (0, 0)-- which, in my setCELLNeighbors function, ostensibly has the correct number of neighbors (2). Any idea why this might be happening and where I should look to solve it?<br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="http://beastie.cs.ua.edu/forum/images/attachtypes/image.png" title="PNG Image" border="0" alt=".png" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=32" target="_blank" title="">Screen Shot 2018-10-10 at 12.10.54.png</a> (Size: 132.96 KB / Downloads: 15)
+<!-- end: postbit_attachments_attachment -->]]></description>
+			<content:encoded><![CDATA[Hi, could anyone help debug why the count of my neighbors array (the number of neighbors for any particular cell) is not being updated, even when it seemingly is?<br />
+<br />
+A picture of what my debugger output looks like is attached. You can see in my helper function "setCELLNeighbors" that each cell is being read into the function and has the correct number of neighbors (testing with a 3x3 matrix--I went through by hand and verified that each cell should have the number of neighbors that my program is outputting). However, when I want to find an eligible neighbor to remove its wall, my findNeighbor function is claiming that the CELL argument has a neighbor count of 0... the first cell to be passed to the findNeighbor function is the cell at (0, 0)-- which, in my setCELLNeighbors function, ostensibly has the correct number of neighbors (2). Any idea why this might be happening and where I should look to solve it?<br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="http://beastie.cs.ua.edu/forum/images/attachtypes/image.png" title="PNG Image" border="0" alt=".png" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=32" target="_blank" title="">Screen Shot 2018-10-10 at 12.10.54.png</a> (Size: 132.96 KB / Downloads: 15)
+<!-- end: postbit_attachments_attachment -->]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[If we create a different, correct, maze, is it wrong?]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=149</link>
+			<pubDate>Wed, 10 Oct 2018 14:44:29 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=149</guid>
+			<description><![CDATA[If we create a maze that is valid (no unvisited spots, constant line from entry to exit, proper size) is it wrong if it doesn't match the ones in the drop box? Do we need to use Lusth's algorithm <span style="font-weight: bold;" class="mycode_b">exactly</span> to create our mazes?]]></description>
+			<content:encoded><![CDATA[If we create a maze that is valid (no unvisited spots, constant line from entry to exit, proper size) is it wrong if it doesn't match the ones in the drop box? Do we need to use Lusth's algorithm <span style="font-weight: bold;" class="mycode_b">exactly</span> to create our mazes?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Beware]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=148</link>
+			<pubDate>Tue, 09 Oct 2018 22:58:29 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=148</guid>
+			<description><![CDATA[A couple of students were getting different mazes that what the test1 dropbox indicated.<br />
+<br />
+This was because they only pushed a cell onto the stack only once. If you pop a cell and it has more than one eligible neighbor, it needs to pushed back onto the stack before the chosen neighbor.<br />
+<br />
+Or you could peek, count neighbors, push a neighbor if any exist, otherwise pop.]]></description>
+			<content:encoded><![CDATA[A couple of students were getting different mazes that what the test1 dropbox indicated.<br />
+<br />
+This was because they only pushed a cell onto the stack only once. If you pop a cell and it has more than one eligible neighbor, it needs to pushed back onto the stack before the chosen neighbor.<br />
+<br />
+Or you could peek, count neighbors, push a neighbor if any exist, otherwise pop.]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Purpose of argIndex in options.c]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=146</link>
+			<pubDate>Tue, 09 Oct 2018 21:56:17 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=146</guid>
+			<description><![CDATA[In ProcessOptions we return argIndex. But why? What's the purpose of that value and what should we do with it?<br />
+<br />
+if (argIndex == argc) {printf("No arguments?\n");}<br />
+<br />
+The above line will always trigger even though everything else works fine. If I get rid of it, what is processoption supposed to return? In main we set argIndex = processoptions(); <br />
+<br />
+Can't we just call processoptions(); Why does it need to return anything?]]></description>
+			<content:encoded><![CDATA[In ProcessOptions we return argIndex. But why? What's the purpose of that value and what should we do with it?<br />
+<br />
+if (argIndex == argc) {printf("No arguments?\n");}<br />
+<br />
+The above line will always trigger even though everything else works fine. If I get rid of it, what is processoption supposed to return? In main we set argIndex = processoptions(); <br />
+<br />
+Can't we just call processoptions(); Why does it need to return anything?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[attempt #5]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=145</link>
+			<pubDate>Tue, 09 Oct 2018 13:11:16 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=145</guid>
+			<description><![CDATA[QUIZ NUMBER: 17470<br />
+<br />
+The answer to question 1 is E<br />
+The answer to question 2 is F<br />
+The answer to question 3 is C<br />
+The answer to question 4 is F<br />
+The answer to question 5 is E<br />
+The answer to question 6 is B<br />
+The answer to question 7 is D<br />
+The answer to question 8 is D<br />
+The answer to question 9 is B<br />
+The answer to question 10 is B<br />
+The answer to question 11 is E<br />
+The answer to question 12 is C<br />
+The answer to question 13 is B<br />
+The answer to question 14 is E<br />
+The answer to question 15 is A<br />
+The answer to question 16 is B<br />
+The answer to question 17 is E<br />
+The answer to question 18 is H<br />
+The answer to question 19 is F<br />
+The answer to question 20 is E]]></description>
+			<content:encoded><![CDATA[QUIZ NUMBER: 17470<br />
+<br />
+The answer to question 1 is E<br />
+The answer to question 2 is F<br />
+The answer to question 3 is C<br />
+The answer to question 4 is F<br />
+The answer to question 5 is E<br />
+The answer to question 6 is B<br />
+The answer to question 7 is D<br />
+The answer to question 8 is D<br />
+The answer to question 9 is B<br />
+The answer to question 10 is B<br />
+The answer to question 11 is E<br />
+The answer to question 12 is C<br />
+The answer to question 13 is B<br />
+The answer to question 14 is E<br />
+The answer to question 15 is A<br />
+The answer to question 16 is B<br />
+The answer to question 17 is E<br />
+The answer to question 18 is H<br />
+The answer to question 19 is F<br />
+The answer to question 20 is E]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[One more clarification about using random]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=144</link>
+			<pubDate>Mon, 08 Oct 2018 16:40:28 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=144</guid>
+			<description><![CDATA[I know this has been addressed somewhere else on the forum previously, but I am still confused as to when to use random when creating/building a maze. Different options:<br />
+<br />
+1) We use just one value to seed the random number generator for the whole maze, and we then only use the random number generator once for the whole maze. (I don't think this is intended at all.)<br />
+<br />
+2) Any time we need to pick a new eligible neighbor, we generate a new random number using the same seed value from the beginning, and this seed value never changes throughout the creation of the maze. It can be given via the -r option or default to 1. The seed value is never generated by a random number generator with another seed value (i.e. we never use a random number generator to seed another random number generator). The randomness of this approach stems from what the value of count is. <span style="font-weight: bold;" class="mycode_b">Once we find the direction we need to take, we follow this direction until we hit an ineligible neighbor, and then we retrace. </span>(I think this is wrong because it would just create a spiral of a maze, and not a random maze.)<br />
+<br />
+3) The same logic as (2), but instead of following the same direction until we hit an ineligible neighbor, every time we have to choose a new eligible neighbor, we generate a new random number that decides. <span style="font-weight: bold;" class="mycode_b">(I think this is what is intended.)</span><br />
+<br />
+I think that (2) is what Dr. Lusth intends, but I want to be 100% certain. If anyone could confirm? Thanks!]]></description>
+			<content:encoded><![CDATA[I know this has been addressed somewhere else on the forum previously, but I am still confused as to when to use random when creating/building a maze. Different options:<br />
+<br />
+1) We use just one value to seed the random number generator for the whole maze, and we then only use the random number generator once for the whole maze. (I don't think this is intended at all.)<br />
+<br />
+2) Any time we need to pick a new eligible neighbor, we generate a new random number using the same seed value from the beginning, and this seed value never changes throughout the creation of the maze. It can be given via the -r option or default to 1. The seed value is never generated by a random number generator with another seed value (i.e. we never use a random number generator to seed another random number generator). The randomness of this approach stems from what the value of count is. <span style="font-weight: bold;" class="mycode_b">Once we find the direction we need to take, we follow this direction until we hit an ineligible neighbor, and then we retrace. </span>(I think this is wrong because it would just create a spiral of a maze, and not a random maze.)<br />
+<br />
+3) The same logic as (2), but instead of following the same direction until we hit an ineligible neighbor, every time we have to choose a new eligible neighbor, we generate a new random number that decides. <span style="font-weight: bold;" class="mycode_b">(I think this is what is intended.)</span><br />
+<br />
+I think that (2) is what Dr. Lusth intends, but I want to be 100% certain. If anyone could confirm? Thanks!]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Command Line Arguments]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=143</link>
+			<pubDate>Sun, 07 Oct 2018 22:47:00 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=143</guid>
+			<description><![CDATA[For the command line arguments are we to expect two different forms of input? Ex. -c 10 10 m.data, -c10 10 m.data. I noticed that in the options.c given to us it has both options as an expected input. In the description of assign1 it doesn't mention this and I would like to know if I should have to include both inputs as an option.]]></description>
+			<content:encoded><![CDATA[For the command line arguments are we to expect two different forms of input? Ex. -c 10 10 m.data, -c10 10 m.data. I noticed that in the options.c given to us it has both options as an expected input. In the description of assign1 it doesn't mention this and I would like to know if I should have to include both inputs as an option.]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Duplicate Functions on rbt.h]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=142</link>
+			<pubDate>Sat, 06 Oct 2018 16:57:03 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=142</guid>
+			<description><![CDATA[Are the duplicate functions on your rbt.h sample intentional?]]></description>
+			<content:encoded><![CDATA[Are the duplicate functions on your rbt.h sample intentional?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Helpful Hint]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=141</link>
+			<pubDate>Thu, 04 Oct 2018 22:17:52 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=141</guid>
+			<description><![CDATA[Just to help people out, when you are doing -s, if the file you are reading from and writing to are the same, you will need to make sure to close the read version before you open the write version.  I did it the other way initially and got a segfault when testing against one of the student provided test cases.  I don't know if Dr. Lusth will be testing for the ability to handle both files being the same file, but doing this expands your functionality.  Good luck on y'alls projects.]]></description>
+			<content:encoded><![CDATA[Just to help people out, when you are doing -s, if the file you are reading from and writing to are the same, you will need to make sure to close the read version before you open the write version.  I did it the other way initially and got a segfault when testing against one of the student provided test cases.  I don't know if Dr. Lusth will be testing for the ability to handle both files being the same file, but doing this expands your functionality.  Good luck on y'alls projects.]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Fix my CSS!]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=140</link>
+			<pubDate>Thu, 04 Oct 2018 16:41:00 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=140</guid>
+			<description><![CDATA[Here is my CSS for my beastie web pages. I've removed the wide margins for narrow displays (phones). But I can't get chrome to wrap urls (see syllabus.html). Alternate browsers on my phone wrap properly...<br />
+<br />
+Any suggestions would be greatly appreciated!<br />
+<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>html<br />
+    {<br />
+    background-color: silver;<br />
+    border-left: 100px solid silver;<br />
+    border-right: 100px solid silver;<br />
+    border-top: 10px solid silver;<br />
+    }<br />
+<br />
+body<br />
+    {<br />
+    font-size:100%;<br />
+    font-family: serif;<br />
+    background-color: FloralWhite;<br />
+    padding-top: 10px;<br />
+    padding-left: 40px;<br />
+    padding-right: 40px;<br />
+    padding-bottom: 30px;<br />
+    color:black;<br />
+    line-height: 1.3;<br />
+    }<br />
+<br />
+#title { font-size: 150%;}<br />
+<br />
+h1 {font-size:150%;}<br />
+h2 {font-size:120%;}<br />
+h3 {font-size:100%; font-weight: normal; }<br />
+<br />
+h1, h2, h3 { margin-left:-20px; }<br />
+<br />
+#title { color:#0F0F5F; }<br />
+h1 { color:#0F0F5F; }<br />
+h2 { color:#0F0F5F; }<br />
+h3 { color:#0F0F5F; }<br />
+<br />
+a:link {color:red;text-decoration:none;}<br />
+a:visited {color:maroon;text-decoration:none;}<br />
+a:hover {color:red;font-weight:bold;text-decoration:underline;}<br />
+<br />
+h2 a:link {color:darkslategray;text-decoration:none;}<br />
+h2 a:visited {color:darkslategray;text-decoration:none;}<br />
+h2 a:hover {color:darkslategray;font-weight:bold;text-decoration:none;}<br />
+<br />
+code,tt,pre    { font-size: 110%; color: #115555; }<br />
+<br />
+hr<br />
+    {<br />
+    margin-left: -20px;<br />
+    width: 100%;<br />
+    height: 4px;<br />
+    color:#AFCF9F;<br />
+    background-color:#AFCF9F;<br />
+    }<br />
+<br />
+sub, sup { font-size: 75% }<br />
+<br />
+p { line-height: 1.1; }<br />
+pre { line-height: 1.3; }<br />
+sub, sup { line-height: 0; } <br />
+<br />
+.ldraw <br />
+    {<br />
+    margin-top: 15px;<br />
+    margin-left: 60px;<br />
+    }<br />
+<br />
+center .ldraw <br />
+    {<br />
+    margin-top: 0px;<br />
+    margin-left: 0px;<br />
+    }<br />
+<br />
+.smaller {font-size: smaller; }<br />
+.bigger {font-size: larger; }<br />
+.indent {<br />
+    margin-top: 0px;<br />
+    margin-bottom: 0px;<br />
+    padding-left: 40px;<br />
+    padding-bottom: 0px;<br />
+    display: block;<br />
+    }<br />
+<br />
+ol ul {<br />
+    margin-left: 40px;<br />
+    margin-bottom: 10px;<br />
+    }<br />
+    <br />
+ol ol {<br />
+    margin-left: 40px;<br />
+    margin-bottom: 10px;<br />
+    }<br />
+    <br />
+li li { <br />
+    margin-top: 8px;<br />
+    }<br />
+<br />
+li li &gt; pre<br />
+    {<br />
+    margin-top: 10px;<br />
+    margin-bottom: 0px;<br />
+    padding-top: 0px;<br />
+    padding-bottom: 0px;<br />
+    }<br />
+<br />
+table {<br />
+    padding-top: 10px;<br />
+    padding-bottom: 10px;<br />
+    padding-left: 10px;<br />
+    padding-right: 10px;<br />
+    }<br />
+<br />
+table {    <br />
+    color:    black;<br />
+    text-decoration:    none;<br />
+    border-color:    black;<br />
+    border-style:    none;<br />
+    background: none;<br />
+    border-top: 1px solid darkgreen;<br />
+    border-bottom: 1px solid darkgreen;<br />
+    margin-top: 40px;<br />
+    /* border-collapse: collapse; */<br />
+    }    <br />
+<br />
+tr, td {<br />
+    background-color: FloralWhite;<br />
+    }<br />
+<br />
+td {padding-left: 10px; padding-right: 10px; <br />
+    vertical-align: center; }<br />
+<br />
+<br />
+@media screen and (max-width: 768px)<br />
+    {<br />
+    html<br />
+        {<br />
+        background-color: cyan;<br />
+        border-left: 0px solid cyan;<br />
+        border-right: 0px solid cyan;<br />
+        }<br />
+<br />
+    body<br />
+        {<br />
+        font-family: serif;<br />
+        font-size:100%;<br />
+        background-color: FloralWhite;<br />
+        border: 1px solid silver;<br />
+        padding-top: 10px;<br />
+        padding-left: 2px;<br />
+        padding-right: 2px;<br />
+        padding-bottom: 30px;<br />
+        color:black;<br />
+        line-height: 1.3;<br />
+    word-wrap: break-word;<br />
+        }<br />
+<br />
+    hr<br />
+        {<br />
+        margin-left: 2px;<br />
+        width: 95%;<br />
+        }<br />
+<br />
+    <br />
+    h1, h2, h3 { margin-left: 0px; }<br />
+<br />
+    ol {<br />
+        margin-left: -10px;<br />
+        }<br />
+<br />
+    ol ul {<br />
+        margin-left: 0px;<br />
+        }<br />
+        <br />
+    ol ol {<br />
+        margin-left: 0px;<br />
+    }<br />
+    <br />
+<br />
+    img<br />
+        {<br />
+        max-width:90%;<br />
+        height: auto;<br />
+        }<br />
+    }</code></div></div>]]></description>
+			<content:encoded><![CDATA[Here is my CSS for my beastie web pages. I've removed the wide margins for narrow displays (phones). But I can't get chrome to wrap urls (see syllabus.html). Alternate browsers on my phone wrap properly...<br />
+<br />
+Any suggestions would be greatly appreciated!<br />
+<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>html<br />
+    {<br />
+    background-color: silver;<br />
+    border-left: 100px solid silver;<br />
+    border-right: 100px solid silver;<br />
+    border-top: 10px solid silver;<br />
+    }<br />
+<br />
+body<br />
+    {<br />
+    font-size:100%;<br />
+    font-family: serif;<br />
+    background-color: FloralWhite;<br />
+    padding-top: 10px;<br />
+    padding-left: 40px;<br />
+    padding-right: 40px;<br />
+    padding-bottom: 30px;<br />
+    color:black;<br />
+    line-height: 1.3;<br />
+    }<br />
+<br />
+#title { font-size: 150%;}<br />
+<br />
+h1 {font-size:150%;}<br />
+h2 {font-size:120%;}<br />
+h3 {font-size:100%; font-weight: normal; }<br />
+<br />
+h1, h2, h3 { margin-left:-20px; }<br />
+<br />
+#title { color:#0F0F5F; }<br />
+h1 { color:#0F0F5F; }<br />
+h2 { color:#0F0F5F; }<br />
+h3 { color:#0F0F5F; }<br />
+<br />
+a:link {color:red;text-decoration:none;}<br />
+a:visited {color:maroon;text-decoration:none;}<br />
+a:hover {color:red;font-weight:bold;text-decoration:underline;}<br />
+<br />
+h2 a:link {color:darkslategray;text-decoration:none;}<br />
+h2 a:visited {color:darkslategray;text-decoration:none;}<br />
+h2 a:hover {color:darkslategray;font-weight:bold;text-decoration:none;}<br />
+<br />
+code,tt,pre    { font-size: 110%; color: #115555; }<br />
+<br />
+hr<br />
+    {<br />
+    margin-left: -20px;<br />
+    width: 100%;<br />
+    height: 4px;<br />
+    color:#AFCF9F;<br />
+    background-color:#AFCF9F;<br />
+    }<br />
+<br />
+sub, sup { font-size: 75% }<br />
+<br />
+p { line-height: 1.1; }<br />
+pre { line-height: 1.3; }<br />
+sub, sup { line-height: 0; } <br />
+<br />
+.ldraw <br />
+    {<br />
+    margin-top: 15px;<br />
+    margin-left: 60px;<br />
+    }<br />
+<br />
+center .ldraw <br />
+    {<br />
+    margin-top: 0px;<br />
+    margin-left: 0px;<br />
+    }<br />
+<br />
+.smaller {font-size: smaller; }<br />
+.bigger {font-size: larger; }<br />
+.indent {<br />
+    margin-top: 0px;<br />
+    margin-bottom: 0px;<br />
+    padding-left: 40px;<br />
+    padding-bottom: 0px;<br />
+    display: block;<br />
+    }<br />
+<br />
+ol ul {<br />
+    margin-left: 40px;<br />
+    margin-bottom: 10px;<br />
+    }<br />
+    <br />
+ol ol {<br />
+    margin-left: 40px;<br />
+    margin-bottom: 10px;<br />
+    }<br />
+    <br />
+li li { <br />
+    margin-top: 8px;<br />
+    }<br />
+<br />
+li li &gt; pre<br />
+    {<br />
+    margin-top: 10px;<br />
+    margin-bottom: 0px;<br />
+    padding-top: 0px;<br />
+    padding-bottom: 0px;<br />
+    }<br />
+<br />
+table {<br />
+    padding-top: 10px;<br />
+    padding-bottom: 10px;<br />
+    padding-left: 10px;<br />
+    padding-right: 10px;<br />
+    }<br />
+<br />
+table {    <br />
+    color:    black;<br />
+    text-decoration:    none;<br />
+    border-color:    black;<br />
+    border-style:    none;<br />
+    background: none;<br />
+    border-top: 1px solid darkgreen;<br />
+    border-bottom: 1px solid darkgreen;<br />
+    margin-top: 40px;<br />
+    /* border-collapse: collapse; */<br />
+    }    <br />
+<br />
+tr, td {<br />
+    background-color: FloralWhite;<br />
+    }<br />
+<br />
+td {padding-left: 10px; padding-right: 10px; <br />
+    vertical-align: center; }<br />
+<br />
+<br />
+@media screen and (max-width: 768px)<br />
+    {<br />
+    html<br />
+        {<br />
+        background-color: cyan;<br />
+        border-left: 0px solid cyan;<br />
+        border-right: 0px solid cyan;<br />
+        }<br />
+<br />
+    body<br />
+        {<br />
+        font-family: serif;<br />
+        font-size:100%;<br />
+        background-color: FloralWhite;<br />
+        border: 1px solid silver;<br />
+        padding-top: 10px;<br />
+        padding-left: 2px;<br />
+        padding-right: 2px;<br />
+        padding-bottom: 30px;<br />
+        color:black;<br />
+        line-height: 1.3;<br />
+    word-wrap: break-word;<br />
+        }<br />
+<br />
+    hr<br />
+        {<br />
+        margin-left: 2px;<br />
+        width: 95%;<br />
+        }<br />
+<br />
+    <br />
+    h1, h2, h3 { margin-left: 0px; }<br />
+<br />
+    ol {<br />
+        margin-left: -10px;<br />
+        }<br />
+<br />
+    ol ul {<br />
+        margin-left: 0px;<br />
+        }<br />
+        <br />
+    ol ol {<br />
+        margin-left: 0px;<br />
+    }<br />
+    <br />
+<br />
+    img<br />
+        {<br />
+        max-width:90%;<br />
+        height: auto;<br />
+        }<br />
+    }</code></div></div>]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[When I find the exit.]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=139</link>
+			<pubDate>Thu, 04 Oct 2018 14:45:07 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=139</guid>
+			<description><![CDATA[On your expected output from the preliminary the exit is found at a 7 but a nearby branch goes one farther:<br />
+-----   -   -----   -   -----   -   -----   -   -----   -   -----<br />
+| 3   4 | 9   0 | 5 |       | 2 | 9   8 |   | 6   7 |   |     8 | &lt;--This is one step of the queue after the exit is found<br />
+-   ---------   -   ---------   -----   ---------   ---------   -<br />
+| 2   1 | 2   1 | 4   3   2 | 3 | 8 | 7 | 4   3 | 8   9   0 | 7 |<br />
+-----   -   -------------   -   -   -   -   -   ---------   -   -<br />
+| 9   0 | 3 | 6   7 | 0   1 | 4 | 7 | 6   5 | 2   3 | 2   1 | 6 |<br />
+-   -----   -   -   -   -----   -   ---------   -   -   -----   -<br />
+| 8   7 | 4 | 5 | 8 | 9 | 6   5 | 6 | 9   0   1 | 4 | 3 | 4   5 |<br />
+-   -   -   -   -   -   -   -----   -   -------------   -   -   -<br />
+| 9 | 6   5 | 4 | 9 | 8   7 | 4   5 | 8   7   6   5   4 | 3 | 6 |<br />
+-   ---------   -   ---------   -   ---------------------   -   -<br />
+| 0   1   2   3 | 0   1   2   3 | 6   7   8   9   0   1   2 | 7  <br />
+-----------------------------------------------------------------<br />
+Do you want our program to go one step beyond when we find the exit?]]></description>
+			<content:encoded><![CDATA[On your expected output from the preliminary the exit is found at a 7 but a nearby branch goes one farther:<br />
+-----   -   -----   -   -----   -   -----   -   -----   -   -----<br />
+| 3   4 | 9   0 | 5 |       | 2 | 9   8 |   | 6   7 |   |     8 | &lt;--This is one step of the queue after the exit is found<br />
+-   ---------   -   ---------   -----   ---------   ---------   -<br />
+| 2   1 | 2   1 | 4   3   2 | 3 | 8 | 7 | 4   3 | 8   9   0 | 7 |<br />
+-----   -   -------------   -   -   -   -   -   ---------   -   -<br />
+| 9   0 | 3 | 6   7 | 0   1 | 4 | 7 | 6   5 | 2   3 | 2   1 | 6 |<br />
+-   -----   -   -   -   -----   -   ---------   -   -   -----   -<br />
+| 8   7 | 4 | 5 | 8 | 9 | 6   5 | 6 | 9   0   1 | 4 | 3 | 4   5 |<br />
+-   -   -   -   -   -   -   -----   -   -------------   -   -   -<br />
+| 9 | 6   5 | 4 | 9 | 8   7 | 4   5 | 8   7   6   5   4 | 3 | 6 |<br />
+-   ---------   -   ---------   -   ---------------------   -   -<br />
+| 0   1   2   3 | 0   1   2   3 | 6   7   8   9   0   1   2 | 7  <br />
+-----------------------------------------------------------------<br />
+Do you want our program to go one step beyond when we find the exit?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Test 4, Question 20]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=138</link>
+			<pubDate>Wed, 03 Oct 2018 19:53:19 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=138</guid>
+			<description><![CDATA[Is the answer H because find set goes to 4 which is already a child of its root and thus no values have their paths compressed?]]></description>
+			<content:encoded><![CDATA[Is the answer H because find set goes to 4 which is already a child of its root and thus no values have their paths compressed?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Queue Valgrind Errors]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=137</link>
+			<pubDate>Wed, 03 Oct 2018 00:13:28 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=137</guid>
+			<description><![CDATA[When solving the maze, I'm successfully freeing the queue used and not getting any memory leaks and the logic is working correctly. For some reason I am getting many valgrind errors that say "Invalid read of size 8" and "Address is 0 bytes after a block of size 0 alloc'd". Anyone else getting the same error? It confuses me as my queue passed all the assign0 tests.]]></description>
+			<content:encoded><![CDATA[When solving the maze, I'm successfully freeing the queue used and not getting any memory leaks and the logic is working correctly. For some reason I am getting many valgrind errors that say "Invalid read of size 8" and "Address is 0 bytes after a block of size 0 alloc'd". Anyone else getting the same error? It confuses me as my queue passed all the assign0 tests.]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[options.c and main.c]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=136</link>
+			<pubDate>Tue, 02 Oct 2018 23:50:07 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=136</guid>
+			<description><![CDATA[I'm confused as to how you intend us to integrate options.c.  I understand that it will handle all the options for us, but what I don't get is how that works with the libraries we are writing.  Is your thought process that we will edit options.c to call the functions necessary based upon what it reads in, that we will call options.c from our own main, or that we take options.c and write it into our main?]]></description>
+			<content:encoded><![CDATA[I'm confused as to how you intend us to integrate options.c.  I understand that it will handle all the options for us, but what I don't get is how that works with the libraries we are writing.  Is your thought process that we will edit options.c to call the functions necessary based upon what it reads in, that we will call options.c from our own main, or that we take options.c and write it into our main?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[problems with random and -std=C99]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=135</link>
+			<pubDate>Tue, 02 Oct 2018 22:19:39 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=135</guid>
+			<description><![CDATA[I have<br />
+<span style="color: #d4d4d4;" class="mycode_color"><span style="font-family: Consolas,;" class="mycode_font"><span style="color: #c586c0;" class="mycode_color">#include</span> <span style="color: #ce9178;" class="mycode_color">&lt;stdio.h&gt;</span><br />
+<span style="color: #c586c0;" class="mycode_color">#include</span> <span style="color: #ce9178;" class="mycode_color">&lt;stdlib.h&gt;</span></span></span><br />
+<br />
+in my code, but when I use the random() function I get <br />
+warning: implicit declaration of function ‘random’ [-Wimplicit-function-declaration]<br />
+<br />
+I googled it, and <a href="https://stackoverflow.com/questions/575350/why-cant-gcc-find-the-random-interface-when-std-c99-is-set" target="_blank" rel="noopener" class="mycode_url">a stackoverflow question</a> gave me this answer:<br />
+<span style="font-style: italic;" class="mycode_i"><span style="font-weight: bold;" class="mycode_b">man srandom</span> says that the function is not part of C99 but part of POSIX.</span><br />
+<br />
+How do I reconcile that with "You must implement your modules in C99 and you must use the -std=C99 option to gcc in your makefile."? Should we use rand() instead of random()? As far as I can tell the code still works, but it always compiles with a warning.<br />
+<hr class="mycode_hr" />
+Edit: got my question answered. You have to put <br />
+extern void srandom(unsigned int); <br />
+extern long int random(void); <br />
+at the top of the file]]></description>
+			<content:encoded><![CDATA[I have<br />
+<span style="color: #d4d4d4;" class="mycode_color"><span style="font-family: Consolas,;" class="mycode_font"><span style="color: #c586c0;" class="mycode_color">#include</span> <span style="color: #ce9178;" class="mycode_color">&lt;stdio.h&gt;</span><br />
+<span style="color: #c586c0;" class="mycode_color">#include</span> <span style="color: #ce9178;" class="mycode_color">&lt;stdlib.h&gt;</span></span></span><br />
+<br />
+in my code, but when I use the random() function I get <br />
+warning: implicit declaration of function ‘random’ [-Wimplicit-function-declaration]<br />
+<br />
+I googled it, and <a href="https://stackoverflow.com/questions/575350/why-cant-gcc-find-the-random-interface-when-std-c99-is-set" target="_blank" rel="noopener" class="mycode_url">a stackoverflow question</a> gave me this answer:<br />
+<span style="font-style: italic;" class="mycode_i"><span style="font-weight: bold;" class="mycode_b">man srandom</span> says that the function is not part of C99 but part of POSIX.</span><br />
+<br />
+How do I reconcile that with "You must implement your modules in C99 and you must use the -std=C99 option to gcc in your makefile."? Should we use rand() instead of random()? As far as I can tell the code still works, but it always compiles with a warning.<br />
+<hr class="mycode_hr" />
+Edit: got my question answered. You have to put <br />
+extern void srandom(unsigned int); <br />
+extern long int random(void); <br />
+at the top of the file]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA["Wall Info" clarification]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=134</link>
+			<pubDate>Tue, 02 Oct 2018 20:47:01 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=134</guid>
+			<description><![CDATA[Hi, could someone clarify what "wall info" means within our CELL objects? Are we basing that wall info off of that particular CELL's adjacent CELLs? Or something else?<br />
+<br />
+Thank you!]]></description>
+			<content:encoded><![CDATA[Hi, could someone clarify what "wall info" means within our CELL objects? Are we basing that wall info off of that particular CELL's adjacent CELLs? Or something else?<br />
+<br />
+Thank you!]]></content:encoded>
+		</item>
+	</channel>
+</rss>

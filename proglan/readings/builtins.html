@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>builtins</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Adding Built-in Functions to a Language
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="builtins.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Simple, but ugly
+<br/>
+</h2><!-- section ENDED -->
+
+Here is a simple way to add built-in functions to your language. It's
+ugly, but it works. For example, let's add two builtin functions:
+<i>println</i> and <i>makeArray</i>.
+One does so by adding some tests to the <i>evalCall</i> function.
+Originally, this function looks like:
+<br/>
+
+<pre>
+    function evalCall(pt,env)
+        {
+        var name = getCallFunction(pt);
+        var args = getCallArgs(pt);
+        var eargs = evalArgs(args,env);
+        var closure = eval(name,env);
+        var params = getClosureParams(closure);
+        var body = getClosureBody(closure);
+        var denv = getClosureEnvironment(closure);
+        var xenv = EnvExtend(denv,params,eargs);
+
+        return eval(body,xenv);
+        }
+</pre>
+
+We modify the function to check for a call to the built-in function:
+<br/>
+
+<pre>
+    function evalCall(pt,env)
+        {
+        var name = getCallFunction(pt);
+        var args = getCallArgs(pt);
+        var eargs = evalArgs(args,env);
+        //check for built-in functions here
+        if (isString(name) &amp;&amp; identifierEquals(name,&quot;println&quot;))
+            return evalPrintln(eargs);
+        else if (isString(name) &amp;&amp; identifierEquals(name,&quot;makeArray&quot;))
+            return evalMakeArray(eargs);
+        else
+            {
+            var closure = eval(name,env);
+            var params = getClosureParams(closure);
+            var body = getClosureBody(closure);
+            var denv = getClosureEnvironment(closure);
+            var xenv = EnvExtend(denv,params,eargs);
+
+            return eval(body,xenv);
+            }
+        }
+</pre>
+
+and dispatch to the appropriate handler for the built-in.
+Finally, we add the <i>evalPrintln</i> and <i>evalMakeArray</i> evaluators
+to our evaluation module:
+<br/>
+
+<pre>
+    function evalPrintln(eargs)
+        {
+        while (eargs != null)
+            {
+            arg = eargs.left;
+            display(arg);
+            eargs = eargs.right;
+            }
+        return arg;
+        }
+
+    function evalMakeArray(eargs)
+        {
+        var a = new Lexeme(ARRAY);
+        a.aval = new Lexeme[eags.left.ival]; //or somesuch
+        return a;
+        }
+</pre>
+
+You can perform similar actions for each of your built-ins.
+<br/>
+<!-- section -->
+<h2> A better way
+<br/>
+</h2><!-- section ENDED -->
+
+We start by adding a new value field to our lexeme, which we will call
+<i>fval</i>.
+This field will hold a pointer to an evaluation function. Next,
+we first create some <i>builtin</i> lexemes:
+<br/>
+
+<pre>
+     var printlnB = new Lexeme(BUILTIN);
+     printlnB.fval = evalPrint;
+     var makeArrayB = new Lexeme(BUILTIN);
+     makeArrayB.fval = evalMakeArray;
+</pre>
+
+We also build some identifier lexemes:
+<br/>
+
+<pre>
+     var printlnID = new Lexeme(ID);
+     printlnID.sval = &quot;println&quot;;
+     var makeArrayID = new Lexeme(ID);
+     makeArrayID.sval = &quot;makeArray;
+</pre>
+
+Our next step is to insert
+our builtin lexemes into the global environment, binding them
+to the appropriate identifiers:
+<br/>
+
+<pre>
+    insertEnv(global,printlnID,printlnB);
+    insertEnv(global,makeArrayID,makeArrayB);
+</pre>
+
+Since we will do this for a possibly large set of
+builtin functions, it will be useful
+to define a function to assist us in this task:
+<br/>
+
+<pre>
+    function addBuiltin(env,name,evaluator)
+        {
+        var b = new Lexeme(BUILTIN);
+        b.fval = evaluator;
+        var v = new Lexeme(ID);
+        v.sval = name;
+        insertEnv(env,v,b);
+        }
+</pre>
+
+We would use this function like so:
+<br/>
+
+<pre>
+    addBuiltin(global,&quot;println&quot;,evalPrintln);
+    addBuiltin(global,&quot;makeArray&quot;,evalMakeArray);
+</pre>
+
+Finally, we modify <i>evalCall</i> to handle builtin lexemes:
+<br/>
+
+<pre>
+    function evalCall(t,env)
+        {
+        //this code assumes a function call of the form f(x,y)
+        var name = getCallFunction(pt);
+        var args = getCallArgs(pt);
+        var eargs = evalArgs(args,env);
+        var closure = eval(name,env);
+
+        if (closure.type == BUILTIN)
+            {
+            var evaluator = closure.fval
+            return evaluator(eargs);
+            }
+        else
+            {
+            var params = getClosureParams(closure);
+            var body = getClosureBody(closure);
+            var denv = getClosureEnvironment(closure);
+            var xenv = EnvExtend(denv,params,eargs);
+
+            return eval(body,xenv);
+            }
+        }
+</pre>
+
+The advantage of this method is two-fold:
+<br/>
+<ol type="i">
+
+<li>
+
+ We can easily add new builtins with a minimum of modification to
+existing code.
+</li>
+
+<li>
+
+ We can now override builtin functions to extend their behaviors
+</li>
+
+</ol>
+
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign2</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Assignment 2
+<br/>
+<br/>
+<span class="smaller">Version 2a</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="assign2.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Preliminary information
+<br/>
+</h2><!-- section ENDED -->
+
+This is your second Scam assignment.
+To run your code, use the following
+command:
+<br/>
+
+<pre>
+    scam FILENAME
+</pre>
+
+or
+<br/>
+
+<pre>
+    scam -r FILENAME
+</pre>
+
+where 
+<code>FILENAME</code> is replaced by the name of the program you wish to run.
+The 
+<code>-r</code> option will automatically run a no-argument function named 
+<code>main</code>
+on startup.
+<br/>
+<br/>
+All assignment submissions should supply a program named <i>author.scm</i>.
+This program should look like:
+<br/>
+
+<pre>
+    (define (main)
+        (println &quot;AUTHOR: Rita Recursion rrita@crimson.ua.edu&quot;)
+        )
+</pre>
+
+with the name and email replaced by your own name and email.
+<br/>
+<br/>
+For each numbered task (unless otherwise directed),
+you are to provide a
+program named
+<i>taskN.scm</i>,
+with the <i>N</i> corresponding to the task number, starting at one
+(as in <i>task1.scm</i>,
+<i>task2.scm</i>,
+and so on).
+<br/>
+<br/>
+You may not use assignment
+in any of the code you write.
+Nor may you use any looping function such as <i>while</i> or <i>for</i>.
+Do not use the comment-out-the rest-of-the-file comment in your code.
+On any line of output, there should be no leading whitespace and no
+trailing whitespace other than a newline (except when otherwise directed).
+<br/>
+<!-- section -->
+<h2> Tasks
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Define a variadic function named <i>n-loop</i> that takes a procedure
+and some number of lists, each containing a lower bound (inclusive)
+and an upper bound (exclusive). The <i>loop</i> function should
+repeatedly execute the procedure, supplying as many arguments
+as there are bounding lists with the arguments
+derived from the given bounds.
+NOTE: the syntax of variadic functions in Scam differs from that of Scheme.
+<br/>
+<br/>
+For example, the call:
+<br/>
+
+<pre>
+    (n-loop (lambda (x y) (inspect (list x y))) &#39;(0 2) &#39;(0 3))
+</pre>
+
+should produce the following output:
+<br/>
+
+<pre>
+    (list x y) is (0 0)
+    (list x y) is (0 1)
+    (list x y) is (0 2)
+    (list x y) is (1 0)
+    (list x y) is (1 1)
+    (list x y) is (1 2)
+</pre>
+
+Example:
+<br/>
+
+<pre>
+    $ # (n-loop (lambda (x) (inspect x)) (0 1))
+    $ echo &quot;(lambda (x) (inspect x))&quot; &gt; task1.args
+    $ echo &quot;((0 1))&quot; &gt;&gt; task1.args
+    $ scam -r task1.scm task1.args
+    x is 0
+    $
+</pre>
+
+Define your <i>main</i> such that it evaluates the first expression read, as in
+<i>pfa</i> task in the previous assignment.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Partial function application is the process of breaking up the
+arguments to a function into two groups. When the first
+group of arguments and the function itself is passed
+to a partial-evaluator, a function that accepts the remaining
+arguments is returned.
+Define a variadic function, named <i>pfa</i>,
+that partially evaluates a given function and the first <i>k</i> arguments.
+As an example, the last five expressions in the following list
+should evaluate to the same result:
+<br/>
+
+<pre>
+    (define (f x y z) (+ x y z))
+    (f a b c)
+    ((pfa f) a b c)
+    ((pfa f a) b c)
+    ((pfa f a b) c)
+    ((pfa f a b c))
+</pre>
+
+If the wrong number of arguments are supplied, you should throw
+one of the following exceptions:
+<br/>
+
+<pre>
+    (throw &#39;MALFORMED_FUNCTION_CALL &quot;too many arguments&quot;)
+    (throw &#39;MALFORMED_FUNCTION_CALL &quot;too few arguments&quot;)
+</pre>
+
+Example:
+<br/>
+
+<pre>
+    $ # ((pfa f 1) 1)
+    $ echo &quot;(define (f a b) (+ a b))&quot; &gt; task2.args
+    $ echo &quot;(1)&quot; &gt;&gt; task2.args
+    $ echo &quot;(1)&quot; &gt;&gt; task2.args
+    $ scam -r task2.scm task2.args
+    2
+    $
+</pre>
+
+Your <i>main</i> will need to evaluate the first expression.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Define a function named <i>infix<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mspace width="0.167em" />	<mo>&rarr;</mo></mrow></math>postfix</i>
+that takes a quoted arithmetic infix expression
+involving numbers, variables, and
+operators and transforms the expression
+into a postfix expression.
+The operators are 
+<code>+</code>, 
+<code>-</code>, 
+<code>*</code>, 
+<code>/</code>, and 
+<code>^</code>
+where 
+<code>^</code> represents the exponentiation
+operator.
+The precedence of the operators increases in the order given.
+Thus 
+<code>+</code> has
+the lowest precedence while 
+<code>^</code> has the
+highest precedence.
+As an example,
+<br/>
+
+<pre>
+    (infix-&gt;postfix &#39;(2 + 3 * x ^ 5 + a))
+</pre>
+
+would return the list:
+<br/>
+
+<pre>
+    (2 3 x 5 ^ * + a +)
+</pre>
+
+Note that all operators are left associative.
+<br/>
+<br/>
+In your <i>main</i>, do not apply <i>infix->postfix</i> to the read-in expression.
+Just call <i>infix->postfix</i> with the expression as an argument.
+Example:
+<br/>
+
+<pre>
+    $ # (infix-&gt;postfix &#39;(2 + 3))
+    $ echo &quot;(2 + 3)&quot; &gt; task3.args
+    $ scam -r task3.scm task3.args
+    (2 3 +)
+    $
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Define two functions, <i>if2cond</i> and <i>cond2if</i> that
+convert source code in the first form to that
+of the second. For example,
+<br/>
+
+<pre>
+    (if2cond `(if (&lt; a b) a b))
+</pre>
+
+should return the list:
+<br/>
+
+<pre>
+    (cond ((&lt; a b) a) (else b))
+</pre>
+
+Both functions should work recursively. That is, both should
+handle nested <i>if</i>s and nested <i>cond</i>s, respectively
+You may assume that all <i>if</i>s have both a true expression
+and a false expression and that all <i>cond</i>s have
+an else. You may also assume that each action of
+a <i>cond</i> clause and both clauses of an <i>if</i> are
+single expressions and are
+neither begin blocks and nor lambda expressions.
+<br/>
+<br/>
+In your <i>main</i>, call <i>if2cond</i> with the first read-in expression and
+<i>cond2if</i> with the second expression, printing each result.
+Example:
+<br/>
+
+<pre>
+    # (if2cond &#39;(if #t 0 1))
+    # (cond2if &#39;(cond (#t 0) (else 1)))
+    $ echo &quot;(if #t 0 1)&quot; &gt; task4.args
+    $ echo &quot;(cond (#t 0) (else 1))&quot; &gt;&gt; task4.args
+    $ scam -r task4.scm task4.args
+    (cond (#t 0) (else 1))
+    (if #t 0 1)
+    $
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ It turns out that a programming language need not have numbers
+as a core part of the language; they can be programmed in!
+<br/>
+<br/>
+Suppose we define <i>zero</i> as a function rather than a number.
+Let <i>zero</i> be the function that, regardless of its single
+argument, returns the identity function. The identity
+function is:
+<br/>
+
+<pre>
+    (define (identity x) x)
+</pre>
+
+Understand that we are <i>not</i> defining <i>zero</i> as the identity function
+but as a function that <i>returns</i> the identity function.
+<br/>
+<br/>
+Next, suppose we define <i>increment</i> as a function that takes one of
+these funny numbers (like zero) and returns a function
+representing the next higher number. We can define <i>increment</i>
+as:
+<br/>
+
+<pre>
+    (define (increment number)
+        (lambda (incrementer)
+            (define (resolver base)
+                (incrementer ((number incrementer) base))
+                )
+            resolver
+            )
+        )
+</pre>
+
+We can see that incrementing <i>zero</i> is equivalent to
+defining <i>one</i> as:
+<br/>
+
+<pre>
+    (lambda (incrementer) 
+        (define (resolver base)
+            (incrementer base)
+            )
+        resolver
+        )
+</pre>
+
+Next, define two functions named <i>add</i> and <i>multiply</i>
+that
+add and multiply two of these functional numbers, respectively. Your
+<i>add</i> routine should add numbers directly (i.e.
+without using increment and the like).
+<br/>
+Example:
+<br/>
+
+<pre>
+    $ echo &quot;(define num1 (lambda (f) (lambda (x) x)))&quot; &gt; task5.args
+    $ echo &quot;(define num2 (lambda (f) (lambda (x) (f x))))&quot; &gt;&gt; task5.args
+    $ echo &quot;(define (inc x) (+ x 1))&quot; &gt;&gt; task5.args
+    $ echo &quot;(define base 0)&quot; &gt;&gt; task5.args
+    $ scam -r task5.scm task5.args
+    1
+    0
+    $
+</pre>
+
+Your <i>main</i> function should evaluate all four expressions and the
+print the following expressions;
+<br/>
+
+<pre>
+    (((add num1 num2) inc) base)
+    (((multiply num1 num2) inc) base)
+</pre>
+
+Constraints: You are only allowed the following top-level functions:
+<i>main</i>, <i>increment</i>, <i>add</i>, and <i>multiply</i>.
+Your <i>add</i> function should not use the <i>increment</i>
+function. Your <i>multiply</i> function should not use the <i>add</i>
+function. You will likely need to do some research on
+<i>Church</i> numerals.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Define a function named <i>map+</i> that
+has the same functionality as the native
+map in Scheme (the version of <i>map</i> that
+can take one or more lists to map over).
+You may call <i>map</i> from <i>map+</i> but you
+may only send one list to <i>map</i> on any
+given invocation. You will need to make <i>map+</i>
+a variadic function. Note: Scam does not
+use the dotted
+tail notation of Scheme to implement variadic functions.
+See <i>The</i> <i>Scam</i> <i>Reference</i> <i>Manual</i> on implementing
+variadic functions.
+Hint: a list of lists is a single
+list that can be passed to <i>map</i>.
+<br/>
+<br/>
+Example usage:
+<br/>
+
+<pre>
+    $ # (map+ + (1 2 3) (4 5 6) (7 8 9))
+    $ echo &quot;+&quot; &gt; task6.args
+    $ echo &quot;((1 2 3) (4 5 6) (7 8 9))&quot; &gt;&gt; task6.args
+    (12 15 18)
+    $
+</pre>
+
+Your <i>main</i> function should evaluate the first expression
+and should apply <i>map+</i> to the cons of the evaluated
+first expression and the second expression.
+<br/>
+<br/>
+Constraints: You are only allowed the following top-level functions:
+<i>main</i> and <i>map+</i>. You may only call the built-in <i>map</i> with
+a single list.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+
+This exercise is similar to Exercise 2.42 in the text.
+Unlike the textbook version,
+the return value of the <i>queens</i> function
+should be a list of locations with the row numbers in
+decreasing order. Columns need to be filled in a greedy manner,
+For example, here is
+an example return value for an eight by eight board size with
+columns filled greedily from low to high:
+<br/>
+
+<pre>
+    ((7 6) (6 7) (5 5) (4 3) (3 1) (2 4) (1 2) (0 0))
+</pre>
+
+Note that the row numbers and column numbers start with 0
+(unlike the textbook version).
+Note also that the above solution is incorrect.
+<br/>
+<br/>
+Your <i>queens</i> function should take three arguments, the
+number of rows, the number of columns, and a flag that says
+columns should be filled greedily from low to high (if the
+flag is 
+<code>#t</code>) or high to low (if the flag is 
+<code>#f</code>).
+If there is no solution, <i>queens</i> should return the empty list.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ Define a function, named <i>extract</i>, which when given
+a symbol composed of 
+<code>&#39;h</code>s and 
+<code>&#39;t</code>s, generates a list function that
+extracts the appropriate element(s). An 
+<code>&#39;h</code> implies taking
+the <i>car</i> while a 
+<code>&#39;t</code> implies taking the <i>cdr</i>. Actions should
+be performed from left to right. For example:
+<br/>
+
+<pre>
+    (extract &#39;t &#39;(1 2 3 4))
+</pre>
+
+should return 
+<code>(2 3 4)</code>. Also,
+<br/>
+
+<pre>
+    (extract &#39;th &#39;(1 2 3 4))
+</pre>
+
+should return 2.
+<br/>
+
+<pre>
+    (extract &#39;ht &#39;((1) 2 3 4)) 
+</pre>
+
+should return 
+<code>nil</code>.
+<br/>
+<br/>
+To convert a symbol to a string, one uses the <i>string</i> function. Like lists,
+one can take the head and tail of a string:
+<br/>
+
+<pre>
+    (car (string &#39;htt))
+    (cdr (string &#39;htt))
+</pre>
+
+The two expressions above evaluate to 
+<code>&quot;h&quot;</code> and 
+<code>&quot;tt&quot;</code>.
+<br/>
+<br/>
+To compare two strings, one should use the <i>equal?</i> function,
+which tests for structural equality, not the <i>eq?</i>
+function, which tests for pointer equality.
+Finally, the empty string 
+<code>&quot;&quot;</code> is equivalent to nil.
+<br/>
+<br/>
+Example:
+<br/>
+
+<pre>
+    $ echo hht &gt; task8.args
+    $ echo (((1 2)) 3) &gt;&gt; task8.args
+    $ scam -r task8.scm task8.args
+    (2)
+    $
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ Define a series of functions, named <i>big</i>+, <i>big</i>-, <i>big</i>*, and
+<i>big</i>/, to support the addition, subtraction, and multiplication of
+arbitrary sized integers, respectively.
+Each integer will be expressed as a list of
+digits. For example, the integer 4918039 would be represented as
+the list 
+<code>(4 9 1 8 0 3 9)</code>.
+<br/>
+Example:
+
+<pre>
+    $ echo (1 2) &gt; task9.args
+    $ echo (3 4) &gt;&gt; task9.args
+    $ scam -r task9.scm task9.args
+    (1 2) plus (3 4) is (4 6)
+    (1 2) minus (3 4) is (- 2 2)
+    (1 2) times (3 4) is (4 0 8)
+    (1 2) divided by (3 4) is (0)
+    $
+</pre>
+
+Negative numbers should be represented by a leading minus sign.
+For example, the number
+-4918039
+would be represented by the list 
+<code>(- 4 9 1 8 0 3 9)</code>.
+Note: the minus sign is the symbol generated by 
+<code>(quote -)</code>,
+not the built-in subtraction
+function.
+<br/>
+<br/>
+For efficiency reasons,
+you should define (at the top level) a set of analogous functions
+that perform the above operations with the digits reversed.
+These function names should have the prefix <i>r</i>. For example,
+the function <i>big</i>+ should simply call <i>rbig</i>+ with the
+digits of its arguments reversed. Try to make your operations
+relatively efficient.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ Integrate your <i>big</i>+, <i>big</i>-, <i>big</i>*, and <i>big</i>/ functions
+into Scam's
+normal arithmetic functions. Do this by saving the old functions,
+as in:
+<br/>
+
+<pre>
+    (define old+ +)
+</pre>
+
+and then redefining new ones, as in:
+<br/>
+
+<pre>
+    (define (+ a b)
+        ...
+        )
+</pre>
+
+The new functions should call the old functions, if appropriate.
+Furthermore, if the operation processing two regular integers will
+cause an overflow or underflow, the regular integers should be first
+converted to big integers. Conversely, if a big integer result fits into a
+regular integer, the big integer should be converted to a regular
+integer. For easy of testing, assume an regular integer
+ranges from <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo>-</mo>	<msup>		<mn>2</mn>		<mn>15</mn>	</msup></mrow></math> to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mn>2</mn>		<mn>15</mn>	</msup>	<mo>-</mo>	<mn>1</mn></mrow></math>. Examples:
+<br/>
+
+<pre>
+    (+ 234 5)                       ;yields a regular int
+    (+ &#39;(2 3 4) 5)                  ;yields a regular int
+    (+ 234 &#39;(5))                    ;yields a regular int
+    (+ 32767 32767)                 ;yields a big int
+    (* 10000 4)                     ;yields a big int
+    (- &#39;(4 0 0 0 0) &#39;(1 0 0 0 0))   ;yields a regular int
+</pre>
+
+Your functions cannot refer to any regular integers outside the assumed
+range.
+<br/>
+<br/>
+Your <i>main</i> function should read two expressions and output the four
+results of adding, subtracting, multiplying, and dividing the two expressions,
+respectively, one result per line. An expression can either be a normal
+integer (within the restricted range given above) or a big integer.
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- selection -->
+
+<!-- 1 questions in this selection -->
+<!-- 0 items needed -->
+<!-- section -->
+<h2> Handing in the tasks
+<br/>
+</h2><!-- section ENDED -->
+
+For preliminary testing,
+send me all the files in your directory by running the command:
+<br/>
+
+<pre>
+    submit proglan lusth test2
+</pre>
+
+For your final submission, use the command:
+<br/>
+
+<pre>
+    submit proglan lusth assign2
+</pre>
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

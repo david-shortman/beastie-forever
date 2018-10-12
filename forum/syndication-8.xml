@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title><![CDATA[Forums - Project 2]]></title>
+		<link>http://beastie.cs.ua.edu/forum/</link>
+		<description><![CDATA[Forums - http://beastie.cs.ua.edu/forum]]></description>
+		<pubDate>Fri, 12 Oct 2018 04:14:17 +0000</pubDate>
+		<generator>MyBB</generator>
+		<item>
+			<title><![CDATA[Duplicate Functions on rbt.h]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=142</link>
+			<pubDate>Sat, 06 Oct 2018 16:57:03 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=142</guid>
+			<description><![CDATA[Are the duplicate functions on your rbt.h sample intentional?]]></description>
+			<content:encoded><![CDATA[Are the duplicate functions on your rbt.h sample intentional?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[test dropbox]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=120</link>
+			<pubDate>Wed, 26 Sep 2018 22:23:51 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=120</guid>
+			<description><![CDATA[The test2 dropbox is up and running. At the moment, it only tests your TNODE and BST classes.]]></description>
+			<content:encoded><![CDATA[The test2 dropbox is up and running. At the moment, it only tests your TNODE and BST classes.]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Project specifications]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=98</link>
+			<pubDate>Tue, 18 Sep 2018 20:41:28 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=98</guid>
+			<description><![CDATA[One type of development is called bottom-up, meaning you build an application by first implementing the more basic and fundamental pieces first and then the code that uses these pieces later. Here are some fundamental pieces that are ready, in order of increasing complexity:<br />
+<br />
+<a href="http://beastie.cs.ua.edu/cs201/assign-tnode.html" target="_blank" rel="noopener" class="mycode_url">Binary Search Tree Node</a><br />
+<a href="http://beastie.cs.ua.edu/cs201/assign-bst.html" target="_blank" rel="noopener" class="mycode_url">Binary Search Tree</a><br />
+<br />
+I will add more as I finish those specifications.]]></description>
+			<content:encoded><![CDATA[One type of development is called bottom-up, meaning you build an application by first implementing the more basic and fundamental pieces first and then the code that uses these pieces later. Here are some fundamental pieces that are ready, in order of increasing complexity:<br />
+<br />
+<a href="http://beastie.cs.ua.edu/cs201/assign-tnode.html" target="_blank" rel="noopener" class="mycode_url">Binary Search Tree Node</a><br />
+<a href="http://beastie.cs.ua.edu/cs201/assign-bst.html" target="_blank" rel="noopener" class="mycode_url">Binary Search Tree</a><br />
+<br />
+I will add more as I finish those specifications.]]></content:encoded>
+		</item>
+	</channel>
+</rss>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: install.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Fri Apr 17 15:38:10 2015 -->
+<head>
+<title>Songlib: installation of instrument sample packs</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: installation of instrument sample packs<br /></h1>
+<h2 class="maketitle">written by: Song Li Buser</h2>
+<h3 class="maketitle">Revision Date: April 17, 2015</h3>
+</p>
+
+<h3><a name="id1"><a href="install.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Installing the <i><b>songlib</b></i>&#32;free sample repository</a></h1><p>
+<i><b>Songlib</b></i>&#32;is a sample-based music development library. Thus
+the quality of the output greatly depends on the quality
+of the input samples. The <i><b>songlib</b></i>&#32;free sample repository
+(<i>songlib-fsr</i>) is provided with no restrictions. Because
+<a href="rra.html">RRA</a> files are rather large-ish, the samples
+are encoded using flac. These flac samples will need to
+be converted to RRA before <i><b>songlib</b></i>&#32;can use them. The
+basic strategy for unpacking samples is to download
+a sample pack to a convenient directory and then (this
+is for illustration only; there is a more convenient
+method further down):
+</p>
+<pre>
+    cd convenientDirectory
+    tar xvzf instrument-basename.tgz
+    ./install
+</pre>
+<p>Of course, <i>convenientDirectory</i> and <i>instrument-basename</i> are
+to be replaced with the appropriate names. Also, you will need to
+install <i>flac</i> utility:
+</p>
+<pre>
+   sudo apt-get install flac
+</pre>
+<p>since the samples are stored as <i>flac</i> files (<i>flac</i> is a compressed,
+but lossless, audio format). The installation processes converts
+the <i>flac</i> files to <i>rra</i> format
+(hence the need for the <i>flac</i> utility).
+The converted rra note files are then
+stored in the <tt>/usr/local/share/samples/</tt>
+hierarchy.
+</p>
+<p>The current set of samples in the repository can be found
+<a href="samples">here</a>.
+</p>
+<p>There is a Bash shell script, named <i>getpack</i>, that automates
+these tasks. For example, to install the <i>banjo-a.tgz</i> sample pack,
+run the command:
+</p>
+<pre>
+    getpack banjo-a
+</pre>
+<p>This will fetch, unpack, and install the instrument sample pack.
+Do this in a temporary directory as a bunch of files are left
+behind in the process.
+</p>
+
+<h1><a name="id3">Making your own sample packs</a></h1><p>
+The converse of <i>getpack</i> is <i>mkpack</i>. To make a sample pack,
+you start with a set of WAV or RRA files that are properly named.
+Here are three ways to properly name RRA files that contain notes
+from octave 4, using a filename prefix of <i>soft&#95;</i>:
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="left">
+<i>note-octave</i>     </td><td colspan="1" align="left">   <i>octave-note</i>     </td><td colspan="1" align="left">   <i>note number</i>     </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_c4.rra</code>    </td><td colspan="1" align="left">   <code>soft_4c.rra</code>   </td><td colspan="1" align="left">   <code>soft_48.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_c#4.rra</code>   </td><td colspan="1" align="left">   <code>soft_4c\#.rra</code> </td><td colspan="1" align="left">   <code>soft_49.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_db4.rra</code>   </td><td colspan="1" align="left">   <code>soft_4db.rra</code>  </td><td colspan="1" align="left">   <code>soft_49.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_d4.rra</code>    </td><td colspan="1" align="left">   <code>soft_4d.rra</code>   </td><td colspan="1" align="left">   <code>soft_50.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_d#4.rra</code>   </td><td colspan="1" align="left">   <code>soft_4d\#.rra</code> </td><td colspan="1" align="left">   <code>soft_51.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_eb4.rra</code>   </td><td colspan="1" align="left">   <code>soft_4eb.rra</code>  </td><td colspan="1" align="left">   <code>soft_51.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_e4.rra</code>    </td><td colspan="1" align="left">   <code>soft_4e.rra</code>   </td><td colspan="1" align="left">   <code>soft_52.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_f4.rra</code>    </td><td colspan="1" align="left">   <code>soft_4f.rra</code>   </td><td colspan="1" align="left">   <code>soft_53.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_f#4.rra</code>   </td><td colspan="1" align="left">   <code>soft_4f\#.rra</code> </td><td colspan="1" align="left">   <code>soft_54.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_gb4.rra</code>   </td><td colspan="1" align="left">   <code>soft_4gb.rra</code>  </td><td colspan="1" align="left">   <code>soft_54.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_g4.rra</code>    </td><td colspan="1" align="left">   <code>soft_4g.rra</code>   </td><td colspan="1" align="left">   <code>soft_55.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_g#4.rra</code>   </td><td colspan="1" align="left">   <code>soft_4g\#.rra</code> </td><td colspan="1" align="left">   <code>soft_56.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_ab4.rra</code>   </td><td colspan="1" align="left">   <code>soft_4ab.rra</code>  </td><td colspan="1" align="left">   <code>soft_56.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_a4.rra</code>    </td><td colspan="1" align="left">   <code>soft_4a.rra</code>   </td><td colspan="1" align="left">   <code>soft_57.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_a#4.rra</code>   </td><td colspan="1" align="left">   <code>soft_4a\#.rra</code> </td><td colspan="1" align="left">   <code>soft_58.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_bb4.rra</code>   </td><td colspan="1" align="left">   <code>soft_4bb.rra</code>  </td><td colspan="1" align="left">   <code>soft_58.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+<code>soft_b4.rra</code>    </td><td colspan="1" align="left">   <code>soft_4b.rra</code>   </td><td colspan="1" align="left">   <code>soft_59.rra</code>   </td></tr>
+<tr><td colspan="1" align="left">
+</td></tr></tbody></table>
+</p>
+</div>
+<p>The last column uses absolute note numbers. The lowest absolute note number
+is zero which corresponds to a C in octave 0. The C note in octave one
+has a note number of 12, since there are 12 notes in an octave and <i><b>songlib</b></i>&#10;uses zero-based counting.
+</p>
+<p>Let's suppose I have a set of tinwhistle notes, stored as properly named
+WAV files, where the WAV files start with the prefix <i>soft&#95;</i>.
+For example, one of the files might be named:
+</p>
+<pre>
+    soft_f#5.wav
+</pre>
+<p>Suppose further, I wish to create a sample pack named <i>tinwhistle-soft</i>.
+I would run this command:
+</p>
+<pre>
+    mkpack tinwhistle soft soft_*.wav
+</pre>
+<p>The first two arguments to <i>mkpack</i> will be used to construct the sample
+pack name.
+</p>
+<p>The <i>mkpack</i> program will then perform the following steps:
+</p>
+<ol><li>convert the WAV files to RRA
+</li><li>fade in and fade out the RRA amplitudes so that the
+amplitude values both start and end with a zero
+</li><li>normalize the amplitudes so that all notes have the same volume
+</li><li>convert the sample notes to FLAC format, which is a lossless, but
+compressed
+</li></ol>
+<p>If RRA files are passed to <i>mkpack</i> instead of WAVs, the first step is ommitted.
+</p>
+<p>Next, the FLAC files and an install script are tarred up
+into a tarball.
+Finally, the tarball is then shipped to the <i><b>songlib</b></i>&#32;server.
+If the notes are already in RRA format, then the command would be
+something like:
+</p>
+<pre>
+    mkpack tinwhistle soft soft_*.rra
+</pre>
+<p>The fading and normalizing steps will still be performed.
+Note: the second argument to <i>mkpack</i> (in the example, <i>soft</i>)
+does not have to match the prefix of the WAV or RRA files.
+</p>
+<p>For every sample pack,
+you should have a file named <code>&lt;prefix&gt;.README</code>, where
+<code>&lt;prefix&gt;</code> is the prefix of your notes (like <i>soft</i>), that gives
+the provenance of the notes in the sample pack. You may
+also have a file named <code>&lt;prefix&gt;.include</code>
+that can be used to simplify the use of your sample pack. Such
+an include file might load the sample pack into a predefined
+variable, as in:
+</p>
+<pre>
+    instrument = readScale("/usr/local/share/samples/tinwhistle","soft_");
+</pre>
+<p>or for a set of drum kit samples:
+</p>
+<pre>
+    setCrash(readScale("/usr/local/share/samples/beatbox/","dpe-crash_"));
+    setHHOpen(readScale("/usr/local/share/samples/beatbox/","dpe-hhopen_"));
+    setHHClosed(readScale("/usr/local/share/samples/beatbox/","dpe-hhclosed_"));
+    setHHPedal(readScale("/usr/local/share/samples/beatbox/","dpe-hhpedal_"));
+    setSnare(readScale("/usr/local/share/samples/beatbox/","dpe-snare_"));
+    setTomHi(readScale("/usr/local/share/samples/beatbox/","dpe-tomhi_"));
+    setTom(readScale("/usr/local/share/samples/beatbox/","dpe-tom_"));
+    setTomLo(readScale("/usr/local/share/samples/beatbox/","dpe-tomlo_"));
+    setKick(readScale("/usr/local/share/samples/beatbox/","dpe-kick_"));
+    setRim(readScale("/usr/local/share/samples/beatbox/","dpe-rim_"));
+    setStick(readScale("/usr/local/share/samples/beatbox/","dpe-stick_"));
+</pre>
+<p>If you don't have an account on the <i><b>songlib</b></i>&#32;server, this last step will fail.
+In this case, you can mail the sample pack to the email address at the
+bottom of this document.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Sep  5 20:07:21 2016 -->
+<head>
+<title>The Scam Reference Manual -- Conditionals</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_9.html">
+  <img border="0" alt="Assignment" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_11.html">
+  <img border="0" alt="Functions" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Conditionals</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Conditionals</h1>
+<p>Conditionals implement decision points in a computer program.
+Suppose you have a program that performs some task on an
+image. You may well have a point in the program where you
+do one thing if the image is a JPEG and quite another
+thing if the image is a GIF file. Likely, at this point,
+your program will include a conditional expression to make
+this decision.
+</p>
+<p>Before learning about conditionals, it is important to
+learn about logical expressions. Such expressions are the
+core of conditionals and loops.<sup><a href="index_22.html#footnote-3">3</a></sup>
+</p>
+
+<h2><a name="id1">Logical expressions</a></h2><p>
+A logical expression evaluates to a truth value, in essence true or
+false. For example, the expression <code>(&gt; x 0)</code>
+resolves to true if <i>x</i> is positive
+and false if <i>x</i> is negative or zero. In Scam, truth is represented by
+the symbol <code>#t</code> and falsehood
+by the symbol <code>#f</code>.
+Together,
+these two symbols are known as <i><i>Boolean</i></i> values.
+</p>
+<p>One can assign truth values to variables:
+</p>
+<pre>
+      (define c -1)
+      (define z (&gt; c 0))
+
+      (inspect z)
+      -&gt; z is #f
+</pre>
+<p>Here, the variable <i>z</i> would be assigned true
+if <i>c</i>  was positive;
+since <i>c</i> is negative, however, it is assigned false.
+</p>
+
+<h2><a name="id2">Logical operators</a></h2><p>
+Scam has the following logical operators:
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="center">
+<tt>=</tt>     </td><td colspan="1" align="left"> numeric equal to </td></tr>
+<tr><td colspan="1" align="center">
+<tt>!=</tt>    </td><td colspan="1" align="left"> not equal to </td></tr>
+<tr><td colspan="1" align="center">
+<tt>&gt;</tt>     </td><td colspan="1" align="left"> greater than </td></tr>
+<tr><td colspan="1" align="center">
+<tt>&gt;=</tt>    </td><td colspan="1" align="left"> greater than or equal to </td></tr>
+<tr><td colspan="1" align="center">
+<tt>&lt;</tt>     </td><td colspan="1" align="left"> less than </td></tr>
+<tr><td colspan="1" align="center">
+<tt>&lt;=</tt>    </td><td colspan="1" align="left"> less than or equal to </td></tr>
+<tr><td colspan="1" align="center">
+<tt>==</tt>    </td><td colspan="1" align="left"> pointer equality </td></tr>
+<tr><td colspan="1" align="center">
+<tt>neq?</tt>  </td><td colspan="1" align="left"> pointer inequality </td></tr>
+<tr><td colspan="1" align="center">
+<tt>eq?</tt>   </td><td colspan="1" align="left"> pointer equality </td></tr>
+<tr><td colspan="1" align="center">
+<tt>equal?</tt></td><td colspan="1" align="left"> structural equality </td></tr>
+<tr><td colspan="1" align="center">
+<tt>and</tt>   </td><td colspan="1" align="left"> and </td></tr>
+<tr><td colspan="1" align="center">
+<tt>or</tt>    </td><td colspan="1" align="left"> or </td></tr>
+<tr><td colspan="1" align="center">
+<tt>not</tt>   </td><td colspan="1" align="left"> not </td></tr>
+<tr><td colspan="1" align="center">
+</td></tr></tbody></table>
+</p>
+</div>
+<p>The first ten operators are used for comparing two  (or more) things,
+while the last three operators are the glue that joins up simpler
+logical expressions into more complex ones.
+</p>
+
+<h2><a name="id3">Short circuiting</a></h2><p>
+When evaluating a logical expression,
+Scam evaluates the expression from left to right and
+stops evaluating as soon as it finds out that the expression
+is definitely true or definitely false.
+For example, when encountering the expression:
+</p>
+<pre>
+      (and (!= x 0) (&gt; (/ y x) 2))
+</pre>
+<p>if <i>x</i> has a value of 0, the subexpression on the left side of the
+<i>and</i>
+connective resolves to false. At this point, there is no way for the
+entire expression to be true (since both the left hand side and the right
+hand side must be true for an
+<i>and</i>
+expression to be true), so the right
+hand side of the expression is not evaluated. Note that this expression
+protects against a divide-by-zero error.
+</p>
+
+<h2><a name="id4">If expressions</a></h2><p>
+Scam's <i>if</i> expressions are used to conditionally execute code,
+depending on the truth value of what is known as the
+<i>test</i> expression. One version of <i>if</i> has a single expression 
+following the test expression:
+</p>
+<p>Here is an example:
+</p>
+<pre>
+    (if (equal? name "John")
+        (println "What a great name you have!")
+        )
+</pre>
+<p>In this version, when the test expression is true (<i>i.e.</i>, 
+the string <tt>"John"</tt> is bound to the variable <i>name</i>), 
+then the following expression is evaluated 
+(i.e., the compliment
+is printed).
+If the test expression is false, however the
+expression following the test expression is not evaluated.
+</p>
+<p>Here is another form of <i>if</i>:
+</p>
+<pre>
+    (if (equal? major "Computer Science")
+        (println "Smart choice!")
+        (println "Ever think about changing your major?")
+        )
+</pre>
+<p>In this version, <i>if</i> has two expressions following
+the test.
+As before, the first expression is evaluated if the test expression
+is true. If the test expression is false, however,
+the second expression is evaluated instead.
+</p>
+
+<h2><a name="id5">else-if chains and the <i>cond</i> function</a></h2><p>
+You can chain <tt>if</tt> statements together, as in:
+</p>
+<pre>
+    (if (== bases 4)
+        (print "HOME RUN!!!")
+        (if (== bases 3)
+            (print "Triple!!")
+            (if (== bases 2)
+                (print "double!")
+                (if (== bases 1) 
+                    (print "single")
+                    (print "out")
+                    )
+                )
+            )
+        )
+</pre>
+<p>The expression that is eventually evaluated is
+directly underneath the first test expression
+that is true, reading from top to bottom.
+If no test expression is true, the second expression associated
+with the most nested if is evaluated.
+</p>
+<p>The <i>cond</i> function takes care  of the awkward indentation
+of the above construct:
+</p>
+<pre>
+    (cond
+        ((== bases 4) (print "HOME RUN!!!"))
+        ((== bases 3) (print "Triple!!"))
+        ((== bases 2) (print "double!"))
+        ((== bases 1) (print "single"))
+        (else (print "out"))
+        )
+</pre>
+<p>The general form of a <i>cond</i> function call is:
+</p>
+<pre>
+    (cond (expr1 action1) (expr2 action2) ... (else actionN))
+</pre>
+<p>where <i>expr1</i>, <i>expr2</i>, and so on are Boolean expressions. In addition
+to its compactness, another advantage of a <i>cond</i> is each action
+portion of a clause is really an implied block. For example,
+suppose we wish to debug an <i>if</i> expression and print out a
+message if the test resolves to true. We are required to insert
+a <i>begin</i> block, so:
+</p>
+<pre>
+    (if (alpha a b c)
+        (beta y)
+        (gamma z)
+        )
+</pre>
+<p>becomes:
+</p>
+<pre>
+    (if (alpha a b c)
+        (begin
+            (println "it's true!")
+            (beta y)
+            )
+        (gamma z)
+        )
+</pre>
+<p>On the other hand:
+</p>
+<pre>
+    (cond
+        ((alpha a b c)
+            (beta y)
+            )
+        (else
+            (gamma z)
+            )
+        )
+</pre>
+<p>becomes:
+</p>
+<pre>
+    (cond
+        ((alpha a b c)
+            (println "it's true!")
+            (beta y)
+            )
+        (else
+            (gamma z)
+            )
+        )
+</pre>
+<p>Note the lack of a <i>begin</i> block for <i>cond</i>.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_9.html">
+  <img border="0" alt="Assignment" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_11.html">
+  <img border="0" alt="Functions" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Conditionals</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: hosa.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Tue Mar 31 08:34:49 2015 -->
+<head>
+<title>Songlib: Hosa Tracklink recording</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: tracklink<br /></h1>
+<h2 class="maketitle">written by: Song Li Buser</h2>
+<h3 class="maketitle">Revision Date: March 31, 2015</h3>
+</p>
+
+<h3><a name="id1"><a href="hosa.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Introduction</a></h1><p>
+This tutorial assumes Ubuntu Linux running the ALSA Sound Server,
+although this should work for other versions of Linux and
+other sound servers, with appropriate modifications.
+</p>
+<p>You should have a shell script named <i>record</i>
+that uses the alsa audio driver.
+You will also need to install <i>ecasound</i> and <i>sox</i>:
+</p>
+<pre>
+    sudo apt-get install ecasound sox
+</pre>
+<dl>
+<dt>Step 1</dt><dd>
+<p>Using the Hosa Tracklink USB cable, connect your microphone
+to your laptop.  If you run the following command:
+</p>
+<pre>
+    record
+</pre>
+<p>without any arguments, you should see a message similar to:
+</p>
+<pre>
+    you must specify a sound card number!
+     0 [PCH            ]: HDA-Intel - HDA Intel PCH
+                          HDA Intel PCH at 0xe3d40000 irq 44
+     1 [Interface      ]: USB-Audio - Tracklink USB Interface
+                          Hosa Technology, Inc. Tracklink USB Interface at ...
+        </pre>
+<p>Card 0 is your internal sound card while card 1
+should be the Hosa Tracklink.
+</p>
+</dd><dt>Step 2</dt><dd>
+<p>Turn the volume button on the Hosa Tracklink all the way up (clockwise).
+This control is on the top of the small brick in the middle of the 
+cable.
+The Tracklink supports both condensor and dynamic mics.
+For condensor mics, turn on the phantom power; the phantom power
+switch is on the side of the brick. If the phantom power is on,
+the 48V LED will light up.
+</p>
+</dd><dt>Step 3</dt><dd>
+<p>Now you need to set the levels. In one terminal window, run the command:
+</p>
+<pre>
+    alsamixer -c 1
+</pre>
+<p>In another window, run the command:
+</p>
+<pre>
+    monitor 1
+</pre>
+<p>Plug in some good headphones into your computer and then
+speak into the mic. You should hear your voice through the headphones,
+with a slight delay.
+Using <i>alsamixer</i>,
+make sure your master, pcm, and headphones are near 100&#37;.
+Now you want to adjust the volume control on the Tracklink
+until you have the loudest result in your headphones WITHOUT any
+annoying buzz or hiss.
+Note that only one side of your head phones
+will change during this volume adjustment since the mic is monophonic.
+Stop monitoring in the monitoring window with a <code>&lt;Ctl&gt;-c</code>.
+</p>
+</dd><dt>Step 4</dt><dd>
+<p>To record, enter the command:
+</p>
+<pre>
+    record 1
+</pre>
+<p>At the <i>ecasound</i> prompt, press <code>t</code> to start recording, <code>s</code> to
+stop recording, and <code>q</code> to quit.
+Note that if you want to record with the built-in
+device, you would enter the command:
+</p>
+<pre>
+    record 0
+</pre>
+<p>After recording,
+play the file <i>track.wav</i> back through the laptop speakers
+to make sure you have recorded properly:
+</p>
+<pre>
+    play track.wav
+</pre>
+<p>If you experience clipping, reduce the loudness of your voice or
+reduce the volume control on the Tracklink.
+If you want to save the recording, save <i>track.wav</i>
+under another name, since subsequent recordings will
+overwrite <i>track.wav</i>.
+</p>
+</dd></dl>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

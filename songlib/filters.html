@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: filters.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Nov  7 10:41:28 2011 -->
+<head>
+<title>Songlib: filters</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: filters<br /></h1>
+<h2 class="maketitle">Song Li Buser</h2>
+<h3 class="maketitle">Revision Date: November 7, 2011</h3>
+</p>
+
+<h3><a name="id1"><a href="filters.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Filtering notes</a></h1><p>
+It is possible to modify notes using the <i><b>songlib</b></i> filtering system.
+It is also possible to design your own filters. The basic filtering
+strategy is to add filters to an instrument. Notes are then processed by
+the filters when they are played. Filters are applied in the opposite order
+they were placed upon
+upon the instrument's filter stack.
+As an example, suppose we wish to pass each note of a guitar throw a
+low-pass filter (to remove any high frequency harmonics),
+then a diminishing filter (to have the note fade away),
+and
+finally a reverb filter (to add richness).
+We would push filters onto the filter stack in
+the following order.
+</p>
+<pre>
+    guitar = readScale(GuitarDir,GuitarPrefix);
+
+    pushFilter(guitar,myReverb);
+    pushFilter(guitar,myDiminish);
+    pushFilter(guitar,myLowPass);
+</pre>
+<p>The added filters must have a prototype similar to...
+</p>
+<pre>
+    void filter(int *,int);
+</pre>
+<p>...and are called back during filter processing. The added filters are
+passed the raw audio data (as an integer array) and the length of the
+array. The filter should then modify the audio data (in place) in the
+appropriate way.
+</p>
+<p>Since the
+<a href="builtInFilters.html">built-in filters</a>
+take a varying number of arguments, one must
+<i>wrap</i> them so to accomodate the two argument requirement of added
+filters. Here is an example, with, <i>myLowPass</i> defined as follows:
+</p>
+<pre>
+    static void
+    myLowPass(int *data,int length)
+        {
+        lowPass(data,length,4000,1.414);
+        }
+</pre>
+<p>The <i>lowPass</i> function is a one of the 
+<a href="builtInFilters.html">built-in filters</a>.
+It
+takes two additional arguments beyond the raw data and the lentgh. The
+<i>myLowPass</i> procedure is a wrapper so that the <i>lowPass</i> function
+can be added to the stack of instrument filters.
+</p>
+<p>Filtering occurs when notes are played. Thus if a note is never
+played, it is never filtered. In additions, notes are only filtered
+if a non-empty filter stack is in existence at the time the
+note is played. Finally, notes are (nominally) filtered once and
+cached.  If the filter stack is changed and the note is replayed, the
+cached version will be used and the note will not be refiltered.
+If you wish to refilter a note, you must first clear it first via a call
+similar to:
+</p>
+<pre>
+    setFilteredNote(instrument,octave,pitch,0);
+</pre>
+<p>Here are the list of functions for manipulating filters and filtered
+notes:
+</p>
+<pre>
+    void pushFilter(int instrument,filter_t filter);
+
+    filter_t popFilter(int instrument);
+</pre>
+<p>The <i>pushFilter</i> function adds the given filter to the stack of
+filters assigned for the given instrument. The <i>popFilter</i> function
+removes the most recently added filter still on the filter stack.
+The type <i>filter&#95;t</i> is defined as:
+</p>
+<pre>
+    typedef void (*)(int *,int) filter_t
+</pre>
+<p>One can retrieve filtered notes for use in the <i>r</i>-type note
+playing functions:
+</p>
+<pre>
+    RRA *getFilteredNote(int instrument,int octave,int pitch);
+
+    RRA *setFilteredNote(int instrument,int octave,int pitch, RRA *newest);
+
+    RRA *getFilteredNumberedNote(int instrument,int numberedNote);
+
+    RRA *setFilteredNumberedNote(int instrument,int numberedNote, RRA *newest);
+</pre>
+<p>The <i>getFilteredNote</i> and <i>getFilteredNumberedNote</i>
+functions retrieve the
+specified filtered note while the <i>setFilteredNote</i> and
+<i>setFilteredNumberedNote</i> update the filtered note.
+</p>
+<p>The <i>set...</i> functions return the previous value of the filtered note.
+</p>
+<p>One can also filter notes without playing them by using the
+following functions:
+</p>
+<pre>
+    void filter(int instrument,int octave,int pitch);
+
+    void nfilter(int instrument,int numberedNote);
+
+    void hfilter(int instrument,RRA *h);
+
+    void dfilter(int instrument,int *data,int length);
+</pre>
+<p>Be aware that the <i>filter</i> and <i>nfilter</i> functions
+permanantly filter (for the remaining life of the songlib program)
+the specified clean notes.
+The <i>hfliter</i> function filters the given RRA object while the
+<i>dfilter</i> function filters the given data array.
+All functions
+use the filter stack currently associated with the given 
+instrument. If the instrument's filter stack is empty, these
+functions have no effect.
+</p>
+<p>See also: 
+<a href="builtInFilters.html">builtInFilters</a>
+<address><a href="mailto:lusth@cs.ua.edu">lusth@cs.ua.edu</a></address><br />
+</body></html>

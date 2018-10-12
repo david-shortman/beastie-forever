@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Error With freeCDA - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=73">Error With freeCDA</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Error With freeCDA (<em>/showthread.php?tid=73</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>Error With freeCDA</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=153">brucelogue</a> -  <strong>09-14-2018</strong>
+<br />
+<br />
+I've been getting a seg fault whenever I attempt to use my freeCDA function and I traced the error to the following part. I created a loop that goes from index 0 to capacity and calls items-&gt;free with a call to getCDA as the argument. The free call causes the seg fault and gives me an error that a double free or corruption occurred. I commented out any other calls to items-&gt;free but the error persists. Any ideas how to get my sweet sweet memory back?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Error With freeCDA</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=94">ajaymehul</a> -  <strong>09-14-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-14-2018, 01:25 AM)</span>brucelogue Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=319#pid319" class="quick_jump"></a></cite>I've been getting a seg fault whenever I attempt to use my freeCDA function and I traced the error to the following part. I created a loop that goes from index 0 to capacity and calls items-&gt;free with a call to getCDA as the argument. The free call causes the seg fault and gives me an error that a double free or corruption occurred. I commented out any other calls to items-&gt;free but the error persists. Any ideas how to get my sweet sweet memory back?</blockquote><br />
+Probably because you aren't meant to free anything when using getCDA. If you do, the CDA still assumes it's got the memory, and when you call freeCDA it's gonna try to free that. But you already did, hence the error.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Error With freeCDA</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-14-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-14-2018, 01:25 AM)</span>brucelogue Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=319#pid319" class="quick_jump"></a></cite>I've been getting a seg fault whenever I attempt to use my freeCDA function and I traced the error to the following part. I created a loop that goes from index 0 to capacity and calls items-&gt;free with a call to getCDA as the argument. The free call causes the seg fault and gives me an error that a double free or corruption occurred. I commented out any other calls to items-&gt;free but the error persists. Any ideas how to get my sweet sweet memory back?</blockquote><br />
+You should only run the loop if items-&gt;free is not null. If it is not null, your loop index should go from 0 to size-1 (not capacity) . You can/should use getCDA.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

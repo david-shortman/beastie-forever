@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>passing</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Invariants
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="passing.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Description
+<br/>
+</h2><!-- section ENDED -->
+
+<br/>
+There are six main methods of passing arguments in a function call:
+<br/>
+
+<ul>
+
+<li>
+
+
+call-by-value
+</li>
+
+<li>
+
+
+call-by-reference
+</li>
+
+<li>
+
+
+call-by-value-result
+</li>
+
+<li>
+
+
+call-by-name
+</li>
+
+<li>
+
+
+call-by-need
+</li>
+
+<li>
+
+
+call-by-name-with-thunks
+</li>
+
+</ul>
+
+
+Let's examine these six methods in turn.
+<br/>
+<!-- section -->
+<h2> Call-by-value
+<br/>
+</h2><!-- section ENDED -->
+
+This method is the only method of parameter passing allowed by C, Java,
+Scheme, and Scam. In this method, the formal parameters are set up as local
+variables that contain the value of the expressions that were passed as
+arguments to the function. Changes to local variables are not reflected
+in the actual arguments. For example, a swap routine such as:
+<br/>
+
+<pre>
+    function swap(a, b)
+        { 
+        var tmp; 
+        tmp = a; 
+        a = b; 
+        b = tmp; 
+        }
+</pre>
+
+under <i>call-by-value</i> would not yield the intended semantics.
+The code fragment:
+<br/>
+
+<pre>
+    var x = 3;
+    var y = 4;
+
+    swap(x,y);
+    println(&quot;x is &quot;, x, &quot; and y is &quot;, y);
+</pre>
+
+would print out:
+<br/>
+
+<pre>
+    x is 3 and y is 4
+</pre>
+
+since only the values of the local variables <i>a</i> and <i>b</i>
+were swapped. In
+general, one cannot write get a swap routine to work under <i>call-by-value</i>
+unless the addresses of the variables are somehow sent. One way of
+using addresses is to pass an array (in C and Java, when an array name
+is used as an argument, the address of the first element (C) or array
+object (Java) is sent, rather than a copy of the array). For example,
+the code fragment:
+<br/>
+
+<pre>
+    int x[1];
+    int y[1];
+
+    x[0] = 3;
+    y[0] = 4; 
+
+    swap(x,y); //address of beginning element is sent
+
+    printf(&quot;x[0] is %d and y[0] is %d\n&quot;,x[0],y[0]);
+</pre>
+
+with <i>swap</i> defined as:
+<br/>
+
+<pre>
+    void swap(int a[], int b[])
+        {
+        int tmp;
+
+        tmp = a[0];
+        a[0] = b[0];
+        b[0] = tmp;
+        }
+</pre>
+
+would print out:
+<br/>
+
+<pre>
+    x[0] is 4 and y[0] is 3
+</pre>
+
+In this case, the address is stored in the local variables <i>a</i> and
+<i>b</i>. This is
+still <i>call-by-value</i>;
+even if the address stored in <i>a</i>, for example,
+is modified,
+<i>x</i> still "points" to the same array as before.
+<br/>
+<br/>
+C has an operator that extracts the address of a variable, the
+& operator. By using &, one can write a swap in C that does
+not depend on arrays:
+<br/>
+
+<pre>
+    void swap(int *a,int *b)
+        {
+        int tmp;
+        tmp = *a;
+        *a = *b;
+        *b = tmp;
+        }
+</pre>
+
+The call to <i>swap</i> would look like:
+<br/>
+
+<pre>
+    int x = 3;
+    int y = 4;
+
+    swap(&amp;x,&amp;y);
+
+    printf(&quot;x is %d and y is %d\n&quot;,x,y);
+</pre>
+
+Note that this is still <i>call-by-value</i> since the value of the
+address of <i>x</i> (and <i>y</i>) is being passed to the swapping function.
+<br/>
+<!-- section -->
+<h2> Call-by-reference
+<br/>
+</h2><!-- section ENDED -->
+
+The second method differs from the first in that changes to
+the formal parameters during execution of the function body are
+immediately reflected in actual arguments. Both C++ and Pascal allow
+for <i>call-by-reference</i>. Normally, this is accomplished,
+under the hood, by passing the
+address of the actual argument (assuming it has an address) rather than
+the value of the actual argument. References to the analogous formal
+parameter are translated to references to the memory location stored in
+the formal parameter. In C++, <i>swap</i> could be defined as:
+<br/>
+
+<pre>
+    void swap(int &amp;a, int &amp;b) //The &amp; here signifies call-by-reference
+        {
+        int tmp;
+        tmp = a;
+        a = b;
+        b = tmp;
+        }
+</pre>
+
+Now consider the code fragment:
+<br/>
+
+<pre>
+    var x = 3;  //assume x at memory location 1000
+    var y = 4;  //assume y at memory location 1008
+
+    //location 1000 holds a 3
+    //location 1008 holds a 4
+
+    swap(x,y);
+    cout &lt;&lt; &quot;x is &quot; &lt;&lt; x &lt;&lt; &quot; and y is &quot; &lt;&lt; y &lt;&lt; &quot;\n&quot;;
+</pre>
+
+When the swapping function starts executing, the value 1000 is stored
+in the local variable <i>a</i> and 1008 is stored in local variable <i>b</i>.
+The line:
+<br/>
+
+<pre>
+    tmp = a;
+</pre>
+
+is translated, not into store the value of <i>a</i> (which is 1000) in
+variable <i>tmp</i>, but rather store the value at memory location 1000 (which
+is 3) in variable <i>tmp</i>. Similar translations are made for the remaining
+statements in the function body. Thus, the code fragment prints out:
+<br/>
+
+<pre>
+    x is 4 and y is 3
+</pre>
+
+The swap works! When trying to figure out what happens under
+<i>call-by-reference</i>, it is often useful to draw pictures of the various
+variables and their values and location and update them as the function
+body executes.
+<br/>
+What happens if a literal is passed as an actual argument to a formal
+parameter that is designated <i>call-by-reference</i>? For example, how might
+the call:
+<br/>
+
+<pre>
+    swap(x,4);
+</pre>
+
+be handled?
+<br/>
+<br/>
+One can simulate <i>call-by-reference</i> in Scam by delaying the arguments
+and capturing the calling environment. Using this paradigm,
+example, a working <i>swap</i>
+routine can be written in Scam:
+<br/>
+
+<pre>
+    (define (swap # $a $b)
+        (define temp (get $a #))
+        (set $a (get $b #) #)
+        (set $b temp #)
+        )
+</pre>
+
+The <i>get</i> function takes a symbol and an environment and retrieves the
+value of the symbol as found in the given environment.
+The <i>set</i> function is analogous, but changes the value of a symbol
+found in the given environment. Both <i>get</i> and <i>set</i> are true functions,
+so the values of <i>$a</i> and <i>$b</i> are used in manipulating the given
+environment. Note that this version of <i>swap</i> only works if symbols are
+passed to <i>swap</i>.
+<br/>
+<br/>
+By taking advantage of Scam's allowing us to make calls to <i>get</i> implicitly
+by calling the object itself, <i>swap</i> can be rewritten as:
+<br/>
+
+<pre>
+    (define (swap # $a $b)
+        (define temp (# $a))
+        (set $a (# $b) #)
+        (set $b temp #)
+        )
+</pre>
+
+<!-- section -->
+<h2> Call-by-value-result
+<br/>
+</h2><!-- section ENDED -->
+
+This method is a combination of the first two. Execution of the function
+body proceeds as in <i>call-by-value</i>. That is, no updates of the actual
+arguments are made. However, after execution of the body, but just before
+the function returns, the actual arguments are updated with the final
+values of their associated formal parameters. This method of parameter
+passing is often used for Ada <i>in-out</i> parameters.
+<br/>
+<br/>
+We can simulate
+<i>call-by-value-result</i> in Scam by simulating <i>call-by-reference</i>,
+but assigning the values of the passed symbols to local
+variables at the start of the function:
+<br/>
+
+<pre>
+    (define (swap # $a $b)
+        ; pre
+        (define a (get $a #))
+        (define b (get $b #))
+
+        ; body
+        (define temp a)
+        (set! a b)
+        (set! b temp)
+
+        ;post
+        (set $a a #)
+        (set $b b #)
+        )
+</pre>
+
+The section marked verb!pre! sets up the locals while the section marked
+verb!body! implements the swap on the locals. The section marked verb!post!
+updates the variables that were passed to <i>swap</i>.
+<br/>
+<br/>
+Usually, one cannot tell whether a language implements
+<i>call-by-reference</i> or <i>call-bay-value-result</i>;
+the resulting values are the same.
+One situation where the two methods of parameter passing can
+generate different results is if the body portion of the
+function references a global variable and that global
+variable is passed as an argument as well. This second
+reference to the global is known as an <i>alias</i>. Now there
+are two references to the same variable through two different
+names.
+Unlike <i>call-by-value-result</i>,
+updates to the alias in the body section
+are immediately reflected in the value
+of the global variable under <i>call-by-reference</i>.
+<br/>
+<!-- section -->
+<h2> Call-by-name
+<br/>
+</h2><!-- section ENDED -->
+
+<i>Call-by-name</i> was used in Algol implementations. In essence, functions
+are treated as macros. Under <i>call-by-name</i>, the fragment:
+<br/>
+
+<pre>
+    var x = 3;
+    var y = 4;
+    swap(x,y);
+    print(&quot;x is &quot;, x, &quot; and y is &quot;, y, &quot;\n&quot;);
+</pre>
+
+would be translated into:
+<br/>
+
+<pre>
+    var x = 3;
+    var y = 4;
+
+    //substitute the body of the function for the call, 
+    //renaming the formal parameters with the names of 
+    //the actual args
+
+    {
+    var tmp;
+
+    tmp = x;
+    x = y;
+    y = tmp;
+    }
+
+    print(&quot;x is &quot;, x, &quot; and y is &quot;, y, &quot;\n&quot;);
+</pre>
+
+Under <i>call-by-name</i>, <i>swap</i> also works, so why is <i>call-by-name</i>
+a method that has fallen into relative disuse? One reason is complexity.
+What happens if a local parameter happens to have the same name as one of
+the actual args. Suppose <i>swap</i> had been written as:
+<br/>
+
+<pre>
+    function swap(a, b)
+        { 
+        var x; 
+
+        x = a; 
+        a = b; 
+        b = x; 
+        }
+</pre>
+
+Then a naive substitution and renaming would have produced:
+<br/>
+
+<pre>
+    var x = 3;
+    var y = 4;
+
+    //substitute the body of the function for the call,
+    //renaming the formal parameters with the names of
+    //the actual args
+
+    {
+    var x;
+
+    x = x;
+    x = y;
+    y = x;
+    }
+
+    println(&quot;x is &quot;, x, &quot; and y is &quot;, y);
+</pre>
+
+which is surely incorrect.
+Further problems occur if the body of the function references
+globals which have been shadowed in the calling function. This requires
+a complicated renaming scheme. Finally, <i>call-by-name</i> makes treating
+functions as first-class objects problematic (being difficult to recover
+the static environment of the called function). <i>Call-by-name</i>
+exists today in C++, where it is possible to <i>inline</i> function calls
+for performance reasons.
+<br/>
+<!-- section -->
+<h2> Call-by-need
+<br/>
+</h2><!-- section ENDED -->
+
+In <i>call-by-value</i>, the arguments in a function call are evaluated and
+the results are bound to the formal parameters of the function. In
+<i>call-by-need</i>, the arguments themselves are literally bound
+to the formal
+parameters, as in <i>call-by-name</i>. A major difference is
+that the calling environment is also bound to the formal
+parameters as well. This bundle of literal argument and
+evaluation environment is known as a <i>thunk</i>.
+The actual values of the arguments
+are determined only when such values are
+needed; when such a need occurs, the thunk is
+evaluated, causing the literal argument
+in the thunk to be
+evaluated in the stored (calling) environment.
+For example, consider this code:
+<br/>
+
+<pre>
+    function f(x)
+        {
+        var y = x;      //x needed! x is fixed to its current value
+        z = z * 2;
+        return x + y;   //x needed! x was already evaluated under call-by-need
+        }
+
+    var z = 5;
+    f(z+3); 
+</pre>
+
+Under <i>call-by-name</i>, the return value is 21, but under
+<i>call-by-need</i>, the return value is 16.
+This is because the
+value of <i>z</i> changed <b><i>after</i></b> the point when the value of <i>x</i>
+(really <i>z</i>+3) was needed and the value of <i>x</i> was fixed from then on.
+Under <i>call-by-name</i>, the second
+reference to <i>x</i> causes a fresh, new evaluation of <i>z</i>,
+the yielding the result of 21.
+<br/>
+<br/>
+<i>Call-by-need</i>
+is exactly the method used to implement streams in the text.
+It is important to remember that the evaluation of a
+<i>call-by-need</i> argument is done only once,
+with the result stored for future requests.
+<br/>
+<br/>
+One can simulate <i>call-by-need</i> in Scam by delaying the
+evaluation of the arguments and capturing the calling
+environment. The combination of delayed argument and
+captured environment comprise a thunk in Scam. To memoize
+the thunk, we assign the evaluation of the delayed argument
+to a local variable. Here is a Scam's version of function <i>f</i>,
+if we assume
+the argument to <i>f</i> is always an identifier:
+<br/>
+
+<pre>
+    (define (f # $x)
+        ;get-and-set the value of x
+        (define x (# $x))
+        (define y x)
+        (set! z (* z 2))
+        (+ x y)
+        )
+</pre>
+
+If we allow <i>f</i> to be called with an arbitrary expression, we
+need a more powerful tool to evaluate the delayed argument, <i>eval</i>:
+<br/>
+
+<pre>
+    (define (f # $x)
+        ;get-and-set the value of x
+        (define x (eval $x #))
+        (define y x)
+        (set! z (* z 2))
+        (+ x y)
+        )
+</pre>
+
+The built-in <i>eval</i> function is used to evaluate the thunk
+comprised of <i>$x</i> and #.
+<br/>
+<br/>
+With <i>call-by-need</i>, one can define functions that exhibit
+short-circuiting:
+<br/>
+
+<pre>
+    function my-if(test,truthiness,falseness)
+        {
+        if (test)  ; test needed, it is evaluated
+            return truthiness   ; truthiness need, falseness not needed
+        else
+            return falseness    ; falseness need, truthiness not needed
+        }
+</pre>
+
+Now, function calls like:
+<br/>
+
+<pre>
+   my-if(y == 0,result = 0,result = x / y)
+</pre>
+
+work as intended.
+<br/>
+<!-- section -->
+<h2> Call-by-name-with-thunks
+<br/>
+</h2><!-- section ENDED -->
+
+<i>Call-by-name-with-thunks</i> combines the semantics
+of <i>call-by-name</i> and <i>call-by-need</i>, the difference being
+that thunks are used instead of textual substitutions.
+in the body of the function. <i>Call-by-name-with-thunks</i> differs
+from <i>call-by-need</i> in that the
+result of evaluating a thunk is not memoized (i.e. stored
+for future retrieval). Instead, repeated
+calls for the the value of the formal parameter result in the
+expression in the thunk being evaluated again and again.
+Differences between <i>call-by-need</i> and <i>call-by-name-with-thunks</i>
+arise when the thunk's expression causes a change of state.
+<br/>
+
+<pre>
+    function f(x)
+        {
+        var y = x;      //x needed! Evaluate the arg in the calling env
+        z = z * 2;
+        return x + y;   //x needed! Evaluate the arg in the calling env
+        }
+
+    var z = 5;
+    f(z + 3);
+</pre>
+
+Like <i>call-by-name</i>, this function call also returns 21. One can simulate
+<i>call-by-name-with-thunks</i> in Scam easily:
+<br/>
+
+<pre>
+    (define (f # $x)
+        (define y (eval $x #))
+        (set! z (* z 2))
+        (+ (eval $x #) y)
+        )
+</pre>
+
+Here, any time the value of the delayed argument is needed, a fresh
+evaluation is invoked.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

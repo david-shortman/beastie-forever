@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: mac-install.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed May  3 14:34:03 2017 -->
+<head>
+<title>Songlib: The C Library for Music Composition</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: The C Library for Music Composition<br /></h1>
+<h2 class="maketitle">written by: John C. Lusth</h2>
+<h3 class="maketitle">Revision Date: May 3, 2017</h3>
+</p>
+
+<h3><a name="id1"><a href="mac-install.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Mac installation instructions</a></h1><p>
+Begin the installation process by downloading the <i><b>songlib</b></i>&#32;source
+tarball into a directory named <i>songlib</i>:
+</p>
+<pre>
+    mkdir ~/songlib
+    cd ~/songlib
+    curl -O beastie.cs.ua.edu/songlib/songlib-1.47.tgz
+</pre>
+<p>Then, unpack the tarball:
+</p>
+<pre>
+    tar xvfz *.tgz
+</pre>
+<p>If <code>/usr/local/bin/</code> is not in your path, then you
+should add it. See the web for instructions on how to add
+a directory to the <code>PATH</code> environment variable.
+</p>
+<p>Create the <code>/usr/local/bin/</code> directory, if it doesn't already exist:
+</p>
+<pre>
+   sudo mkdir -p /usr/local/bin/
+</pre>
+<p>Move into the <i>songlib</i> directory and then
+into <i>mac</i> directory and install <i>wget</i>:
+</p>
+<pre>
+    cd ~/songlib/mac
+    chmod +x wget
+    sudo cp wget /usr/local/bin
+</pre>
+<p>If you want to use additional songlib instrument sample packs,
+install <i>flac</i>:
+</p>
+<pre>
+    cd ~/songlib/mac
+    open flac-1.2.1.dmg
+</pre>
+<p>Open up the <i>flac</i> folder on your desktop, double click on the installation
+icon, and follow the instructions.
+</p>
+<p>At the bottom of the file <code>~/.bash_profile</code>, add the lines:
+</p>
+<pre>
+    export WAVPLAYER=afplay
+    export PATH=~/bin:/usr/local/bin:$PATH:.
+</pre>
+<p>Log out of your computer and log in again
+for these changes to go into effect.
+</p>
+<p>Finally, build and install the library, build and install the utilities,
+and install the default sample note files by typing the command:
+</p>
+<pre>
+    sudo make install
+</pre>
+<p>while in the <i>songlib</i> directory.
+</p>
+<p>To test your installation, move into the <i>quickstart</i> directory and
+type <i>make play</i>:
+</p>
+<pre>
+    cd quickstart
+    make
+    make play
+</pre>
+<p>You should see the song being constructed and then should hear it
+begin to play.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

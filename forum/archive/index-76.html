@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Need clarification regarding CDA shift.</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Need clarification regarding CDA shift.</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=75">Need clarification regarding CDA shift.</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=75">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=133">RussianBot</a></h2></div><div class="dateline">09-14-2018, 04:13 AM</div>
+</div>
+<div class="message">Sorry, if this was addressed in a previous post, but I couldn't find anything directly addressing my issue.<br />
+<br />
+I'm going through the code for testing cda.c line by line, and I'm having trouble understanding what to do when shifting the indexes. Currently, I've edited the code to stop just before inserting the value at 3+i. Here is what my array looks like at this point:<br />
+<br />
+|3|2| |4|<br />
+    ^   ^<br />
+    b    f<br />
+<br />
+at i=0, the index to insert 1 is at 3, where the front of my array is. This is confusing me, as this would constitute inserting to the front of the array, result in the array print out as (1,4,3,2) instead of the intended (4,3,2,1).<br />
+<br />
+The spec says that the previous value at the insertion spot is to be moved to the next higher spot, but higher in what way? If higher means pushing the previous value up one, inserting 4 when the array was just |3|2| would give me:<br />
+<br />
+|4|2| |3|     then  |4|2|3|1|<br />
+<br />
+ ^ ^                    ^ ^ <br />
+  f  b                     f  b<br />
+<br />
+which definitely isn't right. If higher means pushing the previous value down one, then the result would be<br />
+<br />
+|4|3|2| |<br />
+ ^    ^<br />
+  f    b<br />
+<br />
+which sets up the next insert all well and good, but looking ahead at the next level of inserts, constantly shifting to the right defeats purpose of the CDA and results in the wrong display as well.<br />
+<br />
+tldr; In what regard is the "higher" in which you are shifting the index?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a></h2></div><div class="dateline">09-14-2018, 06:11 AM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (09-14-2018, 04:13 AM)</span>RussianBot Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=321#pid321">[ -> ]</a></cite>Sorry, if this was addressed in a previous post, but I couldn't find anything directly addressing my issue.<br />
+<br />
+I'm going through the code for testing cda.c line by line, and I'm having trouble understanding what to do when shifting the indexes. Currently, I've edited the code to stop just before inserting the value at 3+i. Here is what my array looks like at this point:<br />
+<br />
+|3|2| |4|<br />
+    ^   ^<br />
+    b    f<br />
+<br />
+at i=0, the index to insert 1 is at 3, where the front of my array is. This is confusing me, as this would constitute inserting to the front of the array, result in the array print out as (1,4,3,2) instead of the intended (4,3,2,1).<br />
+<br />
+The spec says that the previous value at the insertion spot is to be moved to the next higher spot, but higher in what way? If higher means pushing the previous value up one, inserting 4 when the array was just |3|2| would give me:<br />
+<br />
+|4|2| |3|     then  |4|2|3|1|<br />
+<br />
+ ^ ^                    ^ ^ <br />
+  f  b                     f  b<br />
+<br />
+which definitely isn't right. If higher means pushing the previous value down one, then the result would be<br />
+<br />
+|4|3|2| |<br />
+ ^    ^<br />
+  f    b<br />
+<br />
+which sets up the next insert all well and good, but looking ahead at the next level of inserts, constantly shifting to the right defeats purpose of the CDA and results in the wrong display as well.<br />
+<br />
+tldr; In what regard is the "higher" in which you are shifting the index?</blockquote>When inserting at the front of a CDA, it would be better to insert at the corrected index - 1. In this case, 1 would go at index 2 of your array, and you would change front to 2. There is a special case when front is already at 0.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">09-14-2018, 06:12 PM</div>
+</div>
+<div class="message">You should make room for the new element by increasing the size first. Then, if you are inserting towards the front, you should decrement the start index and then shift elements to the left. Otherwise, just shift elements to the right.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=133">RussianBot</a></h2></div><div class="dateline">09-14-2018, 06:57 PM</div>
+</div>
+<div class="message">So in the case where you are inserting at index 0 in a nonempty array, you insert the value in the newly decremented startIndex, instead of moving the value initially found at 0 there?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">09-15-2018, 12:04 AM</div>
+</div>
+<div class="message">Yes. Elements at the insertion point and higher should appear to the right of the newly inserted element.</div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-6.html">Project 0</a> &gt; Need clarification regarding CDA shift.</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

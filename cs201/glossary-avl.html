@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>glossary-avl</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+AVL Trees
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="glossary-avl.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Glossary
+<br/>
+</h2><!-- section ENDED -->
+
+Here are some terms that are used when discussing <i>AVL</i> trees:
+<br/>
+
+<ul>
+
+<li>
+
+ <b>child</b> -- same as for binary search trees
+</li>
+
+<li>
+
+ <b>parent</b> -- same as for binary search trees
+</li>
+
+<li>
+
+ <b>leaf</b> -- same as for binary binary search trees
+</li>
+
+<li>
+
+ <b>grandparent</b> -- parent of parent
+</li>
+
+<li>
+
+ <b>favorite</b> --the child who roots the taller subtree -
+if the parent's balance factor is 1, the left child is the
+favorite --
+if the parent's balance factore is -1, the right child is
+the favorite --
+if the parent's balance factor is 0, no child is the favorite
+</li>
+
+<li>
+
+ <b>linear</b> -- true if the parent and child are both left children or
+are both right children
+</li>
+
+<li>
+
+ <b>rotation</b> -- make a child a parent and the former parent a child
+-- preserves binary search tree ordering
+</li>
+
+</ul>
+
+
+Note that terms like
+<i>favorite</i> and <i>linear</i>
+are not found in other <i>AVL</i> search tree
+descriptions.
+They are used here in order to remove leftness and rightness issues from the main
+<i>AVL</i> tree algorithms.
+<br/>
+<!-- section -->
+<h2> <i>AVL</i> properties
+<br/>
+</h2><!-- section ENDED -->
+
+An <i>AVL</i> tree has the following properties:
+<br/>
+
+<ul>
+
+<li>
+
+
+Leaves have a balance factor of zero
+</li>
+
+<li>
+
+
+Interior nodes have a balance factor of -1, 0, or 1
+</li>
+
+</ul>
+
+
+The <i>balance factor</i> marks which child is the root of the taller
+subtree and is computed by subtracting the height of the right child's
+subtree from the height of the left child's subtree. This means that
+an <i>AVL</i> tree is nearly as balanced as it can be with just a little
+bit of slop allowed.
+<a href="http://beastie.cs.ua.edu/red-black">
+<i>Red-black</i> trees,
+</a> on the other hand, allow a good deal more slop with regards to
+balance.
+<br/>
+<br/>
+<b>Next:</b>
+<a href="insert-avl.html">
+Inserting into <i>AVL</i> trees
+</a>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

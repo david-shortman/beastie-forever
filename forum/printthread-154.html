@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Assignment description - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=35">Assignment description</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 1 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=7</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Assignment description (<em>/showthread.php?tid=35</em>)<br />
+<br />
+<!-- start: printthread_multipage -->
+<div class="multipage">Pages: <strong></strong> <!-- start: printthread_multipage_page -->
+<a href="printthread.php?tid=35&amp;page=1">1</a>
+<!-- end: printthread_multipage_page --><!-- start: printthread_multipage_page -->
+<a href="printthread.php?tid=35&amp;page=2">2</a>
+<!-- end: printthread_multipage_page --><!-- start: printthread_multipage_page -->
+<a href="printthread.php?tid=35&amp;page=3">3</a>
+<!-- end: printthread_multipage_page --><!-- start: printthread_multipage_page_current -->
+<strong>4</strong>
+<!-- end: printthread_multipage_page_current --><!-- start: printthread_multipage_page -->
+<a href="printthread.php?tid=35&amp;page=5">5</a>
+<!-- end: printthread_multipage_page --></div>
+<!-- end: printthread_multipage --></td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-24-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-23-2018, 10:40 PM)</span>oamohamed Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=459#pid459" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (09-07-2018, 07:13 PM)</span>lusth Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=223#pid223" class="quick_jump"></a></cite>I'm restricting the use of the random number generator so that we end up with the same mazes.<br />
+<br />
+Use a new random number each time a choice of a wall removal is made (i.e. the next neighbor to pursue). But make sure you use just one.<br />
+<br />
+You could generate a random number to pick a neighbor. If that neighbor was visited, you could generate a new random number to pick another neighbor and so on, until you get an unvisited neighbor. But I don't want you to do that.</blockquote><br />
+how to use rand()%direction in a way that generate different numbers?.</blockquote><br />
+You should use random, not rand. You would mod random() by the number of eligible candidates.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=41">jwarnett</a> -  <strong>09-24-2018</strong>
+<br />
+<br />
+In regards to the command line options, you said previously "You can print and exit the program once the -v option is encountered."  Does that mean that if at any point in the commands there is "-v" no other commands are executed?  Also since the commands appear to be simultaneous, do we ignore everything but the last command of a type.  Also where in the general order of command handling is "-r"?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-24-2018</strong>
+<br />
+<br />
+Any option can be anywhere. The specific handling of -v and -r, means all command line arguments should be processed before doing any work on building/solving/drawing mazes.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=41">jwarnett</a> -  <strong>09-24-2018</strong>
+<br />
+<br />
+So does the last -r take precedence?  Also, can one run of the program process mazes?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-24-2018</strong>
+<br />
+<br />
+Typically, the last dash anything takes precedence over previous versions.<br />
+<br />
+I don't understand the second question.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=7">andrasveto</a> -  <strong>09-24-2018</strong>
+<br />
+<br />
+Are there time bounds we should be taking into consideration? Assuming we use the stack and queue as directed for creation and solving.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-24-2018</strong>
+<br />
+<br />
+Building and solving an array of n rows and m columns should take theta(nm).
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=41">jwarnett</a> -  <strong>09-25-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-24-2018, 07:51 PM)</span>lusth Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=479#pid479" class="quick_jump"></a></cite>Building and solving an array of n rows and m columns should take theta(nm).</blockquote><br />
+The second qeustion was supposed to say can one run of the program process multiple mazes? i.e. ./a.out -c 3 3 file1 -c 3 3 file2
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-25-2018</strong>
+<br />
+<br />
+That would be a nice bit of option handling, but I will only test with (at most) one -r, one -c, one -s, and one -d.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Assignment description</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=3">amjohnson36</a> -  <strong>09-27-2018</strong>
+<br />
+<br />
+Will you ever test solving a maze from a file when it hasn't been created in that execution? For example you run:<br />
+&#36; ./amaze -c 10 10 outfile<br />
+&#36; ./amaze -s outfile solvedoutfile<br />
+&#36; ./amaze -d solvedoutfile<br />
+<br />
+Or will every command be run in one execution?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

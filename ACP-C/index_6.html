@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:15 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Variables</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_5.html">
+  <img border="0" alt="Literals" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_7.html">
+  <img border="0" alt="Operators" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Variables</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Variables</h1>
+<p>Suppose you found an envelope lying on the street and on the front of
+the envelope was printed the name <i>numberOfDogsTeeth</i>.
+Suppose further
+that you opened the envelope and inside was a piece of paper with
+the number 42 written upon it.
+What might you conclude from such an
+encounter? Now suppose you kept walking and found another envelope
+labeled <i>meaningOfLifeUniverseEverything</i> and,
+again, upon opening it
+you found a slip of paper with the number 42 on it.
+Further down the
+road,
+you find two more envelopes,
+entitled <i>numberOfDotsOnPairOfDice</i> and
+<i>StatueOfLibertyArmLength</i>,
+both of which contain the number 42.
+</p>
+<p>Finally,
+you find one last envelope labeled <i>sixTimesNine</i> and inside of it
+you,
+yet again,
+find the number 42.
+At this point,
+you're probably thinking "somebody
+has an odd affection for the number 42" but then the times table that
+is stuck somewhere in the dim recesses of your brain begins yelling at
+you saying "54! It's 54!".
+After this goes on for an embarrassingly long
+time,
+you realize that 6 * 9 is not 42, but 54.
+So you cross out the 42
+in the last envelope and write 54 instead and put the envelope back
+where you found it.
+</p>
+<p>This strange little story,
+believe it or not,
+has profound implications
+for writing programs that both humans and computers can understand.
+For
+programming languages,
+the envelope is a metaphor for something called
+a <i>variable</i>,
+which can be thought of as a label for a place in memory
+where a literal value can reside.
+In other words, a variable can be thought of as a convenient
+name for a value.
+In many programming languages,
+one can change the value at that memory location,
+much like replacing
+the contents of an envelope<sup><a href="index_26.html#footnote-5">5</a></sup>.
+A variable is our first encounter with a
+concept known as <i>abstraction</i>,
+a concept that is fundamental to the whole
+of Computer Science<sup><a href="index_26.html#footnote-6">6</a></sup>.
+</p>
+
+<h2><a name="id1">Variables</a></h2><p>
+Most likely,
+you've encountered the term <i>variable</i> before.
+Consider the
+<i>slope-intercept</i> form of an algebraic equation of a particular line:
+</p>
+<blockquote><i>  y = 2x - 3 </i></blockquote>
+<p>You probably can tell from this equation that the slope of this line
+is 2 and that it intercepts the <i>y</i>-axis at -3.
+But what role do
+the letters <i>y</i> and <i>x</i> actually play?  The names <i>x</i> and <i>y</i>
+are placeholders that stand for the <i>x</i>- and <i>y</i>-coordinates of any
+conceivable point on that line.
+Without placeholders,
+the line would
+have to be described by listing every point on the line.
+Since there
+are an infinite number of points,
+clearly an exhaustive list is not
+feasible.
+As you learned in your algebra class,
+the common name for a
+place holder for a specific value is the term <i>variable</i>.
+</p>
+<p>One can generalize<sup><a href="index_26.html#footnote-7">7</a></sup>
+the above line resulting in an equation that describes
+every line.
+</p>
+<blockquote><i>  y = mx + b </i></blockquote>
+<p>Here,
+the variable <i>m</i> stands for the slope and <i>b</i> stands for the
+<i>y</i>-intercept.
+Clearly,
+this equation was not dreamed up by an English-speaking Computer
+Scientist; a cardinal rule is to choose good names or
+mnemonics for variables,
+such as <i>s</i> for slope and <i>i</i> for intercept.
+But alas,
+for historical reasons,
+we are stuck with <i>m</i> and <i>b</i>.
+</p>
+<p>The term <i>variable</i> is also used in most programming languages,
+including
+C,
+and the term has roughly the equivalent meaning.
+The difference is
+programming languages use the envelope metaphor
+while algebraic meaning of variable is an equivalence to a value<sup><a href="index_26.html#footnote-8">8</a></sup>.
+The difference is purely philosophical and not worth going into at this
+time.
+</p>
+
+<h2><a name="id2">Creating, combining, and printing variables</a></h2><p>
+Suppose you found three envelopes,
+marked <i>m</i>, <i>x</i>, and <i>b</i>,
+and inside
+those three envelopes you found the numbers 6, 9, and -12 respectively.
+If
+you were asked to make a <i>y</i> envelope,
+what number should you put inside?
+If
+the number 42 in the <i>sixTimesNine</i> envelope in the previous story did not
+bother you (e.g., your internal times table was nowhere to be found),
+perhaps you might need a little help in completing your task.
+We can
+have C calculate this number with the following dialog:
+</p>
+<pre>
+    //test - copy this code and paste it at the quickc prompt
+    int m = 6;
+    int x = 9;
+    int b = -12;
+    int y = m * x + b;
+    printf("y is %d\n",y);           //should print: y is 42
+</pre>
+<p>One creates variables in C by 
+first giving the type of the value the variable is to hold.
+In this case, we are creating variables that hold integers;
+the keyword <code>int</code> tells us that.
+Next comes the name of the variable. If one wishes to
+immediately give the variable a value (which we do), we
+follow the variable name with an equals sign and the value
+we wish the variable to have.
+Note that this value can be a literal or some combination of
+literals and variables. In any case, the type of the expression
+(generally) should match the type of the variable.
+</p>
+<p>The code that creates a variable is known as a 
+<i>variable definition</i>. When a variable is defined,
+the compiler allocates some space in memory to hold
+the value of the variable. Sometimes, we wish to inform the compiler
+that a variable will be defined elsewhere. For that task, we
+use a <i>variable declaration</i>. To declare
+that a variable exists somewhere else, we use the <code>extern</code>
+keyword. For example, to say that the variable <i>x</i>, defined above
+exists, we would say:
+</p>
+<pre>
+    extern int x;      //variable declaration: x exists!
+</pre>
+<p>This tells the compiler the subsequent occurrences of <i>x</i>
+in the code
+refer to an integer and that space for <i>x</i> has already been
+allocated.
+Many people, even long-time C programmers, confuse the terms <i>definition</i>
+and <i>declaration</i>. The reason is C does not treat
+declarations and definitions consistently. For example,
+in some contexts, C can treat:
+</p>
+<pre>
+    int x;
+</pre>
+<p>as a declaration, but in others, C treats it as a definition<sup><a href="index_26.html#footnote-9">9</a></sup>.
+Just remember, if you see a type and
+a variable name, it's (likely) a
+definition. If you see the word <code>extern</code> in front, it's a declaration.
+</p>
+<p>Continuing on with the example above, we combine the
+values of <i>m</i>, <i>x</i>, and <i>b</i> using multiplication<sup><a href="index_26.html#footnote-10">10</a></sup>
+and addition to determine the value of variable
+<i>y</i>.
+C,
+when asked to compute the value of an expression containing variables, as in:
+</p>
+<pre>
+    m * x + b
+</pre>
+<p>goes to those envelopes and
+retrieves the values stored there and combines them as directed.
+The last line of code:
+</p>
+<pre>
+    printf("y is %d\n",y);
+</pre>
+<p>shows of some of the sophistication of the <i>printf</i> function.
+As we discussed when we introduced the <i>main</i> function,
+functions can take in raw data. In this case, the <i>printf</i>
+function is being passed two pieces of information,
+a string and a variable, separated by a comma.
+The string guides <i>printf</i> on how to do the printing. Inside the string
+is the character sequence:
+</p>
+<pre>
+    %d
+</pre>
+<p>This informs <i>printf</i> to look for an additional value beyond the
+string and substitute that value for the <code>%d</code>. Moreover, the
+<code>d</code> in the <code>%d</code> indicates that <i>printf</i> 
+should print that value as an integer. Moreover, when we give a
+variable to a function to be used as data, we actually send the
+value of the variable. In our code, the value of <i>y</i> will be 42, so we
+should see:
+</p>
+<pre>
+    y is 42
+</pre>
+<p>displayed when we run the program. The <code>%d</code> is known as a
+<i>format</i> <i>directive</i>.
+Inserting our test code into the template program <i>tester.c</i> gives us the
+following source code:
+</p>
+<pre>
+    //template for testing code
+    //download with: wget troll.cs.ua.edu/ACP-C/tester.c
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include &lt;string.h&gt;
+    #include &lt;math.h&gt;
+
+    int main(int argc,char **argv)
+        {
+        //test code goes here
+        int m = 6;
+        int x = 9 ;
+        int b = -12;
+        int y = m * x + b;
+
+        printf("y is %d\n",y);
+
+        return 0;
+        }
+</pre>
+<p>Compiling:
+</p>
+<pre>
+    lusth@warka:~/cs100$ gcc -Wall -g tester.c -o tester
+</pre>
+<p>and running this program produces the output:
+</p>
+<pre>
+    lusth@warka:~/cs100$ tester
+    y is 42
+</pre>
+<p>just as expected. Pasting the test code at the <i>quickc</i> prompt gives
+us the same result.
+</p>
+<p>Here are some more examples of variable creation:
+</p>
+<pre>
+    //test
+    int dots = 42;
+    int bones = 206;
+    printf("%d\n",dots);            //should print: 42
+    printf("%d\n",bones);           //should print: 206
+    int CLXIV = bones - dots;
+    printf("%d\n",CLXIV);           //should print: 164
+</pre>
+<p>After a variable is created,
+the variable or its value can be used interchangeably.
+For example,
+it is an easy matter to
+set up an equivalence between the variable <b>PI</b> and the real number 3.14159.
+</p>
+<pre>
+    //test
+    double PI = 3.14159;
+    double radius = 10.0;
+    double area = PI * radius * radius;
+    double circumference = 2 * PI * radius;
+    printf("area is %f, while circumference is %f\n",area,circumference);
+</pre>
+<p>Compiling and running this code inside the template program should yield the output:
+</p>
+<pre>
+    area is 314.159000, while circumference is 62.831800
+</pre>
+<p>Recall that the <code>double</code> type is used for variables that hold real numbers.
+Notice how the expressions used to compute the values of the variables
+area and circumference are more readable than if 3.14159 was used
+instead of <b>PI</b>.
+In fact,
+that is one of the main uses of variables,
+to
+make code more readable.
+The second is if the value of <b>PI</b> should change
+(e.g., if a more accurate value of <b>PI</b> is desired<sup><a href="index_26.html#footnote-11">11</a></sup>),
+we would only need
+to change the definition of <b>PI</b>.
+From the example above, we can see that to print a real number,
+we need to use the <code>%f</code> format directive in the guide string for <i>printf</i>.
+</p>
+
+<h2><a name="id3">Variables and memory</a></h2><p>
+A variable in C refers to a memory location. At that memory location,
+the value of the variable is stored. One can imagine memory as a series of
+boxes. Using <i>m</i> as an example, the variable <i>m</i> identifies one of
+those boxes and the value of <i>m</i> is placed inside
+that box:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-variable1.png"/>
+</div>
+<p>Just like a house on a street (the street being memory and 
+the house being the box), every box in memory has an address.
+Having variables makes the actual address irrelevant, but let's
+just say the variable <i>m</i>
+refers to the box at address 1976 in memory<sup><a href="index_26.html#footnote-12">12</a></sup>.
+If actual addresses are important, we will place them above the box:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-variable2.png"/>
+</div>
+<p>Since the actual address of a memory location rarely matters,
+we will most often use a simpler notation for variables and their values:
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="right">
+<i>m</i>: </td><td colspan="1" align="left"> 6</td></tr>
+<tr><td colspan="1" align="right">
+</td></tr></tbody></table>
+</p>
+</div>
+<p>This notation should be read as 
+"<i>m</i> identifies a location in memory that holds the value 6".
+Often, we will shorten this to "<i>m</i> is 6".
+</p>
+
+<h2><a name="id4">Variable naming</a></h2><p>
+Like many languages,
+C is quite restrictive in regards to legal variable names.
+A variable name must begin with a letter or an underscore
+and may be followed by any number of letters, digits, or
+underscores.
+</p>
+<p>Variables are the next layer in a programming languages,
+resting on
+the literal expressions and combinations of expressions (which are
+expressions themselves).
+In fact,
+variables can be thought of as an
+abstraction of the literals and collections of literals.
+As an analogy,
+consider your name.
+Your
+name is not you,
+but it is a convenient (and abstract) way of referring
+to you.
+In the same way,
+variables can be considered as the names of
+things.
+A variable isn't the thing itself,
+but a convenient way to referring
+to the thing.
+</p>
+<p>While C lets you name variables in wild ways:
+</p>
+<pre>
+    int _1_2_3_iiiiii__ = 7;
+</pre>
+<p>you should temper your
+creativity if it gets out of hand.
+For example,
+rather than use the
+variable <i>m</i> for the slope,
+we could use the name <i>slope</i> instead:
+</p>
+<pre>
+    int slope = 6;
+</pre>
+<p>We could have also used a different name:
+</p>
+<pre>
+    int _e_p_o_l_s_ = 6;
+</pre>
+<p>The name <i>&#95;e&#95;p&#95;o&#95;l&#95;s&#95;</i>
+is a perfectly good variable name from C's point of
+view.
+It is a particularly poor name from the point of making your C
+programs readable by you and others.
+It is important that your variable
+names reflect their purpose.
+In the example above,
+which is the better name: <i>b</i>, <i>i</i>, <i>intercept</i>, or 
+<i>&#95;t&#95;p&#95;e&#95;c&#95;r&#95;e&#95;t&#95;n&#95;i&#95;</i>
+to represent the intercept of a line?
+</p>
+
+<h2><a name="id5">Uninitialized variables</a></h2><p>
+If you create an integer variable, but don't initialize it:
+</p>
+<pre>
+    int x;
+</pre>
+<p>the value held by that variable is some random integer<sup><a href="index_26.html#footnote-13">13</a></sup>.
+Thus, if your
+program uses the value of an uninitialized variable, not only is it likely to
+compute incorrect results, it will also likely compute different results each
+time it is run.
+The same is true of all other types of variables as well.
+</p>
+<p>An uninitialized variable is said to be <i>filled with garbage</i>, which leads to
+the old saying about computer programs:
+</p>
+<div class="quote">
+<i>garbage in, garbage out</i>
+</div>
+
+<h2><a name="id6">Activities</a></h2><p>
+Note: all activities in assume a Unix-style system, either Linux, Mac OSX, or Cygwin on Windows.
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="left">
+<i>name</i> </td><td colspan="1" align="left"> <i>purpose</i> </td></tr>
+<tr><td colspan="1" align="left">
+<a href="activities/variables-activity.html">variables</a> </td><td colspan="1" align="left">
+practicing with C variables </td></tr>
+<tr><td colspan="1" align="left">
+</td></tr></tbody></table>
+</p>
+</div>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_5.html">
+  <img border="0" alt="Literals" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_7.html">
+  <img border="0" alt="Operators" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Variables</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

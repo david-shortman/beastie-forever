@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>typing</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Static Typing
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="typing.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Static typing
+<br/>
+</h2><!-- section ENDED -->
+
+There are two basic approaches to typing found in modern languages,
+static typing, which is generally used in languages for mission critical
+applications, and dynamic typing, which is generally used in languages for
+rapid prototyping and simple task automation (such as shell scripts). In
+a statically typed language, type mismatches are discovered at compile time
+(or parse time for interpreters). In a dynamically typed language, such errors
+are discovered at run time.
+<br/>
+<br/>
+Building an interpreter for a dynamically typed language is quite simple -
+one simply ignores type consideration until the last possible moment.
+Thus, if a statement in the language tries to combine two objects in
+some illegal way, as in:
+<br/>
+
+<pre>
+    a = x % 4.3;  // modulus valid only for integral types
+</pre>
+
+the parser for the interpreter will gladly build a parse tree for
+performing modulus with a non-integral divisor. Only when the statement
+is executed by the evaluator will the error be uncovered.
+<br/>
+<!-- section -->
+<h2> A Grammar for Types
+<br/>
+</h2><!-- section ENDED -->
+
+The first step to adding static typing is to modify your
+grammar so that all variable definitions have a type.
+This includes function definitions as well. For
+example, a rule like:
+<br/>
+
+<pre>
+    varDef : VAR ID ASSIGN expr SEMI
+</pre>
+
+would become:
+<br/>
+
+<pre>
+    varDef : type ID ASSIGN expr SEMI
+</pre>
+
+In addition, a rule for defining functions, like:
+<br/>
+
+<pre>
+    funcDef : function ID OPAREN optParamList CPAREN block
+</pre>
+
+would become:
+<br/>
+
+<pre>
+    funcDef : type ID OPAREN optTypedParamList CPAREN block
+</pre>
+
+Note that both <i>varDef</i> and <i>funcDef</i> both start the same, so your
+grammar will have to deal with that, but for illustrative
+purposes, we will discuss them as separate rules.
+We are left with defining the <i>type</i> rule. At first, this seems
+to be a simple task:
+<br/>
+
+<pre>
+    type : INT
+         | STR
+</pre>
+
+where 
+<code>INT</code> denotes the keyword for an integer type specifier and
+
+<code>STR</code> denotes the keyword for a string type specifier.
+The problem here is that your functions must be able to take functions
+as arguments and return them. These functions need to be typed
+as well. Here is one possible typing scheme which extends the previous rule
+to allow for function types:
+<br/>
+
+<pre>
+    type : INT
+         | STR
+         | OPAREN type COLON optTypeList CPAREN //function type
+
+    optTypeList : *empty*
+                | typeList
+
+    typeList : type
+             | type COMMA typeList
+</pre>
+
+Consider the <i>square</i> function,
+which takes an integer and returns an integer.
+In a typeless language, it might be defined as
+<br/>
+
+<pre>
+    function square(x)
+        {
+        x * x;
+        }
+</pre>
+
+In our typing scheme, it would be
+<br/>
+
+<pre>
+    int square(int x)
+        {
+        x * x;
+        }
+</pre>
+
+Now consider a function that returns the <i>square</i> function!
+Typelessly, it would be:
+<br/>
+
+<pre>
+    function f()
+        {
+        square;
+        }
+</pre>
+
+But using our extended type rule above, it would be:
+<br/>
+
+<pre>
+    (int:int) f()
+        {
+        square;
+        }
+</pre>
+
+Suppose we wish to return a function that composes two given functions
+(like the <i>compose</i> function in the book). Here is one possible
+definition:
+<br/>
+
+<pre>
+    (int:int) compose((int:int) f,(int:int) g)
+        {
+        int both(int x)
+            {
+            f(g(x));
+            }
+        both;
+        }
+</pre>
+
+Suppose the <i>zorp</i> function returned the <i>compose</i> function. Its
+definition would be:
+<br/>
+
+<pre>
+    ((int:int):(int:int),(int:int)) zorp()
+        {
+        compose;
+        }
+</pre>
+
+As you can see, keeping up with types when doing functional-style programming
+can be rather tedious.
+<br/>
+<!-- section -->
+<h2> Keeping track of types
+<br/>
+</h2><!-- section ENDED -->
+
+After adding the syntax,
+actually checking to make sure types match boils down to
+keeping track of variables and their types with an <i>environment</i>.
+We did something very similar when <a href="undefined.html">
+detecting undefined variables
+</a> at parse time.
+For static typing,
+every variable (including variables bound to functions)
+are inserted into an environment with its <i>type</i> as its value.
+<br/>
+<br/>
+To begin, nearly every parsing routine is now passed an environment.
+Consider a parsing function for a simple variable definition:
+<br/>
+
+<pre>
+    // varDef : type ID ASSIGN expr SEMI
+    function varDef(env)
+        {
+        var varType;
+        var name,value;
+
+        varType = type();
+        name = match(ID);
+        match(ASSIGN);
+        value = expr(env);
+        match(SEMI);
+
+        insert(name,varType,env);
+
+        return cons(VARDEF,name,value);
+        }
+</pre>
+
+The environmental <i>insert</i> function places the variable name and its type
+in the hash table at the head of the chain, since we have
+just defined a local variable.
+<br/>
+<br/>
+Note that we are using a typed <i>cons</i> function. It returns
+a lexeme whose left pointer is the name and whose right
+pointer is the initialization expression and whose type
+is 
+<code>VARDEF</code>.
+<br/>
+<br/>
+The modification for a function definition is similar,
+except the environment is extended prior to parsing the body:
+<br/>
+
+<pre>
+    // funcDef : type ID OPAREN optTypedParamList CPAREN block
+    function funcDef(env)
+        {
+        var name,params,body;
+        var returnType;
+        var xenv;
+
+        returnType = type();
+        name = match(ID);
+        match(OPAREN);
+        params = optTypedParamList();
+        match(CPAREN);
+
+        insert(name,makeFuncType(returnType,extractTypes(params)),env);
+
+        xenv = extend(extractNames(params),extractTypes(params),env);
+
+        body = block(xenv);
+
+        return cons(FUNCDEF,name,cons(NO_TYPE,params,body));
+        }
+</pre>
+
+Note that any time a block is encountered, the environment needs to
+be extended, since local definitions may occur in the block.
+The environmental <i>extend</i> function
+takes a list of variables and a parallel
+list of types, builds a new frame from the two lists, and
+returns an environment with the new frame at the head.
+<br/>
+<br/>
+For example, suppose we are parsing the <i>urp</i> function:
+<br/>
+
+<pre>
+    int urp(int x,int y)
+        {
+        x * y;
+        }
+</pre>
+
+At the point where we call the <i>insert</i> function,
+<i>name</i> is bound to
+<i>urp</i> and <i>returnType</i> is bound to 
+<code>INT</code>.
+The variable <i>params</i> is
+bound to the list containing 
+<code>int x,int y</code> (in some form).
+The function
+<i>extractTypes</i> should return the list
+containing 
+<code>int,int</code> (in some form).
+The function <i>makeFuncType</i> should return 
+<code>(int:int,int)</code>
+(in some form).
+Moreover, and this is very important: the structure
+returned by <i>makeFuncType</i> should match exactly the
+structure returned by the <i>type</i> parsing function
+if it encountered the type:
+<br/>
+
+<pre>
+    (int:int,int)
+</pre>
+
+in the source code.
+<br/>
+After inserting the type of the function into the environment,
+the environment is extended. This extension models the
+static scoping of the language. As you recall for evaluating
+function calls,
+the extended environment is populated with the formal
+parameters and their values.
+In this case,
+the value of a formal parameter is its type.
+Under this extended environment,
+the body of the function definition is parsed.
+<br/>
+<br/>
+Finally, the function object is created and
+returned.
+Since these are the only places variables are given types, we are
+done with the &lsquo;keeping track&rsquo; part. What's left is the &lsquo;checking
+that types match&rsquo; part.
+<br/>
+<!-- section -->
+<h2> Checking that all types match
+<br/>
+</h2><!-- section ENDED -->
+
+The last stage of the implementation of static typing is
+to make sure that all expressions are typed and that
+when the parse trees of expressions are combined,
+type violations are reported.
+<br/>
+<br/>
+This presents a bit of a quandary.
+The recursive descent parsing functions
+must return parse trees, but now they
+must return the types of those parse
+trees as well.
+A simple solution is to add a new
+field to the lexemes that make up
+the parse trees. We will call
+that field <i>resultType</i>, to distinguish
+it from the <i>type</i> field of the lexeme.
+Now, every parse tree will have
+<i>resultType</i> set to the type
+of the overall expression that the
+parse tree represents.
+The field <i>resultType</i> should point
+to a lexeme in order for the
+type matching routine (see below)
+to function properly.
+<br/>
+<!-- subsection -->
+<h3> Typing primaries
+<br/>
+</h3><!-- subsection ENDED -->
+
+Since all expression parse trees start
+with <i>unary</i>, we modify the <i>unary</i>
+parse function to set <i>returnType</i>.
+<br/>
+
+<pre>
+    function unary(env)
+        {
+        var result;
+
+        if (check(INTEGER))
+            {
+            result = match(INTEGER);
+            result . resultType = new Lexeme(INT);
+            }
+        else if (check(STRING))
+            {
+            result = match(STRING);
+            result . resultType = new Lexeme(STR);
+            }
+        else if (check(ID))
+            {
+            result = match(ID);
+            result . resultType = lookup(result,env);
+            if (check(OPAREN))
+                {
+                //process function call
+                ...
+                }
+            }
+        //other primaries
+        ...
+        
+        return result;
+        }
+</pre>
+
+Recall that 
+<code>INTEGER</code> is the type of an integer lexeme,
+while 
+<code>INT</code> is the type of the integer type specifier
+in the target language.
+<br/>
+<br/>
+Note that the code for identifiers is where we
+see the type environment come into play.
+The lookup routine serves two purposes.
+The first purpose is to detect undefined
+variables. If the variable just parsed is
+not in the type environment,
+then it is considered undefined.
+The second purpose is to retrieve the
+type of the variable that was stored in
+the environment when the variable was
+declared. In our example language,
+the type would be an 
+<code>INT</code> or a 
+<code>STR</code>
+or a function type.
+<br/>
+<br/>
+The next unary we tackle is function
+call. Here, we have to
+ensure the identifier is actually bound to
+a function and that the argument types
+match the defined types of the formal parameters.
+<br/>
+
+<pre>
+    if (check(ID))
+        {
+        var idtype;
+        result = match(ID);
+        idtype = lookup(result,env);
+        if (check(OPAREN))
+            {
+            var returnType;
+            ensureFunction(result);
+            returnType = extractReturnType(idtype);
+            match(OPAREN);
+            args = optArgList(env);
+            match(CPAREN);
+            matchTypes(extractParamTypes(idtype),extractArgTypes(args));
+            result = cons(CALL,result,args);
+            result . resultType = returnType;
+            }
+        else
+            result . resultType = idtype;
+        }
+</pre>
+
+Once the 
+<code>check(OPAREN)</code>
+confirms that this is truly a function call,
+we use 
+<code>ensureFunction</code>
+to ensure that the identifier will be bound
+to a function.
+The <i>ensureFunction</i> routine, need only check that
+the given cons cell has type FUNCTYPE.
+<br/>
+<br/>
+Next we extract and save the return type of the
+function as that will be the type of the
+overall function call parse tree.
+<br/>
+<br/>
+After parsing the arguments, the <i>matchTypes</i> routine
+is called to compare the lists of types that <i>extractParamTypes</i>
+and <i>extractArgTypes</i> return. They must match exactly.
+If they do not, a fatal
+error can be generated at this point.
+<br/>
+<br/>
+Finally, the call parse tree is constructed and typed
+with the return type of the function.
+<br/>
+<br/>
+Other primaries, such as parenthesized expressions,
+are left to the student.
+<br/>
+<!-- subsection -->
+<h3> Typing expressions
+<br/>
+</h3><!-- subsection ENDED -->
+
+Primaries (and expressions) are joined together by the expression rule.
+Here, the compatibility of the pieces being joined together is
+examined and the resulting parse tree is given a type.
+A data-directed approach is ideal for this application:
+<br/>
+
+<pre>
+    function expr(env)
+        {
+        var root,left,right;
+        
+        left = unary(env);
+        if (opPending())
+            {
+            root = op();
+            right = expr(env);
+            root . resultType =
+                get(root . type,left . resultType,right . resultType);
+            root . left = left;
+            root . right = right;
+            }
+        else
+            root = left;
+
+        return root;
+        }
+</pre>
+
+The <i>get</i> function examines a table loaded with triples
+
+<code>(operator,type,type)</code>,
+with each triple associated with a resulting type. The resulting
+type is returned by <i>get</i>. If get can't find a matching triple,
+it reports a type error and ends execution.
+<br/>
+<br/>
+For example, if the table is loaded with:
+<br/>
+
+<pre>
+    (+,int,int) -&gt; int
+</pre>
+
+this means that an integer added to an integer yields an
+integer. If this is the only entry in the table, the
+source code fragment:
+<br/>
+
+<pre>
+    &quot;hello&quot; + &quot;, world&quot;
+</pre>
+
+would generate a type error.
+<br/>
+<!-- subsection -->
+<h3> Checking function definitions
+<br/>
+</h3><!-- subsection ENDED -->
+
+Another important type check is
+to make sure the value returned by a function
+matches the return value specified by the
+function definition. Here is a modified
+version of <i>funcDef</i> that does just that:
+<br/>
+
+<pre>
+    // funcDef : type ID OPAREN optTypedParamList CPAREN block
+    function funcDef(env)
+        {
+        var name,params,body;
+        var returnType;
+        var xenv;
+
+        returnType = type();
+        name = match(ID);
+        match(OPAREN);
+        params = optTypedParamList();
+        match(CPAREN);
+
+        insert(name,makeFuncType(returnType,extractTypes(params)),env);
+
+        xenv = extend(extractNames(params),extractTypes(params),env);
+
+        body = block(xenv);
+
+        matchType(block.resultType,returnType);
+
+        return cons(FUNCDEF,name,cons(NO_TYPE,params,body));
+        }
+</pre>
+
+For this to work, the type of the last statement
+in the block has to percolate up to be the result
+type of the block's root note:
+<br/>
+
+<pre>
+    function block(env)
+        {
+        var root,item;
+
+        item = statement(env);
+        if (statementPending())
+            {
+            root = cons(BLOCK,item,block(env));
+            root.resultType = cdr(root).resultType;
+            }
+        else
+            {
+            root = cons(BLOCK,item,null);
+            root.resultType = car(root).resultType;
+            }
+        return root;
+        }
+</pre>
+
+There are other places where type checks and tags need to be performed:
+<br/>
+
+<ul>
+
+<li>
+
+ the <i>test</i> expression for 
+<code>if</code> statements
+</li>
+
+<li>
+
+ if an 
+<code>if</code> statement has both a true clause and a false clause,
+the result types of those clauses must match
+</li>
+
+<li>
+
+ the 
+<code>if</code> expression itself needs to be tagged
+</li>
+
+<li>
+
+ the <i>test</i> expression for 
+<code>while</code> loops
+</li>
+
+<li>
+
+ the 
+<code>while</code> expression itself needs to be tagged (if the grammar
+promotes 
+<code>while</code>s to first class status
+</li>
+
+<li>
+
+ any other unary operations
+</li>
+
+</ul>
+
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

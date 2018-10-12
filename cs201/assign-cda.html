@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign-cda</title>
+<link rel=stylesheet
+    href="201.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+A Circular Dynamic Array Class
+<br/>
+<span class="smaller">version 1e</span>
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> The <i>CDA</i> class
+<br/>
+</h2><!-- section ENDED -->
+
+For your circular dynamic array class, the header file, <i>cda.h</i>, should look
+like:
+<br/>
+
+<pre>
+    #ifndef __CDA_INCLUDED__
+    #define __CDA_INCLUDED__
+
+    #include &lt;stdio.h&gt;
+
+    typedef struct cda CDA;
+
+    extern CDA *newCDA(void);
+    extern void setCDAdisplay(CDA *items, void (*display)(void *,FILE *));
+    extern void setCDAfree(CDA *items, void (*free)(void *));
+    extern void insertCDA(CDA *items,int index,void *value);
+    extern void *removeCDA(CDA *items,int index);
+    extern void unionCDA(CDA *recipient,CDA *donor);
+    extern void *getCDA(CDA *items,int index);
+    extern void *setCDA(CDA *items,int index,void *value);
+    extern int  sizeCDA(CDA *items);
+    extern void displayCDA(CDA *,FILE *);
+    extern int  debugCDA(CDA *,int level);
+    extern void freeCDA(CDA *);
+
+    #define insertCDAfront(items,value) insertCDA(items,0,value)
+    #define insertCDAback(items,value)  insertCDA(items,sizeCDA(items),value)
+    #define removeCDAfront(items)       removeCDA(items,0)
+    #define removeCDAback(items)        removeCDA(items,sizeCDA(items)-1)
+
+    #endif
+</pre>
+
+The header file contains the function signatures of your public
+methods while the code module, <i>cda.c</i>, contains their implementations.
+<br/>
+<br/>
+The only local includes that <i>cda.c</i> should have is <i>cda.h</i>.
+<br/>
+<!-- subsection -->
+<h3> Method behavior
+<br/>
+</h3><!-- subsection ENDED -->
+
+Here are some of the behaviors your methods should have. This listing
+is not exhaustive; you are expected, as a computer scientist, to
+complete the implementation in the best possible and most logical manner.
+The circular dynamic array uses zero-based indexing.
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newCDA</i> -
+The constructor returns an initialized <i>CDA</i> object.
+<br/>
+</li>
+
+<li>
+
+ <i>insertCDA</i> -
+This insert method places the item in the slot named by the given index.
+The previous item at that slot shifts to the next higher slot (and so on).
+If there is no room for the insertion, the array grows by doubling.
+It should run in amortized constant time when inserting an item a constant
+distance from the front or back and in linear time otherwise.
+<br/>
+</li>
+
+<li>
+
+ <i>removeCDA</i> -
+This remove method removes and returns the item named by the given index.
+The item at the next higher slot shifts to that slot (and so on).
+If the ratio of the size to the capacity drops below 25%,
+the array shrinks by half. The array should never shrink below
+a capacity of one.
+Also, an empty array should always have a capacity of one.
+It should run in amortized constant time when removing an item a constant
+distance from the front or back and in linear time otherwise.
+It runs in amortized constant time.
+<br/>
+</li>
+
+<li>
+
+ <i>unionCDA</i> -
+The union method takes two array and moves all the items in the
+donor array to the recipient array. If the recipient array has the
+items 
+<code>(3,4,5)</code> and the donor array has the items 
+<code>(1,2)</code>,
+then, after the union, the donor array will be empty and recipient
+array will have the items 
+<code>(3,4,5,1,2)</code>.
+It should run in amortized linear time
+with respect to the size of the donor array.
+<br/>
+</li>
+
+<li>
+
+ <i>getCDA</i> -
+The get method returns the value at the given index,
+from the perspective of the user. In the user's view, the
+first item is at index zero, the second item at index 1, and
+so on. So this routine has to translate between the users view and
+the internal view (where the first item can be anywhere in the
+underlying array.
+It runs in constant time.
+<br/>
+</li>
+
+<li>
+
+ <i>setCDA</i> -
+The set method updates the value at the given index,
+from the perspective of the user.
+If the given index is equal to the size, the value is inserted via
+the <i>insertCDAback</i> method.
+If the given index is equal to -1, the value is inserted via
+the <i>insertCDAfront</i> method.
+The method returns the replaced value or the null pointer
+if no value was replaced.
+It runs in constant time if the array does not need to grow and
+amortized constant time if it does.
+<br/>
+</li>
+
+<li>
+
+ <i>sizeCDA</i> -
+The size method returns the number of items stored in the array.
+<br/>
+</li>
+
+<li>
+
+ <i>displayCDA</i> -
+This visualizing method prints out the filled region, enclosed in
+parentheses and
+separated by commas, followed by the size of the unfilled region, enclosed
+in brackets.
+If the
+integers 5, 6, 2, 9, and 1 are stored in the array (listed from
+index 0 upwards)
+the method would generate this output:
+
+<pre>
+    (5,6,2,9,1)
+</pre>
+
+with no preceding or following whitespace.
+If no display method is set, the address of each item is printed
+(using 
+<code>%p</code>). Each address is preceded by an @ sign.
+<br/>
+</li>
+
+<li>
+
+ <i>debugCDA</i> -
+The debug method sets an internal flag in the object to the given value.
+If the flag is greater than zero, the display method adds a comma (if needed)
+and the number
+of empty slots (in brackets) immediately after the last element.
+If the above array had a capacity of 8,
+the display would be 
+<code>(5,6,2,9,1,(3))</code>.
+An empty array with capacity 1
+displays as 
+<code>((1))</code>.
+The method returns the previous debug value.
+<br/>
+</li>
+
+<li>
+
+ <i>freeCDA</i> -
+If no free method is set, the individual items are not freed.
+In any case, the array and its supporting allocations are freed.
+</li>
+
+</ul>
+
+
+<!-- subsection -->
+<h3> Assertions
+<br/>
+</h3><!-- subsection ENDED -->
+
+Include the following assertions in your methods:
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newCDA</i> -
+The memory allocated shall be not be zero.
+<br/>
+</li>
+
+<li>
+
+ <i>insertCDA</i> -
+The index shall be valid.
+<br/>
+</li>
+
+<li>
+
+ <i>removeCDA</i> -
+The index shall be valid.
+The size shall be greater than zero.
+<br/>
+</li>
+
+<li>
+
+ <i>getCDA</i> -
+The index shall be greater than or equal to zero and less than the size.
+<br/>
+</li>
+
+<li>
+
+ <i>setCDA</i> -
+The index shall be greater than or equal to -1 and less than or
+equal to the size.
+</li>
+
+</ul>
+
+
+<!-- subsection -->
+<h3> Testing your CDA class
+<br/>
+</h3><!-- subsection ENDED -->
+
+Modify the testing program found in the
+<a href="http://beastie.cs.ua.edu/cs201/assign-sll.html">sll class description</a>
+to work with circular dynamic arrays. Make sure you add additional
+testing to make sure the time constraints of all methods are met.
+<br/>
+<!-- subsection -->
+<h3> Change log
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<code>     1e    </code> removed reference to capacity in <i>displayCDA</i>
+<br/>
+
+<code>     1d    </code> removed reference to display field in <i>newCDA</i>
+<br/>
+
+<code>     1c    </code> fixed return type of <i>debugCDA</i> (now 
+<code>int</code>)
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

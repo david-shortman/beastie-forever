@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Exam question discussion</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-3.html">First content exam</a> &gt; Exam question discussion</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=131">Exam question discussion</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=131">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="multipage"><strong>Pages:</strong> <strong>1</strong> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-131-2.html">2</a> </div><div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">10-01-2018, 05:57 PM</div>
+</div>
+<div class="message">Explanations of particular question/answers go here.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=7">andrasveto</a></h2></div><div class="dateline">10-01-2018, 06:13 PM</div>
+</div>
+<div class="message">I originally had "only union-by-rank" for question 23 (Which of the following Heuristics make sense for a linked-list implementation of a disjoint set?), but ended up changing my answer to "neither".<br />
+<br />
+My reasoning was as follows: the rank of a set increases only when two sets of equal rank are unioned. So it could be possible to have a set of rank 2 with 4 nodes, and a set of rank 1 with 2000 nodes (if you keep unioning it with sets of rank 0). As a result, for the linked list implementation, it doesn't seem to make sense to use union by rank, but rather <span style="font-weight: bold;" class="mycode_b">union by size</span>, since union by rank (for a linked list) doesn't guarantee the minimum amount of work, while union by size does.<br />
+<br />
+I believe both "only the second" and "neither" should be correct.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">10-01-2018, 06:23 PM</div>
+</div>
+<div class="message">Rank tracks the depth of the structure, so to me, rank is a perfectly good term for a linked list (since a linked list is a linear tree whose depth is the size).<br />
+<br />
+But the book uses the term "weighted union", not union by rank, so I'll have to think about this.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a></h2></div><div class="dateline">10-01-2018, 06:47 PM</div>
+</div>
+<div class="message">For test 5775, could you please explain question 25? I put "none of the answers are correct" because I got 7 children <br />
+<br />
+I can come to office hours if it's difficult to explain the drawing on this forum.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=95">Bphightower</a></h2></div><div class="dateline">10-01-2018, 07:06 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (10-01-2018, 06:47 PM)</span>magarwal Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=535#pid535">[ -> ]</a></cite>For test 5775, could you please explain question 25? I put "none of the answers are correct" because I got 7 children <br />
+<br />
+I can come to office hours if it's difficult to explain the drawing on this forum.</blockquote><br />
+I had the same result with 7 children</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=110">calvinc5</a></h2></div><div class="dateline">10-01-2018, 07:45 PM</div>
+</div>
+<div class="message">same here for #25</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=53">sam</a></h2></div><div class="dateline">10-01-2018, 08:00 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (10-01-2018, 06:23 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=534#pid534">[ -> ]</a></cite>Rank tracks the depth of the structure, so to me, rank is a perfectly good term for a linked list (since a linked list is a linear tree whose depth is the size).<br />
+<br />
+But the book uses the term "weighted union", not union by rank, so I'll have to think about this.</blockquote><br />
+If it helps I only chose neither because the book calls it weighted union and not union-by-rank<br />
+<hr class="mycode_hr" />
+<blockquote class="mycode_quote"><cite><span> (10-01-2018, 08:00 PM)</span>sam Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=539#pid539">[ -> ]</a></cite><blockquote class="mycode_quote"><cite><span> (10-01-2018, 06:23 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=534#pid534">[ -> ]</a></cite>Rank tracks the depth of the structure, so to me, rank is a perfectly good term for a linked list (since a linked list is a linear tree whose depth is the size).<br />
+<br />
+But the book uses the term "weighted union", not union by rank, so I'll have to think about this.</blockquote><br />
+If it helps I only chose neither because the book calls it weighted union and not union-by-rank, although I now understand there is little difference</blockquote></div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">10-01-2018, 09:17 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (10-01-2018, 06:47 PM)</span>magarwal Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=535#pid535">[ -> ]</a></cite>For test 5775, could you please explain question 25? I put "none of the answers are correct" because I got 7 children <br />
+<br />
+I can come to office hours if it's difficult to explain the drawing on this forum.</blockquote><br />
+The first value is the representative, children are represented by -(...)<br />
+<br />
+make-sets: 0 1 2 3 4 5 6 7 8 9 10 11<br />
+union(1,2): 0 2-(1) 3 4 5 6 7 8 9 10 11<br />
+union(3,8): 0 2-(1) 8-(3) 4 5 6 7 9 10 11<br />
+union(11,3): 0 2-(1) 8-(11,3) 4 5 6 7 9 10<br />
+union(9,0): 9-0 2-(1) 8-(11,3) 4 5 6 7 10<br />
+union(5,6): 9-0 2-(1) 8-(11,3) 4 6-(5) 7 10<br />
+union(6,9): 9-(0,6-(5)) 2-(1) 8-(11,3) 4 7 10<br />
+union(3,1): 9-(0,6-(5)) 8-(11,3,2-(1)) 4 7 10<br />
+find-set(1): 9-(0,6-(5)) 8-(11,3,2,1) 4 7 10<br />
+union(4,10): 9-(0,6-(5)) 8-(11,3,2,1) 10-(4) 7<br />
+union(7,0): 9-(0,6-(5),7) 8-(11,3,2,1) 10-(4)<br />
+union(6,8): 9-(0,6-(5),7,8-(11,3,2,1)) 10-(4)<br />
+find-set(7): 9-(0,6-(5),7,8-(11,3,2,1)) 10-(4)<br />
+find-set(6): 9-(0,6-(5),7,8-(11,3,2,1)) 10-(4)<br />
+<br />
+9 has rank 3 (union with 0, 6, and 8)<br />
+10 has rank 1 (union with 4)<br />
+<br />
+8 has four children</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=27">zmweske</a></h2></div><div class="dateline">10-02-2018, 01:52 AM</div>
+</div>
+<div class="message">For number 11, I got a minimum of 0 red nodes instead of a minimum of 1. Why does there need to be one red node?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=16">IsabelHerrick</a></h2></div><div class="dateline">10-02-2018, 03:11 AM</div>
+</div>
+<div class="message">Can you explain #13 on 5775 (inserting ints into a rb-tree)? I got 8 recolorings and 2 rotations<br />
+<br />
+Also how are all paths trails? Isn't it entirely possible to visit all vertexes without visiting all edges?</div>
+</div>
+<div class="multipage"><strong>Pages:</strong> <strong>1</strong> <a href="http://beastie.cs.ua.edu/forum/archive/index.php?thread-131-2.html">2</a> </div></div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-3.html">First content exam</a> &gt; Exam question discussion</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

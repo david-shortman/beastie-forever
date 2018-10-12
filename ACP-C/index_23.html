@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:17 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Recursion Patterns</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_22.html">
+  <img border="0" alt="Recursion" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_24.html">
+  <img border="0" alt="Comparing Recursion and Looping" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Recursion Patterns</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Recursion Patterns</h1>
+<p>You can download the functions defined or used in this chapter with the
+following commands:
+</p>
+<pre>
+    wget troll.cs.ua.edu/ACP-C/recursionPatterns.c
+    wget troll.cs.ua.edu/ACP-C/recursionPatterns.h
+</pre>
+<p>These files will help you run the test code listed in this chapter.
+You will also need to download the integer <i>list</i> module.
+</p>
+
+<h2><a name="id1">Manipulating arrays and lists with recursion</a></h2><p>
+Recursion, arrays, and lists go hand-in-hand. What follows
+are a number of recursive patterns involving arrays and lists
+that you should be able to recognize and implement.
+Recursion for lists makes heavy use of the <i>head</i> and <i>tail</i> functions
+from the previous chapter.
+As all the examples in this chapter use lists of integer values.
+We will also make use of
+the following analogs for arrays:
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="center">
+<i>list expression</i>  </td><td colspan="1" align="center"> <i>equivalent array expression</i> </td></tr>
+<tr><td colspan="1" align="center">
+<code>head(items)</code> </td><td colspan="1" align="center"> <code>items[0]</code> </td></tr>
+<tr><td colspan="1" align="center">
+<code>tail(items)</code> </td><td colspan="1" align="center"> <code>items+1</code> </td></tr>
+<tr><td colspan="1" align="center">
+<code>items == 0</code> </td><td colspan="1" align="center"> <code>size == 0</code> </td></tr>
+<tr><td colspan="1" align="center">
+</td></tr></tbody></table>
+</p>
+</div>
+<p>The last expression tests whether the list (or array) is "empty".
+Note that an array name points to the first slot in the array.
+Suppose the name of the array is <i>items</i>. Then
+<i>items</i> + 1 points to the second slot in the array.
+If the size of the array <i>items</i> is <i>n</i>, the the size of
+the array pointed to by <i>items</i> + 1 must be <i>n - 1</i>.
+This is why adding one to the array name is equivalent to
+taking the tail of a list.
+</p>
+
+<h3><a name="id2">The <i>counting</i> pattern</a></h3><p>
+The <i>counting</i> pattern is used to count the number of items
+in a collection. If the collection is empty, then its count of items
+is zero.
+The following function
+counts and ultimately returns the number of items in an array:
+</p>
+<pre>
+    int
+    countList(Node *items)
+        {
+        if (items == 0) //base case
+            return 0;
+        else
+            return 1 + countList(tail(items));
+        }
+</pre>
+<p>The functions works on the observation that if you count
+the number of items in the tail of a list, then the number
+of items in the entire array is one plus that number. The
+extra one added in accounts for the head item that omitted when the
+tail was counted.
+</p>
+<p>The array version is similar:
+</p>
+<pre>
+    int
+    countArray(int *items,int size)
+        {
+        if (size == 0) //base case
+            return 0;
+        else
+            return 1 + countArray(items+1,size-1);
+        }
+</pre>
+<p>As with using a loop, the counting pattern for arrays is
+a bit useless as we need to the the size of the array
+before we can determine its size. However, the pattern
+is a basis for all other recursive patterns for arrays:
+</p>
+<ul><li>recursive functions on an array need the size of the array
+</li><li>the base case tests that the size has reached zero
+</li><li>taking the "tail" of the array means the size needs to be
+reduced by one
+</li></ul>
+
+<h3><a name="id3">The <i>accumulate</i> pattern</a></h3><p>
+The <i>accumulate</i> pattern is used to combine all the values in
+a collection.
+The following function performs a summation of the list values:
+</p>
+<pre>
+    int
+    sumList(Node *items)
+        {
+        if (items == 0) //base case
+            return 0;
+        else
+            return head(items) + sumList(tail(items));
+        }
+</pre>
+<p>Recall that the <i>head</i> function calls
+<i>getNodeValue</i> on the node at the front of a list of items.
+Note that the only difference between the <i>count</i> function and
+the <i>sum</i> function is the recursive case adds in the value of
+the head item, rather than just counting the head item.
+That the functions <i>countList</i> and <i>sumList</i> look similar
+is no coincidence. In fact, most recursive functions, especially
+those working on collections, look very
+similar to one another.
+</p>
+<p>The equivalent <i>sumArray</i> is left as an exercise.
+</p>
+
+<h3><a name="id4">The <i>filtered-count</i> and <i>filtered-accumulate</i> patterns</a></h3><p>
+A variation on the <i>counting</i> and <i>accumulate</i> 
+patterns involves <i>filtering</i>. When filtering,
+we use an additional <code>if</code> statement to decide whether 
+or not we should count the item, or in the case of accumulating,
+whether or not the item ends up in the accumulation.
+</p>
+<p>Suppose we wish to count the number of even items in
+a list:
+</p>
+<pre>
+    int
+    countListEvens(Node *items)
+        {
+        if (items == 0) //base case
+            return 0;
+        else if (head(items) % 2 == 0)
+            return 1 + countListEvens(tail(items));
+        else
+            return 0 + countListEvens(tail(items));
+        }
+</pre>
+<p>The base case states that there are zero even numbers
+in an empty list.
+The first recursive case simply counts the head item if
+it is even and so adds 1 to the count of even items in
+the remainder of the list. The second recursive case
+does not count the head item (because it is not even)
+and so adds in a 0 to the count of the remaining items.
+Of course, the last return would almost always be written
+as:
+</p>
+<pre>
+    return countListEvens(tail(items));
+</pre>
+<p>The array version is similar:
+</p>
+<pre>
+    int
+    countArrayEvens(int *items,int size)
+        {
+        if (size == 0) //base case
+            return 0;
+        else if (items[0] % 2 == 0) //head item always at index 0
+            return 1 + countArrayEvens(items+1,size-1);
+        else
+            return countArrayEvens(items+1,size-1);
+        }
+</pre>
+<p>As another example of <i>filtered counting</i>, we can
+pass in a value and count how many times that
+value occurs:
+</p>
+<pre>
+    int
+    occurrencesInList(int target,Node *items)
+        {
+        if (items == 0)
+            return 0;
+        else if (head(items) == target)
+            return 1 + occurrencesInList(target,tail(items));
+        else
+            return occurrencesInList(target,tail(items));
+        }
+</pre>
+<p>An example of a <i>filtered-accumulation</i> would be 
+to sum the even-numbered integers in an array:
+</p>
+<pre>
+    int
+    sumArrayEvens(int *items,int size)
+        {
+        if (size == 0)
+            return 0;
+        else if (isEven(items[0]))
+            return items[0] + sumArrayEvens(items+1,size-1);
+        else
+            return sumArrayEvens(items+1,size-1);
+        }
+</pre>
+
+<h3><a name="id5">The <i>extreme</i> and <i>extreme index</i> patterns</a></h3><p>
+The extreme and extreme index patterns are a bit more difficult
+to implement recursively, due to the need to carry more information
+around while making recursive calls. For example, here is an
+example of the
+extreme pattern for arrays. We use a helper function that carries
+the extra information around:
+</p>
+<pre>
+    int
+    getMax(int *a,int size)
+        {
+        return getMaxHelper(a,size,a[0],1); //start looking at index 1
+        }
+</pre>
+<p>The third argument of the helper function is the assumed
+largest value. The fourth argument is the index at which one
+starts looking for a better max. Here is the helper function:
+</p>
+<pre>
+    int
+    getMaxHelper(int *a,int size,int best,int i)
+        {
+        if (i == s) //no more indices to check
+            return best;
+        else if (a[i] &gt; best) //found a bigger number!
+            return getMaxHelper(a,s,a[i],i+1)
+        else //best is still best
+            return getMaxHelper(a,s,best,i+1)
+        }
+</pre>
+<p>The first recursive case finds a better "best" number at the
+current index <i>i</i>, so it
+replaces the old <i>best</i> with the better candidate in the recursive
+call. The second recursive case doesn't replace <i>best</i>. In both
+recursive cases, the index is incremented so that subsequent
+elements can be checked.
+</p>
+<p>The extreme index patter for arrays is similar:
+</p>
+<pre>
+    int
+    getMaxIndex(int *a,int size)
+        {
+        return getMaxIndexHelper(a,size,0,1); //start looking at index 1
+        }
+</pre>
+<p>In the case of <i>getMaxIndex</i>, the index of the best candidate so far
+is passed around, rather than its value. The implementation of
+<i>getMaxIndexHelper</i> is left as an exercise.
+</p>
+<p>A similar strategy is used to find extreme values in a linked list.
+</p>
+
+<h3><a name="id6">The <i>filter</i> pattern</a></h3><p>
+A special case of a filtered-accumulation is called <i>filter</i>.
+Instead of summing the filtered items (for example), we collect
+the filtered items into a collection. The new collection is said to be
+a <i>reduction</i> of the original collection.
+</p>
+<p>Suppose we wish to extract the even numbers from a list. The
+structure of the
+code looks very much like the <i>sumEvens</i> function in the previous
+section, but instead of adding in the desired item,
+we join the item to the
+reduction of the tail of the array:
+</p>
+<pre>
+    Node *
+    extractListEvens(Node *items)
+        {
+        if (items == 0)
+            return 0;
+        else if (isEven(head(items)))
+            return join(head(items),extractListEvens(tail(items)));
+        else
+            return extractListEvens(tail(items));
+        }
+</pre>
+<p>Given a list of integers,
+<i>extractEvens</i> returns a (possibly empty)
+list of the even numbers:
+</p>
+<pre>
+    //test (compile with ilist.c and recursionPatterns.c)
+    #include "ilist.h"
+    #include "recursionPatternsPatterns.h"
+    int numbers[] = {4,2,5,2,7,0,8,3,7};
+    Node *a;
+    a = arrayToList(numbers,sizeof(numbers)/sizeof(int));
+    displayList(extractEvens(a));
+</pre>
+<p>Running this code yields:
+</p>
+<pre>
+    {4}{2}{2}{0}{8}
+</pre>
+<p>Recall that, in the previous chapter, our attempt at
+filtering with a loop left the collected items in the opposite order.
+A recursive implementation preserves the order of values found
+in the original list.
+</p>
+<p>With <i>extractEvens</i> defined,
+then <i>sumListEvens</i> could be written very simply as:
+</p>
+<pre>
+    int
+    sumListEvens(Node *items)
+        {
+        return sumList(extractListEvens(items));
+        }
+</pre>
+<p>Unlike many patterns, recursive filtering is best
+suited for lists; recursive filtering of arrays
+is very problematic and will not be dealt with here.
+</p>
+
+<h3><a name="id7">The <i>map</i> pattern</a></h3><p>
+<i>Mapping</i> is a task closely coupled with that
+of reduction, but rather than collecting
+certain items, as with the <i>filter</i> pattern, we
+collect all the items. As we collect, however,
+we transform each item as
+we collect it. The basic pattern looks like this:
+</p>
+<pre>
+    Node *
+    mapList(int (*f)(int),Node *items)
+        {
+        if (items == 0)
+            return 0;
+        else
+            {
+            int v = f(head(items));
+            return join(v,mapList(f,tail(items)));
+            }
+        }
+</pre>
+<p>Here, <i>f</i> is used to transform each item in the
+recursive step.
+As with mapping using a loop, we use a function pointer as the
+type of the formal parameter <i>f</i>.
+</p>
+<p>Suppose we wish to subtract one from each element in an array.
+First we need a transforming function that reduces its argument
+by one:
+</p>
+<pre>
+    int decrement(int x) { return x - 1; }
+</pre>
+<p>Now we can "map" the <i>decrement</i> function over an array of numbers:
+</p>
+<pre>
+    //test (compile with ilist.c and recursionPatterns.c)
+    #include "ilist.h"
+    #include "recursionPatterns.h"
+    int numbers[] = {4,3,7,2,4,3,1};
+    Node *a = arrayToList(numbers,sizeof(numbers) / sizeof(int));
+    Node *b = mapList(decrement,a);
+    displayList(b);
+</pre>
+<p>The code yields the following output:
+</p>
+<pre>
+    {3}{2}{6}{1}{3}{2}{0}
+</pre>
+<p>We see that each value in the resulting list is one less than
+the corresponding number in the original <i>numbers</i> array.
+</p>
+<p>Both map and filtering (reduce) are used heavily by Google in programming
+their search strategies.
+</p>
+
+<h3><a name="id8">The <i>search</i> pattern</a></h3><p>
+The <i>search</i> pattern is a slight variation of <i>filtered-counting</i>.
+Suppose we wish to see if a value is present in a list. We can
+use a filtered-counting approach and if the count is greater than
+zero, we know that the item was indeed in the list:
+</p>
+<pre>
+    int
+    findInList(int target,Node *items)
+        {
+        return occurrencesInList(target,items) &gt; 0;
+        }
+</pre>
+<p>In this case, <i>occurrencesInList</i>
+helps <i>find</i> do its job. We call
+such functions, naturally, <i>helper functions</i>.
+We can improve the efficiency of <i>find</i> by having it
+perform the search, but short-circuiting the
+search once the target item is found. We do this
+by turning the first recursive case into a second base case:
+</p>
+<pre>
+    int
+    findInList2(int target,Node *items)
+        {
+        if (items == 0)                     //empty list, not found
+            return 0;                   
+        else if (head(items) == target)     //short-circuit!
+            return 1;
+        else
+            return findInList2(target,tail(items));
+        }
+</pre>
+<p>When the list is empty, we return false because if
+the item had been list, we would have hit the second
+base case (and returned true) before hitting the first.
+If neither base case hits, we simple search the remainder of
+the list (the recursive case).
+If the second base case never hits, the first base case 
+eventually will.
+</p>
+
+<h3><a name="id9">The <i>shuffle</i> pattern</a></h3><p>
+Sometimes, we wish to combine two lists.
+This is easy to do with the <i>append</i> function:
+</p>
+<pre>
+   append(list1,list2)
+</pre>
+<p>This places the first element in the second list after the last
+element in the first list.
+However, many times we wish to intersperse the elements from the
+first list with the elements in the second list. This is known
+as a <i>shuffle</i>, so named since it is similar to shuffling a deck of
+cards. When a deck of cards is shuffled,
+the deck is divided in two halves (one half is akin to the first
+list and the other half is akin to the second list). Next the 
+two halves are interleaved back into a single deck (akin to
+the resulting third list).
+Note that while appending is destructive, in that it changes
+the first list, shuffling is non-destructive, in the neither
+of the shuffled lists are modified.
+</p>
+<p>We can use recursion to shuffle two lists. If both lists are exactly
+the same length, the recursive function is easy to implement
+using the <i>accumulate</i> pattern:
+</p>
+<pre>
+    Node *
+    shuffle(Node *list1,Node *list2)
+        {
+        if (list1 == 0)
+            return 0;
+        else
+            {
+            Node *rest = shuffle(tail(list1),tail(list2));
+            return join(head(list1),join(head(list2),rest));
+            }
+        }
+</pre>
+<p>If <i>list1</i> is empty
+(which means <i>list2</i> is empty since they have the same number of elements),
+the function returns the empty, since shuffling nothing together
+yields nothing.
+Otherwise, we shuffle the tails of the lists (the result is stored
+in the temporary variable <i>rest</i>), then join the
+the first elements of each list to the shuffled remainders.
+</p>
+<p>If you have ever shuffled a deck of cards, you will know that it is
+rare for the deck to be split exactly in half prior to the shuffle.
+Can we amend our shuffle function to deal with this problem? Indeed,
+we can,
+by simply placing the extra cards (list items) at the end
+of the shuffle. We don't know which list (<i>list1</i> or <i>list2</i>)
+will go empty first,
+so we test for each list becoming empty in turn:
+</p>
+<pre>
+    Node *
+    shuffle2(Node *list1,Node *list2)
+        {
+        if (list1 == 0)
+            return list2;
+        else if (list2 == 0)
+            return list1;
+        else
+            {
+            Node *rest = shuffle2(tail(list1),tail(list2));
+            return join(head(list1),join(head(list2),rest));
+            }
+        }
+</pre>
+<p>If either list is empty, we return the other. Only if both are
+not empty do we execute the recursive case.
+</p>
+<p>One can make shuffling even simpler by manipulating the recursive
+call that shuffles the remainder of the lists. If we flip the order of the
+lists in the recursive call, we only need to deal with the first list
+becoming empty:
+</p>
+<pre>
+    Node *
+    shuffle3(Node *list1,Node *list2)
+        {
+        if (list1 == 0)
+            return list2;
+        else
+            return join(head(list1),shuffle3(list2,tail(list1)));
+        }
+</pre>
+<p>Note that in the recursive call, we take the tail of <i>list1</i> since
+we joined the head of <i>list1</i> to the resulting shuffle.
+The base case returns <i>list2</i> because if <i>list1</i> is empty,
+the "shuffle" of
+the remaining elements is just <i>list2</i>.
+Also, even if <i>list1</i> and <i>list2</i> are both empty,
+the base case test
+returns the correct value of zero, the null pointer or empty list.
+</p>
+<p>Finally, note how much simpler it is to shuffle two lists using
+recursion as compared to 
+shuffling two arrays with loops.
+</p>
+
+<h3><a name="id10">The <i>merge</i> pattern</a></h3><p>
+With the <i>shuffle</i> pattern, we always took the head elements from both
+lists at each step in the shuffling process.
+Sometimes, we wish to place a constraint of the choice of elements.
+For example, suppose the two lists to be combined are sorted
+and we wish the resulting list to be sorted as well. The
+following example shows that shuffling does not always work:
+</p>
+<pre>
+    //test (compile with ilist.c and recursionPatterns.c)
+    #include "ilist.h"
+    #include "recursionPatterns.h"
+    int n1[6] = {1,4,6,7,8,11};
+    int n2[4] = {2,3,5,9};
+    Node *c = shuffle3(arrayToList(n1,6),arrayToList(n2,4));
+    displayList(c);
+</pre>
+<p>The result is shuffled, but not sorted:
+</p>
+<pre>
+    {1}{2}{4}{3}{6}{5}{7}{9}{8}{11}
+</pre>
+<p>The <i>merge</i> pattern is used to ensure the resulting list is
+sorted and is based upon the <i>filtered-accumulate</i> pattern.
+We only accumulate an item <i>if</i> it is the smallest item
+in the two lists:
+</p>
+<pre>
+    Node *
+    mergeList(Node *list1,Node *list2)
+        {
+        if (list1 == 0)         //list1 is empty, return list2
+            return list2;
+        else if (list2 == 0)    //list2 is empty, return list1
+            return list1;
+        else if (head(list1) &lt; head(list2))
+            return join(head(list1),mergeList(tail(list1),list2));
+        else //the head of list2 is smaller
+            return join(head(list2),mergeList(list1,tail(list2)));
+        }
+</pre>
+<p>As with <i>shuffle2</i>, we don't know which list will become empty
+first, so we check both in turn.
+</p>
+<p>In the first recursive case, the first element of the first list
+is smaller than the first element of the second list.
+So we accumulate the first element of the first list and
+recur, sending the tail of the first list because we have
+used/accumulated the head of that list. The second list we
+pass unmodified, since we did not use/accumulate an element
+from the second list.
+</p>
+<p>In the second recursive case, we implement the symmetric version
+of the first recursive case, focusing on the second list rather
+than the first.
+</p>
+<p>Testing our function:
+</p>
+<pre>
+    //test (compile with ilist.c and recursionPatterns.c)
+    #include "ilist.h"
+    #include "recursionPatterns.h"
+    int n1[6] = {1,4,6,7,8,11};
+    int n2[4] = {2,3,5,9};
+    Node *c = mergeList(arrayToList(n1,6),arrayToList(n2,4));
+    displayList(c);
+</pre>
+<p>yields:
+</p>
+<pre>
+    {1}{2}{3}{4}{5}{6}{7}{8}{9}{11}
+</pre>
+
+<h3><a name="id11">The <i>fossilized</i> pattern</a></h3><p>
+If a recursive function mistakenly never makes the problem
+smaller, the problems is said to be <i>fossilized</i>.
+Without ever smaller problems, the base case is never reached
+and the function recurs<sup><a href="index_26.html#footnote-48">48</a></sup>
+forever.
+This condition is known as an
+<i>infinite recursive loop</i>. Here is an example:
+</p>
+<pre>
+     int
+     countList(Node *items)
+        {
+        if (n == 0)
+            return 0;
+        else
+            return 1 + countList(items); //should be tail(items)
+        }
+</pre>
+<p>Since <i>countList</i> recurs on the same list it was given,
+<i>items</i>
+never gets smaller so it never becomes empty.
+Fossilizing the problem is a common error made by both novice
+and expert programmers alike.
+</p>
+
+<h3><a name="id12">The <i>bottomless</i> pattern</a></h3><p>
+Related to the <i>fossilized</i> pattern is the <i>bottomless</i> pattern.
+With the <i>bottomless</i> pattern, the problem gets smaller, but the base
+case is never reached. Here is a function that attempts to
+divide a positive number by two, by seeing how many times
+you can subtract two from the number:<sup><a href="index_26.html#footnote-49">49</a></sup>
+</p>
+<pre>
+    int
+    div2(int n)
+        {
+        if (n == 0)
+            return 0;
+        else
+            return 1 + div2(n - 2);
+        }
+</pre>
+<p>Things work great for a while:
+</p>
+<pre>
+    //test (compile with ilist.c and recursionPatterns.c)
+    #include "ilist.h"
+    #include "recursionPatterns.h"
+    printf("div2(16) is %d\n",div2(16));
+</pre>
+<p>yields:
+</p>
+<pre>
+    div2(16) is 8
+</pre>
+<p>and:
+</p>
+<pre>
+    printf("div2(134) is %d\n",div2(134));
+</pre>
+<p>yields:
+</p>
+<pre>
+    div2(134) is 67
+</pre>
+<p>But then, something goes terribly wrong:
+</p>
+<pre>
+    printf("div2(7) is %d\n",div2(7));
+</pre>
+<p>results in the program crashing: 
+</p>
+<pre>
+    Segmentation fault      (core dumped)
+</pre>
+<p>What happened? To see, let's <i>visualize</i> our function,
+as we did with the <i>gcd</i> function previously,
+by adding a <i>print</i> statement:
+</p>
+<pre>
+    int
+    div2(int n)
+        {
+        printf("div2(%d)...\n",n);
+        if (n == 0)
+            return 0;
+        else
+            return 1 + div2(n - 2);
+        }
+</pre>
+<p>Now every time the function is called, both originally and
+recursively, we can see how the value of <i>n</i> is changing:
+</p>
+<pre>
+    div2(7)...
+    div2(5)...
+    div2(3)...
+    div2(1)...
+    div2(-1)...
+    div2(-3)...
+    ...
+    Segmentation fault      (core dumped)
+</pre>
+<p>Now we can see why things went wrong, the value of <i>n</i>
+skipped over the value of zero and just kept on going.
+The solution is to change the base case to catch odd
+(and even) numbers:
+</p>
+<pre>
+    int
+    div2(int n)
+        {
+        if (n &lt;= 1)
+            return 0;
+        else
+            return 1 + div2(n - 2);
+        }
+</pre>
+<p>Remember, when you see a recursion depth exceeded error,
+you likely have implemented either
+the fossilized or the bottomless pattern.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_22.html">
+  <img border="0" alt="Recursion" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_24.html">
+  <img border="0" alt="Comparing Recursion and Looping" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Recursion Patterns</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

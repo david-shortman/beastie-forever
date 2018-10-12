@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Concept Inventory</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Data Structures
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="basics.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+ Key ideas
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+
+<ul>
+
+<li>
+
+ the utility of a simple data structure
+</li>
+
+<li>
+
+ the blurring between procedure and data
+</li>
+
+</ul>
+
+
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ The cons cell
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+There are a number of data structures in Scheme, but
+one rises to the forefront due to its simplicity and
+usefulness. The structure is known as the <i>cons</i>
+<i>cell</i> (or cons object).
+A cons
+object is simply two pieces of data, or items, glued together. For example,
+the expression
+(define a (cons 2 3))
+binds the name <i>a</i> to the pair 
+<code>(2 . 3)</code>.
+The dot is used to
+signify the glue in the cons object. The object
+<br/>
+
+<pre>
+    ()
+</pre>
+
+is used to signify the empty cons object (and also the empty list,
+which is discussed below). The Scam intepreter
+the class echos the value of the
+empty cons object as:
+<br/>
+
+<pre>
+    nil
+</pre>
+
+Because Scheme obeys the closure property for data structures, a cons
+object can be one (or both) of the items in a cons object. For example:
+<br/>
+
+<pre>
+    (define b (cons 1 (cons 2 3)))
+</pre>
+
+binds the name <i>b</i> to the pair 
+<code>(1 . (2 . 3))</code>.
+A special term
+is used if the last item in the last cons object is the empty cons
+object. Such a structure is called a list. For example:
+<br/>
+
+<pre>
+    (define c (cons 1 (cons 2 (cons 3 () ))))
+</pre>
+
+binds the name <i>c</i> to a list containing the numbers 1, 2, and 3.
+The
+list is usually represented as
+<br/>
+
+<pre>
+    (1 2 3)
+</pre>
+
+rather than
+<br/>
+
+<pre>
+    (1 . (2 . (3 . #f)))
+</pre>
+
+although both representation are accurate. Typing the name <i>c</i> to
+the interpreter will produce the first representation.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Lists
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+The function which constructs a list is appropriately called <i>list</i>.
+To bind the name <i>a</i> to the list consisting of the numbers 2, 3 and
+4, one could execute the following command.
+<br/>
+
+<pre>
+    (define a (list 2 3 4))
+</pre>
+
+Note that list is a multi-arity or variadic procedure.
+It can take any number of arguments.
+If one were to subsequently type <i>a</i> to the interpreter, it would
+return the value
+<br/>
+
+<pre>
+    (2 3 4)
+</pre>
+
+Lists also have literal forms. The following definition of <i>a</i> is
+equivalent to the previous.
+<br/>
+
+<pre>
+    (define a &#39;(2 3 4))
+</pre>
+
+The quote mark instructs the interpreter not to evaluate any item in the
+list. So while the definitions are equivalent in this case, they are not
+equivalent in all cases. For example, consider these definitions:
+<br/>
+
+<pre>
+    (define x 3)
+    (define a &#39;(1 2 x))
+    (define b (list 1 2 x))
+</pre>
+
+Evaluating <i>a</i> yields:
+<br/>
+
+<pre>
+    (1 2 x)
+</pre>
+
+while evaluating <i>b</i> yields:
+<br/>
+
+<pre>
+    (1 2 3)
+</pre>
+
+The difference is due to list being a normal function which has
+its arguments evaluated. Quoting a list with a quote mark is equivalent
+to making a call to the function <i>quote</i>. For example:
+<br/>
+
+<pre>
+    (define z &#39;(2 3 4))
+</pre>
+
+is equivalent to:
+<br/>
+
+<pre>
+    (define z (quote (2 3 4))
+</pre>
+
+Note that <i>quote</i> must be a special form.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Dissecting a list
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Scheme has two functions for dissembling pairs or lists. They are <i>car</i>,
+which returns the first item in the list, and <i>cdr</i> which returns
+the list minus the first element. When applied to cons cells, <i>car</i>
+returns the first item in the cell while <i>cdr</i> returns the second item.
+Consider this definition
+<br/>
+
+<pre>
+    (define odds &#39;(1 3 5 7 9))
+</pre>
+
+Then consider the following operations on the list odds
+<br/>
+
+<pre>
+    (car odds)                          ;yields 1
+    (cdr odds)                          ;yields the list (3 5 7 9)
+    (cdr (cdr odds))                    ;yields the list (5 7 9)
+    (car (cdr (cdr (cdr odds))))        ;yields 7
+    (cdr (cdr (cdr (cdr (cdr odds)))))  ;yields the empty list ()
+    (cdr (car odds)                     ;yields an error
+</pre>
+
+It is an error to take the car or the cdr of something that
+is not a list or a cons object. It is an error to take the car
+or the cdr of an empty list. Scheme allows you to conveniently combine
+multiple car and cdr function calls into a single function
+call. The last four examples above could have been written as:
+<br/>
+
+<pre>
+    (cddr odds)
+    (cadddr odds)
+    (cdddddr odds)
+    (cdar odds)
+</pre>
+
+respectively. The empty list is the real false value in Scheme; every other
+object in MIT Scheme is considered true. Thus
+<br/>
+
+<pre>
+    (if t 0 1)
+</pre>
+
+evaluates to zero if <i>t</i> is an empty list and 1 otherwise.
+The predicate
+<i>list?</i> is provided to answer the question of whether an item is a
+list or not, while the predicate <i>null?</i> is provided to answer the
+question whether an item is an empty list or not.
+<br/>
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Computing the length of a list
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Here is a procedure to count the number of top-level items in a list. I
+say top-level because in actuality, an item in a list may be a list itself..
+<br/>
+
+<pre>
+    (define (length a)
+        (if a
+            (+ 1 (length (cdr a)))
+            0
+            )
+        )
+</pre>
+
+Note that this function implements an recursive process.
+<br/>
+<br/>
+Here is a version which recursively counts all the non-list items in a
+list. This is equivalent to counting all of the leaves in a tree, so I'll
+name the function leaves.
+<br/>
+
+<pre>
+    (define (leaves t)
+        (cond
+            ((null? t) ;no more leaves in this subtree
+                0
+                )
+            ((list? t)
+                (+ (leaves (car t)) (leaves (cdr t)))
+                )
+            (else ;must be a leaf
+                1
+                )
+            )
+        )
+</pre>
+
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Procedures as a repository for data
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Consider the following function definition:
+<br/>
+
+<pre>
+    (define (cons a b)
+        (define (extract param)
+            (cond
+                ((= param 0) a)
+                ((= param 1) b)
+                (else (throw &#39;consError &quot;bad argument to cons&quot;))
+                )
+            )
+        extract
+        )
+</pre>
+
+This function builds an internal function (for which the parameters
+a and b are in scope). After constructing the extract function,
+the cons function returns a pointer to extract. Thus we have changed
+the return value of cons from a cons cell to a function.
+Now we can write new versions of car and cdr that act on this new
+return value of cons:
+<br/>
+
+<pre>
+    (define (car cell)
+        (cell 0)
+        )
+
+    (define (cdr cell)
+        (cell 1)
+        )
+</pre>
+
+If one were to drop these functions (cons, car, and cdr) into
+a working program already using the original cons, car, and cdr,
+the semantics of the program would remain unchanged.
+This illustrates that a language with first-class functions
+need not supply any data structures at all!
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

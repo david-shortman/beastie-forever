@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:17 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Recursion</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_21.html">
+  <img border="0" alt="Lists and Loops" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_23.html">
+  <img border="0" alt="Recursion Patterns" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Recursion</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Recursion</h1>
+<p>You can download the functions defined or used in this chapter with the
+following commands:
+</p>
+<pre>
+    wget troll.cs.ua.edu/ACP-C/recursion.c
+    wget troll.cs.ua.edu/ACP-C/recursion.h
+</pre>
+<p>These files will help you run the test code listed in this chapter.
+</p>
+
+<h2><a name="id1">Recursion, just another way to loop</a></h2><p>
+In 
+<a href="index_13.html">the chapter on conditionals</a>,
+we learned about <i>if</i> statements.
+When we combine <i>if</i> statements with functions that call
+themselves, we obtain a powerful programming paradigm
+called <i>recursion</i>.
+</p>
+<p>Recursion is a form of looping; when we loop,
+we evaluate code over and over again. We use a conditional
+to decide whether to continue the loop or to stop.
+Recursive loops are often
+easier to write and understand, as compared to the iterative loops
+such as <i>while</i>s and <i>for</i>s, which you learned
+about in a previous chapter.
+In some programming
+languages, iterative loops are preferred as they use much
+less computer memory and are slightly faster as compared to recursive loops.
+In other languages, this is not the case at all.
+In general, there
+is no reason to prefer iterative loops over recursive ones,
+other than this memory issue (for some languages)
+and slight loss of performance.
+Any iterative loop can be written as a recursion and any recursion
+can be written as an iterative loop.
+Use a recursion if that makes the implementation
+more clear, otherwise, use an iterative loop.
+</p>
+<p>Many mathematical functions are easy to implement recursively, so
+we will start there. Recall that the factorial of a number
+<i>n</i> is:
+</p>
+<p><font color="#0000ff">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Equation 1]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>n</i>! = <i>n</i> * (<i>n</i> - 1) * (<i>n</i> - 2) * ... * 2 * 1
+<font color="#000000">
+</p>
+<p>Consider writing a function which computes the factorial of a positive
+integer. For example, if the function were passed the value of 4, it
+should return the value of 24 since 4! is 4*3*2*1 or 24.
+To apply
+recursion to solve this problem or any problem, for that matter,
+it must be possible to state the solution
+of a problem so that it references a simpler version
+of the problem. For factorial, the factorial of a
+number can be stated in terms of a simpler factorial.
+Consider the two equations below:
+</p>
+<p><font color="#0000ff">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Equation 2]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>n</i>! = 1 if <i>n</i> == 0<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Equation 3]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>n</i>! = <i>n</i> * (<i>n</i> - 1)! if <i>n</i> &gt; 0
+<font color="#000000">
+</p>
+<p>Equation
+2
+says that the factorial
+of zero is one<sup><a href="index_26.html#footnote-42">42</a></sup>.
+Equation 
+3
+states that the factorial
+of any other (positive) number is obtained by
+multiplying the number by the factorial of one less than that
+number. Together, these two equations form a
+<i>recurrence equation</i> that describes the computation 
+of factorial.
+</p>
+<p>After some study, you should be able to see that this
+new way of describing factorial is equivalent to
+Equation
+1,
+the one that that used 
+ellipses<sup><a href="index_26.html#footnote-43">43</a></sup>.
+Equation
+1,
+gets the basic idea of factorial
+across but is not very precise. For example, how would you compute
+the factorial of three using Equation
+1?
+</p>
+<p>The second form with the two equations
+is particularly well suited for implementation
+as a function in a computer program:
+</p>
+<pre>
+    int
+    factorial(int n)
+        {
+        if (n == 0)
+            return 1;
+        else
+            return n * factorial(n - 1);
+        }
+</pre>
+<p>Note how the <i>factorial</i> function
+precisely implements the recurrence equation.
+Convince yourself that the function really works by tracing the function call:
+</p>
+<pre>
+    factorial(3)
+</pre>
+<p>Decomposing the call, we find that:
+</p>
+<pre>
+    factorial(3) is 3 * factorial(2)
+</pre>
+<p>since <i>n</i>, having a value of 3, is not equal to 0.
+Thus the second block of the <i>if</i> is evaluated and
+we can replace <i>n</i> with 3 and <i>n-1</i> with 2.
+Likewise, we can replace <code>factorial(2)</code>
+by <code>2 * factorial(1)</code>, yielding:
+</p>
+<pre>
+    factorial(3) is 3 * 2 * factorial(1)
+</pre>
+<p>since <i>n</i>, now having a value of 2, is still not zero.
+Continuing along this vein, we can replace
+<code>factorial(1)</code> by <code>1 * factorial(0)</code>, yielding:
+</p>
+<pre>
+    factorial(3) is 3 * 2 * 1 * factorial(0)
+</pre>
+<p>Now in this last call to factorial,
+<i>n</i> does have a value of zero, so we can replace
+<code>factorial(0)</code> with its immediate return value of one:
+</p>
+<pre>
+    factorial(3) is 3 * 2 * 1 * 1
+</pre>
+<p>Thus, <code>factorial(3)</code> has a value of six. The program:
+</p>
+<pre>
+    //test (compile with recursion.c)
+    #include "recursion.h"
+    printf("factorial(3) is %d\n",factorial(3));
+</pre>
+<p>yields:
+</p>
+<pre>
+    factorial(3) is 6
+</pre>
+<p>as expected.
+</p>
+<p>In contrast, here is a function which computes factorial using
+a <i>for</i> loop:
+</p>
+<pre>
+    int
+    factorial2(int n)
+        {
+        int i;
+        int total = 1;
+        for (i = 1; i &lt; n + 1; ++i)
+           total = total * i;
+        return total;
+        }
+</pre>
+<p>We can see from this version that factorial is an accumulation. This
+version
+also more closely follows
+Equation
+1.
+Note that we have to extend the upper end of the range by one in order to
+get <i>n</i> included in the accumulation.
+By habit,
+we like the upper limit of <i>for</i> loops always to be exclusive.
+</p>
+
+<h2><a name="id2">The parts of a recursive function</a></h2><p>
+Recursive approaches rely on the fact that it is
+usually simpler to solve a smaller problem than a
+larger one. In the factorial problem, trying to
+find the factorial of <i>n - 1</i> is a little bit simpler<sup><a href="index_26.html#footnote-44">44</a></sup>
+than finding the factorial of <i>n</i>.
+If finding the
+factorial of <i>n - 1</i> is still too hard to solve easily,
+then find the factorial of <i>n - 2</i> and so on until
+we find a case where the solution is dead easy.
+With regards to factorial, this is when <i>n</i> is equal to
+zero. The <i>easy-to-solve</i> code (and the values that get
+you there) is known as the <i>base</i> case. The
+<i>find-the-solution-using-a-simpler-problem</i> code (and the values
+that get you there) is known as the <i>recursive</i> case.
+The recursive case usually contains a call to the very
+function being executed. This call is known as a
+<i>recursive</i> call.
+</p>
+<p>Most well-formed recursive functions are composed of
+at least one <i>base</i> case and at least one <i>recursive</i> case.
+</p>
+
+<h2><a name="id3">The greatest common divisor</a></h2><p>
+Consider finding the greatest common divisor, the <i>gcd</i>, of two numbers.
+For example, the <i>gcd</i> of 30 and 70 is 10, since 10 is the largest
+number that divides both 30 and 70 evenly.
+The ancient Greek philosopher Euclid devised a solution for
+this problem that involves
+repeated division.
+The first division divides the two
+numbers in question, saving the remainder. Now the divisor becomes
+the dividend and the
+remainder becomes the divisor. This process is repeated until
+the remainder becomes zero.
+At that
+point, the current divisor is the <i>gcd</i>.
+We can specify this as a recurrence equation, with this last bit about
+the remainder becoming zero as our base case:
+</p>
+<font color="#0000ff">
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="left">
+<i>gcd</i>(<i>a</i>,<i>b</i>) </td><td colspan="1" align="center"> is </td><td colspan="1" align="left"> <i>b</i> </td><td colspan="1" align="left"> if <i>a</i> divided by <i>b</i> has a remainder of zero</td></tr>
+<tr><td colspan="1" align="left">
+<i>gcd</i>(<i>a</i>,<i>b</i>) </td><td colspan="1" align="center"> is </td><td colspan="1" align="left"> <i>gcd</i>(<i>b</i>,<i>a</i> &#37; <i>b</i>) </td><td colspan="1" align="left"> otherwise </td></tr></tbody></table>
+</p>
+</div>
+<font color="#000000">
+<p>In this recurrence equation,
+<i>a</i> and <i>b</i> are the dividend and the divisor, respectively.
+Recall that the modulus operator <code>%</code> returns the remainder.
+Using the recurrence equation as a guide, we can easily implement
+a function for computing the <i>gcd</i> of two numbers.
+</p>
+<pre>
+    int
+    gcd(int dividend,int divisor)
+        {
+        if (dividend % divisor == 0)
+            return divisor;
+        else
+            return gcd(divisor,dividend % divisor);
+        }
+</pre>
+<p>Note that in our implementation of <i>gcd</i>, we used more descriptive
+variables than <i>a</i> and <i>b</i>.
+We can improve this function further, by noting that
+the remainder is computed twice, once for the
+base case and once again to make the recursive call.
+Rather than compute it twice, we compute it straight off
+and save it in an aptly named variable:
+<a name="RecursionGCD"></a>
+</p>
+<pre>
+    int
+    gcd2(int dividend,int divisor)
+        {
+        int remainder = dividend % divisor;
+        if (remainder == 0)
+            return divisor;
+        else
+            return gcd2(divisor,remainder);
+        }
+</pre>
+<p>Look at how the recursive version turns the <i>divisor</i> into 
+the <i>dividend</i>
+by passing <i>divisor</i> as the first argument in the recursive
+call.
+By the same token, <i>remainder</i> becomes <i>divisor</i> by nature
+of being the second argument in the recursive call.
+To convince one's self that the routine really works,
+one can modify <i>gcd</i> to "visualize" the arguments. On simple
+way of visualizing the action of a function is to
+add a print statement:
+</p>
+<pre>
+    int
+    gcd2(int dividend,int divisor)
+        {
+        int remainder = dividend % divisor;
+        printf("gcd: %2d, %2d, %2d\n",dividend,divisor,remainder);
+        if (remainder == 0)
+            return divisor;
+        else
+            return gcd2(divisor,remainder);
+        }
+</pre>
+<p>With the instrumented definition and this code:
+</p>
+<pre>
+    //test (compile with recursion.c)
+    #include "recursion.h"
+    printf("%d\n",gcd2(66,42));
+</pre>
+<p>we get the following output:
+</p>
+<pre>
+    gcd: 66, 42, 24
+    gcd: 42, 24, 18
+    gcd: 24, 18,  6
+    gcd: 18,  6,  0
+    6
+</pre>
+<p>Note, how the first remainder, 24, keeps shifting
+to the left.
+In the first recursive call, the remainder becomes 
+<i>divisor</i>, so the 24 shifts one spot to the left. On
+the second recursive call, the current <i>divisor</i>,
+which is 24,
+becomes the <i>dividend</i>,
+so the 24 shifts once again to
+the left.
+</p>
+<p>We can also write a iterative (and instrumented) version of <i>gcd</i>:
+</p>
+<pre>
+    int
+    gcd3(int dividend,int divisor)
+        {
+        while (divisor != 0)
+            {
+            int temp = dividend % divisor;
+            printf("gcd: %2d, %2d\n",divisor,dividend);
+            dividend = divisor;
+            divisor = temp;
+            }
+        return dividend;
+        }
+</pre>
+<p>While the iterative version of factorial was only slightly more
+complicated than the recursive version, with <i>gcd</i>, we start to
+see more of an advantage using the recursive formulation. For instance,
+where did the <i>temp</i> variable come from and why is it necessary<sup><a href="index_26.html#footnote-45">45</a></sup>?
+</p>
+
+<h2><a name="id5">The Fibonacci sequence</a></h2><p>
+A third example of recursion is the computation of the
+<i>n<sup>th</sup></i> Fibonacci number.
+The Fibonacci series looks like this:
+</p>
+<pre>
+    n            :  0   1   2   3   4   5   6   7   8    ...
+    Fibonacci(n) :  0   1   1   2   3   5   8  13  21    ...
+</pre>
+<p>and is found in nature again and again<sup><a href="index_26.html#footnote-46">46</a></sup>.
+From this table, we can see that the <i>7<sup>th</sup></i> Fibonacci number is
+13.
+In general, a Fibonacci number is equal to the sum of the previous
+two Fibonacci numbers. The exceptions are the zeroth and the first
+Fibonacci numbers which are equal to 0 and 1 respectively. Voila! The
+recurrence case and the two base cases have jumped right out at us! Here,
+then, is a recurrence equation which describes the computation of the <i>n<sup>th</sup></i>
+Fibonacci number.
+</p>
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="left">
+<i>fib</i>(<i>n</i>) </td><td colspan="1" align="center"> is </td><td colspan="1" align="left"> 0 </td><td colspan="1" align="left"> if <i>n</i> is zero</td></tr>
+<tr><td colspan="1" align="left">
+<i>fib</i>(<i>n</i>) </td><td colspan="1" align="center"> is </td><td colspan="1" align="left"> 1 </td><td colspan="1" align="left"> if <i>n</i> is one</td></tr>
+<tr><td colspan="1" align="left">
+<i>fib</i>(<i>n</i>) </td><td colspan="1" align="center"> is </td><td colspan="1" align="left"> <i>fib</i>(<i>n</i> - 1) + <i>fib</i>(<i>n</i> - 2) </td><td colspan="1" align="left"> otherwise</td></tr>
+<tr><td colspan="1" align="left">
+</td></tr></tbody></table>
+</p>
+</div>
+<p>Again, it is straightforward to convert the recurrence equation
+into a working function:
+</p>
+<pre>
+    //compute the nth Fibonacci number
+    //n must be non-negative!
+    
+    int
+    fibonacci(int n)
+        {
+        if (n == 0)
+            return 0;
+        else if (n == 1)
+            return 1;
+        else
+            return fibonacci(n-1) + fibonacci(n-2);
+        }
+</pre>
+<p>Our implementation is straightforward and elegant. Unfortunately, it's
+horribly inefficient in C. Unlike our recursive version of
+<i>factorial</i> which
+recurred about as many times as the size of the number sent to the function,
+our recursive version of Fibonacci
+will recur many, many more times than the size of
+its input.  Here's why.
+</p>
+<p>Consider the call to <code>fib(6)</code>.
+Tracing all the recursive calls to <i>fib</i>, we get:
+</p>
+<pre>
+    fib(6) is fib(5) + fib(4)
+</pre>
+<p>Replacing <code>fib(5)</code> with <code>fib(4) + fib(3)</code>,
+we get:
+</p>
+<pre>
+    fib(6) is fib(4) + fib(3) + fib(4)
+</pre>
+<p>We can already see a problem, we will compute <code>fib(4)</code> twice,
+once from the original call to <code>fib(6)</code> and again when we
+try to find <code>fib(5)</code>.
+If we write down all the recursive calls generated by <code>fib(6)</code>
+with each recursive call indented from the previous, we
+get a structure that looks like this:
+</p>
+<pre>
+    fib(6)
+        fib(5)
+            fib(4)
+                fib(3)
+                    fib(2)
+                        fib(1)
+                        fib(0)
+                    fib(1)
+                fib(2)
+                    fib(1)
+                    fib(0)
+            fib(3)
+                fib(2)
+                    fib(1)
+                    fib(0)
+                fib(1)
+        fib(4)
+            fib(3)
+                fib(2)
+                    fib(1)
+                    fib(0)
+                fib(1)
+            fib(2)
+                fib(1)
+                fib(0)
+</pre>
+<p>We would expect, based on how the Fibonacci sequence is
+generated,
+to take about six "steps" to calculate <code>fib(6)</code>. 
+Instead,
+ultimately there were 13 calls<sup><a href="index_26.html#footnote-47">47</a></sup>
+to either
+<code>fib(1)</code> or <code>fib(0)</code>.
+There was a tremendous amount of duplicated
+and, therefore, wasted effort. An important part
+of Computer Science is figuring out how to reduce the wasted effort.
+One way to keep the recursive nature without
+the penalty of redundant computations
+is to <i>cache</i> previously computed values.
+Another way is to use an iterative loop:
+</p>
+<pre>
+    int
+    fib(int n)
+        {
+        int i;
+        int previous = 0;
+        int current = 1;
+        for (i = 0; i &lt; n; ++i)
+            {
+            int temp = previous;
+            previous = current;
+            current = previous + temp;
+            }
+        return previous;
+        }
+</pre>
+<p>Here, the recursive version, for all its faults, is much, much easier
+to understand. Complications of the iterative version include, why
+is <i>previous</i> returned and not <i>current</i>?
+And where did the variable <i>temp</i>
+come from?
+In the 
+<a href="index_24.html">chapter that compares recursion to loops</a>, we will
+see a way to combine the clarity of recursion with the
+efficieny of loops.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_21.html">
+  <img border="0" alt="Lists and Loops" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_23.html">
+  <img border="0" alt="Recursion Patterns" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Recursion</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

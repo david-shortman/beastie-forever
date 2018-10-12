@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> debugDA - what is the previous debug value? - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=22">debugDA - what is the previous debug value?</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  debugDA - what is the previous debug value? (<em>/showthread.php?tid=22</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>debugDA - what is the previous debug value?</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=47">hajames</a> -  <strong>08-29-2018</strong>
+<br />
+<br />
+From the project description: <br />
+<br />
+<span style="font-style: italic;" class="mycode_i"><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">debugDA</span></span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"> - The debug method sets an internal flag in the object to the given value. If the flag is greater than zero, the display method adds a comma (if needed) and the number of empty slots (in brackets) immediately after the last element. If the above array had a capacity of 8, the display would be <span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font"><span style="font-family: Monaco, Consolas, Courier, monospace;" class="mycode_font">[5,6,2,9,1,[3]]</span></span></span></span></span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">. An empty array with capacity 1 displays as <span style="font-size: small;" class="mycode_size"><span style="font-family: Monaco, Consolas, Courier, monospace;" class="mycode_font">[[1]]</span></span> </span></span></span><span style="color: #000000;" class="mycode_color"><span style="font-size: small;" class="mycode_size"><span style="font-family: serif;" class="mycode_font">The method returns the previous debug value. </span></span></span><br />
+<br />
+The function signature is: <br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>int debugDA(DA *items,int level);</code></div></div><br />
+Two questions: <br />
+1) What is the "previous debug value" that should be returned?<br />
+2) What is the "level" variable that is passed in with the function?<br />
+<br />
+I'm pretty sure these two things are related, but I'm not sure exactly how or why they are necessary.<br />
+<br />
+Thanks!
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: debugDA - what is the previous debug value?</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a> -  <strong>08-29-2018</strong>
+<br />
+<br />
+Two questions: <br />
+1) What is the "previous debug value" that should be returned?<br />
+2) What is the "level" variable that is passed in with the function?<br />
+<br />
+I'm pretty sure these two things are related, but I'm not sure exactly how or why they are necessary.<br />
+<br />
+Thanks!<br />
+<br />
+<br />
+1. The previous debug value starts at whatever you set it as in the constructor.<br />
+<br />
+2. The level variable is the new debug value. <br />
+<br />
+The debug value determines whether you display the number of available slots in your array.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: debugDA - what is the previous debug value?</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>08-29-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (08-29-2018, 08:10 PM)</span>jdtubbs3 Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=110#pid110" class="quick_jump"></a></cite>1. The previous debug value starts at whatever you set it as in the constructor.</blockquote><br />
+It's supposed to be set to 0.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: debugDA - what is the previous debug value?</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-01-2018</strong>
+<br />
+<br />
+Zero is the most reasonable initial value.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

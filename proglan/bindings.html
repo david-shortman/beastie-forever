@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Concept Inventory</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Bindings
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="schedule.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+ key ideas
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+
+<ul>
+
+<li>
+
+ scope of variable names
+</li>
+
+<li>
+
+ bound variables (local variables)
+</li>
+
+<li>
+
+ free variables (global - actually non-local - variables)
+</li>
+
+</ul>
+
+
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Bound vs. free variables
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Consider the problem of determining whether a number was prime or not. A
+simplistic way is to divide the putative prime by every number greater than
+1 and less than itself. If no divisor divides evenly, then the number is
+prime. Here is a function which implements this search:
+<br/>
+
+<pre>
+    (define (smallest-divisor current n) 
+        (if (= (remainder n current) 0) 
+            current 
+            (smallest-divisor (+ current 1) n) 
+            ) 
+        )
+</pre>
+
+We can use a wrapper function to give us a nice interface to our
+searching function:
+<br/>
+
+<pre>
+    (define (prime? n) 
+        (= (smallest-divisor 2 n) n) 
+        )
+</pre>
+
+However, <i>smallest-divisor</i> is polluting our namespace, so let's restrict
+its scope to the wrapper function.
+<br/>
+
+<pre>
+    (define (prime? n) 
+        (define (smallest-divisor current target) 
+            (if (= (remainder target current) 0) 
+                current 
+                (smallest-divisor (+ current 1) target) 
+                ) 
+            ) 
+        (= (smallest-divisor 2 n) n) 
+        )
+</pre>
+
+There are three variables in this definition of <i>prime?</i>, <i>n</i>,
+<i>current</i>, and <i>target</i>. The variable <i>n</i> that is a formal
+parameter of <i>prime?</i> is said to be bound with respect to <i>prime?</i>.
+The variables <i>current</i> and <i>target</i>, the formal parameters of
+<i>smallest-divisor</i>, are said to be bound
+with respect to <i>smallest-divisor</i>.
+Note that <i>target</i> is always equivalent to <i>n</i>.
+Since the two bindings
+are identical, we can get by with a single binding with
+respect to the outermost
+function.
+Removing the duplicate binding yields :
+<br/>
+
+<pre>
+    (define (prime? n) 
+        (define (smallest-divisor current) 
+            (if (= (remainder n current) 0) 
+                current 
+                (smallest-divisor (+ current 1)) 
+                ) 
+            ) 
+        (= (smallest-divisor 2) n) 
+        )
+</pre>
+
+In this case, the variable <i>n</i> is bound with respect to <i>prime?</i>
+but free with respect to <i>smallest-divisor</i>.
+We will encounter free variables
+further along, but at this point you should be able to analyze code to determine
+the free and bound variables with respect to a function.
+With regards to functions, the name <i>smallest-divisor</i> is bound with
+respect to <i>prime?</i> and <i>prime?</i> is bound with respect to the universe.
+This is no different than the binding rules in C, C++, and Java.
+<br/>
+<br/>
+Here is code that refers to a variable bound in an outer scope:
+<br/>
+
+<pre>
+    { 
+    int x = 5; 
+        { 
+        int y = 6; 
+        cout &lt;&lt; x + y; 
+        // x is visible in the inner scope 
+        } 
+    }
+</pre>
+
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

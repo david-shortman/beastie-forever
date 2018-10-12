@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign-queue</title>
+<link rel=stylesheet
+    href="201.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+A Queue Class
+<br/>
+<br/>
+<span class="smaller">Version 1c</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller"><a href="assign-queue.pdf">Printable Version</a></span></span>
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> The <i>QUEUE</i> class
+<br/>
+</h2><!-- section ENDED -->
+
+The header file, <i>queue.h</i>, should look
+like:
+<br/>
+
+<pre>
+    #ifndef __QUEUE_INCLUDED__
+    #define __QUEUE_INCLUDED__
+
+    #include &lt;stdio.h&gt;
+
+    typedef struct queue QUEUE;
+
+    extern QUEUE *newQUEUE(void);
+    extern void  setQUEUEdisplay(QUEUE *,void (*)(void *,FILE *));
+    extern void  setQUEUEfree(QUEUE *,void (*)(void *));
+    extern void  enqueue(QUEUE *items,void *value);
+    extern void *dequeue(QUEUE *items);
+    extern void *peekQUEUE(QUEUE *items);
+    extern void  displayQUEUE(QUEUE *items,FILE *fp);
+    extern int   debugQUEUE(QUEUE *items,int level);
+    extern void  freeQUEUE(QUEUE *items);
+    extern int   sizeQUEUE(QUEUE *items);
+
+    #endif
+</pre>
+
+The header file contains the function signatures of your public
+methods while the code module, <i>queue.c</i>, contains their implementations.
+<br/>
+<br/>
+The only local includes that <i>queue.c</i> should have are <i>queue.h</i> and
+the header file of the underlying data structure on which the queue
+is based.
+<br/>
+<!-- subsection -->
+<h3> Method behavior
+<br/>
+</h3><!-- subsection ENDED -->
+
+Here are some of the behaviors your methods should have. This listing
+is not exhaustive; you are expected, as a computer scientist, to
+complete the implementation in the best possible and most logical manner.
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newQUEUE</i>, <i>setQUEUEdisplay</i>, <i>setQUEUEfree</i> -
+analogous to the <i>STACK</i> class.
+<br/>
+</li>
+
+<li>
+
+ <i>enqueue</i> -
+The <i>enqueue</i> method runs in constant or amortized constant time.
+The value to be enqueued is stored in the underlying data structure.
+<br/>
+</li>
+
+<li>
+
+ <i>dequeue</i> -
+The <i>dequeue</i> method runs in constant or amortized constant time.
+The value to be dequeued is removed in the underlying data structure.
+<br/>
+</li>
+
+<li>
+
+ <i>peekQUEUE</i> -
+The peek method returns the value ready to come off the queue,
+but leaves the queue unchanged.
+It runs in constant time.
+<br/>
+</li>
+
+<li>
+
+ <i>sizeQUEUE</i> -
+The size method returns the number of items stored in the queue.
+It runs in amortized constant time.
+<br/>
+</li>
+
+<li>
+
+ <i>displayQUEUE</i> -
+This display method prints the items stored in the queue. If the
+integers 5, 6, 2, 9, and 1 are enqueued in the order given,
+the method would generate this output:
+
+<pre>
+    &lt;5,6,2,9,1&gt;
+</pre>
+
+with no preceding or following whitespace. An empty queue displays as 
+<code>&lt;&gt;</code>.
+<br/>
+</li>
+
+<li>
+
+ <i>debugQUEUE</i> -
+Analogous to <i>debugSTACK</i>.
+<br/>
+</li>
+
+<li>
+
+ <i>freeQUEUE</i> -
+Analogous to <i>freeSTACK</i>.
+</li>
+
+</ul>
+
+
+<!-- subsection -->
+<h3> Assertions
+<br/>
+</h3><!-- subsection ENDED -->
+
+Include the following assertions in your methods:
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newQUEUE</i> -
+The memory allocated shall not be zero.
+<br/>
+</li>
+
+<li>
+
+ <i>dequeue</i> -
+The size shall be greater than zero.
+<br/>
+</li>
+
+<li>
+
+ <i>peekQUEUE</i> -
+The size shall be greater than zero.
+</li>
+
+</ul>
+
+
+<!-- subsection -->
+<h3> Testing your QUEUE class
+<br/>
+</h3><!-- subsection ENDED -->
+
+Make sure you test
+to make sure the time constraints of all methods are met.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

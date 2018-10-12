@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Sep  5 20:07:21 2016 -->
+<head>
+<title>The Scam Reference Manual -- Objects</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_13.html">
+  <img border="0" alt="Scopes, Environments, and Objects" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_15.html">
+  <img border="0" alt="Encapsulation, Inheritance and Polymorphism" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Objects</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Objects</h1>
+<p>In the Scam world, an object is simply a collection of related variables.
+You've already been exposed to objects, although you may not
+have realized it. When you created a variable, you modified
+the environment, which is an object. When you defined a
+function, you created 
+an object. To view an object, we use the predefined function
+<i>pp</i>.<sup><a href="index_22.html#footnote-7">7</a></sup> Evaluating the code:
+</p>
+<pre>
+    (define (square x)
+        (* x x)
+        )
+    
+    (ppTable square)
+</pre>
+<p>yields something similar to the following output:
+</p>
+<pre>
+    &lt;object 10435&gt;
+             __label  : closure
+           __context  : &lt;object 10381&gt;
+                name  : square
+          parameters  : (x)
+                code  : (begin (* x x))
+</pre>
+<p>We see that the <i>square</i> function is made up of five <i>fields</i>.<sup><a href="index_22.html#footnote-8">8</a></sup>
+These fields are: <i>&#95;&#95;label</i>, <i>&#95;&#95;context</i>, <i>name</i>,
+<i>parameters</i>,
+and <i>code</i>.
+</p>
+<p>Usually, an object lets you look at its individual components.
+For example:
+</p>
+<pre>
+    (println "square's formal parameters are: " (get 'parameters square))
+</pre>
+<p>yields:
+</p>
+<pre>
+    square's formal parameters are: (x)
+</pre>
+<p>We use the function <i>get</i> to extract
+the fields of an object. The first argument to <i>get</i> is an expression that
+should resolve to a symbol to be gotten,
+while
+the second is the object holding the field. 
+</p>
+
+<h2><a name="id1">Creating objects</a></h2><p>
+It is easy to create your own objects. First you must make a
+<i>constructor</i>. A constructor is just a function that returns 
+the predefined variable <i>this</i>. Suppose you want a constructor to
+create an object with fields <i>name</i> and <i>age</i>. Here is 
+one possibility:
+</p>
+<pre>
+    (define (person)
+        (define name)
+        (define age)
+        this
+        )
+</pre>
+<p>We can create an object simply by calling the constructor:
+</p>
+<pre>
+    (define p (person))
+</pre>
+<p>The variable <i>p</i> now points to a <i>person</i> object and we
+can use <i>p</i> and the <i>set</i> operator to
+set the fields of the person object:
+</p>
+<pre>
+    (set 'name "Boris" p)
+    (set 'age 33 p)
+    (inspect (get 'name p))
+</pre>
+<p>The <i>set</i> function takes three arguments. The first should evaluate
+to the field name, the second to the new field value, and the third
+to the object to update.
+Evaluating this code yields the following output:
+</p>
+<pre>
+    (get 'name  p) is Boris
+</pre>
+<p>Scam allows an alternative form for getting values from an object.
+This form uses function call syntax. For example, the following two expressions
+are equivalent:
+</p>
+<pre>
+    (get 'name p)
+    (p 'name)
+</pre>
+<p>The advantage of the latter form is that if the retrieved field is
+itself an object, you can chain field names together.
+For example if <i>n</i> points
+to a linked list:
+</p>
+<pre>
+    (define (node value next) this)
+    (define n (node 'a (node 'b (node 'c nil))))
+</pre>
+<p>you can get the value of the third node in the
+list with
+either expression:
+</p>
+<pre>
+    (get 'value (get 'next (get 'next n)))
+    (n 'next 'next 'value)
+</pre>
+<p>To set the value of a field using a similar syntax, one calls the <i>set*</i>
+function. Here, both calls set the value of the third node in the list to 5:
+</p>
+<pre>
+    (set 'value 5 (get 'next (get 'next n)))
+    (set* n 'next 'next 'value 5)
+</pre>
+<p>Note that for <i>set</i>, the object is the last argument while for <i>set*</i>,
+the object is the first.
+</p>
+
+<h2><a name="id2">Initializing fields</a></h2><p>
+It is often convenient to give initial values to the fields of
+an object. Here is another version of <i>person</i> that allows us
+to do just that when we create the object:
+</p>
+<pre>
+    (define (person name age) this)
+        
+    (define p (person "Boris" 33))
+        
+    (inspect (p 'name))
+</pre>
+<p>The output is the same:
+</p>
+<pre>
+    (p 'name) is Boris
+</pre>
+<p>In general, if a field is to be initialized when the object
+is constructed, make that field a formal parameter. If not,
+make the field a locally declared variable.
+</p>
+
+<h2><a name="id3">Adding Methods</a></h2><p>
+Objects can have methods as well.<sup><a href="index_22.html#footnote-9">9</a></sup>
+Here's a version of the
+<i>person</i> constructor that has a <i>birthday</i> method.
+</p>
+<pre>
+    (define (person name age)
+        (define (birthday)
+            (println "Happy Birthday, " name "!")
+            (++ age)
+            )
+        this
+        )
+        
+    (define p (person "Boris" 33))
+    ((p 'birthday))
+    (inspect (p 'age))
+</pre>
+<p>The output of this code is:
+</p>
+<pre>
+    Happy Birthday, Boris!
+    (p 'age) is 34
+</pre>
+<p>In summary, one turns a function into a constructor by returning
+<i>this</i>
+from a function. The local variables, including
+formal parameters, become the fields of the function while
+any local functions serve as methods.
+</p>
+
+<h2><a name="id4">The variable <i>this</i> is not <b>this</b></a></h2><p>
+It is tempting to think that the predefined variable <i>this</i> is
+equivalent to <b>this</b> in Java.
+In Scam, <i>this</i> always refers to the current scope/environment,
+while in Java, <b>this</b> refers to the current object. The difference
+is noticable in object methods. For example, consider the following
+constructor:
+</p>
+<pre>
+    (define (f x)
+        (define (g y)
+            this
+            )
+        this
+        )
+</pre>
+<p>If we create an <i>f</i> object:
+</p>
+<pre>
+    (define a (f 0))
+</pre>
+<p>and then save the return value of the <i>g</i> method:
+</p>
+<pre>
+    (define b ((f 'g) 1))
+</pre>
+<p>then <i>a</i> and <i>b</i> are not the same objects; <i>b</i> would
+be a `sub-object', as it were, of <i>a</i>. In fact:
+</p>
+<pre>
+    (eq? a b)
+</pre>
+<p>returns false, while:
+</p>
+<pre>
+    (eq? a (b '__context))
+</pre>
+<p>evaluates to true. To have the <i>g</i> method return a pointer to the object
+created by <i>f</i>, we would have <i>g</i> return its context:
+</p>
+<pre>
+    (define (f x)
+        (define (g y)
+            __context
+            )
+        this
+        )
+</pre>
+
+<h2><a name="id5">Objects and Types</a></h2><p>
+If you were to ask an object, "What are you?", most
+would respond, "I am an environment!". The <i>type</i> function is
+used to ask such questions:
+</p>
+<pre>
+    (define p (person "betty" 19))
+    (inspect (type p))
+</pre>
+<p>yields:
+</p>
+<pre>
+    (type p) is environment
+</pre>
+<p>This is because the predefined variable <i>this</i> always points to
+the current environment and when we return <i>this</i> from a function,
+we are returning an environment. Because environments are objects
+and vice versa, making objects in Scam is quite easy.
+</p>
+<p>While the <i>type</i> function is often useful, we sometimes 
+would like to know what kind of specific object an object is.
+For example, we might like to 
+know whether or not <i>p</i> is a <i>person</i> object.
+That is to say,
+was <i>p</i> created by the <i>person</i> function/constructor?.
+One way to do this
+is to ask the constructor of the object if it is the <i>person</i> function.
+Luckily, all objects carry along a pointer to the function
+that constructed them:
+</p>
+<pre>
+    (define p (person "veronica" 20))
+    (inspect (p '__constructor 'name))
+</pre>
+<p>yields:
+</p>
+<pre>
+    (p '__constructor 'name) is person
+</pre>
+<p>So, to ask if <i>p</i> is a person, we would use the following
+expression:
+</p>
+<pre>
+    (if (and (eq? (type p) 'environment)
+             (eq? (p '__constructor 'name) 'person)) ...
+</pre>
+<p>Since this construct is rather wordy, there
+is a simple function, named <i>is?</i>, that you can use instead:
+</p>
+<pre>
+    (if (is? p 'person) ...
+</pre>
+<p>The <i>is</i> function works for non-objects too. All of the following
+expressions are true:
+</p>
+<pre>
+    (is? 3 'INTEGER)
+    (is? 3.4 'REAL)
+    (is? "hello" 'STRING)
+    (is? 'blue 'SYMBOL)
+    (is? (list 1 2 3) 'CONS)
+    (is? (array "a" "b" "c") 'ARRAY)
+    (is? (person 'veronica 20) 'object)
+    (is? (person 'veronica 20) 'environment)
+    (is? (person 'veronica 20) 'person)
+</pre>
+
+<h2><a name="id6">Other objects in Scam</a></h2><p>
+While environments constitute the bulk of objects in
+Scam, two other object types are built into Scam. They are closures
+(seen the the first section) and error objects. The
+main library adds in a third object type known as a thunk.
+</p>
+<p>An error object is generated when an exception is caught.
+The fields of an error object are code, value, and trace.
+A thunk is an expression and an environment bundled
+together. Thunks are used to delay evaluation of
+an expression for a later time. The fields of a thunk
+are <i>code</i> and <i>&#95;&#95;context</i>.
+You can learn more about error objects and thunks
+in subsequent chapters.
+</p>
+
+<h2><a name="id7">Fun with <i>objects</i></a></h2><p>
+Because of the flexibility of Scam, one can
+add Java-like display behavior to objects.
+In Java, if an object has a method named <i>toString</i>,
+then if one attempts to print the object, the <i>toString</i>
+method is called to generate the print value of the object.
+</p>
+<p>Here is an example:
+</p>
+<pre>
+    (define (person name age)
+        (define (birthday)
+            (println "Happy Birthday, " name "!")
+            (++ age)
+            )
+        (define (toString)
+            (string+ name "(age " age ")")
+            )
+        this
+        )
+
+    (define p (person "boris" 33))
+</pre>
+<p>Given the above definition of <i>person</i>, printing the value of <i>p</i>:
+</p>
+<pre>
+    (println p)
+</pre>
+<p>yields:
+</p>
+<pre>
+    &lt;object 23452&gt;
+</pre>
+<p>Uh oh. The <i>toString</i> method wasn't called! This is because
+the current version of <i>println</i>, defined in <i>main.lib</i>,
+does not understand the <i>toString</i>
+method. No problem here, we'll just reassign <i>display</i>,
+since <i>println</i> calls <i>print</i> and <i>print</i> calls <i>display</i>
+to do the actual printing:
+</p>
+<pre>
+    (define (display  item)
+        (if (and (object? item) (local? 'toString item))
+            (__display ((item 'toString)))
+            (__display item)
+            )
+        )
+</pre>
+<p>The main library binds the original version of <i>display</i>
+to the symbol <i>&#95;&#95;display</i> for
+safe-keeping.
+</p>
+<p>Note that this new version of <i>display</i> is only found in the local
+environment, so the current versions of <i>println</i> and <i>print</i>, defined
+in an outer scope, cannot see the new version of <i>display</i> in the current
+scope.
+To do so would be a scope violation.
+We solve this problem by <i>cloning</i> the two printing functions.
+The process of cloning produces new closures with 
+the local environment as the definition environment.
+In all other respects, the cloned function is identical.
+Thus, when the new <i>print</i> calls <i>display</i>, the new, local version 
+will be found.
+</p>
+<pre>
+    (include "reflection.lib")
+
+    (define print (clone print))
+    (define println (clone println))
+
+    (println p)
+</pre>
+<p>The <i>reflection</i> library must be included
+to access the <i>clone</i> function.
+</p>
+<p>Now, printing the object <i>p</i> yields:
+</p>
+<pre>
+    boris (age 33)
+</pre>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_13.html">
+  <img border="0" alt="Scopes, Environments, and Objects" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_15.html">
+  <img border="0" alt="Encapsulation, Inheritance and Polymorphism" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Objects</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

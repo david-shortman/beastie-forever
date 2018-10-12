@@ -1,0 +1,2505 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Concept Inventory</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Computer Science Fundamentals
+<br/>
+<span class="smaller">(Python3 Language Version)</span>
+<br/>
+<br/>
+<span class="bigger">
+Iterative Loops
+</span>
+<br/>
+<br/>
+
+</center>
+</div>
+
+
+Note: the questions herein use the terminology of
+<a href="http://troll.cs.ua.edu/ACP-PY/index_16.html"> Chapter 15: Loops</a>
+of
+<i>The Art and Craft of Programming (Python Edition)</i>.
+<br/>
+<br/>
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> recognizing <i>counts</i> and <i>accumulations</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 0 0 -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    def f(items):
+        m = 0
+        for i in range(0,len(items),1):
+            m = m + items[i]
+        return m
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    def f(items):
+        m = 0
+        for i in range(0,len(items),1):
+            if (isPrime(items[i])):
+                m = m + items[i]
+        return m
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    def f(items):
+        m = 0
+        for i in range(0,len(items),1):
+            m = m + 1
+        return m
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    def f(items):
+        m = 0
+        for i in range(0,len(items),1):
+            if (isX(items[i])):
+                m = m + 1
+    return m
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> picking patterns, <i>counts</i> and <i>accumulate</i>
+<br/>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 7 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 0 0 1 0 0 -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ If I wish to solve this problem:
+<i>determine the sum product of the numbers from </i> a <i> to </i> b, I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ If I wish to solve this problem:
+<i>count the number of letters in a string that contains letters and digits</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ If I wish to solve this problem:
+<i>count the number of Charmichael prime Ramanujan numbers in the range </i> a <i> to </i> b, I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ If I wish to solve this problem:
+<i>determine the sum product of the Charmichael prime Ramanujan numbers in the range </i> a <i> to </i> b, I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ If I wish to solve this problem:
+<i>determine the sum product of the numbers in an array</i>, I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ If I wish to solve this problem:
+<i>determine the sum product of the even odd numbers in an array</i>, I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ If I wish to solve this problem:
+<i>interleave two arrays, creating a third array</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-shuffle</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>shuffle</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>shuffle-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>recognizing map, filter, search, extreme, and extreme-index</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 8 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 0 1 0 0 0 0 -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    def g(f,s):
+        u = []
+        for i in range(0,len(s),1):
+            u.append(f(s[i]))
+        return u
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    def g(f,s):
+        for i in range(0,len(s),1):
+            if (s[i] == f):
+                return True
+        return False
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme index</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    def g(f,s):
+        u = False
+        for i in range(0,len(s),1):
+            if (s[i] == f):
+                u = True
+        return u
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    def g(checker,s):
+        u = []
+        for i in range(0,len(s),1):
+            if (checker(s[i])):
+                u.append(s[i])
+        return u
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme index</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    def f(s):
+        u = []
+        for i in range(0,len(s),1):
+            if (isX Y Z(s[i])):
+                u.append(s[i])
+        return u
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme index</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    def f(s):
+        u = s[0]
+        for i in range(1,len(s),1):
+            if (s[i] &lt; &gt; u):
+                u = s[i]
+        return u
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>extreme</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    def f(s):
+        u = 0
+        for i in range(1,len(s),1):
+            if (s[i] &lt; &gt; s[u]):
+                u = i
+        return s[u]
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme index</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>extreme</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    def f(s):
+        u = 0
+        for i in range(1,len(s),1):
+            if (s[i] &lt; &gt; s[u]):
+                u = i
+        return u
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>extreme index</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>picking patterns -- map, filter, search, extreme, and
+extreme-index</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 0 -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ If I wish to solve this problem:
+<i>square every number in an array</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+ If I wish to solve this problem:
+<i>find if there is an even number in an array</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>search</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+ If I wish to solve this problem:
+<i>extract the Charmichael prime Ramanujan numbers from an array</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>chaining patterns</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 0 0 -->
+<!-- QA -->
+<ol type="1" start="23">
+<li>
+ If I wish to solve this problem:
+<i>sum the squares of every number in an array</i>,
+I should implement:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>map</i> followed by <i>accumulate</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>count</i> followed by <i>accumulate</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>map</i> followed by <i>search</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>filter</i> followed by <i>accumulate</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="24">
+<li>
+ If I wish to solve this problem:
+<i>find the largest even number in an array</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>filter</i> followed by <i>extreme</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>map</i> followed by <i>accumulate</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>map</i> followed by <i>search</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>filter</i> followed by <i>search</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="25">
+<li>
+ If I wish to solve this problem:
+<i>extract the even numbers from an array and then square each item
+in the resulting array</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>map</i> followed by <i>accumulate</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>filter</i> followed by <i>extreme</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>map</i> followed by <i>filter</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>filter</i> followed by <i>map</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="26">
+<li>
+ If I wish to solve this problem:
+<i>increment each number in an array and then extract the prime numbers</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>map</i> followed by <i>accumulate</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>map</i> followed by <i>filter</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>filter</i> followed by <i>extreme</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>filter</i> followed by <i>map</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>verifying code</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 6 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 0 0 0 0 -->
+<!-- QA -->
+<ol type="1" start="27">
+<li>
+ Consider satisfying the following problem statement:
+<i>sum the numbers from</i> a <i> to </i> b (<i>inclusive</i>).
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def sum(a,b):
+        total = 0
+        for i in range(0,b+1,1):
+            total = total + i
+        return total
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The range should end at <i>b</i>, not <i>b</i>+1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>The range should start at <i>a</i>, not 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The total should start at <i>a</i>, not 0
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="28">
+<li>
+ Consider satisfying the following problem statement:
+<i>sum the numbers from</i> a <i> to </i> b (<i>inclusive</i>).
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def sum(a,b):
+        total = b
+        for i in range(a,b,1):
+            total = total + i
+        return total
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The total should start at 0, not <i>b</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The range should end at <i>b</i>+1, not <i>b</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The range should start at 0, not <i>a</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="29">
+<li>
+ Consider satisfying the following problem statement:
+<i>sum the numbers from</i> a <i> to </i> b (<i>inclusive</i>).
+
+<pre>
+    def sum(a,b):
+        total = a
+        for i in range(a+1,b+1,1):
+            total = total + i
+        return total
+</pre>
+
+What is wrong, if anything, with this attempt?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The total should start at 0, not <i>a</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The range should start at <i>a</i>, not <i>a</i>+1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The range should end at <i>b</i>, not <i>b</i>+1
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="30">
+<li>
+ Consider satisfying the following problem statement:
+<i>sum the numbers from</i> a <i> to </i> b (<i>inclusive</i>).
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def sum(a,b):
+        total = b
+        for i in range(a,b,0):
+            total = total + i
+        return total
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The range should end at <i>b</i>+1, not <i>b</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>The step should be 1, not 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The range should start at <i>a</i>+1, not <i>a</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="31">
+<li>
+ Consider satisfying the following problem statement:
+<i>sum the numbers from</i> a <i> to </i> b (<i>inclusive</i>).
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def sum(a,b):
+        total = a
+        for i in range(a,b+1,1):
+            total = total + i
+        return total
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>The total should start at 0, not <i>a</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The range should start at 0, not <i>a</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The range should end at <i>b</i>, not <i>b</i>+1
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="32">
+<li>
+ Consider satisfying the following problem statement:
+<i>sum the numbers from</i> a <i> to </i> b (<i>inclusive</i>).
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def sum(a,b):
+        total = 0
+        for i in range(a,b+1,1):
+            total = total + i
+        return total
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The range should end at <i>b</i>, not <i>b</i>+1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The range should start at <i>a</i>+1, not <i>a</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The total should start at 1, not 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is correct
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="33">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two equal length arrays, creating a third array</i>.
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def shuffle(array1,array2):
+        array3 = []
+        for i in range(0,len(array1),1):
+            array3.append(array1[i])
+            array3.append(array2[i])
+        return array3
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>array3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function can fail with an error
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is correct
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="34">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two unequal length arrays (array1 longer than array2),
+creating a third array</i>.
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def shuffle(array1,array2):
+        array3 = []
+        for i in range(0,len(array1),1):
+            array3.append(array1[i])
+            array3.append(array2[i])
+        return array3
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>array3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function will fail with an error
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="35">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two unequal length arrays (array2 longer than array1),
+creating a third array</i>.
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def shuffle(array1,array2):
+        array3 = []
+        for i in range(0,len(array1),1):
+            array3.append(array1[i])
+            array3.append(array2[i])
+        return array3
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function can fail with an error
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>array3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 5 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="36">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two equal length arrays, creating a third array</i>.
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def shuffle(array1,array2):
+        array3 = []
+        i = 0; j = 0
+        while (i &lt; len(array1) and j &lt; len(array2)):
+            array3.append(array1[i])
+            array3.append(array2[j])
+        i += 1; j += 1
+
+        return array3 + array1[i:] + array2[j:]
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is correct
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>array3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function can fail with an error
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="37">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two equal length arrays, creating a third array</i>.
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def shuffle(array1,array2):
+        array3 = []
+        i = 0;
+        while (i &lt; len(array1) and i &lt; len(array2)):
+            array3.append(array1[i])
+            array3.append(array2[i])
+            i += 1
+
+        return array3
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is correct
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>array3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function can fail with an error
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function does not shuffle
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="38">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two unequal length arrays, creating a third array</i>.
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def shuffle(array1,array2):
+        array3 = []
+        i = 0;
+        while (i &lt; len(array1) and i &lt; len(array2)):
+            array3.append(array1[i])
+            array3.append(array2[i])
+            i += 1
+
+        return array3
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>array3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function can fail with an error
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="39">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two equal length arrays, creating a third array</i>.
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def shuffle(array1,array2):
+        array3 = []
+        i = 0; j = 0
+        while (i &lt; len(array1) and j &lt; len(array2)):
+            array3.append(array1[i])
+            array3.append(array2[j])
+            i += 1; j += 1
+
+        return array3
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function can fail with an error
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>array3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="40">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two equal length arrays,
+creating a third array</i>.
+What is wrong, if anything, with this attempt?
+
+<pre>
+    def shuffle(array1,array2):
+        array3 = []
+        i = 0; j = 0
+        while (i &lt; len(array1) or j &lt; len(array2)):
+            array3.append(array1[i])
+            array3.append(array2[j])
+            i += 1; j += 1
+
+        return array3
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>array3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function can fail with an error
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> Input-Output using Loops
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 7 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 0 0 1 0 0 -->
+<!-- QA -->
+<ol type="1" start="41">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+    s = Scanner(fileName)
+    token = s.readtoken()
+    while (token != &quot;&quot;):
+        print(token)
+    s.close()
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the token is only read once
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> a file name is not given to <i>Scanner</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the code is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the scanner is opened at the wrong time
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="42">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+    s = Scanner(fileName)
+    token = s.readtoken()
+    while (token != &quot;&quot;):
+        token = s.readtoken()
+        print(token)
+    s.close()
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the code is correct
+<br/>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> a literal string must be given to <i>Scanner</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the token is only read once
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the scanner object is closed at the wrong time
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="43">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+    s = Scanner(fileName)
+    while (token != &quot;&quot;):
+        print(token)
+        token = s.readtoken()
+    s.close()
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>there is no initial read to set token
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the scanner object is closed at the wrong time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> a literal string must be given to <i>Scanner</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the code is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="44">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+    s = Scanner(&quot;data.txt&quot;)
+    token = readtoken()
+    while (token != &quot;&quot;):
+        print(token)
+        token = readtoken()
+    s.close()
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the code is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the Scanner's version of <i>readtoken</i> is not called
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the scanner object is closed at the wrong time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a for loop should have been used instead of while loop
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="45">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+        s = Scanner(fileName)
+        token = s.readtoken()
+        while (token != &quot;&quot;):
+            token = s.readtoken()
+        s.close()
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the tokens are read but not processed in any way
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> a literal string must be given to the <i>Scanner</i> function
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the scanner object is closed at the wrong time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the code is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="46">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+    s = Scanner(fileName)
+    token = s.readtoken()
+    while (token != &quot;&quot;):
+        print(token)
+        token = s.readtoken()
+        s.close()
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> there should be no call to readtoken before the loop
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the tokens are printed before the read
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the code is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the scanner object is closed at the wrong time
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="47">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+    s = Scanner(fileName)
+    token = s.readtoken()
+    while (token != &quot;&quot;):
+        print(token)
+        token = s.readtoken()
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the token should be compared to the empty string
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the scanner object is not closed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> there should be no call to readtoken before the loop
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> tokens are not printable
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 0 -->
+<!-- QA -->
+<ol type="1" start="48">
+<li>
+ <b>T</b> or <b>F</b>:
+This code correctly counts the number of tokens in a file:
+
+<pre>
+    count = 1
+    s = Scanner(fileName)
+    token = s.readtoken()
+    while (token != &quot;&quot;):
+        count = count + 1
+        token = s.readtoken()
+    s.close()
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="49">
+<li>
+ <b>T</b> or <b>F</b>:
+This code correctly counts the number of tokens in a file:
+
+<pre>
+    count = 0
+    s = Scanner(fileName)
+    token = s.readtoken()
+    while (token != &quot;&quot;):
+        count = count + 1
+        token = s.readtoken()
+    s.close()
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="50">
+<li>
+ <b>T</b> or <b>F</b>:
+This code correctly counts the number of tokens in a file:
+
+<pre>
+    count = 0
+    s = Scanner(fileName)
+    token = s.readtoken()
+    while (token != &quot;&quot;):
+        count = count + 1
+        token = s.readline()
+    s.close()
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="51">
+<li>
+ <b>T</b> or <b>F</b>:
+This code correctly counts the number of lines in a file:
+
+<pre>
+    count = 0
+    s = Scanner(fileName)
+    token = s.readline()
+    while (token != &quot;&quot;):
+        count = count + 1
+        token = s.readline()
+    s.close()
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>loop conversions</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 7 questions in this selection -->
+<!-- 4 items needed -->
+<!-- selection array: 1 1 1 0 1 0 0 -->
+<!-- QA -->
+<ol type="1" start="52">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+
+<pre>
+    i = 0                       for i in range(0,x + 2,1):
+    while (i &lt;= x + 1):             print(i)
+        print(i)                    i = i + 1
+        i = i + 1
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="53">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0                       for i in range(0,x + .1,2):
+    while (i &lt;= x + 1):             print(i)
+        print(i)
+        i = i + 2
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="54">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0                       for i in range(0,x,2):
+    while (i &lt;= x + 1):             print(i)
+        print(i)
+        i = i + 2
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="55">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0                       for i in range(0,x + 3):
+    while (i &lt;= x + 1):             print(i)
+        print(i)                    i += 1
+        i = i + 2
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="56">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0                       for i in range(0,x + 2,1):
+    while (i &lt; x + 1):              print(i)
+        print(i)
+        i = i + 1
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="57">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0                       for i in range(.0,x,1):
+    while (i &lt; x - 1):              print(i)
+        i += 1
+        print(i)
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="58">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0                       for i in range(0,x,1):
+    while (i &lt; x):                  print(i)
+        print(i)                    i = i - 2
+        i = i + 1
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

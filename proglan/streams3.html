@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>streams3</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Yet More on Streams
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="streams3.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ Combining streams
+
+<br/>
+</h2><!-- section ENDED -->
+
+An interesting example in the book concerns the generation of all possible
+pairings of the items in two streams, modulo commutativity. Below is a
+table which shows all the pairings up to element 5. The first number in
+the pair is the index of the first stream and the second number in the
+pair is the index of the item in the second stream.
+<br/>
+<span class="indent">
+<table>
+<tr>
+<td style="text-align:center";> (0,0) </td><td style="text-align:center";> (0,1) </td><td style="text-align:center";> (0,2) </td><td style="text-align:center";> (0,3) </td><td style="text-align:center";> (0,4) </td><td style="text-align:center";> (0,5) </td>
+</tr>
+<tr>
+<td style="text-align:center";> </td><td style="text-align:center";> (1,1) </td><td style="text-align:center";> (1,2) </td><td style="text-align:center";> (1,3) </td><td style="text-align:center";> (1,4) </td><td style="text-align:center";> (1,5) </td>
+</tr>
+<tr>
+<td style="text-align:center";> </td><td style="text-align:center";> </td><td style="text-align:center";> (2,2) </td><td style="text-align:center";> (2,3) </td><td style="text-align:center";> (2,4) </td><td style="text-align:center";> (2,5) </td>
+</tr>
+<tr>
+<td style="text-align:center";> </td><td style="text-align:center";> </td><td style="text-align:center";> </td><td style="text-align:center";> (3,3) </td><td style="text-align:center";> (3,4) </td><td style="text-align:center";> (3,5) </td>
+</tr>
+<tr>
+<td style="text-align:center";> </td><td style="text-align:center";> </td><td style="text-align:center";> </td><td style="text-align:center";> </td><td style="text-align:center";> (4,4) </td><td style="text-align:center";> (4,5) </td>
+</tr>
+<tr>
+<td style="text-align:center";> </td><td style="text-align:center";> </td><td style="text-align:center";> </td><td style="text-align:center";> </td><td style="text-align:center";> </td><td style="text-align:center";> (5,5) </td>
+</tr>
+</table>
+
+
+</span>
+
+<br/>
+Here is the pairing procedure, annotated as to which parts of the
+procedure generate which parts of the table:
+<br/>
+
+<pre>
+    (define (pair s1 s2)
+        (cons-stream
+            (list (stream-car s1) (stream-car s2))       ;top-left corner
+            (interleave
+                (stream-map                              ;the rest of the top row
+                    (lambda (x) (list (stream-car s1) x))
+                    (stream-cdr s2))
+                (pairs (stream-cdr s1) (stream-cdr s2))  ;the rest of the table
+                )
+            )
+        )
+</pre>
+
+How the top-left corner and the rest of that row are
+generated should be readily understandable.
+Consider now the rest of the table.
+Note how it looks just
+like the original table; we can generated it
+with a simple recursive call, moving to
+the second elements in both streams.
+<br/>
+<!-- section -->
+<h2>
+ Streams and the concept of time
+<br/>
+</h2><!-- section ENDED -->
+
+Suppose Scheme has a function named rand-update which takes a number and
+returns its transmorgification. If there isn't much of an observed relationship
+between the original and the transmorgification, why you've got yourself
+a handy random number generator. Here's a constructor for a (repeatable)
+random number generator. Given the same seed, it produces the same sequence
+of random numbers. Given different streams it should give a radically different
+stream.
+<br/>
+
+<pre>
+    (define (random-generator seed)
+        (define (dispatch msg . args)
+            (cond
+                ((eq? msg &#39;get)
+                    (set! seed (rand-update seed))
+                    seed
+                    )
+                ((eq? msg &#39;set)
+                    (set! seed (car args))
+                    (dispatch &#39;get)
+                    )
+                )
+            )
+        dispatch
+        )
+</pre>
+
+What happens if we try to generate a stream of random numbers. Here's such
+a generator.
+<br/>
+
+<pre>
+    (define (random-stream seed)
+        (cons-stream
+            (rand-update seed)
+            (random-stream (rand-update seed))
+            )
+        )
+</pre>
+
+To access successive random numbers, we pass successive indices to stream-ref,
+as in
+<br/>
+
+<pre>
+    (define rs (random-stream 123))
+    (stream-ref rs 0)
+    (stream-ref rs 1)
+    (stream-ref rs 2)
+    ...
+</pre>
+
+The remarkable thing is that streams work functionally, yet can accomplish
+that same things that are usually done imperatively. In fact, streams are
+often used in purely functional languages in lieu of state.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

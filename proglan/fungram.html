@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>fungram</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Fun with Grammars
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="fungram.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ Fun with grammars
+
+<br/>
+</h2><!-- section ENDED -->
+
+Here are a set of abstract languages and grammars which can generate them.
+<br/>
+<!-- subsection -->
+<h3>
+ <i>Set of all strings over {A,B} ending in A</i>
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<pre>
+    s : zA
+    z : Az | Bz | empty
+</pre>
+
+Note that the non-terminal <i>z</i> generates all strings composed of 
+<code>A</code>'s
+and 
+<code>B</code>'s. The non-terminal <i>s</i> simply appends all strings generated
+by <i>z</i> with an 
+<code>A</code> to give the desired result.
+<br/>
+<!-- subsection -->
+<h3>
+ <i>Set of all strings over {A,B} beginning and ending in A</i>
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<pre>
+    s : AzA | A
+    z : Az | Bz | *empty*
+</pre>
+
+Here, <i>z</i> plays the same role as before. In this case, <i>s</i> simply prepends
+an 
+<code>A</code> as well to give the desired result.
+<br/>
+<!-- subsection -->
+<h3>
+ <i>Set of all strings over {A,B} with three consecutive A's</i>
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<pre>
+    s : zAAAz
+    z : Az | Bz | *empty*
+</pre>
+
+Now, <i>s</i> places a <i>z</i> at both ends to ensure that there are three
+consecutive A's somewhere in the sentence.
+<br/>
+<!-- subsection -->
+<h3>
+ <i>Set of all strings over {A,B} such that there is a pair
+of A's separated by 4i, i &gt;= 0, characters</i>
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<pre>
+    s : zAlAz
+    z : Az | Bz | *empty*
+    l : fl | *empty*
+    f : Ag | Bg
+    g : Ah | Bh
+    h : Ai | Bi
+    i : A | B
+</pre>
+
+Similar to before, but note that <i>l</i> generates zero or more <i>f </i>strings.
+Note that an <i>i</i> string is composed of a single character. Therefore,
+an
+<i>h</i> string is composed of two characters, a <i>g</i> string is
+composed of three characters and and <i>f</i> string is composed of four
+characters. Since there are zero or more <i>f</i> strings between the two
+A's in an
+<i>s</i> string, we get the desired language.
+<br/>
+<!-- subsection -->
+<h3>
+ <i>Set of all strings over {A,B} such that at no two A's and
+no two B's are adjacent</i>
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<pre>
+    s : a | b
+    b : Ba | *empty*
+    a : Ab | *empty*
+</pre>
+
+The non-terminals <i>a</i> and <i>b</i> flip flop back and forth to ensure
+no two like characters are adjacent.
+<br/>
+<!-- subsection -->
+<h3>
+ <i>Palindromes over {A,B}</i>
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<pre>
+    s : A | B | AsA | BsB | *empty*
+</pre>
+
+If we place an 
+<code>A</code> in the front, we must place one in the back. Likewise
+for 
+<code>B</code>'s.
+<br/>
+<!-- subsection -->
+<h3>
+ <i>Balanced parentheses</i>
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<pre>
+    s : (s) | ss | *empty*
+</pre>
+
+or
+<br/>
+
+<pre>
+    s : (s)s | *empty*
+</pre>
+
+It is a temptation to define <i>s</i> as 
+<code>(s)</code>.
+This disallows such balanced strings as 
+<code>(()())</code>.
+<br/>
+<!-- subsection -->
+<h3>
+ <i>Set of a strings over {A,B} so that the number of As equals
+the number of B's</i>
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<pre>
+    s : Ab | Ba | empty
+    a : As | Baa
+    b : Bs | Abb
+</pre>
+
+Note that <i>b</i> stands for strings with 1 more B than A and <i>a</i>
+stands for strings with 1 more A than B. These non-terminals arise naturally
+out of the observation that the strings must start with an A or B and the
+consequences of that starting character on the remainder of the string.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

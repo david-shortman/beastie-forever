@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Project specifications</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-8.html">Project 2</a> &gt; Project specifications</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=98">Project specifications</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=98">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">09-18-2018, 08:41 PM</div>
+</div>
+<div class="message">One type of development is called bottom-up, meaning you build an application by first implementing the more basic and fundamental pieces first and then the code that uses these pieces later. Here are some fundamental pieces that are ready, in order of increasing complexity:<br />
+<br />
+<a href="http://beastie.cs.ua.edu/cs201/assign-tnode.html" target="_blank" rel="noopener" class="mycode_url">Binary Search Tree Node</a><br />
+<a href="http://beastie.cs.ua.edu/cs201/assign-bst.html" target="_blank" rel="noopener" class="mycode_url">Binary Search Tree</a><br />
+<br />
+I will add more as I finish those specifications.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=41">jwarnett</a></h2></div><div class="dateline">10-06-2018, 05:14 PM</div>
+</div>
+<div class="message">There are two find node descriptions in your given bst.h.  Also, there is no description for locateBST or setBSTsize.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">10-08-2018, 02:38 PM</div>
+</div>
+<div class="message">fixed. The second description of findBST was actually locateBST.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=41">jwarnett</a></h2></div><div class="dateline">10-08-2018, 03:11 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (10-08-2018, 02:38 PM)</span>lusth Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=577#pid577">[ -> ]</a></cite>fixed. The second description of findBST was actually locateBST.</blockquote><br />
+Could you explain what you mean by key and value?  I thought they were the same.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">10-08-2018, 09:41 PM</div>
+</div>
+<div class="message">When you put a single value into a search tree, it is both key and value. In more realistic situations, the key is one piece of the value, usually a unique identifier. In the case of a GST, a value is inserted with a frequency count. So the generic value is the key, but there is more data associated with the key (i.e. the frequency count).</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=41">jwarnett</a></h2></div><div class="dateline">10-09-2018, 04:01 AM</div>
+</div>
+<div class="message">So, if in this project you intend for key and value to be separate member functions, will there be some point where key is passed to the TNODE or will there be a method of extracting the key from the value that we can use?  Also, shouldn't their be functions to handle the frequency within the TNODE?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">10-09-2018, 01:15 PM</div>
+</div>
+<div class="message">The TNODE object knows nothing about how the key is packaged with the value or even if they are the same thing. The BST tree is passed a comparator function that knows how to compare values. It understands which part of the value is the key. For example, the GST will insert values into the underlying BST. A GST value will consist of the generic value passed to insertGST and a frequency count. I use a private class to implement a GST value. That private class has a void * pointer to the generic value and an int frequency. It also has pointers to various functions that will be needed at some point.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=41">jwarnett</a></h2></div><div class="dateline">10-09-2018, 11:08 PM</div>
+</div>
+<div class="message">Is setBSTsize really just declaring that it has a new size just out of the blue.  Also, if we are told to insert a value/key that is already in the tree, do we just increment some sort of frequency variable on the preexisting node?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a></h2></div><div class="dateline">10-10-2018, 12:39 AM</div>
+</div>
+<div class="message">Yes, setBSTsize can be used to set an arbitrary size value. It will be used if someone prefers not to use the BST delete method but uses some other way to remove a node (e.g. swapToLeaf -&gt; pruneLeaf).<br />
+<br />
+What happens when duplicate values are inserted into a BST is undefined.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=41">jwarnett</a></h2></div><div class="dateline"><span title="10-11-2018">Yesterday</span>, 12:38 AM</div>
+</div>
+<div class="message">Do you have any hints as to an efficient way of finding or recording and updating the min and max depth values without having to do linear searches of the tree at every use of insert, delete, and prune?</div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-8.html">Project 2</a> &gt; Project specifications</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

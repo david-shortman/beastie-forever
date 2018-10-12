@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>expgram</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Expression Grammars
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="expgram.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Associativity and Precedence
+<br/>
+</h2><!-- section ENDED -->
+
+Suppose you wish to implement a grammar for C-like expressions. It
+is not easy for a number of reasons. One is that operators in C have
+specific associativities. For example, addition is left-associative while
+assignment is right-associative. Another problem is precedence. There are
+many levels of precedence in a C expressions. Handling associativity and
+precedence at the same time can be tricky. For example, the expression:
+<br/>
+
+<pre>
+    a = b = c + d * e / 3 - 2 - q
+</pre>
+
+should be parsed the same as:
+<br/>
+
+<pre>
+    (a = (b = (((c + ((d * e) / 3)) - 2) - q)))
+</pre>
+
+but it is not obvious how to accomplish this feat. First, we'll look at
+incorporating associativity into a grammar.
+<br/>
+<!-- section -->
+<h2> Associativity
+<br/>
+</h2><!-- section ENDED -->
+
+Consider the following grammar:
+<br/>
+
+<pre>
+    expression : expression operator expression | unary
+
+    operator : PLUS | MINUS | TIMES | DIVIDES
+
+    unary : VARIABLE | NUMBER | ( expression ) | - unary
+</pre>
+
+which implements a significant subset of C expressions. This grammar
+is easy to come up with, but it has a few drawbacks. For one, it is
+ambiguous. With this grammar, an expression such as:
+<br/>
+
+<pre>
+    x - y - 3
+</pre>
+
+can be recognized as:
+<br/>
+
+<pre>
+    ((x - y) - 3)
+</pre>
+
+or:
+<br/>
+
+<pre>
+    (x - (y - 3))
+</pre>
+
+corresponding to left-associativity and right-associativity,
+respectively. We can remove the ambiguity by rewriting the ambiguous
+rule as:
+<br/>
+
+<pre>
+    expression : unary operator expression | unary
+</pre>
+
+This forces right associativity. We can also rewrite the rule to force
+left associativity:
+<br/>
+
+<pre>
+    expression : expression operator unary | unary
+</pre>
+
+If we wish to implement the left-associative rule using recursive descent
+parsing techniques, we quickly run into trouble:
+<br/>
+
+<pre>
+    function expression()
+        {
+        var tree;
+        if (expressionPending())
+            {
+            var temp = expression();    //infinite recursion!
+            var op = operator();
+            op.left = temp;
+            op.right = unary();
+            tree = op;
+            }
+        else
+            tree = unary();
+        return tree;
+        }
+</pre>
+
+We will fall into an infinite recursive loop because
+<i>expressionPending</i> will always return true; what begins
+an <i>expression</i> also begins a <i>unary</i>.
+The right associative version of expression <i>is</i>:
+<br/>
+
+<pre>
+    function expression()
+        {
+        tree = unary();
+        if (operatorPending())
+            {
+            var temp = operator();
+            temp.left = tree;
+            temp.right = expression();
+            tree = temp;
+            }
+        return tree;
+        }
+</pre>
+
+This works fine, assuming all the operators recognized by the function
+operator are right-associative operators. What if the operators should
+be left-associative? Curiously, if we replace the <i>if</i> with a <i>while</i>
+and the recursive call to <i>expression</i> with a call to <i>unary</i>, as in:
+<br/>
+
+<pre>
+    function expression()
+        {
+        tree = unary();
+        while (operatorPending())
+            {
+            temp = operator();
+            temp.left = tree;
+            temp.right = unary();
+            tree = temp;
+            }
+        return tree;
+        }
+</pre>
+
+we still recognize the same language. More curiously, the iterative
+function now builds a left-associative parse tree!
+<br/>
+<!-- section -->
+<h2> Precedence
+<br/>
+</h2><!-- section ENDED -->
+
+If we are to follow the mathematical rules we learned earlier in life,
+we would like multiplication to happen before addition regardless of
+where the mulitplications and additions occur in the expression. Using
+the left associative grammar above, the expression:
+<br/>
+
+<pre>
+    2 + 3 * 5 + 6
+</pre>
+
+would be equivalent to:
+<br/>
+
+<pre>
+    (((2 + 3) * 5) + 6)
+</pre>
+
+The structure we would like to see is:
+<br/>
+
+<pre>
+    ((2 + (3 * 5)) + 6)
+</pre>
+
+We can rewrite our grammar to accomplish this goal:
+<br/>
+
+<pre>
+    expression1 : expression2 operator1 expression1 | expression2
+
+    operator1 : PLUS | MINUS
+
+    expression2 : unary operator2 expression2 | unary
+
+    operator2 : TIMES | DIVIDES
+
+    unary  : VARIABLE | NUMBER | (expression1) | MINUS unary
+</pre>
+
+Each numeric suffix in <i>expression1</i> and <i>expression2</i> correspond
+to a level of precedence. In this case, the <i>expression1</i> operators
+are at a lower level than the <i>expression2</i> operators. Suppose,
+rather than have the operators be right associative,
+we wish them default to left associativity. We simply flip <i>expression1</i>
+and <i>expression2</i> in the rules, yielding:
+<br/>
+
+<pre>
+    expression1 : expression1 operator1 expression2 | expression2
+
+    operator1 : PLUS | MINUS
+
+    expression2 : expression2 operator2 unary | unary
+
+    operator2 : TIMES | DIVIDES
+
+    unary  : VARIABLE | NUMBER | (expression1) | MINUS unary
+</pre>
+
+If we wish to implement this grammar via recursive descent techniques,
+we transform all the rules to be right recursive, and then we use the
+associativity tricks describe above for those particular levels we wish
+to be right-associative. But, simpler is to have the rules naturally
+right associative and convert particular levels to left-associativity
+using loops, as described above.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - Heap Questions</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-2.html">Prerequisite exam</a> &gt; Heap Questions</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=54">Heap Questions</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=54">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=53">sam</a></h2></div><div class="dateline">09-09-2018, 09:23 PM</div>
+</div>
+<div class="message">Can Heaps have one node?<br />
+<br />
+I ask this question because of questions like: "T or F: the largest value in a min heap can be found at the root"<br />
+<br />
+Technically this could be true if the heap is one node. also,<br />
+<br />
+"T or F: A binary tree with one node must be a heap"<br />
+<br />
+This is true if it can be one node right?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=23">JackODonohue</a></h2></div><div class="dateline">09-09-2018, 11:33 PM</div>
+</div>
+<div class="message">Heaps may have single node because heaps may be empty, and insertion into an empty heap yields another heap of size 1. Therefore if a binary tree has a single node, it is a heap since heaps may be of size 1, and there are no children which may be greater than or less than the root with any ordering. The only time when the largest value in a min heap is at the root is when the heap is of size 1. In all other cases, this is false since there may be a duplicate which would mean that a smallest value does not exist. Alternatively, there may exist a distinct value which is less than the largest value, so if the largest value is at the root, the heap property is violated.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a></h2></div><div class="dateline">09-09-2018, 11:38 PM</div>
+</div>
+<div class="message">Yes, yes, and yes.</div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-2.html">Prerequisite exam</a> &gt; Heap Questions</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

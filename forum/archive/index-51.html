@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forums - exam1 #15</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index,follow" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/screen.css" media="screen" />
+<link type="text/css" rel="stylesheet" rev="stylesheet" href="http://beastie.cs.ua.edu/forum/archive/print.css" media="print" />
+</head>
+<body>
+<div id="container">
+<h1><a href="http://beastie.cs.ua.edu/forum/index.php">Forums</a></h1>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-3.html">First content exam</a> &gt; exam1 #15</div>
+<div id="fullversion"><strong>Full Version:</strong> <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=128">exam1 #15</a></div>
+<div id="infobox">You're currently viewing a stripped down version of our content. <a href="http://beastie.cs.ua.edu/forum/showthread.php?tid=128">View the full version</a> with proper formatting.</div>
+<div id="content">
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=90">jtduggan</a></h2></div><div class="dateline">09-30-2018, 07:36 PM</div>
+</div>
+<div class="message">15. Inserting the integers 1, 2, 3, 5, and 4 into an empty red-black tree, in the order given, yields how many recolorings, single rotations, and double rotations, respectively? Don’t forget to color the root black, if need be. <br />
+<br />
+Im getting &copy; none of the answers are correct being that it takes only 4 recolorings, 1 single rotate, and 1 double rotate. Am I doing enough recoloring?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=149">aaduerr</a></h2></div><div class="dateline">09-30-2018, 08:12 PM</div>
+</div>
+<div class="message">Keep in mind that everything inserted starts as red. That means the initial root is first red then recolored. Left rotation and 2 recolors after insertion of 3. No rotations and 4 recolors after insertion of 5. Then finally one double rotation and 2 recolors after inserting 4.</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=101">arhencey</a></h2></div><div class="dateline">09-30-2018, 10:19 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (09-30-2018, 08:12 PM)</span>aaduerr Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=518#pid518">[ -> ]</a></cite>Keep in mind that everything inserted starts as red. That means the initial root is first red then recolored. Left rotation and 2 recolors after insertion of 3. No rotations and 4 recolors after insertion of 5. Then finally one double rotation and 2 recolors after inserting 4.</blockquote><br />
+How can there be 4 recolors after insertion of 5? 5 is the fourth element to be added to the tree and the root is always black so that only leaves 3 possible recolors right?</div>
+</div>
+<div class="post">
+<div class="header">
+<div class="author"><h2><a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=149">aaduerr</a></h2></div><div class="dateline">09-30-2018, 10:52 PM</div>
+</div>
+<div class="message"><blockquote class="mycode_quote"><cite><span> (09-30-2018, 10:19 PM)</span>arhencey Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=522#pid522">[ -> ]</a></cite><blockquote class="mycode_quote"><cite><span> (09-30-2018, 08:12 PM)</span>aaduerr Wrote: <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=518#pid518">[ -> ]</a></cite>Keep in mind that everything inserted starts as red. That means the initial root is first red then recolored. Left rotation and 2 recolors after insertion of 3. No rotations and 4 recolors after insertion of 5. Then finally one double rotation and 2 recolors after inserting 4.</blockquote><br />
+How can there be 4 recolors after insertion of 5? 5 is the fourth element to be added to the tree and the root is always black so that only leaves 3 possible recolors right?</blockquote><br />
+According to the pseudo code on <a href="http://beastie.cs.ua.edu/cs201/insert-rb.html" target="_blank" rel="noopener" class="mycode_url">http://beastie.cs.ua.edu/cs201/insert-rb.html</a>:<br />
+<span style="color: #115555;" class="mycode_color"><span style="font-size: x-small;" class="mycode_size">  </span></span><br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>         if (uncle is red)<br />
+                {<br />
+                color parent black<br />
+                color uncle black<br />
+                color grandparent red<br />
+                x = grandparent<br />
+                }</code></div></div> <br />
+Which means we'll have to color the root red then because it's the root color it back to black.</div>
+</div>
+</div>
+<div class="navigation"><a href="http://beastie.cs.ua.edu/forum/archive/index.php">Forums</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-1.html">CS201</a> &gt; <a href="http://beastie.cs.ua.edu/forum/archive/index.php?forum-3.html">First content exam</a> &gt; exam1 #15</div>
+</div>
+<div id="footer">
+Powered By <a href="https://mybb.com">MyBB</a>, &copy; 2002-2018 <a href="https://mybb.com">MyBB Group</a>
+</div>
+</body>
+</html>

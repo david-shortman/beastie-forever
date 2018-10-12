@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Aug 18 09:08:15 2014 -->
+<head>
+<title>An Encyclop&aelig;dia of Elementary Data Structures -- Priority Queues</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_14.html">
+  <img border="0" alt="Queues" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_16.html">
+  <img border="0" alt="Binary Trees" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Priority Queues</h1>
+
+<h2><a name="id1">Synopsis</a></h2><p>
+Abstractly, a priority queue is an ordered list of elements. Inserting
+into a priority queue entails placing the new element in its proper 
+position to maintain the ordering. Thus, the point of the insertion
+can be anywhere in the list: front, interior, or back.
+Removing from a priority queue means removing an extreme element, either
+the `smallest' or the `largest'. An auxiliary value, called a <i>rank</i>,
+is used to decide which element is the smallest or largest.
+</p>
+<p>A priority queue is neither a stack nor a queue, but is similar to both.
+Both a stack and a queue order their elements by the insertion time,
+whereas a priority queue orders its elements by their ranks.
+Here is an example:
+</p>
+<pre>
+    pq = new PriorityQueue();
+    pq.enqueue("alpha",3);        //element first, rank second
+    pq.enqueue("beta",2);
+    pq.enqueue("gamma",4);
+    pq.enqueue("delta",1);
+</pre>
+<p>At this point, the ordered list of elements would be:
+</p>
+<pre>
+    ("delta","beta","alpha","gamma")
+</pre>
+<p>Typically, but not always, the smallest rank is the highest priority,
+so a removal (dequeuing) would remove the element <code>"delta"</code>.
+</p>
+
+<h2><a name="id2">Structure</a></h2><p>
+Generally, the structure of a priority queue resembles that of
+a
+<a href="index_14.html#QueuesStructure">queue</a>
+or a
+<a href="index_13.html#StacksStructure">stack</a>.
+</p>
+
+<h2><a name="id3">Vocabulary</a></h2><p>
+The terms used in describing a priority queue are:
+</p>
+<dl><dt>enqueue</dt><dd> The name of the operation that adds an element, with a given 
+rank, to a priority queue.
+</dd><dt>dequeue</dt><dd> The name of the operation that removes the element
+with the smallest (largest) rank.
+Usually, the element removed is returned by the <i>dequeue</i> operation,
+with the rank being thrown away.
+</dd><dt>peek</dt><dd> Like <i>dequeue</i>, but 
+the element is not removed
+from the queue. Consecutive peeks, with no
+intervening enqueues or dequeues, always return the same element.
+</dd><dt>rank</dt><dd> The value used to order the elements in a priority queue.
+Each element is associated with a <i>rank</i>.
+</dd><dt>priority</dt><dd> Another name for <i>rank</i>.
+</dd><dt>first-come-first-served</dt><dd> A strategy for dealing with the insertion
+of an element with the same rank as a previously enqueued, but not
+yet dequeued, element. Under this strategy, the newly inserted element
+should be dequeued <i>after</i> the previously enqueued element.
+</dd></dl>
+
+<h2><a name="id4">Supports</a></h2><p>
+Priority queues are used in some important graph
+algorithms as well as in discrete-event simulations.
+</p>
+<p>A priority queue, where the rank of an insertion
+is forced to be greater than the rank of the previous
+insertion implements a <a href="index_13.html">stack</a>. In such
+a case, the last element inserted has the highest rank
+and thus is the next element to come off the priority queue.
+Conversely, forcing the rank of an insertion to be less
+than that of the previous insertion implements a
+<a href="index_14.html">queue</a>.
+</p>
+
+<h2><a name="id5">Dependencies</a></h2><p>
+Priority queues are often built from
+<a href="index_11.html">singly-linked lists</a>
+or
+<a href="index_18.html">heaps</a>.
+If the priority queue is based upon a linked-list, a tail pointer
+is not needed (although if present, it can provide a significant
+optimization if enqueues generally end up at the back of the list).
+</p>
+
+<h2><a name="id6">Operations</a></h2><p>
+The operations of a priority queue have the same name as the operations
+of a 
+<a href="index_14.html">queue</a>,
+namely <i>enqueue</i>, <i>dequeue</i>, <i>peek</i>, and <i>isEmpty</i>.
+Of course, the <i>enqueue</i> operation takes a rank as well as the element
+to be enqueued.
+</p>
+<p>The enqueuing operation can take anywhere from constant to linear time,
+depending on the underlying data structure used to implement the
+priority queue. The dequeuing operation can take anywhere from
+constant to logarithmic time, again depending on the underlying
+structure. The choice of the underlying structure depends on
+whether one wishes for faster enqueues (at the cost of slower
+dequeues) or vice versa.
+</p>
+
+<h2><a name="id7">Traversals</a></h2><p>
+Priority queues are generally not traversed.
+</p>
+
+<h2><a name="id8">Concept Inventory</a></h2>
+<div align="center">
+</div>
+<ol>&nbsp;
+<li>This is a question.
+<ol><li>
+This is one possible answer
+</li><li>
+This is another possible answer
+</li></ol>
+</li></ol>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_14.html">
+  <img border="0" alt="Queues" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_16.html">
+  <img border="0" alt="Binary Trees" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

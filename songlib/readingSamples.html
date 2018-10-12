@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: readingSamples.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Nov  7 10:40:46 2011 -->
+<head>
+<title>songlib: reading notes</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">Songlib: reading notes<br /></h1>
+<h2 class="maketitle">Song Li Buser</h2>
+<h3 class="maketitle">Revision Date: November 7, 2011</h3>
+</p>
+
+<h3><a name="id1"><a href="readingSamples.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Reading a set of notes</a></h1><p>
+In <b><i>songlib</i></b>, one can read in a single note or
+a set of notes with a single function call.
+To
+read in a set of notes, a call to <i>readScale</i> is
+made. The prototype of <i>readScale</i> is:
+</p>
+<pre>
+    int readScale(char *directory,char *prefix);
+</pre>
+<p>This reads in all the notes in the given directory with the given
+prefix. The notes are read as RRA objects and then stored in
+an array. The C note of ocatve 0 is stored at array slot 0,
+The B note of octave 2 is stored at array slot 25, and so on.
+For example, the following code reads in all the notes (as RRA
+files) in the "/home/songlib/samples/guitar/" directory that begin with
+the prefix "pick&#95;".
+</p>
+<pre>
+    #define DIR "/usr/local/share/samples/guitar/"
+    #define PREFIX "pick_"
+
+    int guitar = readScale(DIR,PICK);
+
+    play(4.0,guitar,C,3);
+</pre>
+<p>The function returns the instrument number assigned to notes that were
+specified. The first call to <i>readScale</i> returns 0, the second returns 1,
+and so on. The <i>readScale</i> command first looks for notes of the form:
+</p>
+<pre>
+    pick_c0.rra
+    pick_c#0.rra
+    pick_d0.rra
+    ...
+</pre>
+<p>If no notes are found, it then looks for notes of the form:
+</p>
+<pre>
+    pick_0.rra
+    pick_1.rra
+    pick_2.rra
+    ...
+</pre>
+<p>Notes of this form are assumed to correspond to midi note numbers.
+If the note number is <i>x</i>, then it is placed at octave <i>x / 12</i> and note
+<i>x &#37; 12</i>.
+</p>
+<p>Note that at least one note need be present in the directory.
+If a request is made to play notes other than those found,
+songlib will resample the closest found note to make the
+desired note. However, the further away the found note,
+the more artificial the resampling will sound. A good
+rule of thumb is not to resample more than three or four
+semitones away. Also, resampling a note to a higher pitch
+will shorten the length of the resulting note.
+</p>
+
+<h1><a name="id3">Reading a single note</a></h1><p>
+One can also read in a single note and then use the
+note playing functions that take an RRA object as
+an argument. To read in an RRA note, use the
+<i>readRRA</i> function:
+</p>
+<pre>
+    RRA *readRRA(FILE *in,void (*handler)(RRA *,char *,void *))
+</pre>
+<p>The first argument is a file pointer to the file containing the
+desired note. The second note is a handler for non-standard tags.
+For most songlib work, you do not need to supply a handler, so
+a null value (zero) is passed as the second argument. Here
+is an example:
+</p>
+<pre>
+    char *name = "stick.rra";
+    RRA *note;
+    FILE *fp;
+
+    fp = readRRA(name,"r");
+    if (fp == 0) Fatal("could not read file %s\n",name);
+    note = readRRA(fp,0);
+    fclose(fp);
+
+    rplay(4.0,note);
+</pre>
+<p>Notes read and played in this manner are not automatically
+filtered. They can be manually filtered by calling the
+<a href="builtInFilters.html">built-in filters</a> appropriately.
+</p>
+<p>For other note playing functions, see <a href="notePlaying.html">notePlaying</a>.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

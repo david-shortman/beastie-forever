@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>order</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS201 Data Structures and Algorithms</span>
+<br/>
+<br/>
+Order Notation
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="order.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Rough ideas
+<br/>
+</h2><!-- section ENDED -->
+
+Consider this Venn diagram:
+<br/>
+<span class="indent">
+<image src="order.jpg">
+
+</span>
+
+<br/>
+We can assign the following meanings:
+<span class="indent">
+<table>
+<tr>
+<td style="text-align:left";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&omega;</mi></mrow></math> </td><td style="text-align:left";> always worse than </td><td style="text-align:left";> lower bound </td>
+</tr>
+<tr>
+<td style="text-align:left";> <i>o</i> </td><td style="text-align:left";> always better than </td><td style="text-align:left";> upper bound </td>
+</tr>
+<tr>
+<td style="text-align:left";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Omega;</mi></mrow></math> </td><td style="text-align:left";> never better than </td><td style="text-align:left";> lower bound </td>
+</tr>
+<tr>
+<td style="text-align:left";> <i>O</i> </td><td style="text-align:left";> never worse than </td><td style="text-align:left";> upper bound </td>
+</tr>
+<tr>
+<td style="text-align:left";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi></mrow></math> </td><td style="text-align:left";> never better/worse than </td><td style="text-align:left";> upper and lower (tight) bound </td>
+</tr>
+</table>
+
+
+</span>
+
+<br/>
+under the following conditions:
+<br/>
+
+<ul>
+
+<li>
+
+ the problem size (usually denoted <i>n</i>) is sufficiently large (<span style="font-family: sans;">NSL</span>)
+</li>
+
+<li>
+
+ we are comparing worst case behavior (<span style="font-family: sans;">WCB</span>)
+</li>
+
+</ul>
+
+
+For the <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi></mrow></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Omega;</mi></mrow></math>, and <i>O</i> regions, we apply one more condition:
+<br/>
+
+<ul>
+
+<li>
+
+ we ignore constant factors and other lower order terms (<span style="font-family: sans;">ICF</span>)
+</li>
+
+</ul>
+
+
+If we are comparing the running times of two algorithms, <i>f</i> and <i>g</i>, we
+place one of them, say <i>g</i>, in the <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi></mrow></math> region. If algorithm
+<i>f</i> is in the <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&omega;</mi></mrow></math> region, then:
+<br/>
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>f</mi>	<mo>=</mo>	<mi>&omega;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>g</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+<br/>
+The English interpretation is that
+<i>f</i> is always slower than <i>g</i> (<span style="font-family: sans;">NSL</span>,<span style="font-family: sans;">WCB</span>).
+If <i>f</i> is in the <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Theta;</mi></mrow></math> or <i>o</i> regions, then:
+<br/>
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>f</mi>	<mo>=</mo>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>g</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+<br/>
+The English interpretation of this statement is that
+<i>f</i> is never slower than <i>g</i> (<span style="font-family: sans;">NSL</span>,<span style="font-family: sans;">WCB</span>,<span style="font-family: sans;">ICF</span>).
+<br/>
+<br/>
+When using order notation,
+one generally assumes that <span style="font-family: sans;">NSL</span>, <span style="font-family: sans;">WCB</span>, and <span style="font-family: sans;">ICF</span> always apply, unless otherwise
+stated.
+<br/>
+<!-- section -->
+<h2> Formal Statements
+<br/>
+</h2><!-- section ENDED -->
+
+A formal definition of <i>O</i> is:
+<br/>
+<span class="indent">
+if <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mstyle displaystyle="true">		<munder>			<mi>lim</mi>			<mrow>				<mi>n</mi>				<mo>&rarr;</mo>				<mo>&infin;</mo>			</mrow>		</munder>	</mstyle>	<mfrac linethickness="1">		<mi>f</mi>		<mi>g</mi>	</mfrac>	<mo>=</mo>	<mn>0</mn></mrow></math>
+</span>
+
+<br/>
+The definitions of the other symbols are similar.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

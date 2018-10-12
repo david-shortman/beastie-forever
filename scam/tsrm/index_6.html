@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Sep  5 20:07:21 2016 -->
+<head>
+<title>The Scam Reference Manual -- Combining Literals</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_5.html">
+  <img border="0" alt="Literals" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_7.html">
+  <img border="0" alt="Lists, Strings, and Arrays" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Combining Literals</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Combining Literals</h1>
+<p>Like the literals themselves, combinations of literals are also
+expressions. For example, suppose you have forgotten your times table
+and aren't quite sure whether 8 times 7 is 54 or 56. We can ask Scam,
+presenting the interpreter with the expression:
+</p>
+<pre>
+    (* 8 7)
+    -&gt; 56
+</pre>
+<p>The
+multiplication sign * is known as an <i>operator</i>, as it <i>operates</i> on the 8
+and the 7, producing an equivalent literal value.
+As with all LISP/Scheme-like languages, operators like <code>*</code>
+are true functions and thus prefix notation is used in function calls.
+</p>
+<p>The 8 and the 7 in the above expression are
+known as <i>operands</i>. It seems that the actual names of various operands are
+not being taught anymore, so for nostalgia's sake, here they are. The
+operand to the left of the multiplication sign (in this case the 8) is
+known as the <i>multiplicand</i>. The operand to the right (in this case the 7)
+is known as the <i>multiplier</i>. The result is known as the <i>product</i>.
+</p>
+<p>The operands of the other basic operators
+have special names too. For addition of two operands, the left operand is known as the
+<i>augend</i> and the right operand is known as the <i>addend</i>.
+The result is known as the <i>sum</i>.
+For subtraction,
+the left operand is the <i>minuend</i>, the right the <i>subtrahend</i>, and
+the result as the <i>difference</i>.
+Finally
+for division (and I think this is still taught), the left operand is
+the <i>dividend</i>, the right operand is the <i>divisor</i>, and the 
+result is the <i>quotient</i>.
+</p>
+<p>We separate
+operators from their operands by
+spaces, tabs,
+or newlines, collectively known as <i>whitespace</i>.<sup><a href="index_22.html#footnote-1">1</a></sup>
+</p>
+<p>Scam always takes in an expression and returns an equivalent
+literal expression (<i>e.g.</i>, integer or real). All Scam operators are
+variadic, meaning they operate on exactly on any number of operands:
+</p>
+<pre>
+    (+ 1 2 3 4 5)
+    -&gt; 15
+</pre>
+
+<h2><a name="id1">Numeric operators</a></h2><p>
+If it makes sense to add two things together, you can probably do it in
+Scam using the + operator. For example:
+</p>
+<pre>
+    (+ 2 3)
+    -&gt; 5
+    
+    (+ 1.9 3.1)
+    -&gt; 5.000000
+</pre>
+<p>One can see that if one adds two integers, the result is an integer. If
+one does the same with two reals, the result is a real.
+Things get more interesting when
+you add things having different types. Adding an integer and a real (in
+any order) always yields a real.
+</p>
+<pre>
+    (+ 2 3.3)
+    -&gt; 5.300000
+    
+    (+ 3.3 2)
+    -&gt; 5.300000
+</pre>
+<p>Adding an string to an integer
+(with an augend integer) yields an error;
+the types are not `close' enough, like they are with
+integers and reals:
+</p>
+<pre>
+    (+ 2 "hello")
+    -&gt; EXCEPTION: generalException
+       wrong types for '+': INTEGER and STRING
+</pre>
+<p>In general, when adding two things,
+the types must match or nearly match.
+</p>
+<p>Of special note is the division operator with respect to integer
+operands. Consider evaluating the following expression:
+</p>
+<pre>
+    15 / 2
+</pre>
+<p>If one asked the Scam interpreter to perform this task, the result
+will not be 7.5, as expected, but rather 7, as the division operator
+performs <i>integer division</i>:
+</p>
+<pre>
+    (/ 15 2)
+    -&gt; 7
+</pre>
+<p>However, we wish for a real result, we can convert one of
+the operands to a real, as in:
+</p>
+<pre>
+    (/ (real 15) 2)
+    -&gt; 7.500000
+</pre>
+<p>Note that Scheme would produce the rational number <i>(15)/(2)</i> in this
+case. Scam does not have rationals, but they can be added to
+the language if one desires more Scheme compatibility.
+</p>
+<p>The complement to integer division is the modulus operator &#37;. While the
+result of integer division is the quotient, the result of the modulus
+operator is the remainder. Thus
+</p>
+<pre>
+    (% 14 5)
+    -&gt; 4
+</pre>
+<p>evaluates to 4 since 4 is left over when 5 is divided into 14. To check
+if this is true, one can ask the interpreter to evaluate:
+</p>
+<pre>
+    (== (+ (* (/ 14  5) 5) (% 14 5)) 14)
+    -&gt; #t
+</pre>
+<p>This complicated expression asks the question `is it true that the
+quotient times the divisor plus the remainder is equal to the original
+dividend?'. The Scam interpreter will respond that, indeed, it is
+true. 
+</p>
+
+<h2><a name="id2">Combining strings</a></h2><p>
+To concatenate strings together, one uses the <i>string+</i> operator.
+Like <code>+</code> and <code>-,</code> <i>string+</i> is variadic;
+we can concatenate any number of
+strings at one time. Strings are concatenated from left to right.
+For examle, the expression:
+</p>
+<pre>
+    (string+ "a" "b" "c")
+</pre>
+<p>produces the new string <code>"abc"</code>. Note that the strings passed
+to <i>string+</i> are
+unmodified.
+</p>
+
+<h2><a name="id3">Comparing things</a></h2><p>
+Remember the <i>Boolean</i> literals, <tt>&#35;t</tt> and <tt>&#35;f</tt>?
+We can use the <i>Boolean</i>
+comparison operators to generate such values. For example, we can ask
+if 3 is less than 4:
+</p>
+<pre>
+    (&lt; 3 4)
+    -&gt; #t
+</pre>
+<p>Evaluating this expression shows that, indeed, 3 is less than 4. If it were
+not, the result would be <tt>&#35;f</tt>.
+Besides
+<tt>&lt;</tt>
+(less than),
+there are other <i>Boolean</i> comparison operators:
+<tt>&lt;=</tt>
+(less than or equal to),
+<tt>&gt;</tt>
+(greater than),
+<tt>&gt;=</tt>
+(greater than or equal to),
+<tt>==</tt>
+(equal to), and
+<tt>!=</tt>
+(not equal to).
+</p>
+<p>The comparison operators are variadic:
+</p>
+<pre>
+    (&lt; 1 2 3)
+    -&gt; #t
+
+    (&lt; 1 2 2)
+    -&gt; #f
+</pre>
+<p>Any Scam type can be compared with any other type with the
+<tt>==</tt>
+and
+<tt>!=</tt>
+comparison operators.
+If an integer is compared with a real with these
+operators, the integer is converted into a real before the comparison
+is made. In other cases, comparing different types with
+<tt>==</tt>
+will yield
+a value of <tt>&#35;f</tt>. Conversely, comparing different types with
+<tt>!=</tt>
+will yield
+<tt>&#35;t</tt>
+(the exception, as above, being integers compared with reals).
+If the types match,
+<tt>==</tt>
+will yield true only if the values
+match as well. The operator
+<tt>!=</tt>
+behaves accordingly.
+</p>
+
+<h2><a name="id4">Combining comparisons</a></h2><p>
+We can combine comparisons with the <i>Boolean</i> logical connectives
+<tt>and</tt> and <tt>or</tt>:
+</p>
+<pre>
+    (and (&lt; 3 5) (&lt; 4 5))
+    -&gt; #t
+    
+    (or (&lt; 3 4) (&lt; 4 5))
+    -&gt; #t
+    
+    (and (&lt; 3 4) (&lt; 5 4))
+    -&gt; #f
+    
+    (or (&lt; 3 4) (&lt; 5 4))
+    -&gt; #t
+</pre>
+<p>The first interaction asks if both the expression
+<tt>(&lt; 3 4)</tt> and the expression
+<tt>(&lt; 4 5)</tt> are true. Since both are, the
+interpreter responds with true. The second interaction
+asks if at least one of the expressions is true. Again, the
+interpreter responds with true. The difference between <tt>and</tt>
+and <tt>or</tt> is illustrated in the last two interactions. Since
+only one expression is true (the latter expression being
+false) only the <tt>or</tt> operator yields a true value.
+If both expressions are false, both <code>and</code> and <code>or</code> returns false.
+</p>
+<p>There is one more <i>Boolean</i> logic operation, called
+<i>not</i>. It simply reverses the value of the given expression.
+</p>
+<pre>
+    (not (and (&lt; 3 4) (&lt; 4 5)))
+    -&gt; #f
+</pre>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_5.html">
+  <img border="0" alt="Literals" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_7.html">
+  <img border="0" alt="Lists, Strings, and Arrays" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Combining Literals</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

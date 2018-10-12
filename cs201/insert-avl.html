@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>insert-avl</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+AVL Tree Insertion
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="insert-avl.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+Start out by using a regular binary search tree insertion. Set the
+balance of the newly inserted node (it should be
+zero left height, zero right height, and height of 1).
+Call <i>insertionFixUp</i>, passing a pointer to the
+newly inserted node, <i>x</i>.
+<br/>
+
+<pre>
+
+    function insertionFixup(x)
+        {
+        loop
+            {
+            if (x is the root)
+                exit the loop
+            else if (parent favors the sibling)        //case 1
+                {
+                set the balance of parent
+                exit the loop
+                }
+            else if (parent has no favorite)           //case 2
+                {
+                set the balance of parent
+                x = parent
+                //continue looping
+                }
+            else //parent favors x
+                {
+                y = the favorite child of x
+                p = parent of x
+                if (y exists and y,x,p are not linear) //case 3
+                    {
+                    rotate y to x
+                    rotate y to p
+                    set the balance of x
+                    set the balance of p
+                    set the balance of y
+                    }
+                else                                   //case 4
+                    {
+                    rotate x to p
+                    set the balance of p
+                    set the balance of x
+                    }
+                exit the loop
+                }
+            }
+        }
+</pre>
+
+<br/>
+Setting the balance of a node modifies three fields, the <i>height</i>,
+the <i>leftHeight</i>, and the <i>rightHeight</i>. The last two fields
+cache the heights of the left and right children, respectively:
+<br/>
+
+<pre>
+    function setBalance(x)
+        {
+        set x&#39;s leftHeight to the height of the left child,
+            zero if there is no left child
+        set x&#39;s rightHeight to the height of the right child,
+            zero if there is no right child
+        set x&#39;s height to the max of leftHeight and rightHeight, plus one
+        }
+</pre>
+
+Note that in this pseudocode, there are no references to leftness and
+rightness. This issue is deferred to the helper functions. For example,
+the getting the sibling of a node <i>c</i> with parent <i>p</i>
+could be implemented as:
+<br/>
+
+<pre>
+    function sibling(c)
+        {
+        if c is its parent&#39;s left child, return the parent&#39;s right child
+        if c is its parent&#39;s right child, return the parent&#39;s left child
+        }
+</pre>
+
+<b>Next:</b>
+<a href="delete-avl.html">
+Deleting from <i>AVL</i> trees
+</a>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

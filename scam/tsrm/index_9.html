@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Sep  5 20:07:21 2016 -->
+<head>
+<title>The Scam Reference Manual -- Assignment</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_8.html">
+  <img border="0" alt="Variables" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_10.html">
+  <img border="0" alt="Conditionals" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Assignment</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Assignment</h1>
+<p>Once a variable has been created, it is possible to change its value,
+or <i>binding</i>,
+Consider the following interaction with
+the Scam interpreter:
+</p>
+<pre>
+    (define eyeColor 'black)    ; creation
+    
+    (inspect eyeColor)          ; reference
+    -&gt; eyeColor is black
+    
+    (set! eyeColor 'green)      ; assignment
+    
+    (eq? eyeColor 'black)       ; equality
+    -&gt; #f
+    
+    (eq? eyeColor 'green)       ; equality
+    -&gt; #t
+
+    (assign eyeColor BROWN)     ; assignment (alternate)
+</pre>
+<p>The assignment function is not like the arithmetic operators.
+Recall that <tt>+</tt> evaluates all its arguments
+before performing the addition.
+For <i>set!</i> and <i>assign</i>,
+the leftmost operand is not evaluated:
+If it were, the assignment
+</p>
+<pre>
+    (define x 1)
+    (set! x 3)
+</pre>
+<p>would be equivalent to:
+</p>
+<pre>
+    (set! 1 3)
+</pre>
+<p>In general, an operator which does not evaluate
+all its arguments is known as a <i>special form</i><sup><a href="index_22.html#footnote-2">2</a></sup>.
+For <i>assign</i>, the evaluation of the first argument
+is suppressed.
+</p>
+
+<h2><a name="id1">Other functions for changing the value of a variable</a></h2><p>
+Scam has another functions for changing the value of a
+varible:
+</p>
+<pre>
+    (set 'x 5)
+</pre>
+<p>which changes the current value of <i>x</i> to 5.
+It is equivalent to the <i>set!</i> function,
+except that it evaluates all its arguments. This
+is why the variable name was quoted in the example.
+The reason for this behavior is that, sometimes,
+it is useful to derive the variable name
+to be modified programmatically. The <i>set</i> function
+allows for this while the <i>set!</i> function does not.
+</p>
+
+<h2><a name="id2">Assignment and Environments/Objects</a></h2><p>
+The assignment functions can take an environment as an
+optional third argument.
+Because the predefined variable
+<i>this</i> always points to the current environment,
+the following
+three expressions are equivalent:
+</p>
+<pre>
+        (assign x 5)
+        (set! x 5 this)
+        (set (symbol "x") 5 this)
+</pre>
+<p>The <i>symbol</i> function is used to create a variable name from
+a string.
+Since environments form the basis for objects in Scam,
+<i>set!</i> and <i>set</i> 
+can be used to update the instance variables
+of objects.
+</p>
+
+<h2><a name="ListsStringsArraysSetting">Setting elements of a collection</a></h2>
+<p>The <i>set-car!</i> function can be used to set the first element of
+a collection:
+</p>
+<pre>
+    (define a (list 3 5 7))
+
+    (inspect a)
+    -&gt; a is (3 5 7)
+
+    (set-car! a 11)
+
+    (inspect a)
+    -&gt; a is (11 5 7)
+</pre>
+<p>More generally, the <i>setElement</i> function can be used to set a new value
+at any legal index. The first argument to <i>setElement</i> is the collection
+to be modified, the second is in index at which to place the new value,
+the third argument.
+Indices are numbered using zero-based counting:
+</p>
+<pre>
+    (define a (list 3 5 7))
+    (setElement a 1 44)         ;index 1 refers to the 2nd element
+    (inspect a)
+    -&gt; a is (3 44 7)
+</pre>
+<p>For strings, the new value must be a non-empty string. If the
+value is composed of multiple characters, the characters after
+the first character are ignored.
+</p>
+<p>For lists, it is possible to set the tail of a list. 
+The tail of a list is the list of all elements in the list 
+except the first element. Here, we set the tail of list <i>a</i>
+to be list <i>b</i>, using <i>set-cdr!</i>:
+</p>
+<pre>
+    (define a (list 1 2 3))
+    (define b (list "two" "three" "four" "five"))
+
+    (set-cdr! a b)
+    
+    (inspect a)
+    -&gt; a is (1 "two" "three" "four" "five")
+
+    (set-cdr! (cdr (cdr a)) (list 6))
+
+    (inspect a)
+    -&gt; a is (1 "two" "three" 6)
+</pre>
+<p>The last two interactions show that any expression that resolves
+to a list can be passed as the first and second arguments.
+Note that you cannot set the tail of either an array or a string.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_8.html">
+  <img border="0" alt="Variables" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_10.html">
+  <img border="0" alt="Conditionals" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Assignment</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

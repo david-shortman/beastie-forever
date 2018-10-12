@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>searching</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Elementary Data Structures and Algorithms
+<br/>
+<br/>
+<span class="bigger">Searching</span>
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+
+<!-- section -->
+<h2> <b>Concept</b>: searching
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ <b>T</b> or <b>F</b>:
+The following code reliably sets the variable <i>min</i> to
+the minimum value of an unsorted, non-empty array.
+
+<pre>
+    min = 0;
+    for (i from 0 until array.length)
+        if (array[i] &lt; min)
+            min = array[i];
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ <b>T</b> or <b>F</b>:
+The following code reliably sets the variable <i>max</i> to
+the maximum value in an unsorted, non-empty array.
+
+<pre>
+    max = array[0]
+    for (i from 0 to array.length)
+        if (array[i] &gt; max)
+            max = array[i]
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ <b>T</b> or <b>F</b>:
+The following function reliably returns
+
+<code>True</code> if the value of item is <i>present</i> in the unsorted,
+non-empty array.
+
+<pre>
+    function find(array,item)
+        {
+        found = False;
+        for (i from 0 until array.length)
+            if (array[i] == item)
+                found = True;
+        return found;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ <b>T</b> or <b>F</b>:
+The following function reliably returns
+
+<code>False</code> if the value of item is <i>missing</i> in the unsorted,
+non-empty array.
+
+<pre>
+    function find(array,item)
+        {
+        found = True;
+        for (i from 0 unitl array.length)
+            if (array[i] != item)
+                found = False;
+        return found;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ What is the average and worst case time complexity, respectively,
+for searching an unordered list?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear, linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear, log,
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> log, linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log, log
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ What is the average and worst case time complexity, respectively,
+for searching an ordered list?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>log, log
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear, log
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear, linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log, linear
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

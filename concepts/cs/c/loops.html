@@ -1,0 +1,2426 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Concept Inventory</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Computer Science Fundamentals
+<br/>
+<span class="smaller">(C Language Version)</span>
+<br/>
+<br/>
+<span class="bigger">
+Iterative Loops
+</span>
+<br/>
+<br/>
+
+</center>
+</div>
+
+
+Note: the questions herein use the terminology of
+<a href="http://troll.cs.ua.edu/ACP-C/index_16.html"> Chapter 15: Loops</a>
+of
+<i>The Art and Craft of Programming (C Edition)</i>.
+<br/>
+<br/>
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>recognizing patterns</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 12 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 0 0 0 0 1 0 0 0 0 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    void g(int (*f)(int),int *s,int size)
+        {
+        int i;
+        for (i = 0; i &lt; size; ++i)
+            s[i] = f(s[i]);
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    int f(int *items,int size)
+        {
+        int i,m = 0;
+        for (i = 0; i &lt; size; ++i)
+            m = m + items[i];
+        return m;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    int f(int *items,int size)
+        {
+        int i,m = 0;
+        for (i = 0; i &lt; size; ++i)
+            m = m + 1;
+        return m;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    int f(int *items,int size)
+        {
+        int i,m = 0;
+        for (i = 0; i &lt; size; ++i)
+            if (isX(items[i]))
+                m = m + 1;
+        return m;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    int g(int f,int *s,int size)
+        {
+        int i;
+        for (i = 0; i &lt; size; ++i)
+            if (s[i] == f)
+                return 1;
+        return 0;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme index</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    int g(int f,int *s,int size)
+        {
+        int i,u = 0;
+        for (i = 0; i &lt; size; ++i)
+            if (s[i] == f)
+                u = 1;
+        return u;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    void g(int (*checker)(int),int *s,int size)
+        {
+        int i,u = 0;
+        for (i = 0; i &lt; size; ++i)
+            if (checker(s[i]))
+                {
+                s[u] = s[i];
+                ++u;
+                }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme index</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    int f(int *items,int size)
+        {
+        int i,m = 0;
+        for (i = 0; i &lt; size; ++i)
+            if (isPrime(items[i]))
+                m = m + items[i];
+        return m;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    void f(int *s,int size)
+        {
+        int i,u = 0;
+        for (i = 0; i &lt; size; ++i)
+            if (isX(s[i]))
+                {
+                s[u] = s[i];
+                ++u;
+                }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme index</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    int f(int *s,int size)
+        {
+        int i,u = s[0];
+        for (i = 0; i &lt; size; ++i)
+            if (s[i] &lt; u)
+                u = s[i];
+        return u;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>extreme</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    int f(int *s,int size)
+        {
+        int i,u = 0;
+        for (i = 0; i &lt; size; ++i)
+            if (s[i] &lt; s[u])
+                u = i;
+        return s[u];
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>extreme</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme index</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ Which pattern does the following function implement?
+
+<pre>
+    int f(int *s,int size)
+        {
+        int i,u = 0;
+        for (i = 0; i &lt; size; ++i)
+            if (s[i] &lt; s[u])
+                u = i:
+        return u;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>extreme index</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>choosing patterns</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 10 questions in this selection -->
+<!-- 4 items needed -->
+<!-- selection array: 1 0 0 1 0 0 0 0 1 1 -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ If I wish to solve this problem:
+<i>determine the sum of the numbers from </i> a <i> to </i> b, I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ If I wish to solve this problem:
+<i>find if there is an even number in an array</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>search</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ If I wish to solve this problem:
+<i>extract the Charmichael numbers from an array</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>extreme</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ If I wish to solve this problem:
+<i>count the number of letters in a string that contains letters and digits</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ If I wish to solve this problem:
+<i>count the number of Charmichael numbers in the range </i> a <i> to </i> b, I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ If I wish to solve this problem:
+<i>determine the sum of the Charmichael numbers in the range </i> a <i> to </i> b, I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ If I wish to solve this problem:
+<i>determine the sum of the numbers in an array</i>, I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ If I wish to solve this problem:
+<i>determine the sum of the even numbers in an array</i>, I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+ If I wish to solve this problem:
+<i>interleave two arrays, filling a third array</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>shuffle-counting</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-accumulate</i> pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filtered-shuffle</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>shuffle</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+ If I wish to solve this problem:
+<i>square every number in an array</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>filter</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>search</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the <i>map</i> pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the <i>accumulate</i> pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>chaining patterns</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 0 0 -->
+<!-- QA -->
+<ol type="1" start="23">
+<li>
+ If I wish to solve this problem:
+<i>sum the squares of every number in an array</i>,
+I should implement:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>map</i> followed by <i>accumulate</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>count</i> followed by <i>accumulate</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>filter</i> followed by <i>accumulate</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>map</i> followed by <i>search</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="24">
+<li>
+ If I wish to solve this problem:
+<i>find the largest even number in an array</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>map</i> followed by <i>accumulate</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>filter</i> followed by <i>extreme</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>map</i> followed by <i>search</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>filter</i> followed by <i>search</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="25">
+<li>
+ If I wish to solve this problem:
+<i>extract the even numbers from an array and then square each item
+in the resulting array</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>map</i> followed by <i>accumulate</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>filter</i> followed by <i>map</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>filter</i> followed by <i>extreme</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>map</i> followed by <i>filter</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="26">
+<li>
+ If I wish to solve this problem:
+<i>increment each number in an array and then extract the prime numbers</i>,
+I should implement the:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>filter</i> followed by <i>map</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>map</i> followed by <i>filter</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>filter</i> followed by <i>extreme</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>map</i> followed by <i>accumulate</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>verifying code</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 6 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 0 0 0 0 -->
+<!-- QA -->
+<ol type="1" start="27">
+<li>
+ Consider satisfying the following problem statement:
+<i>sum the numbers from</i> a <i> to </i> b (<i>inclusive</i>).
+What is wrong, if anything, with this attempt?
+
+<pre>
+    int sum(int a,int b)
+        {
+        int i,total = 0;
+        for (i = 0; i &lt; b+1; ++i)
+            total = total + i;
+        return total;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> should end at <i>b</i>, not <i>b</i>+1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>total</i> should start at <i>a</i>, not 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>i</i> should start at <i>a</i>, not 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="28">
+<li>
+ Consider satisfying the following problem statement:
+<i>sum the numbers from</i> a <i> to </i> b (<i>inclusive</i>).
+What is wrong, if anything, with this attempt?
+
+<pre>
+    int sum(int a,int b)
+        {
+        int i,total = b;
+        for (i = a; i &lt; b; ++i)
+            total = total + i;
+        return total;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> should start at 0, not <i>a</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> should end at <i>b</i>+1, not <i>b</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>total</i> should start at 0, not <i>b</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="29">
+<li>
+ Consider satisfying the following problem statement:
+<i>sum the numbers from</i> a <i> to </i> b (<i>inclusive</i>).
+
+<pre>
+    int sum(int a,int b)
+        {
+        int i,total = a;
+        for (i = a+1; i &lt; b+1; ++i)
+            total = total + i:
+        return total;
+        }
+</pre>
+
+What is wrong, if anything, with this attempt?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> should end at <i>b</i>, not <i>b</i>+1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> should start at <i>a</i>, not <i>a</i>+1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>total</i> should start at 0, not <i>a</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="30">
+<li>
+ Consider satisfying the following problem statement:
+<i>sum the numbers from</i> a <i> to </i> b (<i>inclusive</i>).
+What is wrong, if anything, with this attempt?
+
+<pre>
+    int sum(int a,int b)
+        {
+        int i,total = b;
+        for (i = a; i &lt; b; i = i + 0)
+            total = total + i;
+        return total;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> should start at <i>a</i>+1, not <i>a</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>The step should be 1, not 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> should end at <i>b</i>+1, not <i>b</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="31">
+<li>
+ Consider satisfying the following problem statement:
+<i>sum the numbers from</i> a <i> to </i> b (<i>inclusive</i>).
+What is wrong, if anything, with this attempt?
+
+<pre>
+    int sum(int a,int b)
+        {
+        int i,total = a;
+        for (i = a; i &lt; b+1; ++i)
+            total = total + i;
+        return total;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> should end at <i>b</i>, not <i>b</i>+1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> should start at 0, not <i>a</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>The total should start at 0, not <i>a</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="32">
+<li>
+ Consider satisfying the following problem statement:
+<i>sum the numbers from</i> a <i> to </i> b (<i>inclusive</i>).
+What is wrong, if anything, with this attempt?
+
+<pre>
+    int sum(int a,int b)
+        {
+        int i,total = 0;
+        for (i = a; i &lt; b+1; ++i)
+            total = total + i;
+        return total;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> should start at <i>a</i>+1, not <i>a</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>i</i> should end at <i>b</i>, not <i>b</i>+1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>total</i> should start at 1, not 0
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is correct
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 0 -->
+<!-- QA -->
+<ol type="1" start="33">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two equal length arrays, filling a third array</i>.
+What is wrong, if anything, with this attempt?
+Assume the third array has enough room.
+
+<pre>
+    void shuffle(int *a1,int *a2,int *a3,int size)
+        {
+        int i;
+        for (i = 0; i &lt; size; ++i)
+            {
+            a3[i*2] = a1[i];
+            a3[i*2+1] = a2[i];
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is legal, but does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function can fail with an error
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is legal, but <i>a3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is correct
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="34">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two unequal length arrays (a1 longer than a2),
+filling a third array</i>.
+What is wrong, if anything, with this attempt?
+Assume <i>sN</i> is the size of <i>aN</i> and that
+the third array has enough room.
+
+<pre>
+    void shuffle(int *a1,int s1,int *a2,int s2,int *a3)
+        {
+        int i;
+        for (i = 0; i &lt; s1; ++i)
+            {
+            a3[i*2] = a2[i];
+            a3[i*2+1] = a1[i];
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is legal, but does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is legal, but <i>a3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function can fail with an error
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="35">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two unequal length arrays (a2 longer than a1),
+filling a third array</i>.
+What is wrong, if anything, with this attempt?
+Assume <i>sN</i> is the size of <i>aN</i> and that
+the third array has enough room.
+
+<pre>
+    void shuffle(int *a1,int s1,int *a2,int s2,int *a3)
+        {
+        int i;
+        for (i = 0; i &lt; s1; ++i)
+            {
+            a3[i*2] = a1[i];
+            a3[i*2+1] = a2[i];
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is legal, but <i>a3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is legal, but does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function can fail with an error
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 3 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="36">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two unequal length arrays, filling a third array</i>.
+What is wrong, if anything, with this attempt?
+Assume <i>sN</i> is the size of <i>aN</i> and that
+the third array has enough room.
+
+<pre>
+    int shuffle(int *a1,int s1,int *a2,int s2,int *a3)
+        {
+        int i = 0;
+        while (i &lt; s1 &amp;&amp; i &lt; s2)
+            {
+            a3[2*i] = a1[i];
+            a3[2*i+1] = a2[i];
+            i += 1;
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function can fail with an error
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is legal, but does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is legal, but <i>a3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="37">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two equal length arrays, filling a third array</i>.
+What is wrong, if anything, with this attempt?
+Assume the third array has enough room.
+
+<pre>
+    void shuffle(int *a1,int *a2,int size,int *a3)
+        {
+        int i = 0,j = 0;
+        while (i &lt; size &amp;&amp; j &lt; size)
+            {
+            a3[i+j] = a1[i];
+            a3[i+j+1] = a2[i];
+            i += 1; j += 1;
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is legal, but <i>a3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is legal, but does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function can fail with an error
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function is correct
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="38">
+<li>
+ Consider satisfying the following problem statement:
+<i>shuffle two equal length arrays,
+filling a third array</i>.
+What is wrong, if anything, with this attempt?
+Assume the third array has enough room.
+
+<pre>
+    void shuffle(int *a1,int *a2,int *a3,int size)
+        {
+        int i = 0,j = 0;
+        while (i &lt; size || j &lt; size)
+            {
+            a3[i+j] = a1[i];
+            a3[i+j+1] = a2[j];
+            i += 1; j += 1;
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is legal, but does not shuffle
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is correct
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>The function can fail with an error
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> The function is legal, but <i>a3</i> will be missing values
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> Input-Output using Loops
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 6 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 1 0 0 0 -->
+<!-- QA -->
+<ol type="1" start="39">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+        FILE *fp = fopen(fileName,&quot;r&quot;); //assume open is valid
+        char *token = readToken(fp);
+        while (!feof(fp))
+            printf(&quot;%s\n&quot;,token);
+        fclose(fp);
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the file is opened at the wrong time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the code is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the token is only read once
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a file name is not given to <i>fopen</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="40">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+        int count = 0;
+        FILE *fp = fopen(fileName,&quot;r&quot;); //assume open is valid
+        char *token = readToken(fp);
+        while (!feof(fp))
+            {
+            token = readToken(fp);
+            printf(&quot;%s\n&quot;,token);
+            }
+        fclose(fp);
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the code is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>a token resulting from an unsuccessful read is printed
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the file pointer is closed at the wrong time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a literal string must be given to <i>fopen</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="41">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+        char *token;
+        int count = 0;
+        FILE *fp = fopen(fileName,&quot;r&quot;); //assume open is valid
+        while (!feof(fp))
+            {
+            printf(&quot;%s\n&quot;,token);
+            token = readToken(fp);
+            }
+        fclose(fp);
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the code is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the file pointer is closed at the wrong time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>there is no initial read to set token
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a literal string must be given to <i>fopen</i>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="42">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+        int count = 0;
+        FILE *fp = fopen(fileName,&quot;r&quot;); //assume open is valid
+        char *token = readToken(fp);
+        while (!feof(fp))
+            token = readToken(fp);
+        fclose(fp);
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the tokens are read but not processed in any way
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the file pointer is closed at the wrong time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the code is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> a literal string must be given to the <i>fopen</i> function
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="43">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+        int count = 0;
+        FILE *fp = fopen(fileName,&quot;r&quot;); //assume open is valid
+        char *token = readToken(fp);
+        while (!feof(fp))
+            {
+            printf(&quot;%s\n&quot;,token);
+            token = readToken(fp);
+            fclose(fp);
+            }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the tokens are printed before the read
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the code is correct
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>the file pointer is closed at the wrong time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> there should be no call to readToken before the loop
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="44">
+<li>
+ Which criticism of the following scanner code is valid?
+
+<pre>
+        int count = 0;
+        FILE *fp = fopen(fileName,&quot;r&quot;); //assume open is valid
+        char *token = readToken(fp);
+        while (!feof(fp))
+            {
+            printf(&quot;%s\n&quot;,token);
+            token = readToken(fp);
+            }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the token should be compared to the empty string
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> there should be no call to readToken before the loop
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> tokens are not printable
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the file pointer is not closed
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="45">
+<li>
+ <b>T</b> or <b>F</b>:
+This code correctly counts the number of tokens in a file:
+
+<pre>
+        int count = 0;
+        FILE *fp = fopen(fileName,&quot;r&quot;); //assume open is valid
+        count = 1
+        char *token = readToken(fp);
+        while (!feof(fp))
+            {
+            count = count + 1
+            token = readToken(fp);
+            }
+        fclose(fp);
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="46">
+<li>
+ <b>T</b> or <b>F</b>:
+This code correctly counts the number of tokens in a file:
+
+<pre>
+        int count = 0;
+        FILE *fp = fopen(fileName,&quot;r&quot;); //assume open is valid
+        char *token = readToken(fp);
+        while (!feof(fp))
+            {
+            count = count + 1
+            token = readToken(fp);
+            }
+        fclose(fp);
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="47">
+<li>
+ <b>T</b> or <b>F</b>:
+This code correctly counts the number of tokens in a file:
+
+<pre>
+        int count = 0;
+        FILE *fp = fopen(fileName,&quot;r&quot;); //assume open is valid
+        char *token = readToken(fp);
+        while (!feof(fp))
+            {
+            count = count + 1;
+            token = readline(fp);
+            }
+        fclose(fp);
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="48">
+<li>
+ <b>T</b> or <b>F</b>:
+This code correctly counts the number of lines in a file:
+
+<pre>
+        int count = 0;
+        FILE *fp = fopen(fileName,&quot;r&quot;); //assume open is valid
+        char *token = readLine(fp);
+        while (!feof(fp))
+            {
+            count = count + 1;
+            token = readLine(fp);
+            }
+        fclose(fp);
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>loop conversions</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 7 questions in this selection -->
+<!-- 4 items needed -->
+<!-- selection array: 1 1 1 0 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="49">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0;                      for (i = 0; i &lt;= x + 1; ++i)
+    while (i &lt;= x + 1)              {
+        {                           printf(&quot;%d\n&quot;,i);
+        printf(&quot;%d\n&quot;,i);           i = i + 1;
+        i = i + 1;                  }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="50">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0;                      for (i = 0; i &lt; x + 2; i += 2)
+    while (i &lt;= x + 1)              {
+        {                           printf(&quot;%d\n&quot;,i);
+        printf(&quot;%d\n&quot;,i);           }
+        i = i + 2;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="51">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0;                      for (i = 0; i &lt; x; i = i + 2)
+    while (i &lt;= x + 1)              {
+        {                           printf(&quot;%d\n&quot;,i);
+        printf(&quot;%d\n&quot;,i);           }
+        i = i + 2;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="52">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0;                      for (i = 0; i &lt;= x + 2; )
+    while (i &lt;= x + 1)              {
+        {                           printf(&quot;%d\n&quot;,i);
+        printf(&quot;%d\n&quot;,i);           i += 2;
+        i = i + 2;                  }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="53">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0;                      for (i = 0; i &lt;= x + 1; ++i)
+    while (i &lt; x + 1)               {
+        {                           printf(&quot;%d\n&quot;,i);
+        printf(&quot;%d\n&quot;,i);           }
+        i = i + 1;
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="54">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0;                      for (i = 1; i &lt; x; i = i + 1)
+    while (i &lt; x - 1)               {
+        {                           printf(&quot;%d\n&quot;,i);
+        ++i;                        }
+        printf(&quot;%d\n&quot;,i);
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="55">
+<li>
+ <b>T</b> or <b>F</b>:
+These two loops are equivalent, in terms of output.
+Assume <i>x</i> is a small positive integer.
+
+<pre>
+    i = 0;                      for (i = 0; i &lt; x; i += 1)
+    while (i &lt; x)                   {
+        {                           printf(&quot;%d\n&quot;,i);
+        printf(&quot;%d\n&quot;,i);           i = i - .1;
+        i = i + 1;                  }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

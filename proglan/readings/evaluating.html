@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>evaluating</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Programming Languages</span>
+<br/>
+<br/>
+Evaluation of Parse Trees
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="evaluating.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Evaluation
+<br/>
+</h2><!-- section ENDED -->
+
+Once you build parse trees, it's an easy matter to evaluate them. The key
+is to always evaluate a parser tree in the context of an environment.
+The environment
+is necessary to determine the value of variable references as well as to update
+the values of variables.
+<br/>
+<!-- section -->
+<h2> The top-level evaluation function
+<br/>
+</h2><!-- section ENDED -->
+
+The form of the main evaluating function follows that
+of a pretty printer; a case exists for every kind of parse tree:
+<br/>
+
+<pre>
+    function eval(tree,env)
+        {
+        switch (tree.type)
+            {
+            //self evaluating
+            case NUMBER: return tree;
+            case STRING: return tree;
+            //find value of variables in the environment
+            case VARIABLE: return lookup(tree,env);
+            //parenthesized expression
+            case OPAREN: return eval(tree.right,env);
+            //operators (both sides evaluated)
+            case PLUS:
+            case MINUS:
+            case TIMES:
+            case DIVIDES:
+            ...
+            case GREATER_THAN: return evalSimpleOp(tree,env);
+            //AND and OR short-circuit
+            case AND:
+            case OR: return evalShortCircuitOp(tree,env);
+            //dot operator evals lhs, rhs a variable
+            case DOT: return evalDot(tree,env);
+            //assign operator evals rhs for sure
+            //    lhs is a variable or a dot operation
+            case ASSIGN: return evalAssign(tree,env);
+            //variable and function definitions
+            case VAR_DEF: return evalVarDef(tree,env);
+            case FUNC_DEF: return evalFuncDef(tree,env);
+            //imperative constructs
+            case IF: return evalIf(tree,env);
+            case WHILE: return evalWhile(tree,env);
+            //function calls
+            case FUNC_CALL: return evalFuncCall(tree,env);
+            //program and function body are parsed as blocks
+            case BLOCK: return evalBlock(tree,env);
+            default: fatal(&quot;bad expression!&quot;);
+            }
+        }
+</pre>
+
+Note that the main evaluation function is primarily a dispatch function.
+It could be re-written in an data-directed fashion:
+<br/>
+
+<pre>
+    function eval(tree,env)
+        {
+        var f = getEvalFunction(tree.type);
+        if (null?(f))
+            throw(EXCEPTION,&quot;no evaluation function for type &quot; + tree.type);
+        else
+            return f(tree,env);
+        }
+</pre>
+
+<!-- section -->
+<h2> Specific evaluation functions
+<br/>
+</h2><!-- section ENDED -->
+
+The most conceptually difficult sub-evaluation routines are
+<i>evalFuncDef</i> and <i>evalFuncCall</i>. However, the code itself is almost
+trivial. Consider the process of evaluating function definitions. All that
+needs to be done is create a function object (or <i>closure</i>) and
+insert it into the environment
+under the function name, as in:
+<br/>
+
+<pre>
+    function evalFuncDef(t, env)
+        {
+        var closure =
+            cons(CLOSURE,env,
+                cons(JOIN,getFuncDefParams(t),
+                    cons(JOIN,getFuncDefBody(t),
+                        null)));
+        EnvInsert(env,getFuncDefName(t),closure);
+        }
+</pre>
+
+One can simplify this function by simply consing on the definition
+environment to the function definition parse tree, rather than
+decomposing the tree:
+<br/>
+
+<pre>
+    function evalFuncDef(t, env)
+        {
+        var closure = cons(CLOSURE,env,t);
+        EnvInsert(env,getFuncDefName(t),closure);
+        }
+</pre>
+
+The function call evaluator is only slightly more complicated:
+<br/>
+
+<pre>
+    function evalFuncCall(t,env)
+        {
+        var closure = eval(getFuncCallName(t),env);
+        var args = getFuncCallArgs(t);
+        var params = getClosureParams(closure);
+        var body = getClosureBody(closure);
+        var senv = getClosureEnvironment(closure);
+        var eargs = evalArgs(args,env);
+        var xenv = EnvExtend(senv,params,eargs);
+        
+        return eval(body,xenv);
+        }
+</pre>
+
+The closure is found by looking up the name of the function being called
+in the environment. The function call arguments are retrieved as well
+from the parse tree. Next the formal parameters, the function body,
+and the static environment are retrieved from the closure. Next the
+function call arguments are evaluated and, with the formal parameters,
+are used to extend the static environment. Finally, the body is evaluated
+under the newly extended environment.
+<br/>
+<br/>
+Assuming the body is a block and that a block parse tree is simply a list of <i>if</i>s,
+<i>while</i>s, and/or expressions and that the "value" of a block is the value
+of the last statement executed, then <i>evalBlock</i> can be written as:
+<br/>
+
+<pre>
+    function evalBlock(t,env)
+        {
+        var result;
+        while (t != null)
+            {
+            result = eval(t . left, env);
+            t = t . right;
+            }
+        return result;
+        }
+</pre>
+
+Evaluating binary expressions is straightforward, if a bit tedious. First,
+<i>evalSimpleOp</i> dispatches to the proper operator evaluator:
+<br/>
+
+<pre>
+    function evalSimpleOp(t,env)
+        {
+        if (t.type == PLUS) return evalPlus(t,env);
+        if (t.type == MINUS) return evalMinus(t,env);
+        ...
+        }
+</pre>
+
+The evaluator for plus has to examine the types of the left and right
+hand sides to determine the kind of lexeme it should produce:
+<br/>
+
+<pre>
+    function evalPlus(t,env)
+        {
+        //eval the left and the right hand sides
+        var left = eval(t.left,env);
+        var right = eval(t.right,env);
+        if (left.type == INTEGER &amp;&amp; right.type == INTEGER)
+            return newIntegerLexeme(left.ival + right.ival);
+        else if (left.type == INTEGER &amp;&amp; right.type == REAL)
+            return newRealLexeme(left.ival + right.rval);
+        ...
+        }
+</pre>
+
+Simple assignment is like any other operator, except the lhs is not evaluated:
+<br/>
+
+<pre>
+    function evalAssign(t,env)
+        {
+        //eval the right hand side
+        var value = eval(t.right,env);
+        EnvUpdate(env,t.left,value);
+        return value;
+        }
+</pre>
+
+However, if objects are provided for in the language, the left-hand side
+needs to be examined to see if it is a dot operator, as in:
+<br/>
+
+<pre>
+    a . x = 5;
+</pre>
+
+Here is an assignment evaluator that does just that:
+<br/>
+
+<pre>
+    function evalAssign(t,env)
+        {
+        //eval the right hand side
+        var value = eval(t.right,env);
+        if (t.left.type == DOT)
+            {
+            var obj = eval(t.left.left);
+            EnvUpdate(obj,t.left.right,right)
+            }
+        else
+            {
+            EnvUpdate(t.left,value,env);
+            }
+        return value;
+        }
+</pre>
+
+Note, that the equivalence between objects and environments makes this
+modification particularly easy.
+<br/>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

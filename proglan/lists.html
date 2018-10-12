@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>lists</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Notes on Lists
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="lists.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+
+A useful list function
+is one that concatenates two lists into a single list. Often, this
+function is called <i>append</i>.
+Consider these recurrence relations for <i>append</i>:
+<br/>
+
+<pre>
+    append list a to list b:           place the head of list a onto the
+                                       append of the tail of list a
+                                       and the list b
+
+    append the empty list to list  b:  list b
+</pre>
+
+These relations can be directly translated into Scheme:
+<br/>
+
+<pre>
+    (define (append a b)
+        (if (not a)
+            b
+            (cons (car a) (append (cdr a) b))
+            )
+        )
+</pre>
+
+Once append is in place, we can use it to write reverse:
+<br/>
+
+<pre>
+    (define (reverse a)
+        (if a
+            (append (reverse (cdr a)) (list (car a)))
+            nil
+            )
+        )
+</pre>
+
+Note that the variable <i>nil</i> is often used to represent the empty cons
+object/list. Surprisingly, the iterative form of reverse is simpler
+(in that it only uses <i>cons</i>).
+<br/>
+
+<pre>
+    (define (reverse a)
+        (define (_reverse supply result)
+            (if (supply)
+                (_reverse (cdr supply) (cons (car supply) result)))
+                result
+                )
+            )
+        (_reverse a ())
+        )
+</pre>
+
+Why can we get away with using <i>cons</i> in this case?
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

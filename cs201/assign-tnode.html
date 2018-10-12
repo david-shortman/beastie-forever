@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign-tnode</title>
+<link rel=stylesheet
+    href="201.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+A Simple Binary Search Tree Node Class
+<br/>
+<span class="smaller">Version 1a</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller"><a href="assign-tnode.pdf">Printable Version</a></span></span>
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- subsection -->
+<h3> The <i>TNODE</i> module
+<br/>
+</h3><!-- subsection ENDED -->
+
+This module defines a simple search tree node that can be adapted
+for more sophisticated uses (say, a self-balancing tree) with
+a minimum of code rewrites.
+<br/>
+<br/>
+Here is a conforming <i>tnode.h</i> file:
+<br/>
+
+<pre>
+    #ifndef __TNODE_INCLUDED__
+    #define __TNODE_INCLUDED__
+
+    #include &lt;stdio.h&gt;
+
+    typedef struct tnode TNODE;
+
+    extern TNODE *newTNODE(void *v,TNODE *l,TNODE *r,TNODE *p);
+    extern void   setTNODEdisplay(TNODE *n,void (*d)(void *value,FILE *fp));
+    extern void   setTNODEfree(TNODE *n,void (*f)(void *value));
+    extern void  *getTNODEvalue(TNODE *n);
+    extern void   setTNODEvalue(TNODE *n,void *replacement);
+    extern TNODE *getTNODEleft(TNODE *n);
+    extern void   setTNODEleft(TNODE *n,TNODE *replacement);
+    extern TNODE *getTNODEright(TNODE *n);
+    extern void   setTNODEright(TNODE *n,TNODE *replacement);
+    extern TNODE *getTNODEparent(TNODE *n);
+    extern void   setTNODEparent(TNODE *n,TNODE *replacement);
+    extern void   displayTNODE(TNODE *n,FILE *fp);
+    extern int    debugTNODE(TNODE *n,int level);
+    extern void   freeTNODE(TNODE *n);
+
+    #endif
+</pre>
+
+The TNODE structures and methods should all be placed in <i>tnode.c</i>.
+<br/>
+<br/>
+Here are some of the behaviors your methods should have. This listing
+is not exhaustive; you are expected, as a computer scientist, to
+complete the implementation in the best possible and most logical manner.
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newTNODE</i> -
+The constructor is passed a value and three <i>TNODE</i>
+pointers: the left, right, and parent pointers, respectively.
+<br/>
+</li>
+
+<li>
+
+ <i>displayTNODE</i> -
+If the display method is not set, the address of the value is printed with
+a preceding ampersand.
+<br/>
+</li>
+
+<li>
+
+ <i>debugTNODE</i> -
+If the debug level is set to greater than zero,
+the display
+method prints an ampersand and then the address of the node immediately
+after displaying the value (with no intervening or following spaces.
+</li>
+
+</ul>
+
+
+The only local includes the <i>TNODE</i> module should have are <i>tnode.h</i>.
+<br/>
+<!-- subsection -->
+<h3> Assertions
+<br/>
+</h3><!-- subsection ENDED -->
+
+Include the following assertions in your methods:
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newTNODE</i> -
+The memory allocated shall not be zero.
+</li>
+
+</ul>
+
+
+<!-- subsection -->
+<h3> Testing your TNODE class
+<br/>
+</h3><!-- subsection ENDED -->
+
+Modify the testing program found in the
+<a href="http://beastie.cs.ua.edu/cs201/assign-da.html">dynamic-array class description</a>
+to work with a binary search tree node.
+<br/>
+<!-- subsection -->
+<h3> Change log
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<code>     1a    </code> changed return type of setTNODEdisplay/setTNODEfree to void
+<br/>
+
+<code>           </code> changed return type of debugTNODE to int
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

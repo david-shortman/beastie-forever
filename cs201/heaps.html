@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>heaps</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS201 Data Structures and Algorithms</span>
+<br/>
+<br/>
+Heaps
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="heaps.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Introduction
+<br/>
+</h2><!-- section ENDED -->
+
+Some heap facts:
+<br/>
+
+<ul>
+
+<li>
+
+ A heap is a <i>complete</i> binary tree.
+
+
+<br/>
+<div class="ldraw">
+<image src="heaps-img-1-0.png">
+</div>
+
+</li>
+
+<li>
+
+ For a <i>max</i>-heap,
+a parent's value is always <i>greater</i> than or equal to the
+values of its children.
+</li>
+
+<li>
+
+ For a <i>min</i>-heap,
+a parent's value is always <i>less</i> than or equal to the
+values of its children.
+</li>
+
+<li>
+
+ There is no relationship between the values of sibling nodes.
+</li>
+
+</ul>
+
+
+We will assume a max-heap unless otherwise stated.
+<br/>
+<br/>
+Problems:
+
+<ul>
+
+<li>
+
+ 7.1-1
+</li>
+
+<li>
+
+ 7.1-2
+</li>
+
+<li>
+
+ 7.1-4 (all elements distinct)
+</li>
+
+<li>
+
+ 7.1-5
+</li>
+
+<li>
+
+ 7.1-6
+</li>
+
+</ul>
+
+
+<!-- section -->
+<h2> Correcting point errors in a heap
+<br/>
+</h2><!-- section ENDED -->
+
+Often in the course of manipulating a heap, heap ordering is disrupted.
+Typically, these are <i>point errors</i>. That is to say, only one value
+in the heap is incorrect; absent that error, the heap has the correct
+ordering.
+<br/>
+<br/>
+There are two types of point errors that arise during some heap
+operations.
+One is that a parent value is modified and turns out to be too small.
+Since it is a point error, we know that the modified value needs to
+move lower down in the heap.
+The other is that a node gains a child that has a value
+that is larger than it should be. In this case, the child value
+needs to move up.
+<br/>
+<br/>
+To remedy the first case,
+the <i>heapify</i> or <i>pushDown</i> operation for max-heaps pushes a small value down the heap
+until it resides at its proper level
+(<i>mutatis mutandis</i> for min-heaps).
+The sub-heap rooted at the original node will be a heap after this operation
+completes:
+<br/>
+
+<pre>
+    function heapify(i) //i is the ith node
+        {
+        var next = i;
+        if (hasLeft(i) &amp;&amp; value(left(i)) &gt; value(next))
+            next = left(i);
+        if (hasRight(i) &amp;&amp; value(right(i)) &gt; value(next))
+            next = right(i);
+        if (next != i)
+            {
+            swapValues(i,next);
+            heapify(next);
+            }
+        }
+</pre>
+
+To correct the second case,
+the <i>fixHeap</i> or <i>bubbleUp</i> operation
+for max-heaps moves a large value up the heap
+until it resides at its proper level
+(<i>mutatis mutandis</i> for min-heaps).
+<br/>
+
+<pre>
+    function fixHeap(i)
+        {
+        if (hasParent(i) &amp;&amp; value(i) &gt; value(parent(i)))
+            {
+            swapValues(i,parent(i));
+            fixHeap(parent(i));
+            }
+        }
+</pre>
+
+Problems:
+
+<ul>
+
+<li>
+
+ 7.2-1
+</li>
+
+<li>
+
+ 7.2-3
+</li>
+
+<li>
+
+ 7.2-4
+</li>
+
+</ul>
+
+
+<!-- section -->
+<h2> Constructing heaps
+<br/>
+</h2><!-- section ENDED -->
+
+The <i>buildHeap</i> operation is:
+
+<ul>
+
+<li>
+
+ a routine which turns an unordered complete tree into a max-heap
+</li>
+
+<li>
+
+ works from the bottom up
+</li>
+
+</ul>
+
+
+
+<pre>
+    function buildHeap(h)
+        {
+        for each node n in h from rightmost leaf to root by level
+            heapify(n)
+        }
+</pre>
+
+Some questions:
+
+<ul>
+
+<li>
+
+ How would you traverse an array-based heap?
+</li>
+
+<li>
+
+ How would you traverse a tree-based heap?
+</li>
+
+<li>
+
+ Can you ignore the leaves?
+</li>
+
+<li>
+
+ The obvious running time for <i>buildHeap</i> is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>O</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mi>log</mi>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>. Is this bound tight?
+</li>
+
+</ul>
+
+
+Problems:
+
+<ul>
+
+<li>
+
+ 7.3-1
+</li>
+
+<li>
+
+ 7.3-3
+</li>
+
+</ul>
+
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

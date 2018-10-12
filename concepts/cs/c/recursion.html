@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Concept Inventory</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Computer Science Fundamentals
+<br/>
+<span class="smaller">(C Language Version)</span>
+<br/>
+<br/>
+<span class="bigger">
+Recursion and Recursive Loops
+</span>
+<br/>
+<br/>
+
+</center>
+</div>
+
+
+Note: the questions herein use the terminology of
+<a href="http://troll.cs.ua.edu/ACP-C/index_23.html"> Chapter 22: Recursion Patterns</a>
+of
+<i>The Art and Craft of Programming (C Edition)</i>.
+<br/>
+<br/>
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>verifying code</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 6 questions in this selection -->
+<!-- 4 items needed -->
+<!-- selection array: 1 0 0 1 1 1 -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ <b>T</b> or <b>F</b>:
+This function correctly sums the
+the numbers from <i>a</i> to <i>b</i> (inclusive), <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>a</mi>	<mo>&le;</mo>	<mi>b</mi></mrow></math>.
+
+<pre>
+    int sum(int a,int b)
+        {
+        if (a == b)
+            return 0;
+        else
+            return a + sum(a+1,b);
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ <b>T</b> or <b>F</b>:
+This function correctly sums the
+the numbers from <i>a</i> to <i>b</i> (inclusive), <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>a</mi>	<mo>&le;</mo>	<mi>b</mi></mrow></math>.
+
+<pre>
+    int sum(int a,int b)
+        {
+        if (a == b)
+            return a;
+        else
+            return a + sum(a+1,b);
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ <b>T</b> or <b>F</b>:
+This function correctly sums the
+the numbers from <i>a</i> to <i>b</i> (inclusive), <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>a</mi>	<mo>&le;</mo>	<mi>b</mi></mrow></math>.
+
+<pre>
+    int sum(int a,int b)
+        {
+        if (a == b)
+            return b;
+        else
+            return b + sum(a+1,b);
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ <b>T</b> or <b>F</b>:
+This function correctly sums the
+the numbers from <i>a</i> to <i>b</i> (inclusive), <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>a</mi>	<mo>&le;</mo>	<mi>b</mi></mrow></math>.
+
+<pre>
+    int sum(int a,int b)
+        {
+        if (a == b)
+            return 1;
+        else
+            return a + sum(a+1,b);
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ <b>T</b> or <b>F</b>:
+This function correctly sums the
+the numbers from <i>a</i> to <i>b</i> (inclusive), <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>a</mi>	<mo>&le;</mo>	<mi>b</mi></mrow></math>.
+
+<pre>
+    int sum(int a,int b)
+        {
+        if (a == b)
+            return 0;
+        else
+            return 1 + a + sum(a+1,b);
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ <b>T</b> or <b>F</b>:
+This function correctly sums the
+the numbers from <i>a</i> to <i>b</i> (inclusive), <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>a</mi>	<mo>&le;</mo>	<mi>b</mi></mrow></math>.
+
+<pre>
+    int sum(int a,int b)
+        {
+        if (a &gt; b)
+            return 0;
+        else
+            return a + sum(a+1,b);
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 1 1 0 0 -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ <b>T</b> or <b>F</b>:
+This function correctly sums the
+the numbers from <i>a</i> to <i>b</i> (inclusive), <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>a</mi>	<mo>&le;</mo>	<mi>b</mi></mrow></math>.
+
+<pre>
+    int sum(int a,int b)
+        {
+        if (a == b)
+            return a;
+        else
+            return b + sum(a,b-1);
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ <b>T</b> or <b>F</b>:
+This function correctly sums the
+the numbers from <i>a</i> to <i>b</i> (inclusive), <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>a</mi>	<mo>&le;</mo>	<mi>b</mi></mrow></math>.
+
+<pre>
+    int sum(int a,int b)
+        {
+        if (a == b)
+            return a;
+        else
+            return a + sum(a,b-1);
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ <b>T</b> or <b>F</b>:
+This function correctly sums the
+the numbers from <i>a</i> to <i>b</i> (inclusive), <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>a</mi>	<mo>&le;</mo>	<mi>b</mi></mrow></math>.
+
+<pre>
+    int sum(int a,int b)
+        {
+        if (a &gt; b)
+            return 0;
+        else
+            return b + sum(a,b-1);
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ <b>T</b> or <b>F</b>:
+This function correctly sums the
+the numbers from <i>a</i> to <i>b</i> (inclusive), <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>a</mi>	<mo>&le;</mo>	<mi>b</mi></mrow></math>.
+
+<pre>
+    int sum(int a,int b)
+        {
+        if (a &gt; b)
+            return b;
+        else
+            return b + sum(a,b-1);
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 8 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 0 1 0 0 0 0 1 0 -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ Consider the problem statement:
+shuffle two lists,
+creating a third list.
+Does <i>shuffle</i>, as defined below, work correctly?
+Assume the two lists to be shuffled have lengths greater than one.
+
+<pre>
+    Node *shuffle(Node *a,Node *b)
+        {
+        if (a == 0)
+            return 0;
+        else
+            {
+            Node *rest = shuffle(b,tail(a));
+            return join(head(a),rest);
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> never, but won't crash
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> always
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>sometimes, but won't crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> never and may crash
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> sometimes, but may crash otherwise
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ Consider the problem statement:
+shuffle two lists,
+creating a third list.
+Does <i>shuffle</i>, as defined below, work correctly?
+Assume the two lists to be shuffled have lengths greater than one.
+
+<pre>
+    Node *shuffle(Node *a,Node *b)
+        {
+        if (a == 0)
+            return b;
+        else
+            {
+            Node *rest = shuffle(b,tail(a));
+            return join(head(a),rest);
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>always
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> never and may crash
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> never, but won't crash
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> sometimes, but may crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> sometimes, but won't crash otherwise
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ Consider the problem statement:
+shuffle two lists,
+creating a third list.
+Does <i>shuffle</i>, as defined below, work correctly?
+Assume the two lists to be shuffled have lengths greater than one.
+
+<pre>
+    Node *shuffle(Node *a,Node *b)
+        {
+        if (a == 0)
+            return b;
+        else
+            {
+            Node *rest = shuffle(tail(b),tail(a));
+            return join(head(a),rest);
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> sometimes, but may crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> always
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> never, but won't crash
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> sometimes, but won't crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>never and may crash
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ Consider the problem statement:
+shuffle two lists,
+creating a third list.
+Does <i>shuffle</i>, as defined below, work correctly?
+Assume the two lists to be shuffled have lengths greater than one.
+
+<pre>
+    Node *shuffle(Node *a,Node *b)
+        {
+        if (a == 0)
+            return b;
+        else
+            {
+            Node *rest = shuffle(tail(a),tail(b));
+            return join(head(a),join(head(b),rest));
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>sometimes, but may crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> sometimes, but won't crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> never and may crash
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> always
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> never, but won't crash
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ Consider the problem statement:
+shuffle two lists,
+creating a third list.
+Does <i>shuffle</i>, as defined below, work correctly?
+Assume the two lists to be shuffled have lengths greater than one.
+
+<pre>
+    Node *shuffle(Node *a,Node *b)
+        {
+        if (a == 0)
+            return b;
+        else if (b == 0)
+            return a;
+        else
+            {
+            Node *rest = shuffle(tail(a),tail(b));
+            return join(head(a),join(head(b),rest));
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> sometimes, but may crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>always
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> never and may crash
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> sometimes, but won't crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> never, but won't crash
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ Consider the problem statement:
+shuffle two lists,
+creating a third list.
+Does <i>shuffle</i>, as defined below, work correctly?
+Assume the two lists to be shuffled have lengths greater than one.
+
+<pre>
+    Node *shuffle(Node *a,Node *b)
+        {
+        if (a == 0 || b == 0)
+            return 0;
+        else
+            {
+            Node *rest = shuffle(tail(a),tail(b));
+            return join(head(a),join(head(b),rest));
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>sometimes, but won't crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> never, but won't crash
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> sometimes, but may crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> always
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> never and may crash
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ Consider the problem statement:
+shuffle two lists,
+creating a third list.
+Does <i>shuffle</i>, as defined below, work correctly?
+Assume the two lists to be shuffled have lengths greater than one.
+
+<pre>
+    Node *shuffle(Node *a,Node *b)
+        {
+        if (b == 0)
+            return a;
+        else
+            {
+            Node *rest = shuffle(b,tail(a));
+            return join(head(a),rest);
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> never, but won't crash
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>sometimes, but may crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> never and may crash
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> sometimes, but won't crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> always
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ Consider the problem statement:
+shuffle two lists,
+creating a third list.
+Does <i>shuffle</i>, as defined below, work correctly?
+Assume the two lists to be shuffled have lengths greater than one.
+
+<pre>
+    Node *shuffle(Node *a,Node *b)
+        {
+        if (a == 0)
+            return b;
+        else if (b == 0)
+            return a;
+        else
+            {
+            Node *rest = shuffle(tail(b),tail(a));
+            return join(head(a),rest);
+            }
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>never, but won't crash
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> sometimes, but may crash otherwise
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> always
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> never and may crash
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> sometimes, but won't crash otherwise
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>recognizing patterns</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 1 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ What pattern does the following function implement?
+
+<pre>
+    Node *f(Node *a)
+        {
+        if (a == 0)
+            return 0;
+        else if (isX(head(a)))
+            return join(head(a),f(tail(a)));
+        else
+            return f(tail(a));
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the counting pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the filter pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the search pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the extreme pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ What pattern does the following function implement?
+
+<pre>
+    Node *f(Node *a)
+        {
+        if (a == 0)
+            return 1;
+        else if (isX(head(a)))
+            return head(a) * f(tail(a));
+        else
+            return f(tail(a));
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the extreme pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>the filtered-accumulate pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the counting pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the filter pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+ What pattern does the following function implement?
+
+<pre>
+    Node *f(Node *a)
+        {
+        return g(head(a),tail(a));
+        }
+    Node *g(Node *e,Node *b)
+        {
+        if (b == 0)
+            return e;
+        else if (isLT(head(b),e))
+            return g(head(b),tail(b));
+        else
+            return g(e,tail(b));
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the accumulate pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the filtered-accumulate pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the filter pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the extreme pattern
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+ What pattern does the following function implement?
+
+<pre>
+    Node *f(Node *a,Node *b)
+        {
+        if (b == 0)
+            return 0;
+        else if (isSame(head(b),a))
+            return 1;
+        else
+            return f(a,tail(b));
+        }
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>the search pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the extreme pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the filtered-counting pattern
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the filter pattern
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>understanding recurrences</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 9 questions in this selection -->
+<!-- 3 items needed -->
+<!-- selection array: 0 0 0 1 0 1 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="23">
+<li>
+ Consider this recurrence:
+
+<pre>
+    f(a,b) is 1 if b is zero
+    f(a,b) is a * f(a,b - 1) otherwise
+</pre>
+
+The recurrence is implemented with:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else if-else
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>one function with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else if-else
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="24">
+<li>
+ Consider this recurrence:
+
+<pre>
+    f(n) is 0 if n is 0
+    f(n) is 1 if n is 1
+    f(n) is f(n - 1) + f(n - 2) otherwise
+</pre>
+
+The recurrence is implemented with:
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else if-else
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>one function with an if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="25">
+<li>
+ Consider this recurrence:
+
+<pre>
+    g(a,b,n) is a if n is 0
+    g(a,b,n) is g(b,a + b,n - 1) otherwise
+</pre>
+
+The recurrence is implemented with:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else if-else
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else if-else
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="26">
+<li>
+ Consider this recurrence:
+
+<pre>
+    f(t,a,b) is t if b is zero
+    f(t,a,b) is f(t,a * a,b / 2) if b is even
+    f(t,a,b) is f(t * a,a,b - 1) otherwise
+</pre>
+
+The recurrence is implemented with:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else if-else
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>one function with an if-else if-else
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="27">
+<li>
+ Consider this recurrence:
+
+<pre>
+    f(a,b) is 1 if b is zero
+    f(a,b) is f(a * a,b / 2) if b is even
+    f(a,b) is a * f(a,b - 1) otherwise
+</pre>
+
+The recurrence is implemented with:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>one function with an if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else if-else
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="28">
+<li>
+ Consider this recurrence:
+
+<pre>
+    g(t,a,b) is t if b is zero
+    g(t,a,b) is g(t,a * a,b / 2) if b is even
+    g(t,a,b) is g(t * a,a,b - 1) otherwise
+</pre>
+
+The recurrence is implemented with:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>one function with an if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else if-else
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="29">
+<li>
+ Consider this recurrence:
+
+<pre>
+    g(t,a,b) is b if a is the empty list
+    g(t,a,b) is a if b is the empty list
+    g(t,a,b) is head(a) joined to g(1,tail(a),b) if t is 0
+    g(t,a,b) is head(b) joined to g(0,a,tail(b)) otherwise
+</pre>
+
+The recurrence is implemented with:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else if-else
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>one function with an if-else if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="30">
+<li>
+ Consider this recurrence:
+
+<pre>
+    f(t,a,b) is t if b is zero
+    f(t,a,b) is f(a * t,a,b - 1) otherwise
+</pre>
+
+The recurrence is implemented with:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else if-else
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>one function with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="31">
+<li>
+ Consider this recurrence:
+
+<pre>
+    f(a) is g(head(a),tail(a))
+    g(b,c) is b if c is the empty list
+    g(b,c) is g(head(c),tail(c)) if isLT is GT(head(c),b)
+    g(b,c) is g(b,tail(c)) otherwise
+</pre>
+
+The recurrence is implemented with:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> two functions, one with an if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> one function with an if-else if-else
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>two functions, one with an if-else if-else
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>implementing recurrences</i>
+<br/>
+</h2><!-- QA_SEQUENCE -->
+<!-- selection -->
+
+<!-- 7 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 0 0 1 1 0 0 0 -->
+<!-- QA -->
+<ol type="1" start="32">
+<li>
+ (2 pts) Implement this recurrence as a C function. The return type is 
+<code>int</code>:
+
+<pre>
+    f(a,b) is 1 if b is zero
+    f(a,b) is a * f(a,b - 1) otherwise
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="33">
+<li>
+ (2 pts) Implement this recurrence as a C function. The return type is 
+<code>int</code>:
+
+<pre>
+    f(t,a,b) is t if b is zero
+    f(t,a,b) is f(a * t,a,b - 1) otherwise
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="34">
+<li>
+ (2 pts) Implement this recurrence as a C function. The return type is 
+<code>int</code>:
+
+<pre>
+    f(n) is 0 if n is 0
+    f(n) is 1 if n is 1
+    f(n) is f(n - 1) + f(n - 2) otherwise
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="35">
+<li>
+ (2 pts) Implement this recurrence as a C function. The return type is 
+<code>int</code>:
+
+<pre>
+    g(a,b,n) is a if n is 0
+    g(a,b,n) is g(b,a + b,n - 1) otherwise
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="36">
+<li>
+ (2 pts) Implement this recurrence as a C function. The return type is 
+<code>int</code>:
+
+<pre>
+    f(a,b) is 1 if b is zero
+    f(a,b) is f(a * a,b / 2) if b is even
+    f(a,b) is a * f(a,b - 1) otherwise
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="37">
+<li>
+ (2 pts) Implement this recurrence as a C function. The return type is 
+<code>int</code>:
+
+<pre>
+    g(t,a,b) is t if b is zero
+    g(t,a,b) is g(t,a * a,b / 2) if b is even
+    g(t,a,b) is g(t * a,a,b - 1) otherwise
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="38">
+<li>
+ (2 pts) Implement this recurrence as a C function. The return type
+of <i>g</i> is 
+<code>Node *</code>:
+
+<pre>
+    g(t,a,b) is b if a is the empty list
+    g(t,a,b) is a if b is the empty list
+    g(t,a,b) is head(a) joined to g(1,tail(a),b) if t is 0
+    g(t,a,b) is head(b) joined to g(0,a,tail(b)) otherwise
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="39">
+<li>
+ (3 pts) Implement this recurrence as two C functions.
+The return type of <i>f</i>, <i>g</i>, and <i>head</i> is 
+<code>int</code>;
+the return type of <i>tail</i> is 
+<code>Node *</code>:
+
+<pre>
+    f(a) is g(head(a),tail(a))
+    g(b,c) is b if c is the empty list
+    g(b,c) is g(head(c),tail(c)) if isLT isGT(head(c),b)
+    g(b,c) is g(b,tail(c)) otherwise
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="40">
+<li>
+ (3 pts) Implement this recurrence as two C functions.
+The return type of <i>f</i>, <i>g</i>, and <i>head</i> is 
+<code>int</code>;
+the return type of <i>tail</i> is 
+<code>Node *</code>:
+
+<pre>
+    f(a) is g(head(a),tail(a))
+    g(b,c) is b if c is the empty list
+    g(b,c) is f(c) if isLT isGT(head(c),b)
+    g(b,c) is g(b,tail(c)) otherwise
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

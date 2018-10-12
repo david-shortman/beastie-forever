@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Concept Inventory</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Evaluation Order
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="eval_ord.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- SECTION_SEQUENCE -->
+<!-- section -->
+<h2>
+ Key ideas
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+
+<ul>
+
+<li>
+
+ how Scheme evaluates expressions
+</li>
+
+<li>
+
+ applicative order evaluation (immediate evaluation of function arguments)
+</li>
+
+<li>
+
+ normal order evaluation (delayed evaluation of function arguments)
+</li>
+
+</ul>
+
+
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Applicative order
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+One way to evaluate a non-primitive expression in Scheme uses the
+following algorithm:
+<br/>
+
+<pre>
+    for each term of the expression (in any order)
+        evaluate that term
+    apply the first term to the remaining terms
+</pre>
+
+Consider the following definitions ...
+<br/>
+
+<pre>
+    (define (sqr a) (* a a)) 
+    (define (double a) (+ a a))
+</pre>
+
+and the following expression...
+<br/>
+
+<pre>
+    (square (+ (double 2) (double 3)))
+</pre>
+
+Under applicative order, the expression first evaluates to
+<br/>
+
+<pre>
+    (square (+ 4 9))
+</pre>
+
+and then to:
+<br/>
+
+<pre>
+    (square 13)
+</pre>
+
+and finally to:
+<br/>
+
+<pre>
+    169
+</pre>
+
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- section -->
+<h2>
+ Normal order
+<br/>
+</h2><!-- QA_SEQUENCE -->
+
+Contrast the above with normal order, in which
+all complex terms are substituted with equivalent primitive expressions
+before evaluation proceeds. Using the example above,
+<br/>
+
+<pre>
+    (square (+ (double 2) (double 3)))
+</pre>
+
+becomes:
+<br/>
+
+<pre>
+    (square (+ (+ 2 2) (+ 3 3)))
+</pre>
+
+which in turn becomes
+<br/>
+
+<pre>
+    (* (+ (+ 2 2) (+ 3 3)) (+ (+ 2 2) (+ 3 3)))
+</pre>
+
+At this point simplification can begin, since all
+that
+is left are primitives, yielding
+<br/>
+
+<pre>
+    (* (+ 4 9) (+ 4 9))
+</pre>
+
+With more simplification, the expression becomes
+<br/>
+
+<pre>
+    (* 13 13)
+</pre>
+
+Finally, the end result is generated...
+<br/>
+
+<pre>
+    169
+</pre>
+
+Note that applicative order can be much more
+efficient. Scheme uses applicative order, but later we will investigate
+a way to fake normal order evaluation for some interesting uses in
+Scheme.
+<br/>
+end{document}
+<!-- QA_SEQUENCE ENDED -->
+<!-- section ENDED -->
+<!-- SECTION_SEQUENCE ENDED -->
+</body>
+</html>

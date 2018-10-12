@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Sep  5 20:07:21 2016 -->
+<head>
+<title>The Scam Reference Manual -- Functions</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_10.html">
+  <img border="0" alt="Conditionals" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_12.html">
+  <img border="0" alt="Input and Output" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Functions</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Functions</h1>
+<p>Consider the equation to find
+the <i>y</i>-value of a point on the line:
+</p>
+<pre>
+    y = 5x - 3
+</pre>
+<p>First, we assigned values to the slope,
+the <i>x</i>-value, and the <i>y</i>-intercept:
+</p>
+<pre>
+    (define m 5)
+    (define x 9)
+    (define b -3)
+</pre>
+<p>Once those variables have been created,
+we can compute the value of <i>y</i>:
+</p>
+<pre>
+    (define y (+ (* m x) b))
+
+    (inspect y)
+    -&gt; y is 42
+</pre>
+<p>Now, suppose we wished to find the <i>y</i>-value corresponding to
+a different <i>x</i>-value or, worse yet, for a different <i>x</i>-value
+on a different line. All the work we did would have to be
+repeated. A <i>function</i> is a way to encapsulate all these operations
+so we can repeat them with a minimum of effort.
+</p>
+
+<h2><a name="id1">Encapsulating a series of operations</a></h2><p>
+First, we will define a not-too-useful function that
+calculates <i>y</i> give a slope of 5,
+a <i>y</i>-intercept of -3, and an
+<i>x</i>-value of 9 (exactly
+as above). We do this by wrapping a function around
+the sequence of operations above.
+The return value of this function is the computed <i>y</i> value:
+</p>
+<pre>
+    (define (y)
+        (define m 5)
+        (define x 9)
+        (define b -3)
+        (+ (* m x) b) ;the value of this expression is the return value
+        )
+</pre>
+<p>There are a few things to note. The call to the <i>define</i>
+function indicates
+that a variable definition is occurring. The fact that the first
+argument to <i>define</i> looks like a list indicates that the variable
+being defined will be bound to a function and that the variable/function
+name is <i>y</i>, as it is the first member of that list.
+The formal parameters of the function follow the function name;
+since there is nothing after the <i>y</i>, we don't
+need to send any information to this function when we call it.
+Together, the first line is known as the <i>function signature</i>,
+which tells you the name of the function and how many values
+it expects to be sent when called.
+</p>
+<p>The expressions after the function name and formal parameters
+are called the <i>function body</i>; the body
+is the code that will be evaluated (or executed) when the
+function is called. You must remember this: <i>the function body
+is not evaluated until the function is called</i>.
+</p>
+<p>Finally, the return value of a function is the value of the
+last expression evaluated. In the above case, the
+expression is:
+</p>
+<pre>
+    (+ (* m x) b)
+</pre>
+<p>Once the function is defined, we can find the value of <i>y</i> repeatedly.
+</p>
+<pre>
+    (y)
+    -&gt; 42
+
+    (y)
+    -&gt; 42
+</pre>
+<p>Because we designed the
+function to take no values when called, we do not place any
+values between the parentheses.
+</p>
+<p>Note that when we call the <i>y</i> function again,
+we get the exact same answer.
+</p>
+<p>The <i>y</i> function, as written,
+is not too useful in that we cannot use it to compute
+similar things, such as the <i>y</i>-value for a different value of
+<i>x</i>.
+This is because we `hard-wired' the values of <i>b</i>, <i>x</i>, and <i>m</i>,
+We can improve this function by passing in the value of <i>x</i>
+instead of hard-wiring the value to 9.
+</p>
+
+<h2><a name="id2">Passing arguments</a></h2><p>
+A hallmark of a good function is that it lets you compute
+more than one thing. We can modify our <i>y</i> function to <i>take in</i> the
+value of <i>x</i> in which we are interested.
+In this way,
+we can compute more than one value of <i>y</i>.
+We do this by <i>passing</i> in 
+an <i>argument</i><sup><a href="index_22.html#footnote-4">4</a></sup>, in this case, the value of <i>x</i>.
+</p>
+<pre>
+    (define (y x)
+        (define m 5)
+        (define b -3)
+        (+ (* m x) b)
+        )
+</pre>
+<p>Note that we have moved <i>x</i> from the body of the function
+to after the function name. We have also refrained from
+giving it a value since its value is to be sent to the function
+when the function is called.
+What we have done is to <i>parameterize</i> the function to make it more
+general and more useful. The variable <i>x</i> is now called a
+<i>formal parameter</i>.
+</p>
+<p>Now we can compute <i>y</i> for an infinite number of <i>x</i>'s:
+</p>
+<pre>
+    (y 9)
+    -&gt; 42
+    
+    (y 0)
+    -&gt; -3
+    
+    (y -2)
+    -&gt; -13
+</pre>
+<p>What if we wish to
+compute a <i>y</i>-value for a given <i>x</i> for a different
+line? One approach would be to pass in the <i>slope</i> and <i>intercept</i>
+as well as <i>x</i>:
+</p>
+<pre>
+ (define (y x m b)
+        (+ (* m x) b)
+        )
+</pre>
+<p>Now we need to pass even more information to <i>y</i> when we call it:
+</p>
+<pre>
+    (y 9 5 -3)
+    -&gt; 42
+     
+    (y 0 5 -3)
+    -&gt; -3
+</pre>
+<p>If we wish to calculate using a different line, we just pass in the
+new <i>slope</i> and <i>intercept</i> along with our value of <i>x</i>.
+This certainly works as intended, but is not the best way. One problem
+is that we keep on having to type in the slope and intercept even if
+we are computing <i>y</i>-values on the same line. Anytime you
+find yourself doing the same tedious thing over and over,
+be assured that
+someone has thought of a way to avoid that particular tedium.
+If so, how do we
+customize our function so that we only have to enter the slope
+and intercept once per particular line? We will explore
+one way for doing this. In reading further,
+it is not important if you understand all that is going on.
+What is important is that you know you can use functions
+to run similar code over and over again.
+</p>
+
+<h2><a name="id3">Creating functions on the fly</a></h2><p>
+Since creating functions is hard work (lots of typing) and
+Computer Scientists avoid unnecessary work like the plague, somebody
+early on got the idea of writing a function that itself 
+creates functions! Brilliant! We can do this for our line problem.
+We will tell our creative function to create a <i>y</i> function
+for a particular slope and intercept! While we are at it,
+let's change the variable names <i>m</i> and <i>b</i> to <i>slope</i>
+and <i>intercept</i>, respectively:
+</p>
+<pre>
+    (define (createLine slope intercept)
+        (define (y x)
+            (+ (* slope x) intercept)
+            )
+        y    ; the value of y is returned, y is NOT CALLED!
+        )
+</pre>
+<p>The <i>createLine</i> function creates a <i>y</i> function
+and then returns it. Note that this returned function <i>y</i> takes
+one value when called, the value of <i>x</i>.
+</p>
+<p>So our creative <i>createLine</i> function
+simply defines a <i>y</i> function and then
+returns it. Now we can create a bunch of different lines:
+</p>
+<pre>
+    (define a (createLine 5 -3))
+    (define b (createLine 6 2))
+
+    (a 9)
+    -&gt; 42
+    
+    (b 9)
+    -&gt; 56
+
+    (a 9)
+    -&gt; 42
+</pre>
+<p>Notice how lines <i>a</i> and <i>b</i> remember
+the slope and intercept supplied
+when they were created.<sup><a href="index_22.html#footnote-5">5</a></sup>
+While this is decidedly cool, the problem is many languages (
+for example C, C++, and Java<sup><a href="index_22.html#footnote-6">6</a></sup>)
+do not allow you to define functions that create other functions.
+Fortunately, Scam, Python, and most functional languages allow this.
+</p>
+<p>While this might seem a little mind-boggling, don't worry. The
+things you should take away from this are:
+</p>
+<ul><li>functions encapsulate calculations
+</li><li>functions can be parameterized
+</li><li>functions can be called
+</li><li>functions return values
+</li></ul>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_10.html">
+  <img border="0" alt="Conditionals" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_12.html">
+  <img border="0" alt="Input and Output" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Functions</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

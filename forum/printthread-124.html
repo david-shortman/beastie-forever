@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> CDA index assertions - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=32">CDA index assertions</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  CDA index assertions (<em>/showthread.php?tid=32</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>CDA index assertions</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=105">cmtudor</a> -  <strong>09-03-2018</strong>
+<br />
+<br />
+Should the CDA index assertions <br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><ul class="mycode_list"><li><span style="font-style: italic;" class="mycode_i">insertCDA</span> - The index shall be valid. <br />
+<br />
+</li>
+<li><span style="font-style: italic;" class="mycode_i">removeCDA</span> - The index shall be valid. The size shall be greater than zero. <br />
+<br />
+</li>
+<li><span style="font-style: italic;" class="mycode_i">getCDA</span> - The index shall be greater than or equal to zero and less than the size. <br />
+<br />
+</li>
+<li><span style="font-style: italic;" class="mycode_i">setCDA</span> - The index shall be greater than or equal to -1 and less than or equal to the size.<br />
+</li>
+</ul>
+</blockquote>
+<br />
+be asserted before or after index correction? <br />
+Asked slightly differently: should the "index" we are asserting be the given index value passed as an argument to these functions?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: CDA index assertions</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=107">dmwever</a> -  <strong>09-03-2018</strong>
+<br />
+<br />
+Beforehand for sure, for simplicity's sake.<br />
+You can never insert after size, and you can never insert before 0, even though where size and index actually are shift as items are added and removed.<br />
+While your CDA will probably look like this, |a|b|c|d| | | | | with a being the front and d being the back,<br />
+It can eventually, if you add to the back and remove from the front over and over, (like you will with the queue class) look more like this:<br />
+|c|d| | | | |a|b| with a being the front and d being the back.<br />
+If it does end up looking like that, it will be super complicated to process whether or not the index is within the legal range of values.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: CDA index assertions</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>09-03-2018</strong>
+<br />
+<br />
+I think it would be <span style="font-weight: bold;" class="mycode_b">after</span>. The user only has access to the public interface and doesn't know anything about "index correction" or any implementation details, so for them, the index always refers to the corrected index. Of course, you don't actually need to "perform" any correction beforehand - you can just assume the index is corrected for the sake of assertion. The whole point of using those assertions is to validate inputs and inform the user about bad input.<br />
+<br />
+TL;DR: Always look at it from the user's perspective.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: CDA index assertions</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=7">andrasveto</a> -  <strong>09-03-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-03-2018, 07:08 PM)</span>magarwal Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=179#pid179" class="quick_jump"></a></cite>I think it would be <span style="font-weight: bold;" class="mycode_b">after</span>. The user only has access to the public interface and doesn't know anything about "index correction" or any implementation details, so for them, the index always refers to the corrected index. Of course, you don't actually need to "perform" any correction beforehand - you can just assume the index is corrected for the sake of assertion.<br />
+<br />
+TL;DR: Always look at it from the user's perspective.</blockquote><br />
+From the user's perspective, if the CDA is (1,2,(2)) then inserting at index 4 is not valid. Checking the index before correction catches this. However, the corrected index in this case is 0, which is a valid index. So check the index first, then do any correction after asserting it is valid.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: CDA index assertions</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>09-03-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-03-2018, 07:17 PM)</span>andrasveto Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=182#pid182" class="quick_jump"></a></cite>From the user's perspective, if the CDA is (1,2,(2)) then inserting at index 4 is not valid. Checking the index before correction catches this. However, the corrected index in this case is 0, which is a valid index. So check the index first, then do any correction after asserting it is valid.</blockquote><br />
+I think we are all on the same page here. I was looking at the whole "index correction" process from the user's perspective as well. My understanding is that the "corrected index" is what the user sees, and the actual index is the "incorrect index".<br />
+<br />
+To clarify my answer further, the <span style="font-style: italic;" class="mycode_i">"The index shall be greater than or equal to zero and less than the size"</span>  assertion for <span style="font-family: Courier New;" class="mycode_font">getCDA</span> literally translates to <span style="font-family: Courier New;" class="mycode_font">assert(index &gt;=0 &amp;&amp; index &lt; sizeCDA(items))</span> where "index" is the user input.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

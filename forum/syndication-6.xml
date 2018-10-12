@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title><![CDATA[Forums - Project 0]]></title>
+		<link>http://beastie.cs.ua.edu/forum/</link>
+		<description><![CDATA[Forums - http://beastie.cs.ua.edu/forum]]></description>
+		<pubDate>Fri, 12 Oct 2018 04:13:45 +0000</pubDate>
+		<generator>MyBB</generator>
+		<item>
+			<title><![CDATA[Void Type Array]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=124</link>
+			<pubDate>Fri, 28 Sep 2018 17:28:15 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=124</guid>
+			<description><![CDATA[I'm having trouble declaring an array of void data items for my DA struct (and by extension my CDA struct), can anyone help me out?]]></description>
+			<content:encoded><![CDATA[I'm having trouble declaring an array of void data items for my DA struct (and by extension my CDA struct), can anyone help me out?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Seg Fault in displayCDA]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=119</link>
+			<pubDate>Wed, 26 Sep 2018 18:05:10 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=119</guid>
+			<description><![CDATA[I'm getting a seg fault 11 when I try and test my displayCDA method. It is throwing at the first fprintf statement, which leads me to believe that for some reason, it isn't reading the stdout pointer. Thoughts on how to fix this?<br />
+<br />
+Matt:Project0 MatthewWard&#36; ./cdatester<br />
+Begin insertCDA<br />
+Begin insertCDA<br />
+Begin insertCDA<br />
+The items are Enter displayCDA<br />
+Passed a print function 0x107a06ba0<br />
+Segmentation fault: 11<br />
+Matt:Project0 MatthewWard&#36;]]></description>
+			<content:encoded><![CDATA[I'm getting a seg fault 11 when I try and test my displayCDA method. It is throwing at the first fprintf statement, which leads me to believe that for some reason, it isn't reading the stdout pointer. Thoughts on how to fix this?<br />
+<br />
+Matt:Project0 MatthewWard&#36; ./cdatester<br />
+Begin insertCDA<br />
+Begin insertCDA<br />
+Begin insertCDA<br />
+The items are Enter displayCDA<br />
+Passed a print function 0x107a06ba0<br />
+Segmentation fault: 11<br />
+Matt:Project0 MatthewWard&#36;]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[DA unions]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=106</link>
+			<pubDate>Thu, 20 Sep 2018 04:30:52 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=106</guid>
+			<description><![CDATA[So I am trying to wrap my head around the DA union function, and how to both transfer from the donor in amortized O(n) time without doing this:<br />
+      insertDA(recipient, recipient-&gt;size, removeDA(donor, donor-&gt;size - 1));<br />
+Which flips the order of the donor array.<br />
+If I do this: <br />
+      insertDA(recipient, recipient-&gt;size, removeDA(donor, 0);<br />
+or this:<br />
+for (i = 0; i &lt; donor-&gt;size; i++)<br />
+      insertDA(recipient, recipient-&gt;size, removeDA(donor, i));<br />
+<br />
+it runs at O(n^2) time, since both would shift the entire donor array by n every removeDA, and it would take n iterations to empty the donor.<br />
+<br />
+If there is a third strategy I am missing, or if I am misunderstanding one of the examples I have given, I would love to know it.]]></description>
+			<content:encoded><![CDATA[So I am trying to wrap my head around the DA union function, and how to both transfer from the donor in amortized O(n) time without doing this:<br />
+      insertDA(recipient, recipient-&gt;size, removeDA(donor, donor-&gt;size - 1));<br />
+Which flips the order of the donor array.<br />
+If I do this: <br />
+      insertDA(recipient, recipient-&gt;size, removeDA(donor, 0);<br />
+or this:<br />
+for (i = 0; i &lt; donor-&gt;size; i++)<br />
+      insertDA(recipient, recipient-&gt;size, removeDA(donor, i));<br />
+<br />
+it runs at O(n^2) time, since both would shift the entire donor array by n every removeDA, and it would take n iterations to empty the donor.<br />
+<br />
+If there is a third strategy I am missing, or if I am misunderstanding one of the examples I have given, I would love to know it.]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[DA failed tests due to getDA assertion]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=103</link>
+			<pubDate>Wed, 19 Sep 2018 22:51:51 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=103</guid>
+			<description><![CDATA[Hey y'all, I failed a <span style="text-decoration: line-through;" class="mycode_s">couple</span> few <span style="text-decoration: line-through;" class="mycode_s">of</span> tests (8, 18, and 28) in my DA class due to the assertion required of getDA: <br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><ul class="mycode_list"><li><span style="font-style: italic;" class="mycode_i">getDA</span> - The index shall be greater than or equal to zero and less than the size. <br />
+</li>
+</ul>
+</blockquote>
+<br />
+My issue, I've found, is when the user tries to get the value at index 0 in an empty array. It passes the first assertion (that index &gt;= 0) but fails the second assertion (that index &lt; sizeDA(items)). Changing the assertion to "the index shall be greater than or equal to zero and less than <span style="font-style: italic;" class="mycode_i">or equal to</span> the size would fix my issue, but would fail to meet project specifications. Is there something I'm missing here or is the spec not correct?<br />
+Thanks.]]></description>
+			<content:encoded><![CDATA[Hey y'all, I failed a <span style="text-decoration: line-through;" class="mycode_s">couple</span> few <span style="text-decoration: line-through;" class="mycode_s">of</span> tests (8, 18, and 28) in my DA class due to the assertion required of getDA: <br />
+<blockquote class="mycode_quote"><cite>Quote:</cite><ul class="mycode_list"><li><span style="font-style: italic;" class="mycode_i">getDA</span> - The index shall be greater than or equal to zero and less than the size. <br />
+</li>
+</ul>
+</blockquote>
+<br />
+My issue, I've found, is when the user tries to get the value at index 0 in an empty array. It passes the first assertion (that index &gt;= 0) but fails the second assertion (that index &lt; sizeDA(items)). Changing the assertion to "the index shall be greater than or equal to zero and less than <span style="font-style: italic;" class="mycode_i">or equal to</span> the size would fix my issue, but would fail to meet project specifications. Is there something I'm missing here or is the spec not correct?<br />
+Thanks.]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[error in expected results]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=100</link>
+			<pubDate>Wed, 19 Sep 2018 02:07:34 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=100</guid>
+			<description><![CDATA[looking at my testing report, a few of the tests have errors thrown in the expected results. i might be misinterpreting it, but it seems to be pointing to part of the test code rather than my own code. just want to confirm whether this is correct or not before i go trying to debug using these tests. i've attached images of the expected and partial results errors of test 66; there are similar errors in tests 70 and 71.<br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="http://beastie.cs.ua.edu/forum/images/attachtypes/image.png" title="PNG Image" border="0" alt=".png" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=12" target="_blank" title="">assign0_test66_expected results.png</a> (Size: 54.24 KB / Downloads: 18)
+<!-- end: postbit_attachments_attachment --><br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="http://beastie.cs.ua.edu/forum/images/attachtypes/image.png" title="PNG Image" border="0" alt=".png" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=13" target="_blank" title="">assign0_test66_partial results.png</a> (Size: 196.51 KB / Downloads: 14)
+<!-- end: postbit_attachments_attachment -->]]></description>
+			<content:encoded><![CDATA[looking at my testing report, a few of the tests have errors thrown in the expected results. i might be misinterpreting it, but it seems to be pointing to part of the test code rather than my own code. just want to confirm whether this is correct or not before i go trying to debug using these tests. i've attached images of the expected and partial results errors of test 66; there are similar errors in tests 70 and 71.<br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="http://beastie.cs.ua.edu/forum/images/attachtypes/image.png" title="PNG Image" border="0" alt=".png" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=12" target="_blank" title="">assign0_test66_expected results.png</a> (Size: 54.24 KB / Downloads: 18)
+<!-- end: postbit_attachments_attachment --><br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="http://beastie.cs.ua.edu/forum/images/attachtypes/image.png" title="PNG Image" border="0" alt=".png" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=13" target="_blank" title="">assign0_test66_partial results.png</a> (Size: 196.51 KB / Downloads: 14)
+<!-- end: postbit_attachments_attachment -->]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Resubmission]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=99</link>
+			<pubDate>Tue, 18 Sep 2018 23:51:48 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=99</guid>
+			<description><![CDATA[I tried to submit my fixed code, but it told me that the dropbox is closed.  Is there another place to resubmit and if not, when will the dropbox reopen?]]></description>
+			<content:encoded><![CDATA[I tried to submit my fixed code, but it told me that the dropbox is closed.  Is there another place to resubmit and if not, when will the dropbox reopen?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Updating capacity when growing CDA]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=97</link>
+			<pubDate>Tue, 18 Sep 2018 18:14:18 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=97</guid>
+			<description><![CDATA[Hey everyone! I just discovered a bug that's been causing my CDA to seg fault. <br />
+<br />
+When growing your CDA, make sure to update items-&gt;capacity <span style="font-weight: bold;" class="mycode_b"><span style="font-style: italic;" class="mycode_i">after </span></span>growing the array and copying all your items over. If you update capacity before growing, then getCDA() will use the new capacity when generating indices and try to access indices in your original array that don't exist... which is bad. If you're experiencing segmentation faults or assertion errors when trying to display or insert after doubling, this might be your issue!<br />
+<br />
+**Disclaimer: This works when using a temp array and copying items over to double. Not sure how this would affect doubling using realloc().<br />
+<br />
+Thanks!]]></description>
+			<content:encoded><![CDATA[Hey everyone! I just discovered a bug that's been causing my CDA to seg fault. <br />
+<br />
+When growing your CDA, make sure to update items-&gt;capacity <span style="font-weight: bold;" class="mycode_b"><span style="font-style: italic;" class="mycode_i">after </span></span>growing the array and copying all your items over. If you update capacity before growing, then getCDA() will use the new capacity when generating indices and try to access indices in your original array that don't exist... which is bad. If you're experiencing segmentation faults or assertion errors when trying to display or insert after doubling, this might be your issue!<br />
+<br />
+**Disclaimer: This works when using a temp array and copying items over to double. Not sure how this would affect doubling using realloc().<br />
+<br />
+Thanks!]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Debugging Issues]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=96</link>
+			<pubDate>Tue, 18 Sep 2018 17:09:03 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=96</guid>
+			<description><![CDATA[The most common error I see after running my program through the provided mass testing tool is "Invalid read of size x". It occurs primarily when running cda operations, and I think it has something to do with my insertion function. I'm confused, because while testing prior to the submission deadline, no test that I created or that I could find would break my insertion function, and it passed the preliminary test pulled from the site as well as the testing dropbox. <br />
+<br />
+How should I go about trying to find the source of the issue? My index logic is sound, and I can't really see much benefit to debugging step by step, since we're working with pointers.<br />
+<br />
+How can I test my future projects so that I'm not blindsided like this? Last week, I wrapped up the project, and it worked through all test cases I made or found, but when testing with the provided tool, many of the tests fail inexplicably.]]></description>
+			<content:encoded><![CDATA[The most common error I see after running my program through the provided mass testing tool is "Invalid read of size x". It occurs primarily when running cda operations, and I think it has something to do with my insertion function. I'm confused, because while testing prior to the submission deadline, no test that I created or that I could find would break my insertion function, and it passed the preliminary test pulled from the site as well as the testing dropbox. <br />
+<br />
+How should I go about trying to find the source of the issue? My index logic is sound, and I can't really see much benefit to debugging step by step, since we're working with pointers.<br />
+<br />
+How can I test my future projects so that I'm not blindsided like this? Last week, I wrapped up the project, and it worked through all test cases I made or found, but when testing with the provided tool, many of the tests fail inexplicably.]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Wrong link]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=91</link>
+			<pubDate>Mon, 17 Sep 2018 18:18:07 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=91</guid>
+			<description><![CDATA[I neglected to update the link in the grading report. You can get the test cases and expected results at:<br />
+<br />
+wget beastie.cs.ua.edu/cs201/testing/0/submission0.tgz]]></description>
+			<content:encoded><![CDATA[I neglected to update the link in the grading report. You can get the test cases and expected results at:<br />
+<br />
+wget beastie.cs.ua.edu/cs201/testing/0/submission0.tgz]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Valgrind bytes lost in newInteger?]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=85</link>
+			<pubDate>Sun, 16 Sep 2018 18:51:19 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=85</guid>
+			<description><![CDATA[So I'm trying to find out where memory leaks are located in my cda.c file. I modified test cda of test0 so that the only the very first insert into the empty array is occurring. It isn't even printing anything. And in trying to find where it could have happened I nulled out my entire insertCDA, so that it just returns. Even still: I end up with this report:<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>==34== 4 bytes in 1 blocks are definitely lost in loss record 1 of 1<br />
+==34==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)<br />
+==34==    by 0x4009E8: newINTEGER (integer.c:15)<br />
+==34==    by 0x4009AC: main (testCDA.c:53)</code></div></div><br />
+The setup for my newCDA is the same as my newDA, which runs with no leaks, so I don't think that's the issue. And with literally nothing in my insertCDA, is there really some kind of issue with integer.c?]]></description>
+			<content:encoded><![CDATA[So I'm trying to find out where memory leaks are located in my cda.c file. I modified test cda of test0 so that the only the very first insert into the empty array is occurring. It isn't even printing anything. And in trying to find where it could have happened I nulled out my entire insertCDA, so that it just returns. Even still: I end up with this report:<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>==34== 4 bytes in 1 blocks are definitely lost in loss record 1 of 1<br />
+==34==    at 0x4C2DBF6: malloc (vg_replace_malloc.c:299)<br />
+==34==    by 0x4009E8: newINTEGER (integer.c:15)<br />
+==34==    by 0x4009AC: main (testCDA.c:53)</code></div></div><br />
+The setup for my newCDA is the same as my newDA, which runs with no leaks, so I don't think that's the issue. And with literally nothing in my insertCDA, is there really some kind of issue with integer.c?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Linker Failed]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=84</link>
+			<pubDate>Sun, 16 Sep 2018 18:28:00 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=84</guid>
+			<description><![CDATA[Matt:Project0 MatthewWard&#36; make<br />
+gcc -Wall  CDATester.c CDA.c -o assign0.o<br />
+Undefined symbols for architecture x86_64:<br />
+  "_newCDA", referenced from:<br />
+      _main in CDATester-e26d31.o<br />
+ld: symbol(s) not found for architecture x86_64<br />
+clang: error: linker command failed with exit code 1 (use -v to see invocation)<br />
+make: *** [assign0.o] Error 1<br />
+<br />
+Any Idea what this means or how to fix it?]]></description>
+			<content:encoded><![CDATA[Matt:Project0 MatthewWard&#36; make<br />
+gcc -Wall  CDATester.c CDA.c -o assign0.o<br />
+Undefined symbols for architecture x86_64:<br />
+  "_newCDA", referenced from:<br />
+      _main in CDATester-e26d31.o<br />
+ld: symbol(s) not found for architecture x86_64<br />
+clang: error: linker command failed with exit code 1 (use -v to see invocation)<br />
+make: *** [assign0.o] Error 1<br />
+<br />
+Any Idea what this means or how to fix it?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[STRUCT tag required]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=83</link>
+			<pubDate>Sun, 16 Sep 2018 07:11:20 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=83</guid>
+			<description><![CDATA[I'm getting the following error when I try to compile "error: must use 'struct' tag to refer to type 'CDA'" How do I get the compiler to recognize CDA without the struct tag?]]></description>
+			<content:encoded><![CDATA[I'm getting the following error when I try to compile "error: must use 'struct' tag to refer to type 'CDA'" How do I get the compiler to recognize CDA without the struct tag?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[FILE* Type]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=82</link>
+			<pubDate>Sun, 16 Sep 2018 07:07:24 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=82</guid>
+			<description><![CDATA[I am getting a compiler error that FILE is an unknown type. How do I fix this error?]]></description>
+			<content:encoded><![CDATA[I am getting a compiler error that FILE is an unknown type. How do I fix this error?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[valgrind memory leak]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=80</link>
+			<pubDate>Sat, 15 Sep 2018 15:29:10 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=80</guid>
+			<description><![CDATA[to free CDA do we have to free the empty slots before freeing the object and it is supporting allocations?.<br />
+i have 56 bytes lost I am trying to find it,]]></description>
+			<content:encoded><![CDATA[to free CDA do we have to free the empty slots before freeing the object and it is supporting allocations?.<br />
+i have 56 bytes lost I am trying to find it,]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Valgrind on MAC]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=79</link>
+			<pubDate>Fri, 14 Sep 2018 19:14:12 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=79</guid>
+			<description><![CDATA[Anyone know how to install Valgrind on MAC? I already Have homebrew if that helps.]]></description>
+			<content:encoded><![CDATA[Anyone know how to install Valgrind on MAC? I already Have homebrew if that helps.]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[display Queue]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=78</link>
+			<pubDate>Fri, 14 Sep 2018 17:19:22 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=78</guid>
+			<description><![CDATA[the expected for queue test shows the queue after dequeue as if the dequeue func take the element from the back (size-1) !. " I think ".]]></description>
+			<content:encoded><![CDATA[the expected for queue test shows the queue after dequeue as if the dequeue func take the element from the back (size-1) !. " I think ".]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Valgrind Suppressed Errors]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=77</link>
+			<pubDate>Fri, 14 Sep 2018 04:41:02 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=77</guid>
+			<description><![CDATA[If valgrind reports no leaks are possible, but there are a few suppressed errors, is that okay?]]></description>
+			<content:encoded><![CDATA[If valgrind reports no leaks are possible, but there are a few suppressed errors, is that okay?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Stack Display Functions]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=76</link>
+			<pubDate>Fri, 14 Sep 2018 04:30:56 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=76</guid>
+			<description><![CDATA[So I have been reading through the various posts about the display functions for stack but I am still a bit confused. I think an example would really help me see what is supposed to be happening so here is my question. <br />
+<br />
+Say I have a newly created stack. If I call displayStack it should print out ||. If I then set the display flag in the Stack struct to 1 via debugStack and then call displayStack it should print []. If I then set the display flag in the Stack struct to 2 via debugStack and then call displayStack it should print [[1]]. Is this the right way to think of it?<br />
+<br />
+My other question has to do with the order displayStack prints values compared to the order displayDA prints values.<br />
+If I pushed 3,2,1 to my Stack in that order would displayStack with a displayFlag set to zero print |1,2,3| and a displayStack with a display Flag set to one print [3,2,1]? <br />
+<br />
+Thanks for any help!]]></description>
+			<content:encoded><![CDATA[So I have been reading through the various posts about the display functions for stack but I am still a bit confused. I think an example would really help me see what is supposed to be happening so here is my question. <br />
+<br />
+Say I have a newly created stack. If I call displayStack it should print out ||. If I then set the display flag in the Stack struct to 1 via debugStack and then call displayStack it should print []. If I then set the display flag in the Stack struct to 2 via debugStack and then call displayStack it should print [[1]]. Is this the right way to think of it?<br />
+<br />
+My other question has to do with the order displayStack prints values compared to the order displayDA prints values.<br />
+If I pushed 3,2,1 to my Stack in that order would displayStack with a displayFlag set to zero print |1,2,3| and a displayStack with a display Flag set to one print [3,2,1]? <br />
+<br />
+Thanks for any help!]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Need clarification regarding CDA shift.]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=75</link>
+			<pubDate>Fri, 14 Sep 2018 04:13:47 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=75</guid>
+			<description><![CDATA[Sorry, if this was addressed in a previous post, but I couldn't find anything directly addressing my issue.<br />
+<br />
+I'm going through the code for testing cda.c line by line, and I'm having trouble understanding what to do when shifting the indexes. Currently, I've edited the code to stop just before inserting the value at 3+i. Here is what my array looks like at this point:<br />
+<br />
+|3|2| |4|<br />
+    ^   ^<br />
+    b    f<br />
+<br />
+at i=0, the index to insert 1 is at 3, where the front of my array is. This is confusing me, as this would constitute inserting to the front of the array, result in the array print out as (1,4,3,2) instead of the intended (4,3,2,1).<br />
+<br />
+The spec says that the previous value at the insertion spot is to be moved to the next higher spot, but higher in what way? If higher means pushing the previous value up one, inserting 4 when the array was just |3|2| would give me:<br />
+<br />
+|4|2| |3|     then  |4|2|3|1|<br />
+<br />
+ ^ ^                    ^ ^ <br />
+  f  b                     f  b<br />
+<br />
+which definitely isn't right. If higher means pushing the previous value down one, then the result would be<br />
+<br />
+|4|3|2| |<br />
+ ^    ^<br />
+  f    b<br />
+<br />
+which sets up the next insert all well and good, but looking ahead at the next level of inserts, constantly shifting to the right defeats purpose of the CDA and results in the wrong display as well.<br />
+<br />
+tldr; In what regard is the "higher" in which you are shifting the index?]]></description>
+			<content:encoded><![CDATA[Sorry, if this was addressed in a previous post, but I couldn't find anything directly addressing my issue.<br />
+<br />
+I'm going through the code for testing cda.c line by line, and I'm having trouble understanding what to do when shifting the indexes. Currently, I've edited the code to stop just before inserting the value at 3+i. Here is what my array looks like at this point:<br />
+<br />
+|3|2| |4|<br />
+    ^   ^<br />
+    b    f<br />
+<br />
+at i=0, the index to insert 1 is at 3, where the front of my array is. This is confusing me, as this would constitute inserting to the front of the array, result in the array print out as (1,4,3,2) instead of the intended (4,3,2,1).<br />
+<br />
+The spec says that the previous value at the insertion spot is to be moved to the next higher spot, but higher in what way? If higher means pushing the previous value up one, inserting 4 when the array was just |3|2| would give me:<br />
+<br />
+|4|2| |3|     then  |4|2|3|1|<br />
+<br />
+ ^ ^                    ^ ^ <br />
+  f  b                     f  b<br />
+<br />
+which definitely isn't right. If higher means pushing the previous value down one, then the result would be<br />
+<br />
+|4|3|2| |<br />
+ ^    ^<br />
+  f    b<br />
+<br />
+which sets up the next insert all well and good, but looking ahead at the next level of inserts, constantly shifting to the right defeats purpose of the CDA and results in the wrong display as well.<br />
+<br />
+tldr; In what regard is the "higher" in which you are shifting the index?]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Implicit Declaration]]></title>
+			<link>http://beastie.cs.ua.edu/forum/showthread.php?tid=74</link>
+			<pubDate>Fri, 14 Sep 2018 03:53:42 +0000</pubDate>
+			<guid isPermaLink="false">http://beastie.cs.ua.edu/forum/showthread.php?tid=74</guid>
+			<description><![CDATA[I have some helper functions that are declared in cda.h and da.h and defined in cda.c and da.c.  They are used by stack.c and queue.c and work perfectly on my system, but when I send it into the test server, I get an implicit declaration error.  Does anyone have any idea why that would be occurring even though they are declared and defined?]]></description>
+			<content:encoded><![CDATA[I have some helper functions that are declared in cda.h and da.h and defined in cda.c and da.c.  They are used by stack.c and queue.c and work perfectly on my system, but when I send it into the test server, I get an implicit declaration error.  Does anyone have any idea why that would be occurring even though they are declared and defined?]]></content:encoded>
+		</item>
+	</channel>
+</rss>

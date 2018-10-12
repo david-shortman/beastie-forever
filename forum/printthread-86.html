@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> Simple mass tester makefile - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=102">Simple mass tester makefile</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Miscellaneous (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=11</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  Simple mass tester makefile (<em>/showthread.php?tid=102</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>Simple mass tester makefile</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+I saw @dawilly's tester that required some moving around of files everytime changes were made to the project code. So I came up with some simple makefile rules to run the tests. Just put all the test files and expected outputs (such as from <a href="http://beastie.cs.ua.edu/cs201/testing/0/submission0.tgz" target="_blank" rel="noopener" class="mycode_url">submission0.tgz</a>) in a subfolder called 'testing/' (you can change this TESTDIR value) under your main project folder and then add these rules (since I'm not allowed to post the whole makefile):<br />
+<br />
+1. First define all the test file names under a variable (called <span style="font-weight: bold;" class="mycode_b">TESTS</span> here) near the top of your makefile. We can use a wildcard to get all the files under our testing directory:<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>TESTDIR = testing/<br />
+TESTS = &#36;(sort &#36;(basename &#36;(notdir &#36;(wildcard &#36;(TESTDIR)*.c))))</code></div></div><br />
+2. Make sure your .h and .o files get copied to the testing directory when you compile them:<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>OBJS = integer.o real.o string.o da.o cda.o stack.o queue.o<br />
+all : &#36;(OBJS)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cp -f *.o &#36;(TESTDIR)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cp -f *.h &#36;(TESTDIR)</code></div></div><br />
+Then we can add a rule for compiling our tests:<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>&#36;(TESTS): %: &#36;(TESTDIR)%.c all<br />
+&nbsp;&nbsp;&nbsp;&nbsp;gcc -Wall -Wextra -g -o &#36;(TESTDIR)&#36;@ &#36;&lt; &#36;(OBJS)</code></div></div><br />
+3. Define a simple for loop for running tests:<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>test : all &#36;(TESTS)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;for x in &#36;(TESTS); do &#92;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo; echo -------; echo &#36;&#36;x.expected; echo -------; cat &#36;(TESTDIR)&#36;&#36;x.expected; &#92;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;./&#36;(TESTDIR)&#36;&#36;x &gt; &#36;(TESTDIR)&#36;&#36;x.yours; &#92;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo -------; echo &#36;&#36;x.yours; echo -------; cat &#36;(TESTDIR)&#36;&#36;x.yours; echo -------; &#92;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmp --silent &#36;(TESTDIR)&#36;&#36;x.expected &#36;(TESTDIR)&#36;&#36;x.yours &amp;&amp; echo "PASSED" || echo "FAILED"; echo -------; &#92;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;done</code></div></div><br />
+4. Make a valgrind rule if your machine can handle it:<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>valgrind: all &#36;(TESTS)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;for x in &#36;(TESTS); do &#92;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;valgrind --log-file=&#36;(TESTDIR)&#36;&#36;x.valgrind &#36;(TESTDIR)&#36;&#36;x; &#92;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo; echo -------; echo &#36;&#36;x.valgrind; echo -------;&nbsp;&nbsp;cat &#36;(TESTDIR)&#36;&#36;x.valgrind; echo; &#92;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;done</code></div></div><br />
+<br />
+That should be all. After you make/build your main modules, you can literally just run <span style="font-family: Courier New;" class="mycode_font">make test</span> and it'll run all the tests and do a diff on them too. You can pipe the output to a text file with something like <br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>make test &gt; output.txt</code></div></div>or<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>make valgrind &gt; output.txt</code></div></div><br />
+This has been tested to work wonderfully with the submission0.tgz for assign0. The output.txt will contain all the tests that were defined in the TESTS variable. Doing a search for "FAILED" in the test output.txt will show all the tests that failed.<br />
+<br />
+Feel free to change this as necessary (giving proper credit where due).
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Simple mass tester makefile</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=107">dmwever</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+Should the makefile be in the folder with the test cases, or should it be the default makefile?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Simple mass tester makefile</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-19-2018, 09:27 PM)</span>dmwever Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=413#pid413" class="quick_jump"></a></cite>Should the makefile be in the folder with the test cases, or should it be the default makefile?</blockquote><br />
+No, this is all part of your regular makefile.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Simple mass tester makefile</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=50">zmpetro</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+There is a simpler way to test for our purposes.<br />
+<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>gcc da.c cda.c stack.c queue.c integer.c real.c string.c &#36;1-0-&#36;2.c<br />
+./a.out &gt; output.txt<br />
+echo "Running diff..."<br />
+diff output.txt &#36;1-0-&#36;2.expected</code></div></div><br />
+Put this in a file and make it executable with <br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>chmod +x test</code></div></div><br />
+<br />
+where <span style="font-style: italic;" class="mycode_i">test </span>is the name of your file. Now to test a certain test case, simply run <br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>./test cda 15</code></div></div><br />
+if you, for example, wanted to test cda-0-15.c and run a diff on your output with the expected output.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Simple mass tester makefile</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=107">dmwever</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+Hmm.. What is this error for?<br />
+<br />
+cp -f *.o sub0tar/<br />
+cp -f *.h sub0tar/<br />
+make: *** No rule to make target `da-0-1', needed by `test1'.  Stop.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Simple mass tester makefile</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-19-2018, 09:37 PM)</span>zmpetro Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=415#pid415" class="quick_jump"></a></cite>There is a simpler way to test for our purposes.<br />
+<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>gcc da.c cda.c stack.c queue.c integer.c real.c string.c &#36;1-0-&#36;2.c<br />
+./a.out &gt; output.txt<br />
+echo "Running diff..."<br />
+diff output.txt &#36;1-0-&#36;2.expected</code></div></div></blockquote><br />
+The title of the thread is "mass tester". You're going to need a loop for that. I do like your script, but I find the makefile just as simple and more powerful/versatile.<br />
+<hr class="mycode_hr" />
+<blockquote class="mycode_quote"><cite><span> (09-19-2018, 09:41 PM)</span>dmwever Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=416#pid416" class="quick_jump"></a></cite>Hmm.. What is this error for?<br />
+<br />
+cp -f *.o sub0tar/<br />
+cp -f *.h sub0tar/<br />
+make: *** No rule to make target `da-0-1', needed by `test1'.  Stop.</blockquote><br />
+Add the rule for &#36;(TESTS) under point #2 in my original post.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Simple mass tester makefile</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=107">dmwever</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+Ahha. for some reason I missed it
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Simple mass tester makefile</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=50">zmpetro</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-19-2018, 09:41 PM)</span>magarwal Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=417#pid417" class="quick_jump"></a></cite>The title of the thread is "mass tester". You're going to need a loop for that. I do like your script, but I find the makefile just as simple and more powerful/versatile.</blockquote><br />
+<br />
+You're correct, this is about mass testing. However, I think the majority of people only need to test a few test cases that they did not pass. My script enables individual testing which I think could help people that only missed 2 or 3 test cases on their submissions. Either way, thanks for your contribution.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Simple mass tester makefile</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=107">dmwever</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+And now this. I honestly don't understand makefiles.<br />
+<br />
+make: *** No rule to make target `testing/da-0-1.c', needed by `da-0-1'.  Stop.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: Simple mass tester makefile</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>09-19-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-19-2018, 09:51 PM)</span>zmpetro Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=419#pid419" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (09-19-2018, 09:41 PM)</span>magarwal Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=417#pid417" class="quick_jump"></a></cite>The title of the thread is "mass tester". You're going to need a loop for that. I do like your script, but I find the makefile just as simple and more powerful/versatile.</blockquote><br />
+You're correct, this is about mass testing. However, I think the majority of people only need to test a few test cases that they did not pass. My script enables individual testing which I think could help people that only missed 2 or 3 test cases on their submissions. Either way, thanks for your contribution.</blockquote><br />
+This "mass tester" allows a lot of flexibility though. You can put your own tests in the directory and run them. Or you could modify then TESTS variable up top to only run the tests you want. Thanks for your contribution as well; I have simplified things after looking at your implementation.<br />
+<hr class="mycode_hr" />
+<blockquote class="mycode_quote"><cite><span> (09-19-2018, 09:52 PM)</span>dmwever Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=420#pid420" class="quick_jump"></a></cite>And now this. I honestly don't understand makefiles.<br />
+<br />
+make: *** No rule to make target `testing/da-0-1.c', needed by `da-0-1'.  Stop.</blockquote><br />
+Is your testing directory named "testing/"? If not, you might want to change the value of the TESTDIR variable up top. Also, I have updated the post with some new code, so verify everything.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

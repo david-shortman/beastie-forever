@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>2-4</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Sample Questions: SICP Section 2.4
+<br/>
+<br/>
+Data-directed programming and generic operators.
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Define a version of the <i>apply-generic</i> function
+for binary operators.
+Do not implement a variadic function.
+Do not implement any error checking.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Redefine the <i>make-rat</i> procedure to use a dispatch
+function. Handle the messages, <i>numer</i>, <i>denom</i>, and <i>mult</i>.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Define a version of the <i>apply-generic</i> function
+for binary operators in which the operands are message
+passing procedures.
+Do not implement a variadic function.
+Do not implement any error checking.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ Consider re-implementing <i>apply-generic</i> (from the text) for
+just binary operations
+on tagged data.
+If no error checking is to be performed, what would be a valid
+function body? Assume the formal parameters are <i>op</i>, <i>left</i>,
+and <i>right</i> and that functions installed in the operator
+table work on tagged operands.
+Choose the correct answer with the fewest number of printable
+characters.
+<br/>
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+
+<pre>
+((get op)
+    left
+    right)
+</pre>
+
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+
+<pre>
+(apply
+    (get op (type-tag left) (type-tag right))
+    (list left right))</pre>
+
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+
+<pre>
+(op
+    left
+    right)
+</pre>
+
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+
+<pre>
+((get op (map type-tag (list left right)))
+    left
+    right)
+</pre>
+
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<br/>
+
+<pre>
+((get op (type-tag left) (type-tag right))
+    left
+    right)
+</pre>
+
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+
+<pre>
+(apply
+    (get op (map type-tag (list left right)))
+    (list left right))</pre>
+
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

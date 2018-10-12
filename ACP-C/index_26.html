@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:17 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Footnotes</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_25.html">
+  <img border="0" alt="Matrices" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" >
+  <img border="0" alt="" src="nonext.png"></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Footnotes</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Footnotes</h1>
+<dl>
+<dt><a name="footnote-1"></a>(1)</dt><dd>
+It seems odd that the compiler does not know about a function it
+should know about,
+since <i>printf</i> is built in.
+But C was designed to be a rather flexible language, so we will need
+to inform the compiler properly for reasons not worth going into at this time.
+</dd><dt><a name="footnote-2"></a>(2)</dt><dd>
+On Linux and other Unix-like systems, the standard header files are located
+in the <tt>/usr/include/</tt> directory.
+</dd><dt><a name="footnote-3"></a>(3)</dt><dd>
+<i>Executed</i> is such a gruesome term,
+but it means <i>run</i> or <i>performed</i>.
+It
+derives from the idea of an <i>executive</i> performing the task
+indicated by the line of code.
+</dd><dt><a name="footnote-4"></a>(4)</dt><dd>
+More on command-line arguments in a later chapter.
+</dd><dt><a name="footnote-5"></a>(5)</dt><dd>
+Languages that do not allow changes to a variable are called
+<i>functional languages</i>,
+while those that do are called <i>imperative languages</i>.
+C is an imperative language.
+</dd><dt><a name="footnote-6"></a>(6)</dt><dd>
+Another fundamental concept of Computer Science
+is <i>analogy</i> and if you understand the
+purpose of the envelope story after reading this section,
+you're well
+on your way to being a Computer Scientist!
+</dd><dt><a name="footnote-7"></a>(7)</dt><dd>
+The third great fundamental concept in Computer Science
+is <i>generalization</i>.
+In particular,
+Computer Scientists are always trying to make things
+more abstract and more general (but not overly so).
+The reason is that
+software/systems/models exhibiting the proper levels of abstraction and
+generalization are much much easier to understand and modify.
+This is
+especially useful when you are required to make a last second
+change to the software/system/model.
+</dd><dt><a name="footnote-8"></a>(8)</dt><dd>
+Even the envelope metaphor can be confusing since it
+implies that two variables having the same value must
+each have a copy of that value. Otherwise, how can one value
+be in two envelopes at the same time? For simple literals, copying is
+the norm.
+For more complex objects, the cost of copying would
+be prohibitive.
+The solution is to storing the <i>address</i> of the object,
+instead of the object itself, in the envelope. Two variables can
+now "hold" the same object since it is the address is copied.
+</dd><dt><a name="footnote-9"></a>(9)</dt><dd>
+We will cover this in more detail in the chapter on
+Scope.
+</dd><dt><a name="footnote-10"></a>(10)</dt><dd>
+In the algebraic equation <i>mx + b</i>,
+the multiplication sign is elided,
+but most programming languages, C included, 
+require the presence of the multiplication sign,
+For C, the multiplication sign is the asterisk.
+</dd><dt><a name="footnote-11"></a>(11)</dt><dd>
+The believed value of <b>PI</b> has changed throughout the centuries and not
+always to be more accurate (see
+<a href="http://en.wikipedia.org/wiki/History&#95;of&#95;Pi">http://en.wikipedia.org/wiki/History&#95;of&#95;Pi</a>
+)
+</dd><dt><a name="footnote-12"></a>(12)</dt><dd>
+Actual addresses of memory locations in C are usually large numbers,
+typically displayed in octal or hexadecimal, rather than decimal.
+</dd><dt><a name="footnote-13"></a>(13)</dt><dd>
+The value is not really random. A better description would
+be <i>detritus</i>, the stuff left over from previous activities.
+The actual value found in an uninitialized variable are the bits
+left over from previous programs that used that memory location.
+</dd><dt><a name="footnote-14"></a>(14)</dt><dd>
+Computer Scientists, when they have to write their annual reports,
+often refer to the things they are reporting on as
+<i>darkspace</i>. It's always good to have a lot of darkspace in
+your annual report!
+</dd><dt><a name="footnote-15"></a>(15)</dt><dd>
+As you get more sophisticated in your C programming, you
+will likely take advantage of cpp, the C pre-processor. Using
+cpp, you can add constants to your C program.
+</dd><dt><a name="footnote-16"></a>(16)</dt><dd>
+Bits in the informal sense, not zeros and ones.
+</dd><dt><a name="footnote-17"></a>(17)</dt><dd>
+Not all data structures have this
+property of quick access to data. However, these other data structures,
+which you will learn about later,
+may have advantages over arrays in certain situations.
+Choosing the correct data structure for solving a problem is most of the
+work in crafting a solution.
+</dd><dt><a name="footnote-18"></a>(18)</dt><dd>
+There is one exception. Sometimes you will see an array created like this:
+<p><tt>int x[512] = &#123; 0 &#125;;</tt>
+</p>
+<p>C, if given at least one initializer, will set all slots that are missing initializers
+to zero. This quirk of C makes it quite easy to initialize an array to all zeros.
+</p>
+</dd><dt><a name="footnote-19"></a>(19)</dt><dd>
+A byte is eight bits. An integer is usually 4 or 8 bytes, depending on the system,
+while a double is usually 8 bytes.
+</dd><dt><a name="footnote-20"></a>(20)</dt><dd>
+Back in the day, when we wanted to look up the meaning of a word, we grabbed
+a dictionary that had been stored in the form of a <i>book</i>.
+A book was a device made of something called <i>paper</i>, which, more
+often than not,
+was made of pine trees.
+</dd><dt><a name="footnote-21"></a>(21)</dt><dd>
+The information that is passed into a function is collectively
+known as <i>arguments</i>. The arguments are then bound to the
+variables or <i>formal parameters</i>
+that are found after the function name in the
+function definition.
+</dd><dt><a name="footnote-22"></a>(22)</dt><dd>Many times, the printing is
+done to a file, rather than the console.
+</dd><dt><a name="footnote-23"></a>(23)</dt><dd>
+For <i>variadic</i> functions, which C
+allows for, the number of arguments
+may be more than the number of formal parameters.
+The built-in function <i>printf</i> is a variadic function.
+</dd><dt><a name="footnote-24"></a>(24)</dt><dd>
+We will learn about loops in the next chapter.
+</dd><dt><a name="footnote-25"></a>(25)</dt><dd>
+C doesn't care, but your instructor certainly does!
+</dd><dt><a name="footnote-26"></a>(26)</dt><dd>
+see <a href="http://en.wikipedia.org/wiki/Morris&#95;worm">http://en.wikipedia.org/wiki/Morris&#95;worm</a>.
+</dd><dt><a name="footnote-27"></a>(27)</dt><dd>
+In more modern versions of C, one can use the <tt>"&#37;ms"</tt> directive
+and pass in the address of an uninitialized string pointer. In this case,
+<i>scanf</i> would dynamically allocate a sufficiently large character array,
+fill it,
+and set the pointer to point to the array. The caller of <i>scanf</i> would be
+responsible for freeing the array.
+</dd><dt><a name="footnote-28"></a>(28)</dt><dd>
+You will often see the term <i>variable declaration</i> instead of
+variable definition.
+</dd><dt><a name="footnote-29"></a>(29)</dt><dd>
+We will see the utility of the counting pattern for <i>lists</i>, for which we
+do not need the size, <i>a priori</i>.
+</dd><dt><a name="footnote-30"></a>(30)</dt><dd>
+The superior student will ascertain why this is so.
+</dd><dt><a name="footnote-31"></a>(31)</dt><dd>
+This happens if adding the last element causes the array to grow.
+</dd><dt><a name="footnote-32"></a>(32)</dt><dd>
+The <i>readTokens</i> function is more complex, but its
+complexity arises from the desire to not know
+the number of tokens in advance.
+</dd><dt><a name="footnote-33"></a>(33)</dt><dd>
+We can't use the alias Node yet, since the alias is set up
+once the entire node structure is processed. So inside the
+structure, we must use <tt>struct node</tt>.
+</dd><dt><a name="footnote-34"></a>(34)</dt><dd>
+This curious behavior is the basis for a somehting called
+a <i>stack</i>. You will learn about stacks in your next CS course.
+</dd><dt><a name="footnote-35"></a>(35)</dt><dd>
+When two variables, in this case <i>a</i> and <i>items</i>,
+point to the same thing,
+they are said to be <i>aliases</i> of one another.
+</dd><dt><a name="footnote-36"></a>(36)</dt><dd>
+<i>Prepend</i> is rather an awkward term, so that is why we will use <i>join</i> as the
+function name, rather than <i>prepend</i>.
+</dd><dt><a name="footnote-37"></a>(37)</dt><dd>
+The test condition of the while loop
+is the reason for the comment that the length of <i>listA</i>
+must be greater than zero.
+</dd><dt><a name="footnote-38"></a>(38)</dt><dd>Sometimes, destructive functions return a value for convenience to the
+caller, in which case this generalization fails.
+</dd><dt><a name="footnote-39"></a>(39)</dt><dd>
+Again, when an operation does not affect its operands, it is said to
+be non-destructive. The <i>getListIndex</i> function, since it never sets a pointer
+in the given list, is non-destructive
+</dd><dt><a name="footnote-40"></a>(40)</dt><dd>
+This idea of repeatedly inserting items in a list with the
+list remaining ordered is the basis for an important data structure,
+the <i>priority queue</i>. Priority queues are used in network connectivity
+algorithms and discrete-event simulations. You will learn about priority
+queues in a subsequent class
+</dd><dt><a name="footnote-41"></a>(41)</dt><dd>
+Actually, reversing the logic of greater than yields less than <i>or equal</i>, 
+but we are ignoring situations when values match exactly. What happens
+in those cases is left as an exercise.
+</dd><dt><a name="footnote-42"></a>(42)</dt><dd>
+Mathematicians, being an inclusive bunch, like to invite
+zero to the factorial party.
+</dd><dt><a name="footnote-43"></a>(43)</dt><dd>
+Ellipses are the three dots in a row and are stand-ins for
+stuff that has been omitted.
+</dd><dt><a name="footnote-44"></a>(44)</dt><dd>
+If one views more multiplications as more complex,
+then, clearly, computing the factorial of <i>n-1</i> is simpler than
+computing the factorial of <i>n</i>.
+</dd><dt><a name="footnote-45"></a>(45)</dt><dd>
+We'll see why the variable <i>temp</i> is needed in the next chapter.
+</dd><dt><a name="footnote-46"></a>(46)</dt><dd>
+A pineapple, the golden ratio, a chambered nautilus, etc.
+</dd><dt><a name="footnote-47"></a>(47)</dt><dd>
+13 is <i>7<sup>th</sup></i> Fibonacci number and seven is one more than
+six. A coincidence? Maybe...or maybe not!
+</dd><dt><a name="footnote-48"></a>(48)</dt><dd>The word is <i>recurs</i>, not <i>recurses</i>!
+</dd><dt><a name="footnote-49"></a>(49)</dt><dd>
+Yes, division is just repeated subtraction, just like
+multiplication is repeated division.
+</dd><dt><a name="footnote-50"></a>(50)</dt><dd>The loop variable
+is considered a outside variable changed by the loop.
+</dd><dt><a name="footnote-51"></a>(51)</dt><dd>
+A style of programming that uses no assignments is called <i>functional</i>
+programming and is very important in theorizing about the nature
+of computation.
+</dd><dt><a name="footnote-52"></a>(52)</dt><dd>
+Unfortunately, C is not a good language in this
+regard, but the language <i>Scheme</i> is. When the value
+of a recursive call is immediately returned (i.e., not combined
+with some other value), a function is said to be <i>tail recursive</i>.
+The Scheme programming language optimizes tail recursive functions
+so that they are just as efficient as loops both in time and in space
+utilization.
+</dd><dt><a name="footnote-53"></a>(53)</dt><dd>A three-dimensional array would be an array whose elements
+are arrays whose elements are arrays. Arrays of two dimensions and higher 
+are known as multi-dimensional arrays.
+</dd><dt><a name="footnote-54"></a>(54)</dt><dd>
+This choice of the backbone
+representing the rows is purely arbitrary,
+but when this choice is made,
+the matrix is said to be <i>row-ordered</i>.
+If the opposite choice is
+made, that the backbone represents the columns,
+then the matrix is said to be
+<i>column-ordered</i>.
+Most programming languages provide row-ordered multi-dimensional arrays.
+</dd></dl>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_25.html">
+  <img border="0" alt="Matrices" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" >
+  <img border="0" alt="" src="nonext.png"></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Footnotes</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

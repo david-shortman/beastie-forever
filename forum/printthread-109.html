@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> unionDA - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=12">unionDA</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  unionDA (<em>/showthread.php?tid=12</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>unionDA</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=114">mdrobinson4</a> -  <strong>08-26-2018</strong>
+<br />
+<br />
+The description of the unionDA method states that "The union method takes two array[s]..." but in da.h, the function takes two structure pointers. Which is correct? Or am I misunderstanding the description?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: unionDA</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>08-26-2018</strong>
+<br />
+<br />
+I believe "two arrays" refers to "two DAs", so it's consistent with the description.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: unionDA</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=114">mdrobinson4</a> -  <strong>08-26-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (08-26-2018, 12:27 AM)</span>magarwal Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=55#pid55" class="quick_jump"></a></cite>I believe "two arrays" refers to "two DAs", so it's consistent with the description.</blockquote><br />
+That makes sense, but how would we know which DA variable stores the array?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: unionDA</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=22">jdtubbs3</a> -  <strong>08-26-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (08-26-2018, 01:01 AM)</span>mdrobinson4 Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=56#pid56" class="quick_jump"></a></cite><blockquote class="mycode_quote"><cite><span> (08-26-2018, 12:27 AM)</span>magarwal Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=55#pid55" class="quick_jump"></a></cite>I believe "two arrays" refers to "two DAs", so it's consistent with the description.</blockquote><br />
+That makes sense, but how would we know which DA variable stores the array?</blockquote><br />
+The .h file gives the order.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: unionDA</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=124">hashah</a> -  <strong>08-28-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (08-26-2018, 01:01 AM)</span>mdrobinson4 Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=56#pid56" class="quick_jump"></a></cite>That makes sense, but how would we know which DA variable stores the array?</blockquote><br />
+I am also confused on this! I know there are two DA's given and they both are struct. <br />
+<br />
+But how do you actually know which property stores the array?? <br />
+<br />
+For instance, Donor-&gt;(propertyName) gives us the actual array of that struct, so how to access an array from the given struct?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: unionDA</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>08-28-2018</strong>
+<br />
+<br />
+Use the public interface as much as possible. For example:<br />
+<br />
+insertDA(recipient,sizeDA(recipient),getDA(donor,i));
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

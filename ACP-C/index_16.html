@@ -1,0 +1,1248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:16 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Loops</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_15.html">
+  <img border="0" alt="Scope" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_17.html">
+  <img border="0" alt="Input and Loops" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Loops</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Loops</h1>
+<p>You can download the functions defined in this chapter with the
+following commands:
+</p>
+<pre>
+    wget troll.cs.ua.edu/ACP-C/loops.c
+    wget troll.cs.ua.edu/ACP-C/loops.h
+    wget troll.cs.ua.edu/ACP-C/scanner.c
+    wget troll.cs.ua.edu/ACP-C/scanner.h
+</pre>
+<p>These files will help you run the test code listed in this chapter.
+</p>
+
+<h2><a name="id1">While loops</a></h2><p>
+Loops are used to repeatedly execute some code. The most
+basic loop structure in C is the <i>while</i> loop, an example of
+which is:
+</p>
+<pre>
+    int i = 0;
+    while (i &lt; 10)
+        {
+        printf("%d\n",i);
+        i = i + 1;
+        }
+</pre>
+<p>We see a <tt>while</tt> loop looks much like an <tt>if</tt>
+statement.
+The difference
+is that blocks belonging to <tt>if</tt>s are evaluated at most once whereas
+block associated with a loop may be evaluated many many times.
+Another difference in nomenclature is that the block of a loop
+is known as the <i>body</i> (like blocks associated with function
+definitions). Furthermore, the loop test expression is known
+as the <i>loop condition</i>.
+</p>
+<p>As Computer Scientists hate to type extra characters if they can
+help it, you will often see:
+</p>
+<pre>
+    i = i + 1;
+</pre>
+<p>written three different ways:
+</p>
+<pre>
+    i += 1; 
+    ++i;
+    i++;
+</pre>
+<p>The latter two versions are read as "increment <i>i</i>" and
+saves at least a whopping two characters of typing, more
+as the variable name gets longer. The difference between
+the last and the second-to-last version is when the expression
+is used within a larger expression. Stylewise, this is generally
+a bad idea, so until you know better, always use <code>++i</code> or <code>i++</code> as
+stand-alone statements.
+</p>
+<p>A <i>while</i> loop tests its condition before the body of the loop is
+executed. If the initial test fails, the body is not executed at all. For
+example:
+</p>
+<pre>
+    //test
+    int i = 10;
+    while (i &lt; 10)
+        {
+        printf("%d\n",i);
+        ++i;
+        }
+    printf("[nothing should have printed]\n");
+</pre>
+<p>never prints out anything since the test immediately fails. In this example,
+however:
+</p>
+<pre>
+    //test
+    int i = 0;
+    while (i &lt; 10)
+        {
+        printf("%d",i);
+        ++i;
+        }
+    printf("\n");
+    printf("0123456789 should have printed\n");
+</pre>
+<p>the loop prints out the digits 0 through 9:
+</p>
+<pre>
+    0123456789
+</pre>
+<p>A <tt>while</tt> loop repeatedly evaluates its body
+as long as the loop condition remains true.
+</p>
+<p>To write an infinite loop, use true as the condition:
+</p>
+<pre>
+    while (1)
+        {
+        i = getInput();
+        printf("input is %d\n",i);
+        process(i);
+        }
+</pre>
+
+<h2><a name="id2">The <i>for</i> loop</a></h2><p>
+The other loop in C is the
+<i>for</i>
+loop:
+</p>
+<pre>
+    //test
+    int i;
+    for (i = 0; i &lt; 10; ++i)
+        {
+        printf("%d\n",i);
+        }
+</pre>
+<p>This loop is exactly equivalent to:
+</p>
+<pre>
+    //test
+    int i = 0;
+    while (i &lt; 10)
+        {
+        printf("%d\n",i);
+        ++i;
+        }
+</pre>
+<p>In fact, a while loop of the general form:
+</p>
+<pre>
+    i = INIT;
+    while (i &lt; LIMIT)
+        {
+        // body
+        ...
+        i += STEP;
+        }
+</pre>
+<p>can be written as <code>for</code> loop:
+</p>
+<pre>
+    for (i = INIT; i &lt; LIMIT; i += STEP)
+        {
+        // body
+        ...
+        }
+</pre>
+<p>For loops are commonly used to sweep through each element of an array:
+</p>
+<pre>
+    //test
+    int i;
+    int items[] = { 0,1,1,2,3,5,8,13 };
+    int itemCount = sizeof(items)/sizeof(int);
+
+    for (i = 0; i &lt; itemCount; ++i)
+        {
+        printf("%d\n",items[i]);
+        }
+</pre>
+<p>Here, we sweep through an array of integers.
+Since we cannot tell, in general, the size of the array given the
+name of the array, we must make available the size of the
+size of the array to the loop. In the example above, the
+size of the array is stored in the variable <i>itemCount</i>.
+</p>
+<p>Recall the items in an array of <i>n</i> elements are located at
+indices <i>0</i> through <i>n - 1</i>. These are exactly the values
+produced by the initialization, test, and step of the <i>for</i> loop.
+The above loop accesses
+each element by its index in turn, and thus prints out
+each element, in turn.
+Since using an index of <i>n</i> in an array of <i>n</i> items produces an
+error, the test of the index <i>i</i> against the size of the array uses a
+strict "less than" comparison.
+</p>
+<p>A common use for loops is to initialize an array. Recall that when
+an array is allocated statically without initializers or is dynamically
+allocated, the slots are filled with garbage. A loop can be used
+to set the elements of an array to a known value:
+</p>
+<pre>
+    array = malloc(sizeof(int) * size);
+    //check for malloc failure omitted
+    for (i = 0; i &lt; size; ++i)
+        {
+        array[i] = 0;
+        }
+</pre>
+<p>Loops and arrays go very well
+together;
+the next sections detail some common loop patterns involving
+arrays.
+</p>
+
+<h2><a name="id3">The <i>counting</i> pattern</a></h2><p>
+The counting pattern is used to count the number of items
+in a collection. Note that we require the size of the array
+to be available, 
+so counting the elements in an array
+is a bit of a waste of time.
+Still, it is about the easiest array processing
+loop to write, so let's forge ahead<sup><a href="index_26.html#footnote-29">29</a></sup>
+</p>
+<pre>
+    int i,count = 0;
+    for (i = 0; i &lt; itemCount; ++i)
+         {
+         ++count;
+         }
+    //count now holds the number of items
+</pre>
+<p>When the loop finishes, the variable <i>count</i> holds the number of
+items in the array.
+In general, the counting pattern increments a counter every time the loop
+body is evaluated.
+</p>
+<p>The counting pattern is more useful for <i>while</i> loops.
+Suppose we are trying to count the number of characters in a file.
+Suppose further that the function <i>getNextCharacter</i> reads and returns the
+next character in a file or it returns -1 if there are no more characters to
+be read. A counting loop would look like this:
+</p>
+<pre>
+    count = 0;
+    ch = getNextCharacter();
+    while (ch != -1)
+        {
+        ++count;
+        ch = getNextCharacter();
+        }
+    //count now holds the number of characters
+</pre>
+<p>At the end of the loop, <i>count</i> holds the number of characters in the file.
+Note how we did not need to know the number of characters in advance. The
+reason is we had a way to detect when the counting loop should stop running.
+</p>
+
+<h2><a name="id4">The <i>filtered-count</i> pattern</a></h2><p>
+A variation on the counting pattern involves filtering. When <i>filtering</i>,
+we use an <tt>if</tt> statement to decide whether we should count an item
+or not. Suppose we wish to count the number of even items in
+an array:
+</p>
+<pre>
+    int i,count = 0;
+    for (i = 0; i &lt; itemCount; ++i)
+        {
+        if (items[i] % 2 == 0)  //true if items[i] is even
+            {
+            ++count;
+            }
+        }
+    //count now holds the number of even items
+</pre>
+<p>When this loop terminates, the variable <i>count</i> will hold the
+number of even integers in the array of items. The <i>if</i> makes sure
+the count
+is incremented only when the item of interest is even.
+</p>
+
+<h2><a name="id5">The <i>accumulate</i> pattern</a></h2><p>
+Similar to the counting pattern, the <i>accumulate</i> pattern
+updates a variable, not by increasing its value by one, but by the value of
+an item. This loop, sums all the values in an array:
+</p>
+<pre>
+    int i,total = 0;
+    for (i = 0; i &lt; itemCount; ++i)
+        {
+        total += items[i];      //equivalent to total = total + items[i];
+        }
+    //total now holds the sum of all items
+</pre>
+<p>By convention, the variable <i>total</i> is used to accumulate the item
+values. When accumulating a sum, the total is initialized to zero. When
+accumulating a product, the total is initialized to one<sup><a href="index_26.html#footnote-30">30</a></sup>.
+</p>
+
+<h2><a name="id6">The <i>filtered-accumulate</i> pattern</a></h2><p>
+Similar to both the <i>filtered-count</i> pattern, the
+<i>filtered-accumulate</i> pattern
+updating the total only if some test is passed.
+This function sums all the even values in a given array, returning
+the final sum:
+</p>
+<pre>
+    int
+    sumEvens(int *items,int itemCount)
+        {
+        int i,total;
+        total = 0;
+        for (i = 0; i &lt; itemCount; ++i)
+            {
+            if (items[i] % 2 == 0)
+                {
+                total += items[i];
+                }
+            }
+        return total;
+        }
+</pre>
+<p>As before, the variable <i>total</i> is used to accumulate the item
+values. As with a regular accumulating, <i>total</i> is initialized to zero when
+accumulating a sum. The initialization value is one when
+accumulating a product and the initialization value is
+the empty array when accumulating an array (see <i>filtering</i> below).
+</p>
+
+<h2><a name="id7">The <i>search</i> pattern</a></h2><p>
+The <i>search</i> pattern is a slight variation of <i>filtered-counting</i>.
+Suppose we wish to see if a value is present in an array. We can
+use a filtered-counting approach; if the count is greater than
+zero, we know that the item was indeed in the array.
+</p>
+<pre>
+    int
+    occurrences(int target,int *items,int itemCount)
+        {
+        int i,count;
+        count = 0;
+        for (i = 0; i &lt; itemCount; ++i)
+            {
+            if (items[i] == target)
+                {
+                ++count;
+                }
+            }
+        return count;
+        }
+
+    int
+    find(int target,int *items,int itemCount) // is target in items?
+        {
+        return occurrences(target,items,itemCount) &gt; 0;
+        }
+
+</pre>
+<p>In this case, <i>occurrences</i> implements the filtered-count pattern and
+helps <i>find</i> do its job. We designate
+such functions as <i>occurrences</i> and the like, <i>helper functions</i>.
+However, we can improve the efficiency of <i>find</i> by 
+having it
+partially implement the filtered-count,
+but short-circuiting the
+search once the target item is found. We do this
+by returning from the body of the loop:
+</p>
+<pre>
+    int
+    find(int target,int *items,int itemCount)
+        {
+        int i;
+        for (i = 0; i &lt; itemCount; ++i)
+            {
+            if (items[i] == target)
+                {
+                return 1;             // short-circuit! return true
+                }
+            }
+        return 0;   //must not be in the array, return false
+        }
+</pre>
+<p>When the array is empty, we return false, as indicated
+by the last line of the function, because the
+loop never runs and thus the return inside the loop can
+never be reached. In the same vein, 
+if no item matches the target, we cannot return true, and
+eventually the loop exits and false is returned.
+</p>
+<p>As a beginning programmer, however, you should be wary of returning
+from the body of a loop. The reason is most beginners end up
+defining the function this way instead:
+</p>
+<pre>
+    int
+    find(int target,int *items,int itemCount)
+        {
+        int i;
+        for (i = 0; i &lt; itemCount; ++i)
+            {
+            if (items[i] == target)
+                return 1;
+            else
+                return 0;
+            }
+        }
+</pre>
+<p>The first problem with this definition is that the compiler generates
+a warning indicating that it is possible for the function to complete without
+explicitly returning a value.
+The second problems is that the function fails to find the target most times.
+Unfortunately, it works correctly under some
+conditions, which is why thorough testing of code is always a good thing.
+If you cannot figure out why this version generates the
+warning and why it
+fails under some conditions but succeeds under
+others, you most definitely should stay away from placing
+returns in loop bodies.
+</p>
+
+<h2><a name="id8">The <i>extreme</i> pattern</a></h2><p>
+Often, we wish to find the largest or smallest value
+in an array. Here is one approach, which assumes that the
+first item is the largest and then corrects that assumption
+if need be:
+</p>
+<pre>
+    int i,largest = items[0];
+    for (i = 0; i &lt; itemCount; ++i)
+        {
+        if (items[i] &gt; largest)
+            {
+            largest = items[i];
+            }
+        }
+    //largest now holds the largest item
+</pre>
+<p>When this loop terminates, the variable <i>largest</i> holds the
+largest value. We can improve the loop slightly by noting
+that the first time the loop body evaluates, we compare the
+putative largest value against itself, which is a worthless
+endeavor. To fix this, we can start the index variable <i>i</i>
+at 1 instead:
+</p>
+<pre>
+    int i,largest = items[0];
+    for (i = 1; i &lt; itemCount; ++i) //start comparing at index 1
+        {
+        if (items[i] &gt; largest)
+            {
+            largest = items[i];
+            }
+        }
+    //largest now holds the largest item
+</pre>
+<p>Novice programmers often make the mistake of initialing setting
+<i>largest</i> to zero and then comparing all values against <i>largest</i>,
+as in:
+</p>
+<pre>
+    int i,largest = 0;
+    for (i = 0; i &lt; itemCount; ++i)
+        {
+        if (items[i] &gt; largest)
+            {
+            largest = items[i];
+            }
+        }
+    //largest may hold an incorrect value!
+</pre>
+<p>This code appears to work in some cases, namely if the largest
+value in the array is greater than or equal to zero. If not,
+as is the case when all values in the array are negative,
+the code produces an spurious result of zero as the largest
+value.
+</p>
+
+<h2><a name="id9">The <i>extreme-index</i> pattern</a></h2><p>
+Sometimes, we wish to find the index of the most extreme
+value in an array rather than the actual extreme value.
+In such cases, we assume index zero holds the extreme value:
+</p>
+<pre>
+    int i,ilargest = 0;
+    for (i = 0; i &lt; itemCount; ++i)
+        {
+        if (items[i] &gt; items[ilargest])
+            {
+            ilargest = i;
+            }
+        }
+</pre>
+<p>Here, we successively store the index of the largest value
+seen so far in the variable <i>ilargest</i>.
+</p>
+
+<h2><a name="id10">The <i>filter</i> pattern</a></h2><p>
+A special case of a filtered-accumulation is called <i>filter</i>.
+Instead of summing the filtered items (for example), we keep
+the filtered items in the array. The modified array is said to be
+a <i>reduction</i> of the original array.
+</p>
+<p>Suppose we wish to remove the odd numbers from an array. The
+code looks very much like the <i>sumEvens</i> function,
+but instead of adding in the desired item,
+we move the even numbers to the front of the array, overwriting any odd
+numbers or any previously moved even items.
+</p>
+<pre>
+    int
+    removeOdds(int *items,int itemCount)
+        {
+        int i,j;
+        j = 0;
+        for (i = 0; i &lt; itemCount; ++i)
+            if (isEven(items[i]))
+                {
+                items[j] = items[i];
+                ++j;
+                }
+        return j;
+        }
+</pre>
+<p>The <i>removeOdds</i> function needs to implement the function pattern, because
+we need to return the number of items that were kept in the array. This
+number becomes the new size of the array. The caller of the <i>removeOdds</i>
+function is responsible for updating the size of the array:
+</p>
+<pre>
+     int data[] = {1,2,3,4,5,6};
+     int size = sizeof(data) / sizeof(int);
+     size = removeOdds(data,size);
+</pre>
+<p>Here is a pictorial view of the workings of <i>removeOdds</i>.
+Suppose we start with items pointing to this array:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-loops1.png"/>
+</div>
+<p>Both <i>i</i> and <i>j</i>
+start at zero, so they have been placed above and below slot
+0. The brackets around the variables are to remind us these
+variables are used as indices into the array.
+When the first element is checked, we see that it is odd. We 
+drop to the bottom of the loop and increment <i>i</i>,
+leaving us at:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-loops2.png"/>
+</div>
+<p>Now, we check the element at index <i>i</i> and we see it is even. We copy
+it to the slot at index <i>j</i>, overwriting the 5 that was there originally:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-loops3.png"/>
+</div>
+<p>We then increment <i>j</i> and then, at the bottom of the loop,
+increment <i>i</i>.
+Now the situation is:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-loops4.png"/>
+</div>
+<p>Again, the element at index <i>i</i> is even, so we copy it to slot <i>j</i>.
+We then increment both <i>i</i> and <i>j</i>:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-loops5.png"/>
+</div>
+<p>The element at <i>i</i> is odd,
+so we simply increment <i>i</i> for this iteration of the loop:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-loops6.png"/>
+</div>
+<p>Now the element at <i>i</i> is even, so we copy it to slot <i>j</i>.
+After incrementing both <i>j</i> and <i>i</i>, we have:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-loops7.png"/>
+</div>
+<p>At this point, <i>i</i> is equal to <i>itemCounts</i>,
+the loop ends, and we return <i>j</i>
+as the new size of the array.
+In the example, <i>j</i> has a value of 3. This is as desired, 
+as there were three
+even numbers in the original array.
+</p>
+<p>Of course, we are being a bit
+wasteful here, in that there may be unused slots at the end of the array.
+You will note that 1 and 6 remain in the array, but they have no effect
+because the caller of <i>removeOdds</i> will believe the array has shrunk,
+assuming the
+caller properly resets the size of the array:
+</p>
+<pre>
+    //test (compile with loops.c)
+    #include "loops.h"
+
+    int i;
+    int a[] = {5,2,4,1,6};
+    int aSize  = sizeof(a) / sizeof(int);
+
+    aSize = removeOdds(a,aSize);
+
+    for (i = 0; i &lt; aSize; ++i)
+        {
+        printf("[%d]",a[i]);
+        }
+    printf("\n");
+</pre>
+<p>This code should print out:
+</p>
+<pre>
+    [2][4][6]
+</pre>
+<p>as desired.  
+Since the original array is modified, we say that <i>removeOdds</i> is a 
+<i>destructive</i> procedure. We might also say the <i>removeOdds</i> implements
+a <i>destructive filtering</i> pattern.
+</p>
+<p>If <i>removeOdds</i> instead allocated a new array to store the even numbers,
+filled that array with the even numbers found in items, and
+returned the newly allocated and filled array, then <i>removeOdds</i> would
+implement a non-destructive filtering pattern:
+</p>
+<pre>
+    int
+    removeOdds2(int *items,int itemCount,int *evens) //non-destructive
+        {
+        int i,j;
+        j = 0;
+        for (i = 0; i &lt; itemCount; ++i)
+            if (isEven(items[i]))
+                {
+                evens[j] = items[i];
+                ++j;
+                }
+        return j;
+        }
+</pre>
+<p>In this version, we are required to pass in an array to hold the even
+values:
+</p>
+<pre>
+    //test (compile with loops.c)
+    #include "loops.h"
+    int i;
+    int a[] = { 5, 2, 4, 1, 6 };
+    int aSize = sizeof(a) / sizeof(int);
+    int b[] = { 0, 0, 0, 0, 0 };
+    int bSize = sizeof(b) / sizeof(int);
+
+    bSize = removeOdds2(a,aSize,b);
+
+    for (i = 0; i &lt; bSize; ++i)
+        printf("[%d]",b[i]);
+    printf("\n");
+</pre>
+<p>Of course, the caller must ensure that the array <i>b</i> is large enough to
+hold all the even values in <i>a</i>. Most often, the array <i>b</i>
+would be allocated dynamically, rather than statically:
+</p>
+<pre>
+    ...
+    int *b = (int *) malloc(sizeof(int) * aSize);
+    //the test that malloc succeeded omitted
+    int bSize = aSize;
+
+    bSize = removeOdds2(a,aSize,b);
+    ...
+    free(b);
+</pre>
+<p>Rather than call <i>malloc</i> and then check if the allocation succeeded,
+we can write a wrapper function that does the allocation <i>and</i>
+checking:
+</p>
+<pre>
+    char *
+    allocate(int size)
+        {
+        char *s = malloc(size); //size given in bytes
+        if (s == 0)
+            {
+            fprintf(stdin,"allocate: out of memory\n");
+            exit(1);
+            }
+        return s;
+        }
+</pre>
+<p>Now we can use <i>allocate</i> instead of <i>malloc</i>,
+obviating the need for us
+to write the allocation checking code. You can find a version
+of <i>allocate</i> in the <i>scanner.c</i> file.
+The code fragment above becomes:
+</p>
+<pre>
+    ...
+    int *b = (int *) allocate(sizeof(int) * aSize);
+    int bSize = aSize;
+
+    bSize = removeOdds(a,aSize,b);
+    ...
+    free(b);
+</pre>
+<p>From here on out, we will use <i>allocate</i> instead of <i>malloc</i>.
+You would
+need to include the definition of <i>allocate</i> in your code if you wish
+to use it in your programming.
+</p>
+
+<h2><a name="id11">The <i>map</i> pattern</a></h2><p>
+<i>Mapping</i> is a task closely coupled with that
+of filtering, but rather than collecting
+certain items, as with the <i>filter</i> pattern, we
+collect all the items. As we collect, however,
+we transform each item as
+we collect it, using a passed in function.
+The basic destructive pattern looks like this, with the formal
+parameter <i>f</i> holding the function used to transform the
+original items:
+</p>
+<pre>
+    void
+    map(int *items,int itemCount,int (*f)(int)) //destructive
+        {
+        int i;
+        for (i = 0; i &lt; itemCount; ++i)
+            items[i] = f(items[i]);      //pass items[i] through function f
+        }
+</pre>
+<p>The type of the formal parameter <i>f</i> looks rather odd. Recall,
+from the last section of the chapter
+<a href="index_12.html"><i>More about Functions</i></a>,
+how we derive the type of a variable that can point to a function.
+Let's review with the <i>square</i> function, whose definition is:
+</p>
+<pre>
+    int square(int x) { return x * x; } //definition
+</pre>
+<p>and whose signature is:
+</p>
+<pre>
+    int square(int);                    //signature
+</pre>
+<p>First, we wrap the name of the function in the function signature with
+parentheses:
+</p>
+<pre>
+    int (square)(int)
+</pre>
+<p>Then we place an star in front of the function name (inside the parentheses
+we just added):
+</p>
+<pre>
+    int (*square)(int)
+</pre>
+<p>Finally,
+substitute the formal parameter name for <i>square</i>:
+</p>
+<pre>
+    int (*f)(int)
+</pre>
+<p>The formal paramter <i>f</i> has type <code>int (*)(int)</code>.
+</p>
+<p>So any time you wish to pass a function to another function, you can
+follow this technique to derive the type of the formal parameter that
+receives the passed-in function.
+</p>
+<p>Suppose we wish to subtract one from each element in an array.
+First we need a transforming function that reduces its argument
+by one:
+</p>
+<pre>
+    int decrement(int);                     //signature
+    ...
+    int decrement(int x) { return x - 1; }  //definition
+</pre>
+<p>Now we can "map" the <i>decrement</i> function over an array of numbers:
+</p>
+<pre>
+    //test (compile with loops.c)
+    #include "loops.h"
+    int i;
+    int a[] = { 5, 2, 4, 1, 6 };
+    int aSize = sizeof(a) / sizeof(int);
+
+    map(a,aSize,decrement);
+
+    for (i = 0; i &lt; aSize; ++i)
+        printf("[%d]",a[i]);
+    printf("\n");
+</pre>
+<p>For output, we get:
+</p>
+<pre>
+    [4][1][3][0][5]
+</pre>
+<p>as expected.
+</p>
+<p>A non-destructive version of <i>map</i> is similar to the non-destructive
+version of <i>filter</i>; we need to pass in the accepting array:
+</p>
+<pre>
+    void
+    map2(int *items,int itemCount,int (*f)(int),int *mapped) //non-destructive
+        {
+        int i;
+        for (i = 0; i &lt; itemCount; ++i)
+            mapped[i] = f(items[i]);      //pass items[i] through function f
+        }
+</pre>
+<p>The array <i>mapped</i> should be the same size as the array <i>items</i>.
+</p>
+
+<h2><a name="id12">The <i>append</i> pattern</a></h2><p>
+Sometimes, we wish to create a third  array that contains the elements
+of two arrays. The <i>append pattern</i>, places the elements of
+second array after the elements of the first array with all elements
+placed in the third array:
+</p>
+<pre>
+     ...
+     //a and b are integer arrays with sizes aSize and bSize
+     cSize = aSize + bSize;
+     c = (int *) allocate(cSize * sizeof(int));
+
+     append(a,aSize,b,bSize,c);
+</pre>
+<p>The definition of <i>append</i> might look like this:
+</p>
+<pre>
+    void
+    append(int *a,int aSize,int *b,int bSize,int *c)
+        {
+        int i,spot;
+        spot = 0;
+        for (i = 0; i &lt; aSize; ++i)
+            {
+            c[spot] = a[i];
+            ++spot;
+            }
+        for (i = 0; i &lt; bSize; ++i)
+            {
+            c[spot] = b[i];
+            ++spot;
+            }
+        //c now holds all of a and b
+        }
+</pre>
+<p>We use index <i>i</i> to walk through the source arrays <i>a</i> and <i>b</i>
+and the index <i>spot</i> to
+keep track of where we are in the destination array c<i>.</i>
+</p>
+
+<h2><a name="id13">The <i>shuffle</i> pattern</a></h2><p>
+When we wish to combine two arrays into a third array,
+sometimes we wish to shuffle the items in the source arrays,
+much like shuffling a deck of cards, rather than appending them.
+</p>
+<p>Here is one attempt.
+The <i>shuffle</i> function places the items from the first source array in
+the even locations of the destination array. Likewise,
+it places items from the second source into the odd locations:
+</p>
+<pre>
+    int *
+    shuffle(int *a,int aSize,int *b,int bSize)
+        {
+        int *c; //a pointer to the destination array
+        int i,spot;
+        
+        c = malloc(sizeof(int) * (aSize+bSize)); //malloc failure test omitted
+
+        spot = 0;                       //the first even slot
+        for (i = 0; i &lt; aSize; ++i)
+            {
+            c[spot] = a[i];
+            spot += 2;                  //skip to the next even slot
+            }
+        spot = 1;
+        for (i = 0; i &lt; bSize; ++i)     //the first odd slot
+            {
+            c[spot] = b[i];
+            spot += 2;                  //skip to the next odd slot
+            }
+        //c now holds all of a and b
+        return c;
+        }
+</pre>
+<p>Note that this first version only works if the source arrays are
+the same size.
+Suppose the first source has the elements 3, 8, 2, 4, and 5,
+while the second has the elements 7, 1, and 6. After placing the
+first source, the destination arrays looks like this:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-loops8.png"/>
+</div>
+<p>The question marks signify holes in the array. These holes are
+slots that have not been explicitly filled and thus contain
+garbage, due to the
+way C dynamically allocates arrays.
+After adding in the second source, we have:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-loops9.png"/>
+</div>
+<p>Note that holes remain at the end of the destination array.
+There is a worse problem, however. Presumably, the destination
+array was allocated to be just big enough to hold the all the
+elements in the source arrays. In our example, that would be
+a size of 8. However, the last element placed, the 5, was
+placed at index 8, which would be beyond the extent of
+the destination array. It is clear, for mismatched source
+arrays, we need a better solution.
+</p>
+<p>Here is one approach: we shuffle the two arrays,
+as before, but stop when we run out of items in
+one of the source arrays. We then fill out the
+remainder of the destination array with the unused
+elements in the other source array.
+</p>
+<p>To implement this second approach,
+we will combine the two loops from the first attempt at <i>shuffle</i>,
+but limit the loop's
+run to the smaller of the two source array sizes:
+</p>
+<pre>
+    spot = 0;
+    for (i = 0; i &lt; aSize &amp;&amp; i &lt; bSize; ++i)
+        {
+        c[spot] = a[i];     //spot must be even here
+        c[spot+1] = b[i];   //spot+1 therefore must be odd
+        spot += 2;
+        }
+</pre>
+<p>After this loop runs, our destination array looks like:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-loops10.png"/>
+</div>
+<p>with <i>spot</i> referencing the slot of the first question mark.
+The variable <i>i</i>, on the other hand,
+holds the index of the next element that should go into the
+destination array. We don't know which, so we will attempt
+to copy elements from <i>both</i> sources:
+</p>
+<pre>
+    while (i &lt; aSize)
+        {
+        c[spot] = a[i];
+        ++spot;
+        ++i;
+        }
+
+    while (i &lt; bSize)
+        {
+        c[spot] = b[i];
+        ++spot;
+        ++i;
+        }
+</pre>
+<p>How can this possibly work when one of the sources is all used up?
+Suppose the first source is exhausted. We know that <i>i</i> must be equal
+to <i>aSize</i> in that case. Therefore, the first <i>while</i>
+loop test immediately
+fails and the loop body is never executed. We continue on to the
+next loop, where <i>i</i> must hold the index of first unused element in
+the second source. We continue to copy elements over into the
+destination array until the source is exhausted.
+</p>
+<p>Conversely, if the <i>for</i> loop ends with the second source exhausted,
+we copy over elements from the first source. At this point, the variable
+<i>i</i> is greater than the size of the second source, so the second <i>while</i>
+loop immediately fails. In either case, the destination array
+holds all the elements of the source arrays with the elements shuffled
+as much as possible. Putting it all together yields the following
+implementation for shuffle:
+</p>
+<pre>
+    int *
+    shuffle(int *a,int aSize,int *b,int bSize)
+        {
+        int *c; //a pointer to the destination array
+        int i,spot;
+        
+        c = malloc(sizeof(int) * (aSize+bSize)); //malloc failure test omitted
+
+        //shuffle until one source is exhausted
+        spot = 0;
+        for (i = 0; i &lt; aSize &amp;&amp; i &lt; bSize; ++i)
+            {
+            c[spot] = a[i];     //spot must be even here
+            c[spot+1] = b[i];   //spot+1 therefore must be odd
+            spot += 2;
+            }
+
+        //i is either equal to aSize or bSize
+        //spot holds the index of the 1st available slot in c
+
+        // copy over leftover elements in a, if any
+        while (i &lt; aSize)
+            {
+            c[spot] = a[i];
+            ++spot;
+            ++i;
+            }
+
+        // copy over leftover elements in b, if any
+        while (i &lt; bSize)
+            {
+            c[spot] = b[i];
+            ++spot;
+            ++i;
+            }
+
+        //c now holds the shuffle of a and b
+        return c;
+        }
+</pre>
+<p>With this new version, what happens when the sizes of the source
+arrays are equal? The superior student will quickly ascertain the
+validity of the new version in this case.
+</p>
+<p>One last note: the three pieces of a <i>for</i> loop, INIT, LIMIT, and STEP,
+are all optional. We could replace the first <i>while</i>
+loop with this <i>for</i> loop:
+</p>
+<pre>
+        for ( ; i &lt; aSize; ++i) //i starts at its previous value
+            {
+            c[spot] = a[i];
+            ++spot;
+            }
+</pre>
+<p>The second <i>while</i> loop could be replaced in a similar fashion.
+</p>
+
+<h2><a name="id14">The <i>merge</i> pattern</a></h2><p>
+With the <i>shuffle</i> pattern, we always took the head elements from both
+arrays at each step in the shuffling process.
+Sometimes, we wish to place a constraint of the choice of elements.
+For example, suppose the two arrays to be combined are sorted
+and we wish the resulting array to be sorted as well. The
+following example shows that shuffling does not always work:
+</p>
+<pre>
+    //test (compile with scanner.c and loops.c)
+    #include "scanner.h"
+    #include "loops.h"
+
+    int i;
+    int a[] = {1,4,6,7,8};   //a is sorted
+    int b[] = {2,3,9};       //b is sorted
+    int *c;
+    int aSize,bSize,cSize;
+
+    aSize = sizeof(a) / sizeof(int);
+    bSize = sizeof(b) / sizeof(int);
+
+    c = shuffle(a,aSize,b,bSize);
+    cSize = aSize + bSize;
+
+    for (i = 0; i &lt; cSize; ++i)
+        printf("[%d]",c[i]);
+    printf("\n");
+</pre>
+<p>Running this code gives us the following output:
+</p>
+<pre>
+    [1][2][4][3][6][9][7][8]
+</pre>
+<p>Clearly, the destination array <i>c</i> is not sorted.
+</p>
+<p>The <i>merge</i> pattern is used to ensure the resulting array is
+sorted and is based upon the <i>filtered-accumulate</i> pattern.
+The twist is we only accumulate an item <i>if</i> it is the smallest item
+in the two arrays that has not already been accumulated.
+We start by keeping two index variables,
+one pointing to the smallest element in the first source and
+one pointing to the smallest element in second source.
+Now, we loop, similar to <i>shuffle</i>. The difference is we
+will only advance the index variable of a source array <i>if</i>
+we use the smallest of its unused elements:
+</p>
+<pre>
+    i = 0;          //index of the smallest unused element in a
+    j = 0;          //index of the smallest unused element in b
+    spot = 0;
+    while (i &lt; aSize &amp;&amp; j &lt; bSize)
+        {
+        if (a[i] &lt; b[j])    //a's element is smaller, use it
+            {
+            c[spot] = a[i];
+            spot++;
+            i++;
+            }
+        else                //b's element is smaller, use it
+            {
+            c[spot] = b[j];
+            spot++;
+            j++;
+            }
+        }
+</pre>
+<p>Inside the loop, we test to see if the smallest unused element
+in <i>a</i> is smaller than the smallest unused element in <i>b</i>.
+If it is, we copy the element from <i>a</i> to <i>c</i> and increment
+<i>a</i>'s
+index variable, "using up" the smallest unused value.
+Likewise, we do the same for <i>b</i> if <i>b</i>'s element is smaller.
+</p>
+<p>The <i>while</i> loop ends when one of the source arrays is exhausted.
+At this point, we just copy over the elements in the unexhausted
+source, just the same as we did for <i>shuffle</i>. Putting it
+all together yields:
+</p>
+<pre>
+    int *
+    merge(int *a,int aSize,int *b,int bSize)
+        {
+        int *c; //a pointer to the destination array
+        int i,j,spot;
+        
+        c = malloc(sizeof(int) * (aSize+bSize)); //malloc failure test omitted
+
+        //merge until one source is exhausted
+        spot = 0;
+        for (i = 0,j = 0; i &lt; aSize &amp;&amp; j &lt; bSize; ++spot)
+            {
+            if (a[i] &lt; b[j])    //a's element is smaller, use it
+                {
+                c[spot] = a[i];
+                i++;
+                }
+            else                //b's element is smaller, use it
+                {
+                c[spot] = b[j];
+                j++;
+                }
+            }
+
+        //i is either equal to aSize or j is equal to bSize
+        //spot holds the index of the 1st available slot in c
+
+        // copy over leftover elements in a, if any
+        for ( ; i &lt; aSize; ++i)
+            {
+            c[spot] = a[i];
+            ++spot;
+            }
+
+        // copy over leftover elements in b, if any
+        for ( ; j &lt; bSize; ++j)
+            {
+            c[spot] = b[j];
+            ++spot;
+            }
+
+        //c now holds the shuffle of a and b
+        }
+</pre>
+<p>The main <i>while</i> loop has been rewritten as a <i>for</i> loop
+by taking advantage
+of <i>for</i> loop flexibility. Note we can initialize two (or more) variables
+in the INIT portion of the loop by separating the initializations with
+a comma. We also moved the increment of spot to the STEP portion
+since we increment spot regardless of the which array held the smaller
+value. We do <i>not</i> want to increment <i>i</i> and <i>j</i>
+in the STEP portion since
+those indices only get incremented when their arrays hold the smallest
+unused elements.
+</p>
+
+<h2><a name="id15">The <i>fossilized</i> pattern</a></h2><p>
+Sometimes, a loop is so ill-specified that it never ends. This
+is known as an <i>infinite loop</i>. Of the
+two loops we are investigating, the <i>while</i> loop is the most
+susceptible to infinite loop errors. One common mistake
+is the <i>fossilized</i> pattern, in which the index variable never
+changes so that the loop condition never becomes false:
+</p>
+<pre>
+    i = 0;
+    while (i &lt; n)
+        {
+        printf("%d\n",i);
+        }
+</pre>
+<p>This loop keeps printing until you terminate the program with
+prejudice. The reason is because <i>i</i> never changes; presumably a
+statement to increment <i>i</i> at the bottom of the loop body has
+been omitted.
+</p>
+
+<h2><a name="id16">The <i>missed-condition</i> pattern</a></h2><p>
+With the missed condition pattern, the index variable is updated, but
+it is updated in such a way that the loop condition
+never evaluates to false.
+</p>
+<pre>
+    i = getAnInteger();
+    while (i != 0)
+        {
+        printf("%d\n",i);
+        i -= 2;
+        }
+</pre>
+<p>If the <i>getAnInteger</i> returns a positive, even number, then the loop
+terminates as expected. However, if <i>getAnInteger</i> returns 
+an odd or negative number, the loop never ends. Suppose <i>i</i> starts
+out with the value 5. The loop test keeps succeeding and the value of
+<i>i</i> keeps being printed:
+</p>
+<pre>
+    5
+    3
+    1
+    -1
+    -3
+    -5
+    -7
+    ...
+</pre>
+<p>Here, the variable <i>i</i> has skipped over the value used for
+terminating the loop; <i>i</i> never becomes zero.
+Thus, the loop condition never fails and the loop
+becomes infinite.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_15.html">
+  <img border="0" alt="Scope" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_17.html">
+  <img border="0" alt="Input and Loops" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Loops</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

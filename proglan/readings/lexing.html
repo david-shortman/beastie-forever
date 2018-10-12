@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>lexing</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Programming Languages</span>
+<br/>
+<br/>
+Lexical Analysis
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="lexing.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Introduction
+<br/>
+</h2><!-- section ENDED -->
+
+When implementing a programming language, the first step
+is reading in the source code of a program written in that language.
+Typically, the source code is stored as a file of characters.
+To read in a source code file, one groups the important
+individual characters
+into tokens and discards the unimportant characters. For example,
+consider the Python program:
+<br/>
+
+<pre>
+    print &#39;Hello World!&#39;
+</pre>
+
+There are two tokens in this program, 
+<code>print</code> and 
+<code>&#39;Hello World!&#39;</code>.
+The unimportant characters are the space that follows the token 
+<code>print</code>
+and the newline that follows the token 
+<code>&#39;Hello World&#39;</code>. Note that
+the space within the token 
+<code>&#39;Hello World!&#39;</code> <i>is</i> important, so the
+subsystem for reading in source code must be smart enough to distinguish
+between important and unimportant spaces, among other things.
+This subsystem is called <i>lexical analysis</i>.
+<br/>
+<!-- section -->
+<h2> Lexical Analysis
+<br/>
+</h2><!-- section ENDED -->
+
+Lexical analysis is the process of identifying tokens in a
+file of characters. The analyzer is also tasked with
+categorizing those tokens as to the kind of thing they are.
+This <i>kind of thing</i> is known as a <i>type</i>.
+You may think of a token as a word and
+a type as a part of speech.
+For example, the English sentence:
+<br/>
+
+<pre>
+    I like yellow peaches.
+</pre>
+
+is composed of five tokens, 
+<code>I</code> (pronoun), 
+<code>like</code> (verb),
+
+<code>yellow</code> (adjective),
+
+<code>peaches</code> (noun), and 
+<code>.</code> (punctuation).
+The tokens have been annotated with their types (parts of speech).
+Note that the spaces and the newline, while important for
+separating the characters of adjacent tokens, are not saved when
+the tokens are extracted from the sentence.
+<br/>
+<br/>
+The same process that you use in identifying tokens in English prose is used
+for identifying token - type pairs in source code.
+A token - type pair is known as a <i>lexeme</i> lexical analysis is
+the process of converting characters into lexemes.
+lexical analyzer maps a stream of characters onto a stream of lexemes.
+<br/>
+<!-- subsection -->
+<h3> A lexeme data structure
+<br/>
+</h3><!-- subsection ENDED -->
+
+At a minimum, a lexeme is an object that holds at least two pieces of
+information, the
+type of the token and, in some cases, the actual token itself. As will
+be
+seen further on, a lexeme representing a semicolon would generally only
+use
+the type field, since the actual word 
+<code>&quot;;&quot;</code> can easily be reconstructed
+from
+the type information. A data structure for
+holding the parts of a lexeme
+might look
+like:
+<br/>
+
+<pre>
+    class lexeme implements types
+        { 
+        String type; 
+        String word; 
+        }
+</pre>
+
+With respect to
+the lexemes found in a programming language, it may be efficient to
+store some of the words as other than strings. For example, numbers may
+best be stored as native numbers rather than as strings.
+To reflect this idea, we add a field corresponding to each of the
+primitive
+types in the language we are to implement:
+<br/>
+
+<pre>
+    class lexeme extends types
+        { 
+        String type; 
+        String string; 
+        int integer; 
+        double real; 
+        }
+</pre>
+
+Since memory is relatively cheap, we will not worry about the fact that
+for any given lexeme, two of the three value fields will remain empty .
+<br/>
+<br/>
+As an example of lexical analysis with respect to computer
+languages, consider
+some simple expressions in Java:
+<br/>
+
+<pre>
+    int a = 2; 
+    double zeta; 
+
+    if (a != 0) 
+        a = 64.0 / a; 
+    zeta = log(a*a,2); 
+
+    System.out.println(&quot;the value of zeta is &quot; + zeta);
+</pre>
+
+The parts of speech in this language are <i>keywords</i>, <i>variables</i>,
+<i>operators</i>, <i>numbers</i>, and <i>punctuation</i> (in order of
+appearance). Now consider a program for taking this source code and
+producing the lexical stream. The function that reads a portion of the
+input and produces the
+next lexeme has historically been called <i>lex</i>.
+<br/>
+<!-- subsection -->
+<h3> The <i>lex</i> function
+<br/>
+</h3><!-- subsection ENDED -->
+
+How does the <i>lex</i>
+function
+decide what are the tokens and what type a particular token has?
+That depends on the language being implemented.
+For example, an <i>integer</i> in the language might be described
+by this simple rule:
+<br/>
+<br/>
+<span class="indent">
+<i>an integer is either a minus sign followed by one or more
+digits or just a digit followed by any number of digits</i>
+</span>
+
+<br/>
+A <i>variable</i>, on the other hand, has a different rule:
+<br/>
+<br/>
+<span class="indent">
+<i>a variable is token whose first character is
+a letter and whose subsequent characters, if any,
+are letters or digits</i>
+</span>
+
+<br/>
+Often, in a language, a keyword fits the variable rule but
+it is not, of course, a variable.
+Therefore, rules for identifying keywords must be checked before
+checking the variable rule.
+For example, the keyword
+<i>if</i> has
+the following rule:
+<br/>
+<br/>
+<span class="indent">
+<i>the</i> 
+<code>if</code> <i>keyword is an</i> 
+<code>&#39;i&#39;</code> <i>followed by an</i> 
+<code>&#39;f&#39;</code>
+</span>
+
+<br/>
+Putting these ideas together, it becomes rather simple to write the lex
+function:
+<br/>
+
+<pre>
+    function lex() 
+        { 
+        char ch;
+
+       skipWhiteSpace();  //why do we skip whitespace?
+
+        ch = Input.read(); 
+
+        if (Input.failed) return new lexeme(ENDofINPUT); 
+
+        switch(ch) 
+            { 
+            // single character tokens 
+
+            case &#39;(&#39;: return new lexeme(OPAREN); 
+            case &#39;)&#39;: return new lexeme(CPAREN); 
+            case &#39;,&#39;: return new lexeme(COMMA); 
+            case &#39;+&#39;: return new lexeme(PLUS); //what about ++ and += ?
+            case &#39;*&#39;: return new lexemeTIMES); 
+            case &#39;-&#39;: return new lexeme(MINUS); 
+            case &#39;/&#39;: return new lexeme(DIVIDES); 
+            case &#39;&lt;&#39;: return new lexeme(LESSTHAN); 
+            case &#39;&gt;&#39;: return new lexeme(GREATERTHAN); 
+            case &#39;=&#39;: return new lexeme(ASSIGN); 
+            case &#39;;&#39;: return new lexeme(SEMICOLON); 
+
+            //add any other cases here
+
+            default: 
+                // multi-character tokens (only numbers, 
+                // variables/keywords, and strings) 
+                if (Character . isDigit(ch)) 
+                    { 
+                    Input.pushback(ch); 
+                    return lexNumber(); 
+                    } 
+                else if (Character . isLetter(ch)) 
+                    { 
+                    Input.pushback(ch); 
+                    return lexVariableOrKeyword();
+                    } 
+                else if (ch == &#39;\&quot;&#39;) 
+                    { 
+                    return lexString(); 
+                    } 
+                else
+                    return new Lexeme(UNKNOWN, ch); 
+            } 
+        }
+</pre>
+
+<!-- subsection -->
+<h3> Specific lexing functions
+<br/>
+</h3><!-- subsection ENDED -->
+
+In this (partial) implementation of <i>lex</i>,
+you can see a number of helper functions:
+<i>read</i> and <i>pushback</i>,
+<i>skipWhitespace</i>,
+<i>lexVariableOrKeyword</i>,
+<i>lexNumber</i>, and
+<i>lexString</i>.
+<br/>
+<br/>
+The <i>read</i> function reads a single character from the input stream,
+while the <i>pushback</i> function puts a previously read character
+back on the input stream to be read again. If your implementation
+language does not support pushback, you can easily implement your own
+pushback system
+with two global variables:
+<br/>
+
+<pre>
+    Char PushbackCharater;
+    Boolean CharacterHasBeenPushed = FALSE;
+
+    function myRead()
+        {
+        if (CharacterHasBeenPushed)
+            {
+            CharacterHasBeenPushed = FALSE;
+            return PushbackCharacter;
+            }
+        else
+            return Input.read();
+        }
+
+    function myPushback(ch)
+        {
+        if (CharacterHasBeenPushed) Fatal(&quot;too many pushbacks&quot;);
+        CharacterHasBeenPushed = TRUE;
+        PushbackCharacter = ch;
+        }
+    </pre>
+
+This implementation only allows one character of pushback; to push
+back multiple characters, use a stack instead.
+Most lexical analyzers need only one character of pushback;
+the <i>skipWhitespace</i> function illustrates its use:
+<br/>
+
+<pre>
+    function skipWhiteSpace()
+        {
+        var chl;
+        while (isWhiteSpace(ch))
+            ch = Input.read();
+
+        // the character that got us out of the loop was NOT whitespace
+        // so we need to push it back so it can be read again.
+
+        Input.pushback(ch);
+        }
+    </pre>
+
+Most modern programming languages are either completely or mostly
+<i>free format</i>. Free format means that, in most cases, you can
+place as many spaces, tabs, and newlines as you wish between the
+tokens making up the source code of a program. Collectively,
+spaces, tabs, and newlines are known as <i>whitespace</i>.
+Source code comments are another kind of whitespace; comments
+are usually dealt with inside the whitespace while loop.
+We use the function <i>skipWhiteSpace</i>
+to get past the arbitrary amounts of whitespace, so that the next character
+read from the input stream is the start of the next token in
+the source code.
+<br/>
+<br/>
+The function <i>lexVariableOrKeyword</i> is charged with reading the
+complete variable (or keyword) token and then distinguishing between
+the two:
+<br/>
+
+<pre>
+    function lexVariableOrKeyword()
+        {
+        var ch;
+        String token = &quot;&quot;;
+        
+        ch = Input.read();
+        while (isLetter(ch) || isDigit(ch))
+            {
+            token = token + ch; //grow the token string
+            ch = Input.read();
+            }
+
+        //push back the character that got us out of the loop
+        //it may be some kind of punctuation
+
+        Input.pushback(ch);
+
+        //token holds either a variable or a keyword, so figure it out
+
+        if (stringEquals(token,&quot;if&quot;)) return new Lexeme(IF);
+        else if (stringEquals(token,&quot;else&quot;)) return new Lexeme(ELSE);
+        else if (stringEquals(token,&quot;while&quot;)) return new Lexeme(WHILE);
+        ... //more keyword testing here
+        else //must be a variable!
+            return new Lexeme(VARIABLE,token);
+        }
+    </pre>
+
+The
+implementations of <i>lexNumber</i> and <i>lexString</i>
+are similar to <i>lexVariable</i>.
+<br/>
+<br/>
+The tokens 
+<code>ENDofINPUT</code>, 
+<code>PLUS</code>, 
+<code>MINUS</code>, 
+<code>WHILE</code>
+etc. are String constants, defined in the class/module <i>types</i>,
+and are used to fill out the type component of a lexeme. Note that when
+input is
+exhausted, <i>lex</i> repeatedly returns the 
+<code>ENDofINPUT</code>
+lexeme.
+<br/>
+<!-- subsection -->
+<h3> Lexically scanning a file
+<br/>
+</h3><!-- subsection ENDED -->
+
+When given the input:
+<br/>
+
+<pre>
+    int alpha = 10; 
+
+    while (alpha &gt; 0) 
+          { 
+          System.out.println(&quot;alpha is &quot; + alpha); 
+          alpha = alpha - 1; 
+          }
+</pre>
+
+repeated calls to <i>lex</i> might produce the following stream of
+lexemes:
+<br/>
+
+<pre>
+    INTEGER_TYPE
+    VARIABLE alpha 
+    ASSIGN 
+    INTEGER 10 
+    SEMICOLON 
+    WHILE 
+    OPEN_PAREN 
+    VARIABLE alpha 
+    GREATER_THAN 
+    INTEGER 0 
+    CLOSE_PAREN 
+    OPEN_BRACE 
+    VARIABLE System 
+    DOT
+    VARIABLE out
+    DOT
+    VARIABLE println
+    OPEN_PAREN 
+    STRING &quot;alpha is &quot; 
+    PLUS 
+    VARIABLE alpha 
+    CLOSE_PAREN 
+    SEMICOLON 
+    VARIABLE alpha 
+    ASSIGN 
+    VARIABLE alpha 
+    MINUS 
+    INTEGER 1
+    SEMICOLON
+    CLOSE_BRACE
+    ENDofINPUT
+</pre>
+
+A program which repeatedly calls <i>lex</i> and displays the resulting
+lexemes is called a <i>scanner</i>:
+<br/>
+
+<pre>
+    function scanner(filename) 
+        { 
+        var token; 
+        var i = new lexer(fileName);
+
+        token = i.lex(); 
+        while (token.type != ENDofINPUT) 
+            { 
+            Lexeme.display(token); 
+            token = i.lex(); 
+            } 
+        }
+</pre>
+
+Lexical analysis is the very first phase of implementing a programming
+language. The next phase, called <i>syntactic analysis</i> or <i>recognition</i>,
+ensures that the order of the lexemes makes logical sense.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

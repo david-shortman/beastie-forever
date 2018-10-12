@@ -1,0 +1,702 @@
+var __draw =
+    {
+    var lineColor = :black;
+    var fillColor = :black;
+    var textColor = :black;
+    var flyname = ".draw.fly";
+    var outputPort = :stdout;
+    var outputName;
+    var width;
+    var height;
+    var textSize = :large;
+    var textDirection = :horizontal;
+    var shower = "display";
+    var imageType = "gif";
+    var lineWidth = 1;
+    var arrowheadLength = 10;
+    var dx = 0;
+    var dy = 0;
+    var flip = 1;
+    function trx($x) { $x = force($x) + dx; }
+    function try($y)
+        { $y = if(flip == 1,force($y) + dy,force($y) * flip + dy - 1); }
+    this;
+    };
+
+function openImage(output,width,height,@)
+    {
+    if(@ != :null,__draw . flyname = @[0]);
+    //__draw . outputPort = open(__draw . flyname,:write);
+    __draw . outputPort = popen("flydraw",:write);
+    inspect(__draw . outputPort);
+    __draw . outputName = output;
+    __draw . width = width;
+    __draw . height = height;
+    newImage(width,height);
+    }
+
+function closeImage()
+    {
+    println("generating ",__draw . outputName,".",
+        __draw . imageType + "...");
+    emit("output " + __draw . outputName + "." + __draw . imageType);
+    pclose(__draw . outputPort);
+    }
+
+function showImage()
+    {
+    system(__draw . shower + " "
+        + __draw . outputName + "." + __draw . imageType);
+    }
+
+function loadImage(img)
+    {
+    if (prefix(img,7) == "http://")
+        {
+        var spot;
+        system("wget " + img);
+        while ((spot = stringUntil(img,"/")) < length(img))
+            {
+            img = suffix(img,spot + 1);
+            }
+        }
+    copyresized(-1,-1,-1,-1,0,0,__draw . width - 1,__draw . height - 1,img);
+    }
+
+function output(fileName)
+    {
+    emit("output ",fileName);
+    }
+
+function newImage(w,h)
+    {
+    emit("new ",w,",",h);
+    }
+
+function rotateImage(degrees)
+    {
+    var file = __draw . outputName + "." + __draw . imageType;
+    emit("output " + file);
+    pclose(__draw . outputPort);
+    system("convert " + file + " -rotate " + degrees + " " + file + ".rot");
+    __draw . outputPort = popen("flydraw",:write);
+    newImage(__draw . width,__draw . height);
+    loadImage(file + ".rot");
+    }
+
+function translate(dx,dy)
+    {
+    __draw . dx = __draw . dx + dx;
+    __draw . dy = __draw . dy + (dy * __draw . flip);
+    }
+
+function flip()
+    {
+    translate(0, __draw . height);
+    __draw . flip = __draw . flip * -1;
+    }
+
+//**** graphic objects ******************************************************/
+
+function copy(x,y,x1,y1,x2,y2,fileName)
+    {
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    emitCSV("copy ",list(x,y,x1,y1,x2,y2,fileName));
+    }
+
+var insert = copy;
+
+function copyresized(x1,y1,x2,y2,dx1,dy1,dx2,dy2,fileName)
+    {
+    checkX(dx1,dx2);
+    checkY(dy1,dy2);
+    __draw . trx(dx1);
+    __draw . try(dy1);
+    __draw . trx(dx2);
+    __draw . try(dy2);
+    if (__draw . flip == -1)
+        {
+        emitCSV("copyresized",list(x1,y1,x2,y2,dx1,dy2,dx2,dy1,fileName));
+        }
+    else
+        {
+        emitCSV("copyresized",list(x1,y1,x2,y2,dx1,dy1,dx2,dy2,fileName));
+        }
+    }
+
+function line(x1,y1,x2,y2,@)
+    {
+    checkX(x1,x2);
+    checkY(y1,y2);
+    __draw . trx(x1);
+    __draw . try(y1);
+    __draw . trx(x2);
+    __draw . try(y2);
+    emitCSV("line",list(x1,y1,x2,y2,
+        if (@ == :null,__draw . lineColor,@ . 0)));
+    }
+
+function dhline(x,y,@)
+    {
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    emitCSV("dhline",list(x,y,if (@ == :null,__draw . lineColor,@ . 0)));
+    }
+
+var dashedhorizontalline = dhline;
+var dashhorizontalline = dhline;
+var hdline = dhline;
+var horizontaldashedline = dhline;
+
+function dlines(@)
+    {
+    emitCSV("dlines",@);
+    }
+
+var  dashedlines = dlines;
+
+function dvline(x,y,@)
+    {
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    emitCSV("dvline",list(x,y,if (@ == :null,__draw . lineColor,@ . 0)));
+    }
+
+var dashedverticalline = dvline;
+var dashverticalline = dvline;
+var vdline = dvline;
+var verticaldashedline = dvline;
+
+function fill(x,y,@)
+    {
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    emitCSV("fill",list(x,y,if (@ == :null,__draw . fillColor,@ . 0)));
+    }
+
+var flood = fill;
+var floodfill = fill;
+
+function filltoborder(x,y,boundingColor,@)
+    {
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    emitCSV("filltoBorder",list(x,y,boundingColor,
+        if (@ == :null,__draw . fillColor,@ . 0)));
+    }
+
+function pointsFunction(name,color,min,data)
+    {
+    var x,y;
+    var items = :null;
+
+    if (type(data . 0) == :SYMBOL || type(data . 0) == :STRING)
+        {
+        color = data . 0;
+        data = tail(data);
+        }
+
+    if (length(data) < min || length(data) % 2 == 1)
+        {
+        throw(malformedCall,"the call to fpoly was malformed");
+        }
+
+    x = data . 0;
+    y = data . 1;
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    data = tail(tail(data));
+    items = items + list(x,y);
+
+    while (data != :null)
+        {
+        x = data . 0;
+        y = data . 1;
+        checkX(x);
+        checkY(y);
+        __draw . trx(x);
+        __draw . try(y);
+        data = tail(tail(data));
+        items = items + list(x,y);
+        }
+
+    emitCSV(name,color join items);
+    }
+
+function fpoly(@)
+    {
+    pointsFunction("fpoly",__draw . fillColor,6,@);
+    }
+
+var filledpoly = fpoly;
+var filledpolygon = fpoly;
+var fpolygon = fpoly;
+
+function poly(@)
+    {
+    pointsFunction("poly",__draw . lineColor,6,@);
+    }
+
+function rays(@)
+    {
+    pointsFunction("rays",__draw . lineColor,6,@);
+    }
+
+function text(x,y,str,@)
+    {
+    var color = __draw . textColor;
+
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+
+    if (length(@) >= 1,color = @ . 0);
+
+    if (__draw . textDirection == :horizontal)
+        {
+        emitCSV("text ",list(color,x,y,__draw . textSize,str));
+        }
+    else
+        {
+        emitCSV("textup ",list(color,x,y,__draw . textSize,str));
+        }
+    }
+
+function transparent(color)
+    {
+    emit("transparent ",color);
+    }
+
+function xrange(x1,x2)
+    {
+    checkX(x1,x2);
+    __draw . trx(x1);
+    __draw . trx(x2);
+    emitCSV("xrange",list(x1,x2));
+    }
+
+var rangex = xrange;
+
+function yrange(y1,y2)
+    {
+    checkY(y1,y2);
+    __draw . try(y1);
+    __draw . try(y2);
+    emitCSV("yrange",list(y1,y2));
+    }
+
+var rangey = yrange;
+
+function arc(x,y,w,h,a1,a2,@)
+    {
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    emitCSV("arc",list(x,y,w,h,a1,a2,
+        if (@ == :null,__draw . lineColor,@ . 0)));
+    }
+
+function arrow(x1,y1,x2,y2,@)
+    {
+    checkX(x1,x2);
+    checkY(y1,y2);
+    __draw . trx(x1);
+    __draw . try(y1);
+    __draw . trx(x2);
+    __draw . try(y2);
+    emitCSV("arrow",list(x1,y1,x2,y2,__draw . arrowheadLength,
+        if (@ == :null,__draw . lineColor,@ . 0)));
+    }
+
+function darrow(x1,y1,x2,y2,@)
+    {
+    checkX(x1,x2);
+    checkY(y1,y2);
+    __draw . trx(x1);
+    __draw . try(y1);
+    __draw . trx(x2);
+    __draw . try(y2);
+    emitCSV("darrow",list(x1,y1,x2,y2,__draw . arrowheadLength,
+        if (@ == :null,__draw . lineColor,@ . 0)));
+    }
+
+var dasharrow = darrow;
+var dashedarrow = darrow;
+
+function frect(x1,y1,x2,y2,@)
+    {
+    checkX(x1,x2);
+    checkY(y1,y2);
+    __draw . trx(x1);
+    __draw . try(y1);
+    __draw . trx(x2);
+    __draw . try(y2);
+    emitCSV("frect",list(x1,y1,x2,y2,
+        if (@ == :null,__draw . fillColor,@ . 0)));
+    }
+
+var filledrect = frect;
+var fillecrectangle = frect;
+var frectangle = frect;
+
+function ftriangle(x1,y1,x2,y2,x3,y3,@)
+    {
+    checkX(x1,x2,x3);
+    checkY(y1,y2,x3);
+    __draw . trx(x1);
+    __draw . try(y1);
+    __draw . trx(x2);
+    __draw . try(y2);
+    __draw . trx(x3);
+    __draw . try(y3);
+    inspect(list(x1,x2,x3,y1,y2,y3));
+    emitCSV("ftriangle",list(x1,y1,x2,y2,x3,y3,
+        if (@ == :null,__draw . fillColor,@ . 0)));
+    }
+
+function pixel(x,y,@)
+    {
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    emitCSV("setpixel",list(x,y,if (@ == :null,__draw . fillColor,@ . 0)));
+    }
+
+function fsquare(x,y,s,@)
+    {
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    emitCSV("fsquare",list(x,y,s,if (@ == :null,__draw . fillColor,@ . 0)));
+    }
+
+var filledsquare = fsquare;
+
+function rect(x1,y1,x2,y2,@)
+    {
+    checkX(x1,x2);
+    checkY(y1,y2);
+    __draw . trx(x1);
+    __draw . try(y1);
+    __draw . trx(x2);
+    __draw . try(y2);
+    emitCSV("rect",list(x1,y1,x2,y2,
+        if (@ == :null,__draw . lineColor,@ . 0)));
+    }
+
+var rectangle = rect;
+
+function fcircle(x,y,d,@)
+    {
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    emitCSV("fcircle",list(x,y,d,
+        if (@ == :null,__draw . fillColor,@ . 0)));
+    }
+
+var ball = fcircle;
+var disk = fcircle;
+var filledcircle = fcircle;
+
+function circle(x,y,d,@)
+    {
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    emitCSV("circle",list(x,y,d,
+        if (@ == :null,__draw . lineColor,@ . 0)));
+    }
+
+function fellipse(x,y,w,h,@)
+    {
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    emitCSV("fellipse",list(x,y,w,h,
+        if (@ == :null,__draw . fillColor,@ . 0)));
+    }
+
+var filledellipse = fellipse;
+
+function ellipse(x,y,w,h,@)
+    {
+    checkX(x);
+    checkY(y);
+    __draw . trx(x);
+    __draw . try(y);
+    emitCSV("ellipse",list(x,y,w,h,
+        if (@ == :null,__draw . lineColor,@ . 0)));
+    }
+
+function frectangle-wh(x,y,w,h,@)
+    {
+    var u = x + w;
+    var v = y + h;
+    apply(frectangle,list(x,y,u,v) + @);
+    }
+
+function rectangle-wh(x,y,w,h,@)
+    {
+    var u = x + w;
+    var v = y + h;
+    apply(rectangle,list(x,y,u,v) + @);
+    }
+
+function grid(x,y,cellWidth,cellHeight,rows,columns,@)
+    {
+    var i;
+    var length;
+    var color = __draw . lineColor;
+
+    if (@ != :null) { color = @[0]; }
+
+    length = cellWidth * columns;
+    for (i = 0, i <= rows, i += 1)
+        {
+        var yloc = i * cellHeight + y;
+        line(x,yloc,x + length,yloc,color);
+        }
+    length = cellHeight * rows;
+    for (i = 0, i <= columns, i += 1)
+        {
+        var xloc = i * cellWidth + x;
+        line(xloc,y,xloc,y + length,color);
+        }
+    }
+
+function flydraw(str)
+    {
+    emit(str);
+    }
+
+function emit(@)
+    {
+    var oldOutputPort = setPort(__draw . outputPort);
+    apply(println,@);
+    setPort(oldOutputPort);
+    }
+
+function emitCSV(name,items)
+    {
+    var oldOutputPort = setPort(__draw . outputPort);
+
+    print(name," ");
+    while (items != :null)
+        {
+        print(items . 0);
+        items = tail(items);
+        if (items != :null)
+            {
+            print(",");
+            }
+        }
+    println();
+
+    setPort(oldOutputPort);
+    }
+
+function setLineColor(color)
+    {
+    var old = __draw . lineColor;
+    __draw . lineColor = color;
+    old;
+    }
+
+function getLineColor()
+    {
+    __draw . lineColor;
+    }
+
+function setFillColor(color)
+    {
+    var old = __draw . fillColor;
+    __draw . fillColor = color;
+    old;
+    }
+
+function getFillColor()
+    {
+    __draw . fillColor;
+    }
+
+function setTextColor(color)
+    {
+    var old = __draw . textColor;
+    __draw . textColor = color;
+    old;
+    }
+
+function getTextColor()
+    {
+    __draw . textColor;
+    }
+
+function setTextSize(size)
+    {
+    var old = __draw . textSize;
+    __draw . textSize = size;
+    old;
+    }
+
+function getTextSize()
+    {
+    __draw . textSize;
+    }
+
+function setTextDirection(dir)
+    {
+    var old = __draw . textDirection;
+    __draw . textDirection = dir;
+    old;
+    }
+
+function getTextDirection()
+    {
+    __draw . textDirection;
+    }
+
+function setImageType(type)
+    {
+    var old = __draw . imageType;
+    __draw . imageType = type;
+    old;
+    }
+
+function getImageType()
+    {
+     __draw . imageType;
+    }
+
+function setDisplay(s)
+    {
+    var old = __draw . shower;
+    __draw . shower = s;
+    old;
+    }
+
+function getDisplay()
+    {
+    __draw . shower;
+    }
+
+function setLineWidth(w)
+    {
+    var old = __draw . lineWidth;
+    __draw . lineWidth = w;
+    emit("linewidth ",w);
+    old;
+    }
+
+function getLineWidth()
+    {
+    __draw . lineWidth;
+    }
+
+function setArrowTipSize(w)
+    {
+    var old = __draw . arrowheadLength;
+    __draw . arrowheadLength = w;
+    old;
+    }
+
+function getArrowTipSize()
+    {
+    __draw . arrowheadLength;
+    }
+
+function checkX($)
+    {
+    while($ != :null)
+        {
+        var z = force(head($));
+        var tz = z  + __draw . dx;
+        if (tz < 0 || tz >= __draw . width)
+            {
+            throw(:outOfBounds,string(head($) . context . constructor . name)
+                + ": x value (" + z + ") is out of bounds");
+            }
+        $ = tail($);
+        }
+    }
+
+function checkY($)
+    {
+    while($ != :null)
+        {
+        var z = force(head($));
+        var tz = z * __draw . flip + __draw . dy;
+        if (__draw . flip == 1 && (tz < 0 ||  tz >= __draw . height))
+            {
+            throw(:outOfBounds,string(head($) . context . constructor . name)
+                + ": y value (" + z + ") is out of bounds");
+            }
+        else if (__draw . flip == -1 && (tz <= 0 || tz > __draw . height))
+            {
+            throw(:outOfBounds,string(head($) . context . constructor . name)
+                + ": y value (" + z + ") is out of bounds");
+            }
+        $ = tail($);
+        }
+    }
+
+
+openImage("test",400,400);
+
+//flip();
+
+setLineWidth(4);
+line(30,10,60,10,:orange);
+setLineWidth(1);
+fcircle(50,50,20,:red);
+circle(50,50,20,:blue);
+frectangle(100,100,120,150,:yellow);
+rectangle(100,100,120,150,:black);
+frectangle-wh(50,250,50,20,:purple);
+rectangle-wh(50,250,50,20,:black);
+arrow(0,200,200,180);
+darrow(0,180,200,200);
+dlines(:green,250,100,250,150,300,150,250,100);
+fellipse(150,50,20,40,:green);
+ellipse(150,50,20,40,:red);
+setLineWidth(3);
+arc(200,200,40,80,0,180,:blue);
+setLineWidth(1);
+dhline(200,200);
+dvline(200,200);
+circle(350,150,50);
+fill(350,150,:pink);
+fpoly(:violet,100,250,150,250,150,300,100,250);
+poly(:green,100,250,150,250,150,300,100,250);
+fsquare(350,50,25);
+ftriangle(350,50,375,50,363,15,:brown);
+text(56,157,"Hello, World!");
+rays(:orange,200,200,200,150,150,150,250,150);
+output("test.gif");
+copyresized(0,0,400,400,300,300,399,399,"test.gif");
+rotateImage(90);
+rotateImage(90);
+
+closeImage();
+
+showImage();

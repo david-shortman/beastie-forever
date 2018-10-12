@@ -1,0 +1,458 @@
+include("basics");
+include("matrix");
+include("polynomial");
+
+var Title;
+function plotHelp()
+{
+	println("replot()		: replots the graph");
+	println("xLabel(label)		: labels the x-axis");
+	println("yLabel(label)		: labels the y-axis");
+	println("xRange(x1,x2)		: sets the range over which x is plotted from x1 to x2");
+	println("yRange(y1,y2)		: sets the range over which y is plotted from y1 to y2 ");
+	println("autoscale()		: automatically sets the range for the x and y axis");
+	println("moveKey(x1,y1)		: moves the key to the (x1,y1) coordinates");
+	println("removeKey()		: removes the key from the graph entirely");
+	println("labelPoint(x1,y1,label) : creates a label at point (x1,y1)");
+	println("logscale()		: sets the scale of the graph to log base 10");
+	println("xLogscale()		: sets only the x-axis scale to log base 10");
+	println("yLogscale()		: sets only the y-axis scale to log base 10");
+	println("setxTics(xs)		: uses an array to set each individual tic on the x-axis");
+	println("removexTics()		: removes the tics from the x-axis");
+	println("setyTics(ys)		: uses an array to set each individual tic on the y-axis");
+	println("removeyTics()		: removes the tics from the y-axis");
+	println("trendPoly(x,y,n,m)	: creates a trendline of polynomial degree n formatted to disply decimal points up to m");
+	println("addPoints(col1,col2,p)	: adds the points p to the dataset then plots the two columns selected. can be left blank to merely plot two different columns already existing");
+}
+
+function plotXY(xs,ys,@)
+    {
+    var name = if(@ == :null,"data",head(@));
+    var port = open(name,:write);
+    var oldPort = setPort(port);
+
+	Title = name;
+
+	//inspect(xs);
+	//inspect(ys);
+	
+    while (xs != :null && ys != :null)
+        {
+	println(head(xs),"\t",head(ys));
+	xs = tail(xs);
+	ys = tail(ys);
+	}
+
+    close(port);
+    setPort(oldPort);	
+
+	plot_init(name);
+    }
+function plot_init(file)
+{	
+	var port = open(file + "_settings.plot",:write);
+	var oldPort = setPort(port);
+
+	println("#set term png");
+	println("#set output \"",file + ".png\"");
+	println("#");
+	println("#set term jpeg");
+	println("#set output \"",file + ".jpg\"");
+	println("#");
+	println("set title \"",file,"\"");
+	println("set title \"",file,"\"");
+
+	close(port);
+	setPort(oldPort);
+
+	port = open(file + "_exec.plot",:write);	
+	oldPort = setPort(port);
+
+	print("plot \"",file,"\" using 1:2 with points pointtype 7");	
+
+	close(port);
+	setPort(oldPort);
+
+	replot();
+}
+
+function replot()
+{
+	var readPort = open(Title + "_settings.plot",:read);
+	var oldPort = setPort(readPort);
+	
+	var writePort = open(Title + ".plot",:write);
+
+	var s = readLine();	
+	setPort(writePort);
+	println(s);
+
+	while(eof?() != :true)
+	{
+		setPort(readPort);
+		s = readLine();
+		setPort(writePort);
+		println(s);
+	}
+	
+	close(readPort);
+	
+	readPort = open(Title + "_exec.plot",:read);	
+
+	setPort(readPort);
+	s = readLine();
+	setPort(writePort);
+	println(s);
+
+	while(eof?() != :true){
+		setPort(readPort);
+		s = readLine();
+		setPort(writePort);
+		println(s);
+	}
+	close(readPort);	
+
+	close(writePort);
+	setPort(oldPort);
+
+	system("gnuplot -persist " + Title + ".plot");	
+}
+function xLabel(label)
+{
+	var port = open(Title + "_settings.plot",:append);
+	var oldPort = setPort(port);
+	
+	println("set xlabel \"",label,"\"");
+
+	close(port);
+	setPort(oldPort);
+}
+function yLabel(label)
+{
+        var port = open(Title + "_settings.plot",:append);
+        var oldPort = setPort(port);
+
+        println("set ylabel \"",label,"\"");
+
+        close(port);
+        setPort(oldPort);	
+}
+function xRange(x1,x2)
+{
+	var port = open(Title + "_settings.plot",:append);
+	var oldPort = setPort(port);
+
+	println("set xrange [",x1,":",x2,"]");
+
+	close(port);
+	setPort(oldPort);
+}
+function yRange(y1,y2)
+{
+        var port = open(Title + "_settings.plot",:append);
+        var oldPort = setPort(port);
+
+        println("set yrange [",y1,":",y2,"]");
+
+        close(port);
+        setPort(oldPort);
+}
+function autoscale()
+{
+        var port = open(Title + "_settings.plot",:append);
+        var oldPort = setPort(port);
+
+        println("set autoscale");
+
+        close(port);
+        setPort(oldPort);
+}
+function moveKey(x1,x2)
+{
+        var port = open(Title + "_settings.plot",:append);
+        var oldPort = setPort(port);
+
+        println("set key ",x1,",",x2);
+
+        close(port);
+        setPort(oldPort);
+}
+function removeKey()
+{
+        var port = open(Title + "_settings.plot",:append);
+        var oldPort = setPort(port);
+
+        println("unset key");
+
+        close(port);
+        setPort(oldPort);
+}
+function labelPoint(x,y,label)
+{
+        var port = open(Title + "_settings.plot",:append);
+        var oldPort = setPort(port);
+
+        println("set label \"",label,"\" at ",x,",",y);
+
+        close(port);
+        setPort(oldPort);
+}
+function removeLabels()
+{
+        var port = open(Title + "_settings.plot",:append);
+        var oldPort = setPort(port);
+
+        println("unset label");
+
+        close(port);
+        setPort(oldPort);
+}
+function logscale()
+{
+        var port = open(Title + "_settings.plot",:append);
+        var oldPort = setPort(port);
+
+        println("set logscale");
+
+        close(port);
+        setPort(oldPort);
+}
+function yLogscale()
+{
+        var port = open(Title + "_settings.plot",:append);
+        var oldPort = setPort(port);
+
+        println("unset logscale; set logscale y");
+
+        close(port);
+        setPort(oldPort);
+}
+function xLogscale()
+{
+        var port = open(Title + "_settings.plot",:append);
+        var oldPort = setPort(port);
+
+        println("unset logscale; set logscale x");
+
+        close(port);
+        setPort(oldPort);
+}
+
+function setxTics(xs)
+{
+	var port = open(Title + "_settings.plot",:append);
+	var oldPort = setPort(port);
+
+	if(xs != :null){
+		print("set xtics (",head(xs));
+		xs = tail(xs);
+	}
+	while (xs != :null)
+        {
+        	print(",",head(xs));
+        	xs = tail(xs);
+        }
+	print(")\n");
+	
+	close(port);
+	setPort(oldPort);
+}
+function removexTics()
+{
+	var port = open(Title + "_settings.plot",:append);
+	var oldPort = setPort(port);
+	
+	println("unset xtics; set xtics auto");
+
+	close(port);
+	setPort(oldPort);
+}
+function setyTics(ys)
+{
+        var port = open(Title + "_settings.plot",:append);
+        var oldPort = setPort(port);
+
+        if(ys != :null){
+                print("set ytics (",head(ys));
+                ys = tail(ys);
+        }
+        while (ys != :null)
+        {
+                print(",",head(ys));
+                ys = tail(ys);
+        }
+        print(")\n");
+
+        close(port);
+        setPort(oldPort);
+}
+function removeyTics()
+{
+        var port = open(Title + "_settings.plot",:append);
+        var oldPort = setPort(port);
+
+        println("unset ytics; set ytics auto");
+
+        close(port);
+        setPort(oldPort);
+
+}
+function trendPoly(xs,ys,n,dec)
+{
+	var port = open(Title + "_exec.plot",:append);
+	var oldPort = setPort(port);
+
+	var mat = allocateM(n + 1,n + 2);
+
+	var i = 0;
+	var j = 0;
+	var xcon = constant("x");
+	var pol;
+
+	var xmat = allocate(2 * n + 1);
+	var fxmat = allocate(2 * n);
+
+	while(i < length(xmat)){
+		//xmat[i] = sumx(xs,i);
+		xmat[i] = summation(function(k){ return (k ^ i);},x,0);
+		fxmat[i] = sumfx(xs,ys,i);
+		i = i + 1;
+	}
+
+	i = 0;
+
+	while(j < length(mat)){
+		while(i < length(transpose(mat)) - 1){			
+			mat[j][i] = xmat[(i + j)];
+			i = i + 1;
+			if(i == length(mat)){
+				mat[j][i] = fxmat[j];
+			}
+		}
+		i = 0;
+		j = j + 1;
+	}
+
+	mat = rref(mat);
+	i = 0;
+	j = 0;
+	while(j < length(mat)){
+		while(i < length(transpose(mat))){
+			mat[j][i] = fmt("%." + dec + "f",mat[j][i]);
+			i += 1;
+		}
+		i = 0;
+		j += 1;
+	}
+
+	pol = constant(mat[0][length(transpose(mat)) - 1]);
+
+	i = 1;
+	j = length(transpose(mat));
+
+	while(i < length(mat)){
+		pol = poly(term(mat[i][j - 1],xcon,i),pol);
+		i = i + 1;
+	}
+	
+	print(", ",pol . toString());
+
+	close(port);
+	setPort(oldPort);
+
+}
+function sumfx(xs,fx,n){
+	var xtot = 0;
+	var i = 0;
+	var leng = length(xs);
+	while(i < leng){
+		xtot = xtot + (pow(head(xs),n) * head(fx));
+		xs = tail(xs);
+		fx = tail(fx);
+		i = i + 1;
+	}
+	return xtot;
+}
+function addPoints(col1,col2,@){
+	if(@ != :null){apply(addPointsHelper,@);}
+	plotData(col1,col2);	
+}
+function plotData(col1,col2){
+	var writePort = open(Title + "_exec.plot",:append);
+	var oldPort = setPort(writePort);
+	print(", \"",Title,"\""," using ",col1,":",col2," with points pointtype 7");
+	close(writePort);
+	setPort(oldPort);
+}
+function addPointsHelper(@){
+	var readPort = open(Title,:read);
+	var writePort = open(Title + "2",:write);
+	var oldPort = setPort(readPort);
+	var s = readLine();
+	var mat;
+	var rmem;
+	var lmem;
+	var lmemr;
+	var i;
+
+	mat = head(@);
+	while(eof?() != :true){//original >= to new dataset
+		if(s == ""){break();}
+		setPort(writePort);
+		if(mat == :null){
+			println(s + "\t?");
+		}
+		else{
+			println(s + "\t" + head(mat));
+			mat = tail(mat);
+			
+		}
+		setPort(readPort);
+		lmem = s;
+		s = readLine();
+		
+	}
+
+	lmem = length(lmem);
+	if((lmem % 2) == 1){lmem = (lmem / 2) + 1;}
+	else{lmem = lmem / 2;}
+	i = 0;
+
+	setPort(writePort);
+	while(mat != :null){
+		while(i < lmem){
+			print("?\t");
+			i += 1;
+		}
+		i = 0;	
+		println(head(mat));
+		mat = tail(mat);
+	}
+
+
+
+	close(readPort);
+	close(writePort);
+
+	readPort = open(Title + "2",:read);
+	writePort = open(Title,:write);
+	setPort(readPort);
+	s = readLine();
+	setPort(writePort);
+	println(s);
+	while(eof?() != :true){
+		setPort(readPort);
+		s = readLine();
+		setPort(writePort);
+		println(s);
+	}	
+
+	close(readPort);
+	close(writePort);
+
+	if(tail(@) != :null){
+		@ = tail(@);
+		apply(addPointsHelper,@);
+	}
+
+}

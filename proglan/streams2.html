@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>streams2</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+More on Streams
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="streams2.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ The Sieve of Eratosthenes
+
+<br/>
+</h2><!-- section ENDED -->
+
+The Sieve of Eratosthenes is easily implemented as repeated filtering of
+a stream. The assumption is that the first number in the stream is prime.
+<br/>
+
+<pre>
+    (define (sieve s)
+        (cons-stream
+            (stream-car s)
+            (sieve
+                (stream-remove
+                    (lambda (x) (integer? (/ x (stream-car s))))
+                    (stream-cdr s))
+                )
+            )
+        )
+</pre>
+
+where <i>stream-remove</i> removes those elements for which the given predicate
+is true (in the same vein as <i>stream-filter</i>, but I can never remember
+whether <i>filter</i> is supposed to keep or remove). An infinite stream
+of primes is now defined as
+<br/>
+
+<pre>
+    (define primes (seive (stream-cdr integers)))
+</pre>
+
+<!-- section -->
+<h2>
+ Interleaving streams
+<br/>
+</h2><!-- section ENDED -->
+
+Consider combining the stream odds with the streams evens to produce a
+stream of integers (we will assume that odds begins with 1 and evens begins
+with 2). Suppose we placed all the evens after all the odds. This works
+for finite streams (though the integers aren't not in there normal order)
+but this cannot work for infinite streams. In this case, we will never
+see an even integer (even though, technically, they are still there). Here's
+a routine which <i>interleaves</i> two infinite streams so that any particular
+item in the stream can be accessed in a finite amount of time.
+<br/>
+
+<pre>
+    (define (interleave s1 s2)
+        (cons-stream
+            (stream-car s1)
+            (interleave s2 (stream-cdr s1))
+            )
+        )
+</pre>
+
+Note the the arguments in the recursive call are swapped so that the stream
+whose item was not chosen is in line to have an item selected the next
+time. Now we can generate our integers.
+<br/>
+
+<pre>
+    (define integers (interleave odds evens))
+</pre>
+
+What happens if we define our integers this way?
+<br/>
+
+<pre>
+    (define integers (interleave evens odds))
+</pre>
+
+The evens and odds are well distributed, although 2 comes before 1. Is
+there a way to fix interleave, in a generic sort of way, so that we can
+force the interleaved streams out in the proper order, no matter which
+stream comes first in the argument list? Yes, by adding an ordering predicate.
+<br/>
+
+<pre>
+    (define (interleave s1 s2 order)
+        (if (order (stream-car s1) (stream-car s2))
+            (cons-stream
+                (stream-car s1)
+                (interleave (stream-cdr s1) s2)
+                )
+            (cons-stream
+                (stream-car s2)
+                (interleave s1 (stream-cdr s2))
+                )
+            )
+        )
+</pre>
+
+Now, the following definitions are equivalent
+<br/>
+
+<pre>
+    (define integers (interleave evens odds &lt;))
+    (define integers (interleave odds evens &lt;))
+</pre>
+
+<br/>
+<!-- section -->
+<h2>
+ Still more on streams
+<br/>
+</h2><!-- section ENDED -->
+
+The textbook gives a nice example of working with streams.
+The idea is to approximate
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&pi;</mi></mrow></math> by generating a stream of the form:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>1</mn>	<mo>-</mo>	<mfrac linethickness="1">		<mn>1</mn>		<mn>3</mn>	</mfrac>	<mo>+</mo>	<mfrac linethickness="1">		<mn>1</mn>		<mn>5</mn>	</mfrac>	<mo>-</mo>	<mfrac linethickness="1">		<mn>1</mn>		<mn>5</mn>	</mfrac>	<mo>+</mo>	<mfrac linethickness="1">		<mn>1</mn>		<mn>7</mn>	</mfrac>	<mo>-</mo>	<mfrac linethickness="1">		<mn>1</mn>		<mn>9</mn>	</mfrac></mrow></math>...
+</span>
+
+<br/>
+It turns out that the summation of all the terms of this stream is equal
+to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mfrac linethickness="1">		<mi>&pi;</mi>		<mn>4</mn>	</mfrac></mrow></math>. First let's generate
+the initial stream. Here's a function which generates such a stream.
+<br/>
+
+<pre>
+    (define (pi-term-generator a b)
+        (cons-stream
+            (/ a b)
+            (pi-term-generator (- a) (+ b 2.0))
+            )
+        )
+</pre>
+
+We define terms to be
+<br/>
+
+<pre>
+    (define terms (pi-term-generator 1 1))
+</pre>
+
+Now it would be nice to sum the stream, but we can't since it is infinite.
+However, we can sum the first <i>n</i> terms. It will be convenient to
+express all of the possible partial sums as a stream, so that the <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mrow>			<mi>t</mi>			<mi>h</mi>		</mrow>	</msup></mrow></math>
+item in the resulting stream is the sum of items 1 through <i>n</i>
+in the original stream. Here is one such definition...
+<br/>
+
+<pre>
+    (define (partial-sum s)
+        (cons-stream
+            (stream-car s)
+            (add-stream (partial-sum s) (stream-cdr s)))
+            )
+        )
+</pre>
+
+Given a definition of scale-stream...
+<br/>
+
+<pre>
+    (define (scale-stream s x)
+        (cons-stream
+            (* (stream-car s) x)
+            (scale-stream (stream-cdr s) x)
+            )
+        )
+</pre>
+
+We can define <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&pi;</mi></mrow></math> as
+<br/>
+
+<pre>
+    (define pi (scale-stream (partial-sum (pi-terms 1 1)) 4))
+</pre>
+
+As we discovered before, this series for determining <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&pi;</mi></mrow></math>
+converges very slowly. However, Euler came up with a neat trick for accelerating
+the convergence. Given a stream <i>s</i>, whose partial sum converges to
+some value, the following routine produces an accelerated stream which
+converges to the same value, only more rapidly.
+<br/>
+
+<pre>
+    (define (accelerate s)
+        (define Sn-1 (stream-ref s 0))
+        (define Sn (stream-ref s 1))
+        (define Sn+1 (stream-ref s 2))
+        (cons-stream
+            (- Sn+1 (/ (square (- Sn+1 Sn)) (+ Sn-1 (* -2 Sn) Sn+1)))
+            (accelerate (stream-cdr s))
+            )
+        )
+</pre>
+
+Of course, what's to stop us from accelerating the accelerated stream?
+Nothing, but why stop there? Why don't we accelerate infinitely many times?
+Here is a function which makes an infinite stream of infinite streams.
+The first stream is the original, the next is the accelerated stream, the
+third stream is the acceleration of the accelerated stream and so on.
+The book calls this structure a tableau.
+<br/>
+
+<pre>
+    (define (tableau s xcl)
+        (cons-stream
+            s
+            (tableau (xcl s) xcl)
+            )
+        )
+</pre>
+
+Now consider the first term of each stream in the tableau. Each of these
+terms successively approaches the convergence value at an astonishing rate.
+Here is the final stream for approximations to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&pi;</mi></mrow></math>.
+<br/>
+
+<pre>
+    (define api (stream-map stream-car (tableau pi accelerate)))
+</pre>
+
+The name <i>api</i> is mnemonic for accelerated <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&pi;</mi></mrow></math>
+stream. After eight terms, the change in the convergence value is too small
+and outstrips the precision of the interpreter. In contrast, the original
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&pi;</mi></mrow></math> stream converges to an equivalent value after
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mn>1</mn>	<msup>		<mn>0</mn>		<mn>13</mn>	</msup></mrow></math> terms!
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

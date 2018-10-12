@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Mon Aug 18 09:08:15 2014 -->
+<head>
+<title>An Encyclop&aelig;dia of Elementary Data Structures -- Nodes</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_9.html">
+  <img border="0" alt="Dynamic Circular Arrays" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_11.html">
+  <img border="0" alt="Singly Linked-Lists" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Nodes</h1>
+
+<h2><a name="id1">Synopsis</a></h2><p>
+A <i>node</i> is a simple data structure that
+bundles together a value and a set of node pointers, each
+of which point to a node or to nothing.
+At its simplest, there is but a single
+node pointer.
+</p>
+<p>To signify that a node pointer points to nothing, a sentinal
+value, usually named <i>null</i> or <i>nil</i>, is stored in the variable
+representing the node pointer.
+</p>
+<p>Pictorially, a node is often drawn using a box to represent a
+node with arrows representing the value and node pointers.
+Usually, the value pointer is drawn in the downward direction:
+</p>
+<div align="center">
+<img alt="" src="node.png"/>
+</div>
+<p>Here, the value is "elephant" and a single node pointer is shown, set to null.
+</p>
+
+<h2><a name="id2">Structure</a></h2><p>
+The typical node object holds a single value pointer 
+and some number of node pointers. As an example,
+when nodes are used to build a
+<a href="index_11.html">singly linked-list</a>,
+a single node pointer, usually named <i>next</i>,
+is sufficient.
+</p>
+<pre>
+    class node
+        {
+        var value = ?;          //points to the stored value
+        var next = ?;           //optional: for singly/doubly linked-lists
+        var prev = ?;           //optional: for doubly linked-lists
+        var left = ?;           //optional: for binary trees
+        var right = ?;          //optional: for binary trees
+        //operations
+        ...
+        }
+</pre>
+<p>The initializers for <i>value</i> and the node pointer(s) are expected
+to be passed as arguments to the constructor.
+</p>
+
+<h2><a name="id3">Vocabulary</a></h2><p>
+The terms used in describing a node are:
+</p>
+<dl><dt>value</dt><dd> The value stored in the node.
+</dd><dt>next</dt><dd> In the case of a node with a single node pointer that
+is used to implement a <a href="index_11.html">singly linked-list</a>,
+the node pointer is usually named <i>next</i>.
+</dd><dt>prev/next</dt><dd> In the case of a node with two node pointers that
+is used to implement a <a href="index_12.html">doubly linked-list</a>,
+the two node pointers are commonly 
+named <i>prev</i> (for previous) and <i>next</i>.
+</dd><dt>left/right</dt><dd> In the case of a node with two node pointers that
+is used to implement a <a href="index_16.html">binary tree</a>, the two node pointers are
+often named <i>left</i> and <i>right</i>.
+</dd></dl>
+
+<h2><a name="id4">Supports</a></h2><p>
+A node is used to implement:
+</p>
+<ul><li><a href="index_11.html">linked-lists</a>
+</li><li><a href="index_12.html">linked-lists</a>
+</li><li><a href="index_16.html">binary trees</a>
+</li><li><a href="index_17.html">binary search trees</a>
+</li></ul>
+
+<h2><a name="id5">Dependencies</a></h2><p>
+A node is a fundamental data structure 
+often provided by the
+language processor or, if not provided, easily
+constructed using a heterogeneous array or object.
+A heterogeneous array can hold elements of different
+types (<i>e.g.</i> the first element can be an integer,
+the second a string, and so on).
+In the case of a heterogeneous array, the first
+slot can hold the value and subsequent slots
+can hold the node pointers.
+</p>
+
+<h2><a name="id6">Operations</a></h2>
+
+<h3><a name="id7">get-value</a></h3><p>
+This operation returns the value stored in the node.
+</p>
+
+<h3><a name="id8">set-value</a></h3><p>
+This operation updates the value in the node with the given value.
+</p>
+
+<h3><a name="id9">get-next/get-prev/get-left/get-right</a></h3><p>
+This operation returns the node that is stored in the
+associated node pointer. 
+</p>
+
+<h3><a name="id10">set-next/set-prev/set-left/set-right</a></h3><p>
+This operation updates the 
+associated node pointer with the given node. 
+The actual names of the operations depend on
+the number of node pointers.
+</p>
+
+<h2><a name="id11">Traversals</a></h2><p>
+Nodes, having usually one value pointer, are not traversed.
+</p>
+
+<h2><a name="id12">Concept Inventory</a></h2>
+<div align="center">
+</div>
+<ol>&nbsp;
+<li>Generally, a node pointer points to...
+<ol><li>
+another node
+</li><li>
+a value
+</li><li>
+a string
+</li></ol>
+</li></ol>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_9.html">
+  <img border="0" alt="Dynamic Circular Arrays" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_11.html">
+  <img border="0" alt="Singly Linked-Lists" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b></b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

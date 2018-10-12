@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:16 2015 -->
+<head>
+<title>The Art and Craft of Programming -- More about Functions</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_11.html">
+  <img border="0" alt="Functions" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_13.html">
+  <img border="0" alt="Conditionals" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>More about Functions</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>More about Functions</h1>
+<p>We have already seen some examples of functions,
+some user-defined and some built-in.
+For example, we have used the built-in functions,
+such as 
+<tt>printf</tt> and defined our own functions,
+such as <i>square</i>.
+C has many built-in, or <i>predefined</i>, functions.
+No one, however,
+can anticipate all possible tasks that someone might want to perform,
+so most programming languages allow the user to define new functions.
+C is no exception and provides
+for the creation of new and novel functions.
+Of course,
+to be useful,
+these functions should be able to call
+built-in functions as well as other programmer created
+functions.
+</p>
+<p>For example, a function that determines whether a given
+number is odd or even is not built into C but can be
+quite useful in certain situations.
+Here is a definition
+of a function named <i>isEven</i> which returns true (integer 1) if the
+given number is even, false (integer 0) otherwise:
+</p>
+<pre>
+    int
+    isEven(int n)
+        {
+        return n % 2 == 0;
+        }
+</pre>
+<p>Even though this function definition is very short, there is a lot going on.
+If you ever take a course on compilers, you will
+learn how this code is turned into language your computer understands.
+We, however, will stay on
+a higher plane.
+First, we will talk
+about the
+purpose of a function definition.
+Later, we'll
+talk about the
+syntax of a function definition.
+Finally,
+will talk about the mechanics of a function definition
+and a function call.
+</p>
+
+<h2><a name="id1">The purpose of functions</a></h2><p>
+C programming is all about functions. We define a function to do some
+task. This function calls other functions, some that are built-in and
+some that are not. For those that are not, we define those as well.
+These newly defined, lower-level functions, in turn, call more functions,
+some that are built-in and some that are not.
+And so it goes, until our lowest-level functions
+call only built-in functions or functions we have previously defined.
+</p>
+<p>Even in higher-level languages, such as Java, the same process holds
+as well. So learning to be comfortable with defining and calling functions
+is paramount to being a good programmer and to being a good Computer Scientist.
+Consider functions the language of Computer Scientists.
+</p>
+
+<h2><a name="id2">Function syntax</a></h2><p>
+Recall that the words of a programming language include its
+primitives, keywords and variables. A function definition
+corresponds to a sentence in the language in that it is
+built up from the words of the language. And like human
+languages, the sentences must follow a certain form. This
+specification of the form of a sentence is known as its
+<i>syntax</i>. Computer Scientists often use a special way
+of describing syntax of a programming language called the
+Backus-Naur form (or Bnf). Here is a simplfied description
+of the syntax of a C function definition using Bnf:
+</p>
+<pre>
+    functionDefinition : signature block
+    
+    signature : type VARIABLE OPEN_PARENTHESIS parameterList CLOSE_PARENTHESIS
+
+    parameterList : VOID
+                  | type variable [COMMA type variable]*
+
+    block : OPEN_BRACE statement+ CLOSE_BRACE
+</pre>
+<p>In Bnf,
+the items in all capital letters represent the words and punctuation
+in the program.
+A plus sign means "one or more" while an asterisk means
+"zero or more". A question mark, not shown in this example,
+means "zero or one".
+The first Bnf <i>rule</i> says that a function definition is
+composed of two pieces, a <i>signature</i> followed by a <i>block</i>,
+the more formal name for a function body.
+The <i>signature</i>, discussed previously, starts
+with a type of some kind,
+followed by a variable,
+followed by an open parenthesis, followed by a parameter
+list,
+and finally followed by a close
+parenthesis.
+The <i>parameterList</i> rule tells us that
+the formal parameters in the function signature
+consist of either the keyword <code>void</code> (which signifies no formal
+parameters)
+or a <i>type</i> followed by a <i>variable</i>. If there is
+more than one formal paramter, they are separated by
+a comma.
+A <i>block</i> is composed of an open brace,
+followed by 
+one or more <i>statements</i>, and
+ending with a close brace.
+</p>
+<p>As we can see from the Bnf rules,
+formal parameters are variables that will be bound
+to the values supplied in the function call.
+In the particular case of <i>isEven</i>, from the
+previous section,
+the variable <i>x</i> will be bound to the number whose
+evenness is to be determined. As noted earlier,
+it is customary to call <i>x</i>
+a <i>formal parameter</i> of the function <i>isEven</i>.
+</p>
+
+<h2><a name="id3">The syntax of function calls</a></h2><p>
+Once a function is defined,
+it is used by <i>calling</i> the
+function with <i>arguments</i>.
+A function is called by supplying
+the name of the function followed by a parenthesized,
+comma separated, list of expressions.
+Those expressions may be literals, variables,
+array accesses, function calls, combinations thereof, and more.
+</p>
+<p>In Bnf,  a description of a function call would look like:
+</p>
+<pre>
+    functionCall : ID OPAREN argumentList? CPAREN
+
+    argumentList : expression [COMMA expression]*
+</pre>
+<p>Here are some calls to the <i>isEven</i> function defined
+above:
+</p>
+<pre>
+    x = isEven(y);
+    process(isEven(q+r),s);
+    a = isEven(isEven(b));
+</pre>
+<p>Note that the formal paramaters include a type, but the arguments
+do not.
+In Computer Science speak, we say that the values
+of the arguments are <i>bound</i> to
+the
+formal parameters during the processing of a function call.
+</p>
+<p>In general, if there are <i>n</i> formal parameters,
+there should be <i>n</i> arguments.<sup><a href="index_26.html#footnote-23">23</a></sup>
+Furthermore, the value of the
+first argument is bound to the first formal parameter, the
+second argument is bound to the second formal parameter,
+and so on. Moreover, all the arguments are evaluated
+before being bound to any of the parameters.
+If an argument is a literal, the corresponding
+formal parameter is bound to that literal value.
+If an argument is more complicated, C determines
+the value of that more complicated expression before
+the formal parameter receives it.
+</p>
+<p>Once the evaluated arguments are bound to the parameters,
+then the body of the function is evaluated. Most times,
+the expressions in the body of the function will reference
+various variables, some of which may be the formal parameters,
+while some may not. For those that are not formal parameters,
+how does C find the
+values of those variables? That question is answered in
+<a href="index_15.html">the chapter on scope</a>.
+</p>
+
+<h2><a name="id4">Returning from functions</a></h2><p>
+Usually, the evaluation of a function body proceeds, statement by statement,
+until there are no more statements or when a return
+statement is encountered.
+If the return statement has an expression,
+the value of that expression is determined and becomes the
+return value of the function.
+The return value should match the return type of the function.
+</p>
+<p>A function body may have more than one return statement;
+the first one <i>reached</i> wins.
+Look at this example:
+</p>
+<pre>
+    int
+    safeDivide(int x,int y)
+        {
+        if (y == 0)             //conditional
+            return 0;
+        else
+            return x / y;
+        }
+</pre>
+<p>We haven't covered conditional statements yet,
+but the code is easy enough to read.
+When this function is called,
+if the value of the second argument, which will be bound to <i>y</i>,
+is equal to zero, then the function returns zero. If
+not, then the function returns the value of the first argument,
+bound to <i>x</i>, divided by the value of the second, bound do <i>y</i>.
+</p>
+<p>When a return statement is processed, execution of the function
+body terminates. Thus, it is possible that some statements in
+the function can never be processed. For example, consider this
+version of <i>safeDivide</i>:
+</p>
+<pre>
+    int
+    safeDivide(int x,int y)
+        {
+        if (y == 0)             //conditional
+            return 0;
+        else
+            return x / y;
+
+        return 1;               //not reached
+        }
+</pre>
+<p>Since either <i>y</i> is zero or it is not, one of the two returns
+in the <code>if</code> statement must be reached. Once either is reached,
+the processing of the function body terminates.
+Therefore, the return statement at the end of the function
+can never be reached.
+</p>
+
+<h2><a name="id5">Changing arguments using the procedure pattern</a></h2><p>
+Consider writing a function to swap two values:
+</p>
+<pre>
+    void
+    swap(int x,int y)
+        {
+        int temp = x;   //line 1
+        x = y;          //line 2
+        y = temp;       //line 3
+        }
+</pre>
+<p>The function, as written, correctly swaps the values of the formal
+parameters <i>x</i> and <i>y</i>. But can we use the function to swap the values
+of variables passed to the function? For example, what does the
+following code fragment produce?
+</p>
+<pre>
+    //test (with swap defined)
+    int a = 4;
+    int b = 23;
+    printf("a was %d, b was %d\n",a,b);
+    swap(a,b);
+    printf("a now is %d, b now is %d\n",a,b);
+</pre>
+<p>Surprisingly, we get the following output:
+</p>
+<pre>
+    a was 4, b was 23
+    a now is 4, b now is 23
+</pre>
+<p>Even though <i>swap</i> correctly swaps the values of the formal parameters,
+the arguments to <i>swap</i> remained unchanged. If we look at memory, we can
+see why. Just before <i>swap</i> is called, both <i>a</i> and <i>b</i>
+refer to memory initialized to 4 and 23, respectively:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-functions1.png"/>
+</div>
+<p>When swap is called, the space for the formal parameters is
+allocated and the formal parameters are given their initial
+values:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-functions2.png"/>
+</div>
+<p>As the body of <i>swap</i> runs, the variable <i>temp</i> is created
+(line 1)
+and initialized to the value of <i>x</i>:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-functions3.png"/>
+</div>
+<p>After <i>x</i> gets the value of <i>y</i> (line 2), we have:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-functions4.png"/>
+</div>
+<p>After <i>y</i> gets the value of <i>temp</i> (line 3), we have:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-functions5.png"/>
+</div>
+<p>We see that <i>swap</i> has indeed swapped the values 
+of the formal parameters. At this point, swap returns
+and the space allocated for <i>x</i>, <i>y</i>, and <i>temp</i> is reclaimed
+by the system. Note that through this whole process, the variables
+<i>a</i> and <i>b</i> remain unchanged.
+</p>
+<p>So how do we get a function to swap the values of <i>a</i> and <i>b</i>? We do
+so by passing the addresses of <i>a</i> and <i>b</i> to the <i>swap</i> function.
+Here is the new version of <i>swap</i>:
+</p>
+<pre>
+    void
+    swap2(int *x,int *y)
+        {
+        int temp = *x;
+        *x = *y;
+        *y = temp;
+        }
+</pre>
+<p>Taking the address of a variable creates a pointer. Hence, the formal
+parameters need to be declared <code>int *</code> (pointer to <code>int</code>). Note
+the formals <i>x</i> and <i>y</i> look the same as if we passed in an array of
+integers to each. In fact, C does not know the difference, which is
+why you must pass in the size of an array to a function when you pass an array
+to that function. If you wanted to, you could consider <i>x</i> and <i>y</i> to be
+arrays of a single element each, so an alternative, but
+equivalent, version of <i>swap</i> would be:
+</p>
+<pre>
+    void
+    swap3(int *x,int *y)
+        {
+        int temp = x[0];
+        x[0] = y[0];
+        y[0] = temp;
+        }
+</pre>
+<p>We will stick with the <i>swap2</i> version,
+since that is how 99.999&#37; of the world would
+write <i>swap</i>.
+</p>
+<p>To call <i>swap</i>, we send the addresses of the variables whose values
+are to be swapped:
+</p>
+<pre>
+    //test (with swap2 defined)
+    int a = 4;
+    int b = 23;
+    printf("a was %d, b was %d\n",a,b);
+    swap(&amp;a,&amp;b);
+    printf("a now is %d, b now is %d\n",a,b);
+</pre>
+<p>Now, we get the results we desire:
+</p>
+<pre>
+    a was 4, b was 23
+    a now is 23, b now is 4
+</pre>
+<p>Let's look again at memory while our code is running. This time, since we
+are manipulating addresses, we will pay attention to the addresses of
+<i>a</i> and <i>b</i>.
+For illustration, we will assume the value of <i>a</i> is stored at memory
+location 1002, while <i>b</i>'s value is stored at location 1010.
+Here is the state of memory just before <i>swap2</i> is called:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-functions6.png"/>
+</div>
+<p>When <i>swap2</i> is called, formal parameters <i>x</i> and <i>y</i> are
+initialized to the address of <i>a</i> and the address of <i>b</i>,
+respectively:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-functions7.png"/>
+</div>
+<p>Next, the body of <i>swap2</i> is executed, causing the variable <i>temp</i> to be
+created. The line:
+</p>
+<pre>
+    int temp = *x;
+</pre>
+<p>says, "Don't initialize <i>temp</i> with the value of <i>x</i>.
+Instead, intialize <i>temp</i>
+to the value at the <i>address</i> found in <i>x</i>."
+This leaves memory looking like:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-functions8.png"/>
+</div>
+<p>Now, the line:
+</p>
+<pre>
+    *x = *y;
+</pre>
+<p>is executed.
+This line says, "Don't update <i>x</i> with the value of <i>y</i>. Instead, update
+the <i>address</i> found in <i>x</i> with the value at the address
+found in <i>y</i>."
+Now, memory looks like:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-functions9.png"/>
+</div>
+<p>Finally, the line:
+</p>
+<pre>
+    *y = temp;
+</pre>
+<p>is executed.
+This line says, "Don't update <i>y</i> with the value of <i>temp</i>.
+Instead, update
+the <i>address</i> found in <i>y</i> with the value of 
+<i>temp</i>."
+After this update, memory looks like:
+Now, memory looks like:
+</p>
+<div align="center">
+<img scale=0.50 alt="" src="pic-functions10.png"/>
+</div>
+<p>At this point,
+<i>swap2</i> returns and we see that the values of <i>a</i> and <i>b</i>
+have been exchanged, as desired.
+</p>
+
+<h2><a name="id6">Functions that "return" multiple items</a></h2><p>
+The C language is limited somewhat because a function can return
+only one thing.
+However,
+sometimes you need more than one piece of information
+from a function. Consider a function which returns a dynamically
+allocated array of a random length:
+</p>
+<pre>
+    int *
+    randomlySizedIntegerArray(void)
+        {
+        int size;
+        char **array;
+
+        size = random() % 100 + 1; //size will be between 1 and 100
+        array = malloc(sizeof(int) * size); //check for malloc failure omitted
+
+        return ???
+        }
+</pre>
+<p>What should this function return? It can return the array, but without
+knowing the size, the caller of this function won't know how many slots
+are in the array it is receiving. The function can return the size, but
+then the caller will not have access to the array. One solution is
+to return the array, but require the caller to pass the address of
+a variable; that variable will be updated by the function, much
+like the <i>swap2</i> function in the previous section updated variables
+supplied by the caller.
+Here is a possible implementation:
+</p>
+<pre>
+    int *
+    randomlySizedIntegerArray(int *size)
+        {
+        int *array;
+
+        *size = random() % 100 + 1; //size will be between 1 and 100
+        array = malloc(sizeof(int) * *size); //check for malloc failure omitted
+
+        return array;
+        }
+</pre>
+<p>A caller of this function would pass in the address of the variable that is
+to hold the randomly generated size:
+</p>
+<pre>
+    int arraySize;
+    int *array;
+
+    array = randomlySizedIntegerArray(&amp;arraySize); //pass in address of arraySize
+    //arraySize now holds the size of the array
+</pre>
+<p>This is an important rule to
+remember:
+<i>you cannot change the value of a variable by passing it to a function</i>.
+If you wish to change its value, you must pass the address of the variable. 
+An easy way to write such functions is to first assume a value is
+being sent, as in the original, non-working, <i>swap</i> function. Then,
+for every formal parameter that is to receive an address, place an
+asterisk before all occurences in the function signature and
+the function body. Then, place an ampersand before the variable in
+the function call.
+If you do this for <i>swap</i>,
+you end up with the correctly working <i>swap2</i>.
+By following this advice, you will ensure proper updates to
+any variable whose address is to be sent to the function.
+</p>
+
+<h2><a name="id7">Function pointers</a></h2><p>
+In the same way we can have a variable point to an array, we can
+have a variable that points to a function. Suppose with have a
+function whose signature is:
+</p>
+<pre>
+    char *getString(int,double);
+</pre>
+<p>The function <i>getString</i> is a function that,
+when passed an integer and a double
+in that order, returns a string.
+To create a variable named <i>g</i> that can point to this function, we start
+with the function signature,
+wrapping the name of the function in the signature with
+parentheses:
+</p>
+<pre>
+    char *(getString)(int,double);
+</pre>
+<p>Then,
+we place an star in front of the function name (inside the parentheses
+we just added):
+</p>
+<pre>
+    char *(*getString)(int,double);
+</pre>
+<p>Finally, we
+substitute the variable name <i>g</i> for the function name <i>getString</i>:
+</p>
+<pre>
+    char *(*g)(int,double);
+</pre>
+<p>Given the original signature and this definition of g (plus a definition of
+<i>getString</i> somewhere), we can do this:
+</p>
+<pre>
+    char *getString(int,double);  //function prototype for getString
+    char *(*g)(int,double);       //creating a function pointer named g
+    g = getString;                //getString is NOT called here
+    char *s = g(2,3.3);           //getString IS called here
+</pre>
+<p>The type of variable <i>g</i> is <code>char *(*)(int,double)</code>,
+and we will refer to this as the <i>long form</i> of a function pointer.
+This long form is rather unwieldy to type over and over, so we can use
+the <i>typedef</i> mechanism to create a shorthand for this type.
+If we add the keyword <code>typedef</code> in front of the type and change
+the variable name <i>g</i> to a name that represents the new type:
+</p>
+<pre>
+    typedef char *(*FPtr)(int,double);
+</pre>
+<p>we can make a new type called <code>FPtr</code>; this new
+type can
+be used to define variables that
+point to functions like <i>getString</i>:
+</p>
+<pre>
+    typedef char *(*FPtr)(int,double);  //creating a type named FPtr
+    char *getString(int,double);        //function prototype for getString
+    FPtr g;                             //creating a function pointer named g
+    g = getString;                      //getString is NOT called here
+    char *s = g(2,3.3);                 //getString IS called here
+</pre>
+<p>We will refer to the typedef'ed version of the function pointer as
+the <i>short form</i>.
+</p>
+<p>With function pointers, we can now pass functions as arguments and
+return functions as return values.
+When passing a function like <i>getString</i> as an argument,
+the accepting formal parameter
+can be declared with the long form or the short form:
+</p>
+<pre>
+    int f(char *(*u)(int,double));  //long form formal parameter
+    int g(FPtr v);                  //short form formal parameter
+    ...
+    int x = f(getString);           //call to function f, passing getString
+    int y = g(getString);           //call to function g, passing getString
+</pre>
+<p>Presumably,
+functions <i>f</i> and <i>g</i> call <i>getString</i> via the formal parameters
+<i>u</i> and <i>v</i>, respectively.
+</p>
+<p>When defining a function <i>h</i> that returns a function like <i>getString</i>,
+we must use the short form to specify the return type:
+</p>
+<pre>
+    FPtr g(void) { return getString; }
+    ...
+    FPtr h = g();
+</pre>
+<p>We will make use of function
+pointers when we explore the <i>map pattern</i> in
+the
+<a href="index_16.html">Loops chapter</a>.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_11.html">
+  <img border="0" alt="Functions" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_13.html">
+  <img border="0" alt="Conditionals" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>More about Functions</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

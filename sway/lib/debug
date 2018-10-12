@@ -1,0 +1,169 @@
+/* eval
+ *
+ * - evaluate a code fragment in an environment
+ * - code usually comes from the parse or parseString
+ *
+ */
+
+function eval(code,env)
+    {
+    function thunk($x) { $x; }
+    var t = thunk(0);
+    t . code = code;
+    t . context = env;
+    catch(force(t));
+    }
+
+function evalString(str,env)
+    {
+    var p;
+    p = catch(parseString(str));
+    if (type(p) != :ERROR,eval(p,env),p);
+    }
+
+/*
+ * step
+ *
+ * - set up tracing of a function call
+ *
+ */
+
+function step($call)
+    {
+    var result;
+    var name = callFunction($call);
+    var f = $call . context . (name);
+    f . filter = step*;
+    result = force($call);
+    f . filter = :null;
+    result;
+    }
+
+/* step*
+ *
+ * - step over a line of code
+ * - give the opportunity to evaluate expressions by calling sway
+ *   then force and return the resulting value
+ *
+ * - should only be called as a filter
+ */
+
+function step*($item,$rest)
+    {
+    if ($item . code == :null)
+        {
+        println("tracing ",$item . context . constructor . name,"...");
+        }
+    else
+        {
+        var env = $item . context;
+        var oldFilter = env . constructor . filter;
+        var prompt = flatten(string($item . code) + " ",40,:true);
+
+        print(file($item),",line ",line($item),": ",prompt);
+        env . constructor . filter = :null;
+        sway*(env,"> ");
+        env . constructor . filter = oldFilter;
+        force($item);
+        }
+    }
+
+/*
+ * trace
+ *
+ * - set up tracing of a function call
+ *
+ */
+
+function trace($call)
+    {
+    var result;
+    var name = callFunction($call);
+    var f = $call . context . (name);
+    f . filter = trace*;
+    result = force($call);
+    f . filter = :null;
+    result;
+    }
+
+/* trace*
+ *
+ * - trace each line of code
+ *   then force and return the resulting value
+ *
+ * - should only be called as a filter
+ */
+
+function trace*($item,$rest)
+    {
+    if ($item . code == :null)
+        {
+        println("tracing ",$item . context . constructor . name,"...");
+        }
+    else
+        {
+        print(file($item),",line ",line($item),": ");
+        ppFlat($item . code,50);
+        println();
+        force($item);
+        }
+    }
+
+function flatten(s,amt,condensing?)
+    {
+    if (s == "")
+        {
+	"";
+	}
+    else if (amt == 3)
+        {
+	"...";
+	}
+    else if (rawspace?(s))
+        {
+	if (condensing?)
+	    {
+	    flatten(tail(s),amt,:true);
+	    }
+	else
+	    {
+	    " " + flatten(tail(s),amt - 1,:true);
+	    }
+	}
+    else if (space?(s))
+        {
+	if (condensing?)
+	    {
+	    flatten(tail(tail(s)),amt,:true);
+	    }
+	else
+	    {
+	    " " + flatten(tail(tail(s)),amt - 1,:true);
+	    }
+	}
+    else
+	{
+        s[0] + flatten(tail(s),amt - 1,:false);
+	}
+    }
+
+/* assert
+ *
+ * - enforce a constraint
+ *
+ */
+
+function assert($expr)
+    {
+    var result = catch(force($expr));
+    if (result == :false || type(result) == :ERROR)
+        {
+	println("assertion ",$expr . code," failed.");
+	println("    ",$expr . code," had a value of ",result);
+	throw(:assertionFailure,$expr . code);
+	}
+    }
+
+function thunk($x) { $x; }
+function code($x) { $x . code; }
+

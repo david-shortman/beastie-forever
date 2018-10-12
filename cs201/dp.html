@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>dp</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<br/>
+Systematic Conversion of Memoization to Dynamic Programming
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+Consider this memoizing function that computes the number of
+different ways a set of coins can total to a given amount:
+<br/>
+
+<pre>
+    function change(amt,coins,index,size)
+        {
+        if (amt == 0) return 1;
+        if (amt &lt; 0) return 0;
+        if (index == size) return 0;
+
+        /* check if we have previously computed the value */
+        if (table[amt][index] != EMPTY)
+            return table[amt][index];
+
+        /* compute new values, with using the coin and without
+        with = change(amt-coins[index],coins,index,size);
+        without = change(amt,coins,index+1,size);
+
+        /* save the newly computed result */
+        table[amt][index] = with + without;
+
+        return result;
+        }
+</pre>
+
+A systematic conversion follows these steps:
+<br/>
+<span class="indent">
+
+<ul>
+
+<li>
+
+ Identify all the variables that never change over all the recursive calls.
+<br/>
+<br/>
+</li>
+
+<li>
+
+ Remove those variables from the recusive calls.
+<br/>
+<br/>
+<span class="indent">
+<b>Example</b>
+<br/>
+<br/>
+The recursive call 
+<code>change(amt-coins[index],coins,index,size)</code>
+becomes 
+<code>change(amt-coins[index],index)</code>, assuming <i>coins</i>
+and <i>size</i> do not ever change over all recursive calls.
+</span>
+
+<br/>
+</li>
+
+<li>
+
+ Change the remaining variables in the recursive calls to loop variables.
+Do the same for the table update and the base cases.
+<br/>
+<br/>
+<span class="indent">
+<b>Example</b>
+<br/>
+<br/>
+The call 
+<code>change(amt-coins[index],index)</code>
+becomes 
+<code>change(a-coins[i],i)</code>, assuming <i>a</i> is a variable
+that will loop over all values of <i>amt</i> and <i>i</i> is a
+variable that will loop over all values of <i>index</i>.
+The table update 
+<code>table[amt][index] = with + without</code> becomes
+
+<code>table[a][i] = with + without</code>. The base case 
+<code>if (amt &lt; 0) ...</code>
+becomes 
+<code>if (a &lt; 0) ...</code>.
+</span>
+
+<br/>
+</li>
+
+<li>
+
+ Convert recursive calls to calls to a table lookup function (this in
+preparation for dealing with base cases in the original function - see
+below).
+<br/>
+<br/>
+<span class="indent">
+<b>Example</b>
+<br/>
+<br/>
+The call 
+<code>change(a,i+1)</code>
+becomes 
+<code>getTable(a,i+1)</code>. At the beginning, <i>getTable</i>
+looks like:
+<br/>
+
+<pre>
+    function getTable(a,i)
+        {
+        return table[a][i];
+        }
+</pre>
+
+</span>
+
+<br/>
+</li>
+
+<li>
+
+ Surround the table update and lookups with loops that loop over
+the loop variables. The loop variables must reach the original values
+of the formal variables with which they are associated.
+Moreover, if a table lookup references a table value with a reduced
+value of the loop variable, the loop for that variable must run
+from low to high.
+On the other hand,
+if a table lookup references a table value with an increased
+value of the loop variable, the loop for that variable must run
+from high to low.
+<br/>
+<br/>
+<span class="indent">
+<b>Example</b>
+<br/>
+<br/>
+The statements:
+<br/>
+
+<pre>
+    with = getTable(a-coins[i],i);
+    without = getTable(a,i+1);
+    table[a][i] = with + without;
+</pre>
+
+become:
+<br/>
+
+<pre>
+    for (a = 0; a &lt;= amt; ++a)
+        for (i = size-1; i &gt;= 0; --i)
+            {
+            with = getTable(a-coins[i],i);
+            without = getTable(a,i+1);
+            table[a][i] = with + without;
+            }
+</pre>
+
+Note that the <i>a</i> loop goes from low to high since the table lookups
+reference
+indices less than or equal to <i>a</i>.
+The <i>i</i> loop goes from high to low since the table lookups reference
+indices greater than or equal to <i>i</i>.
+</span>
+
+<br/>
+</li>
+
+<li>
+
+ Use the base cases to handle the results of exceptional table lookups.
+Do this by moving the base cases to the lookup function.
+Be sure to modify the definition of and the calls to the lookup
+function if additional information needs to be passed in to handle
+the base cases.
+<br/>
+<span class="indent">
+<b>Example</b>
+<br/>
+<br/>
+The table lookup function:
+<br/>
+
+<pre>
+    function getTable(a,i)
+        {
+        return table[a][i];
+        }
+</pre>
+
+becomes:
+<br/>
+
+<pre>
+    function getTable(a,i,size)
+        {
+        if (a == 0) return 1;
+        if (a &lt; 0) return 0;
+        if (i == size) return 0;
+        return table[a][i];
+        }
+</pre>
+
+Note that we had to modify the formal parameters of <i>getTable</i>
+in order to reference <i>size</i>.
+</span>
+
+<br/>
+</li>
+
+<li>
+
+ Finally, remove the original table lookup, and return
+the table value at the values passed to the function.
+</li>
+
+</ul>
+
+
+</span>
+
+<br/>
+The final result is:
+<br/>
+
+<pre>
+    function change(amt,coins,index,size)
+        {
+        var a,i;
+
+        for (a = 0; a &lt;= amt; ++a)
+            for (i = size-1; i &gt;= 0; --i)
+                {
+                with = getTable(a-coins[i],i);
+                without = getTable(a,i+1);
+                table[a][i] = with + without;
+                }
+
+        return table[amt][index];
+        }
+</pre>
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

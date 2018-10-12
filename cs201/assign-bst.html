@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign-bst</title>
+<link rel=stylesheet
+    href="201.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+A Simple Binary Search Tree Class
+<br/>
+<span class="smaller">Version 1d</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller"><a href="assign-bst.pdf">Printable Version</a></span></span>
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- subsection -->
+<h3> The <i>BST</i> module
+<br/>
+</h3><!-- subsection ENDED -->
+
+This module defines a simple search tree that can be adapted
+for more sophisticated uses (say, a self-balancing tree) with
+a minimum of code rewrites.
+<br/>
+<br/>
+Here is a conforming <i>bst.h</i> file:
+<br/>
+
+<pre>
+    #ifndef __BST_INCLUDED__
+    #define __BST_INCLUDED__
+
+    #include &lt;stdio.h&gt;
+    #include &quot;tnode.h&quot;
+
+    typedef struct bst BST;
+
+    extern BST   *newBST(int (*c)(void *,void *));
+    extern void   setBSTdisplay(BST *t,void (*d)(void *,FILE *));
+    extern void   setBSTswapper(BST *t,void (*s)(TNODE *,TNODE *));
+    extern void   setBSTfree(BST *t,void (*)(void *));
+    extern TNODE *getBSTroot(BST *t);
+    extern void   setBSTroot(BST *t,TNODE *replacement);
+    extern void   setBSTsize(BST *t,int s);
+    extern TNODE *insertBST(BST *t,void *value);
+    extern void  *findBST(BST *t,void *key);
+    extern TNODE *locateBST(BST *t,void *key);
+    extern void  *deleteBST(BST *t,void *key);
+    extern TNODE *swapToLeafBST(BST *t,TNODE *node);
+    extern void   pruneLeafBST(BST *t,TNODE *leaf);
+    extern int    sizeBST(BST *t);
+    extern void   statisticsBST(BST *t,FILE *fp);
+    extern void   displayBST(BST *t,FILE *fp);
+    extern int    debugBST(BST *t,int level);
+    extern void   freeBST(BST *t);
+    #endif
+</pre>
+
+The BST structure and methods should all be placed in <i>bst.c</i>.
+<br/>
+<br/>
+Here are some of the behaviors your methods should have. This listing
+is not exhaustive; you are expected, as a computer scientist, to
+complete the implementation in the best possible and most logical manner.
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newBST</i> -
+The constructor is passed a single function, one that knows how to
+compare two generic values. This function is known as a
+<i>comparator</i>.
+<br/>
+</li>
+
+<li>
+
+ <i>setBSTswapper</i>
+The function passed to this method is used to
+swap the two generic values held by <i>TNODE</i>s.
+The <i>swapper</i> function is used by
+<i>swapToLeafBST</i> to a node's value with the value its predecessor/successor.
+Note, by default, the constructor should store
+its own swapper function. A call to <i>setBSTswapper</i>
+overrides the default method.
+<br/>
+</li>
+
+<li>
+
+<i>insertBST</i> -
+This method inserts a value into the search tree, returning the
+inserted <i>TNODE</i>.
+<br/>
+</li>
+
+<li>
+
+ <i>setBSTroot</i> -
+This method updates the root pointer of a <i>BST</i> object.
+It should run in constant time.
+<br/>
+</li>
+
+<li>
+
+ <i>deleteBST</i> -
+This method returns the value containing the searched-for key.
+The tree node that held the value is removed from the tree.
+This method also decrements
+the size. HINT: swapping the value to a leaf and pruning that
+leaf is an easy way to implement delete.
+<br/>
+</li>
+
+<li>
+
+ <i>findBST</i> -
+This method returns the value with the searched-for key. If
+the key is not in the tree, the method should return null.
+<br/>
+</li>
+
+<li>
+
+ <i>locateBST</i> -
+This method returns the tree node holding the searched-for key.
+If the key is not in the tree, the method should return null.
+<br/>
+</li>
+
+<li>
+
+ <i>swapToLeafBST</i> -
+This method takes a node and recursively swaps its value
+with its predecessor's (preferred) or its
+successor's until a leaf node holds the original value. It
+calls the <i>BST</i>&rsquo;s swapper
+function to actually accomplish the swap,
+sending the two nodes whose values need to be swapped.
+<br/>
+</li>
+
+<li>
+
+ <i>pruneLeafBST</i> -
+This method detaches the given node from the tree. It does not free the
+node nor decrement the size, however.
+<br/>
+</li>
+
+<li>
+
+ <i>sizeBST</i> -
+This method returns the number of nodes currently in the tree. It
+should run in amortized constant time.
+<br/>
+</li>
+
+<li>
+
+ <i>statisticsBST</i> -
+This method should display the number of nodes in the tree
+as well as the minimum and maximum heights of the tree.
+It should run in linear time. Example:
+
+<pre>
+    Nodes: 8
+    Minimum depth: 2
+    Maximum depth: 4
+</pre>
+
+The minimum depth of a tree is the minimum
+number of steps from the root to
+a node with a null child. The maximum depth is similar.
+The depths of an empty tree are -1.
+<br/>
+</li>
+
+<li>
+
+ <i>displayBST</i> -
+The display method
+prints a
+level-order traversal of the tree, each level
+on its own line. Each line should start with
+the level number and have no preceding whitespace and no trailing
+whitespace (other than a newline). A single space should separate entries on
+a line.
+A line entry is generated by calling the cached display function.
+The root value is tagged with an 
+<code>X</code>, a left child with an 
+<code>L</code>,
+a right child with an 
+<code>R</code>, and a leaf with an equals sign.
+Unlike the other tags, the equal sign should precede the node value.
+All entries are tagged with their parents' value.
+No output should be generated for an empty tree.
+This method should run in linear time (HINT: use a queue).
+Here is a sample display:
+
+<pre>
+    0: 20(20)X
+    1: =7(20)L =33(20)R
+</pre>
+
+An empty tree should just print 
+<code>0:</code> followed immediately by a newline.
+<br/>
+</li>
+
+<li>
+
+ <i>debugBST</i> -
+If the debug level is one, two, or three, the display method should
+print an
+in-order, pre-order, or post-order traversal, respectively, of the tree.
+At any
+given node, the method displays the left and right subtrees, each
+enclosed with brackets, but only if they exist. A space is printed
+by <i>displayBST</i>
+only
+to separate
+any existing subtrees (e.g. after the bracket for a left subtree)
+from the node value. An empty tree is
+displayed as 
+<code>[]</code>.
+To display a node in the tree, the cached display function is passed
+the value stored at the node. No characters are to be printed
+before the first opening bracket or after the last closing bracket.
+This method should run in linear time.
+Here is a sample display:
+
+<pre>
+    [[7] 20 [33]]
+</pre>
+
+</li>
+
+<li>
+
+ <i>freeBST</i> -
+This method walks through the tree, freeing the nodes that
+make up the tree (and their values, if appropriate).
+Then, the tree object itself is freed.
+</li>
+
+</ul>
+
+
+The only local includes a <i>BST</i> module should have are <i>bst.h</i>
+and <i>queue.h</i> (needed by the BST display method).
+<br/>
+<!-- subsection -->
+<h3> Assertions
+<br/>
+</h3><!-- subsection ENDED -->
+
+Include the following assertions in your methods:
+<br/>
+
+<ul>
+
+<li>
+
+ <i>newBST</i> -
+The memory allocated shall not be zero.
+<br/>
+</li>
+
+<li>
+
+ <i>insertBST</i> -
+The memory allocated shall not be zero.
+</li>
+
+</ul>
+
+
+<!-- subsection -->
+<h3> Testing your BST class
+<br/>
+</h3><!-- subsection ENDED -->
+
+Modify the testing program found in the
+<a href="http://beastie.cs.ua.edu/cs201/assign-da.html">dynamic array class description</a>
+to work with a binary search tree.
+<br/>
+<!-- subsection -->
+<h3> Change log
+<br/>
+</h3><!-- subsection ENDED -->
+
+
+<code>     1d    </code> changed the second description of findBST to locateBST
+<br/>
+
+<code>     1c    </code> added the locate method
+<br/>
+
+<code>           </code> added more debug levels
+<br/>
+
+<code>           </code> added an example of displaying an empty tree
+<br/>
+
+<code>     1b    </code> flipped the logic of a display and a debugged display
+<br/>
+
+<code>     1a    </code> fixed prototypes for set display,free,swapper
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

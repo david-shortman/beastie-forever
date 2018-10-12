@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Thu Sep 30 12:36:05 2010 -->
+<head>
+<title>sway</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</head>
+<body>
+<p><h2 class="maketitle">The Sway Programming Language</h2>
+<h3 class="maketitle">written by: John C. Lusth</h3>
+<h4 class="maketitle">Revision Date: September 30, 2010</h4>
+</p>
+<p><a href="index.pdf">Printable Version</a>
+</p>
+<p>Sway is a nifty little language
+that seems quite large. It has a C-like syntax (sans types) and is...
+</p>
+<ul><li>a simple imperative-looking language with (what look like)
+iterative structures
+</li><li>a fully object-oriented language with trivial syntax and
+easy-to-comprehend semantics
+</li><li>a functional language with programmer-controlled delayed
+evaluation
+</li><li>a monolingual language: the Sway debugger uses Sway as its
+command-language
+</li></ul>
+<p>...all at the same time!
+</p>
+
+<h2><a name="id1">Downloads</a></h2><p>
+Latest Sway versions:
+</p>
+<dl><dt></dt><dd><a href="sway&#95;1.0.6e-1&#95;i386.tgz">sway&#95;1.0.6e-1&#95;i386.tgz</a>
+</dd><dt></dt><dd><a href="sway&#95;1.0.6e-1&#95;amd64.tgz">sway&#95;1.0.6e-1&#95;amd64.tgz</a>
+</dd><dt></dt><dd>&nbsp;
+</dd><dt></dt><dd><a href="sway&#95;1.0.6e-1&#95;i386.deb">sway&#95;1.0.6e-1&#95;i386.deb</a>
+</dd><dt></dt><dd><a href="sway&#95;1.0.6e-1&#95;amd64.deb">sway&#95;1.0.6e-1&#95;amd64.deb</a>
+</dd></dl>
+<p>Here is an experimental Microsoft Windows version: <a href="sway.exe">sway.exe</a>.
+You will also need <a href="readline5.dll">readline5.dll</a> and
+<a href="history5.dll">history5.dll</a>. Copy all three files to:
+</p>
+<font color="#007233">
+<font size="+0">
+<pre>
+    c:\windows\system32
+</pre>
+</font>
+<font color="#000000">
+<p>and you should be good to go. You will need to run Sway in a DOS box (command
+prompt).
+</p>
+<p>If you want to use the set of Sway libraries (useful functions 
+written in Sway) but don't know how to set up a path on Windows, install the 
+<a href="lib/">libraries</a>
+in same directory as your program, if you want to use any of them.
+</p>
+
+<h2><a name="id2">Sway versus other languages</a></h2><p>
+For Java, C, and C++ programmers, here is a list of important
+differences: <a href="quick.html">quick hits</a>.
+</p>
+
+<h2><a name="id3">Installation Notes</a></h2><p>
+To install Sway from a deb package
+(using <tt><font size="+0">sway&#95;1.0.6e-1&#95;i386.deb</font></tt> as an example), run the command:
+</p>
+<font size="+0">
+<pre>
+    sudo dpkg -i sway_1.0.6e-1_i386.deb
+</pre>
+</font>
+<p>If you are on a system without <i>sudo</i>, run the above command
+as <i>root</i> without the <i>sudo</i> prefix.
+</p>
+<p>To install Sway from a tarball, perform the following steps
+(using <tt><font size="+0">sway&#95;1.0.6e-1&#95;i386.tgz</font></tt> as an example)...
+</p>
+<ol>
+<li>Save the download to a file
+</li><li>Untar the download:
+<font size="+0">
+<pre>
+    tar zxvf sway_1.0.6e-1_i386.tgz
+</pre>
+</font>
+</li><li>Change to the untarred directory:
+<font size="+0">
+<pre>
+    cd sway_1.0.6e-1_i386
+</pre>
+</font>
+</li><li>Install the Sway executable and library file:
+<font size="+0">
+<pre>
+    make install
+</pre>
+</font>
+</li></ol>
+<p>The install command assumes you have admin privileges. On a Linux
+distribution that uses <em>sudo</em>, you would
+run the comand:
+</p>
+<font size="+0">
+<pre>
+    sudo make install
+</pre>
+</font>
+<p>If you do not have root privileges, then copy <em>sway</em> to someplace
+in your path (usually your personal bin directory) and install 
+the library files in a suitable place. If the library files
+go somewhere other than
+<em>/usr/lib/sway</em> or
+<em>/usr/local/lib/sway</em>,
+you will
+need to set an environment variable named <b>SWAY&#95;LIB</b>
+to point to the alternate location.
+</p>
+<p>If you have trouble installing Sway, send a message to 
+<a href="mailto:lusth@cs.ua.edu">lusth@cs.ua.edu</a>.
+</p>
+
+<h2><a name="id4">Learning more about Sway</a></h2><p>
+There is an Open Source
+introductory Computer Science textbook that uses Sway as the teaching
+language. It is called 
+<a href="http://sway.cs.ua.edu/tcop/">The Calculus of Programming</a>
+and teaches about Computer Science using Calculus as the backdrop
+for programming examples and exercises.
+The goal is to give a gentle, but rigorous, introduction
+to both Computer Science and Calculus, before students take
+traditional
+classes on those subjects.
+</p>
+<p>There is also a companion guide, 
+<a href="http://sway.cs.ua.edu/tsrm/">The Sway Reference Manual</a>.
+The reference manual is more nuts and bolts on the syntax
+and semantics of Sway.
+</p>
+
+<h2><a name="id5">About this website</a></h2><p>This website is rendered in the <em>Old School</em> style.
+<em>Old School</em> is known for its somewhat spartan,
+but clean and crisp, no-nonsense, get-down-to-brass-tacks
+appearance. <em>Old School</em> was invented by
+Tim Berners-Lee during the latter part of the last 
+century.
+</p>
+
+<h2><a name="id6">Acknowledgements</a></h2><p>
+This material is based upon work supported by the
+National Science Foundation, grant numbers &#35;00244269 and &#35;0633290.
+</p>
+<p>Any opinions, findings, and conclusions or recommendations
+expressed in this material are those of the author and
+do not necessarily reflect the views of the National Science Foundation.
+</p>
+<p><a href="mailto:lusth@cs.ua.edu">lusth@cs.ua.edu</a>
+</p>
+</font></font><hr /><address><p>lusth@cs.ua.edu</address><br />
+</body></html>

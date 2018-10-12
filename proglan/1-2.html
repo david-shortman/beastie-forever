@@ -1,0 +1,2455 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>1-2</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Sample Questions: SICP Section 1.2
+<br/>
+<br/>
+Procedures and Processes
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>linear recursion and iteration</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ One hallmark of an iterative process is that it:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> does not exhibit recursion
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>executes in constant space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> uses a while loop or a for loop
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> cannot be implemented in functional languages
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ What kind of process does the following function implement?
+
+<pre>
+    (define (f x)
+        (if (&lt; x 1)
+            1
+            (* (+ x 1) (f (- x 1)))
+            )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>syntactically non-tail recursive, so recursive
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail recursive, so iterative
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail and non-tail recursive, overall recursive
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail and non-tail recursive, overall iterative
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ What kind of process does the following function implement?
+
+<pre>
+    (define (f x y z)
+        (cond
+            ((= x 1) (* y z))
+            ((= (% x 2) 0) (f (/ x 2) (* y 2) z))
+            (else (f (- x 1) y (+ z x)))
+            )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically non-tail recursive, so recursive
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail and non-tail recursive, overall recursive
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail and non-tail recursive, overall iterative
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>syntactically tail recursive, so iterative
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ <i>TQ</i>:
+What kind of process does the following function implement?
+
+<pre>
+    (define (f x y z)
+        (cond
+            ((= x 0) (* y z))
+            ((&lt; x 5) (f y z (+ x 7))
+            ((&lt; x 10) (+ y (* 2 z) (f (- x 1) y z)))
+            (else x)
+            )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail recursive, so iterative
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically non-tail recursive, so recursive
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>syntactically tail and non-tail recursive, overall iterative
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail and non-tail recursive, overall recursive
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ What kind of process does the following function implement?
+
+<pre>
+    (define (f n a b)
+        (cond
+            ((= b (+ a 1)) &#39;ok)
+            ((= b (+ a 2)) (swap n a (+ a 1)))
+            (else
+                (f n a (integer (* (+ a b) 0.666)))
+                (f n (integer (* (+ a b) 0.333) b))
+                (f n a (integer (* (+ a b) 0.666)))
+                )
+            )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>syntactically tail and non-tail recursive, overall recursive
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically non-tail recursive, so recursive
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail recursive, so iterative
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail and non-tail recursive, overall iterative
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ What kind of process does the following function implement?
+
+<pre>
+    (define (f n z)
+        (cond
+            ((= n 0) z)
+            ((&lt; n 3) (* z (f (- n 1) (+ z 1))))
+            (else (f (- n 1) (* n z)))
+            )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically non-tail recursive, so recursive
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>syntactically tail and non-tail recursive, overall iterative
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail and non-tail recursive, overall recursive
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail recursive, so iterative
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ What kind of process does the following function implement?
+
+<pre>
+    (define (f n z)
+        (cond
+            ((= n 0) z)
+            ((&lt; n 3) (f (- n 1) (* z n)))
+            (else (* z (f (- n 1) (+ z 1))))
+            )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail recursive, so iterative
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically tail and non-tail recursive, overall iterative
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> syntactically non-tail recursive, so recursive
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>syntactically tail and non-tail recursive, overall recursive
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>tree recursion</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="8">
+<li>
+ <b>T</b> or <b>F</b>:
+Does the following function exhibit tree recursion?
+
+<pre>
+    (define (f z)
+        (if (&lt; z 2)
+            z
+            (+ (f (- z 2)) (- z 1))
+            )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="9">
+<li>
+ <b>T</b> or <b>F</b>:
+Does the following function exhibit tree recursion?
+
+<pre>
+    (define (f z)
+        (define (iter a b count)
+            (if (= count 0)
+                b
+                (iter (f (- count 1)) (f (- count 2)) (- count 1))
+                )
+            )
+        (iter 0 0 z)
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="10">
+<li>
+ <b>T</b> or <b>F</b>:
+Does the following function exhibit tree recursion?
+
+<pre>
+    (define (f z)
+        (define (iter a b count)
+            (if (= count 0)
+                a
+                (iter b (+ a b) (- count 1))
+                )
+            )
+        (iter 0 1 z)
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="11">
+<li>
+ <b>T</b> or <b>F</b>:
+<i>TQ</i>:
+Does the following function exhibit tree recursion?
+
+<pre>
+    (define (f z)
+        (cond
+            ((&lt; z 2) 1)
+            (else (* z (f (- z 1))) (f 1))
+            )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="12">
+<li>
+ The space complexity of the following function is:
+
+<pre>
+    (define (f x)
+       (if (&lt; x 2)
+           x
+           (+ (f (- x 1)) (f (- x 2)))
+           )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> exponential
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> logorithmic
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="13">
+<li>
+ The time complexity of the following function is:
+
+<pre>
+    (define (f x)
+       (if (&lt; x 2)
+           x
+           (+ (f (- x 1)) (f (- x 2)))
+           )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> logorithmic
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>exponential
+<br/>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 -->
+<!-- QA -->
+<ol type="1" start="14">
+<li>
+ <b>T</b> or <b>F</b>:
+One way to reduce redundant computations, if any, in tree recursion is to
+memoize intermediate results.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="15">
+<li>
+ <b>T</b> or <b>F</b>:
+A recursive function cannot implement an iterative process.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 2 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 1 0 -->
+<!-- QA -->
+<ol type="1" start="16">
+<li>
+ A completely tail recursive function is one that:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> recurs an infinite number of times
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> recurs a constant number of times
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>if a recursive call is made, it is the last expression evaluated
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> the last expression evaluated is a recursive call
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="17">
+<li>
+ Among recursive functions,
+a completely tail recursive function is uniquely characterized by:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> execution in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&omega;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math> space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>execution in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math> space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> execution in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math> time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> execution in <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>&Omega;</mi>	<mrow>		<mo form="prefix">(</mo>		<mn>1</mn>		<mo form="postfix">)</mo>	</mrow></mrow></math> time
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>orders of growth</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 5 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 0 0 1 -->
+<!-- QA -->
+<ol type="1" start="18">
+<li>
+ <b>T</b> or <b>F</b>:
+If <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>f</mi>	<mo>=</mo>	<mi>&Theta;</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>g</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>, then <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msub>		<mi>c</mi>		<mn>1</mn>	</msub>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&le;</mo>	<mi>f</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&le;</mo>	<msub>		<mi>c</mi>		<mn>2</mn>	</msub>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="19">
+<li>
+ Tree-recursive fibonacci takes time on the order of:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mi>n</mi>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mn>2</mn>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mn>2</mn>	</msup></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="20">
+<li>
+ Non-tail recursive factorial takes space on the order of:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mn>2</mn>	</msup></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mn>2</mn>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mi>n</mi>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="21">
+<li>
+ Non-tail recursive factorial takes time on the order of:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>n</mi>		<mn>2</mn>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mn>2</mn>	</msup></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mi>n</mi>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="22">
+<li>
+ Tree-recursive fibonacci takes space on the order of:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> a constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mn>2</mn>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mi>n</mi>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 1 0 0 -->
+<!-- QA -->
+<ol type="1" start="23">
+<li>
+ Iterative factorial takes space on the order of:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mi>n</mi>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mn>2</mn>	</msup></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>a constant
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="24">
+<li>
+ Iterative factorial takes time on the order of:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mi>n</mi>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> a constant
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>!</mo></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="25">
+<li>
+ Iterative fibonacci takes space on the order of:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>a constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mi>n</mi>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mn>2</mn>	</msup></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="26">
+<li>
+ Iterative fibonacci takes time on the order of:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> a constant
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>&phi;</mi>		<mi>n</mi>	</msup></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>!</mo></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>exponentiation</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 11 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 1 0 0 0 0 0 0 0 1 0 0 -->
+<!-- QA -->
+<ol type="1" start="27">
+<li>
+ This recurrence:
+
+<pre>
+    e(b,n) = b * e(b,n-1) if n &gt; 0
+    e(b,n) = 1 otherwise
+</pre>
+
+if implemented directly, takes:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> log time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> exponential time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant time
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear time
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="28">
+<li>
+ This recurrence:
+
+<pre>
+    e(b,n) = b * e(b,n-1) if n &gt; 0
+    e(b,n) = 1 otherwise
+</pre>
+
+if implemented directly, takes:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> log space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic space
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic space
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="29">
+<li>
+ This recurrence:
+
+<pre>
+    e(b,n) = e(b*b,n/2) if
+        n is positive,even
+    e(b,n) = b * e(b,n-1) if
+        n is positive,odd
+    e(b,n) = 1 otherwise
+</pre>
+
+if implemented directly, takes:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>log time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> exponential time
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="30">
+<li>
+ This recurrence:
+
+<pre>
+    e(b,n) = e(b*b,n/2) if
+        n is positive,even
+    e(b,n) = b * e(b,n-1) if
+        n is positive,odd
+    e(b,n) = 1 otherwise
+</pre>
+
+if implemented directly, takes:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic space
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> exponential space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>log space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant space
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="31">
+<li>
+ This recurrence:
+
+<pre>
+    e(b,n) = e(b*b,n/2) if
+        n is positive,even
+    e(b,n) = b * e(b,n-1) if
+        n is positive,odd
+    e(b,n) = 1 otherwise
+</pre>
+
+if implemented directly, takes:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>log space
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant space
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="32">
+<li>
+ This recurrence:
+
+<pre>
+    e(b,n) = e(b,n/2)^2 if
+        n is positive,even
+    e(b,n) = b * e(b,n-1) if
+        n is positive,odd
+    e(b,n) = 1 otherwise
+</pre>
+
+if implemented directly, takes:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> exponential time
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>log time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic time
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="33">
+<li>
+ This recurrence:
+
+<pre>
+    e(b,n) = e(b,n/2)^2 if
+        n is positive,even
+    e(b,n) = b * e(b,n-1) if
+        n is positive,odd
+    e(b,n) = 1 otherwise
+</pre>
+
+if implemented directly, takes:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> exponential space
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>log space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear space
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="34">
+<li>
+ This recurrence:
+
+<pre>
+    e(b,n) = e(b,n/2) * e(b,n/2) if
+        n is positive,even
+    e(b,n) = b * e(b,n-1) if
+        n is positive,odd
+    e(b,n) = 1 otherwise
+</pre>
+
+if implemented directly, takes:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> exponential space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>log space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic space
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear space
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="35">
+<li>
+ This recurrence:
+
+<pre>
+    e(b,n) = e(b,n/2) * e(b,n/2) if
+        n is positive,even
+    e(b,n) = b * e(b,n-1) if
+        n is positive,odd
+    e(b,n) = 1 otherwise
+</pre>
+
+if implemented directly, takes:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> log time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> exponential time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic time
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>linear time
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="36">
+<li>
+ This recurrence:
+
+<pre>
+    e(b,n) = f(b,n,1)
+    f(b,n,t) = f(b*b,n/2,t) if
+        n is positive,even
+    f(b,n,t) = f(b,n-1,t*b) if
+        n is positive,odd
+    f(b,n,t) = t otherwise
+</pre>
+
+if implemented directly, takes:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> exponential time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> constant time
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear time
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li>log time
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="37">
+<li>
+ This recurrence:
+
+<pre>
+    e(b,n) = f(b,n,1)
+    f(b,n,t) = f(b*b,n/2,t) if
+        n is positive,even
+    f(b,n,t) = f(b,n-1,t*b) if
+        n is positive,odd
+    f(b,n,t) = t otherwise
+</pre>
+
+if implemented directly, takes:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>constant space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> log space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> exponential space
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>greatest common divisors</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 4 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 1 1 0 0 -->
+<!-- QA -->
+<ol type="1" start="38">
+<li>
+ This recurrence:
+
+<pre>
+    gcd(a,b) = a if b is zero
+    gcd(a,b) = gcd(b,a%b) otherwise
+</pre>
+
+was first attributed to:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> Caesar Augustus
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>Euclid
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> Ptolmey
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> Aristotle
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="39">
+<li>
+ How is Lam&eacute;&apos;s Theorem used to generate an upper bound on 
+<code>gcd(m,n)</code>?
+Assume <i>m</i> is larger than <i>n</i> and that 
+<code>gcd(m,n)</code> takes <i>k</i> steps.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>&ge;</mo>	<mi>F</mi>	<mi>i</mi>	<mi>b</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&rarr;</mo>	<mi>n</mi>	<mo>&ge;</mo>	<mfrac linethickness="1">		<mrow>			<msup>				<mi>k</mi>				<mi>&Phi;</mi>			</msup>		</mrow>		<mrow>			<msqrt>				<mn>5</mn>			</msqrt>		</mrow>	</mfrac>	<mo>&rarr;</mo>	<mi>l</mi>	<mi>o</mi>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&ge;</mo>	<mi>&Phi;</mi>	<mspace width="0.278em" />	<mi>l</mi>	<mi>o</mi>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>-</mo>	<mi>l</mi>	<mi>o</mi>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<msqrt>			<mn>5</mn>		</msqrt>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>&le;</mo>	<mi>F</mi>	<mi>i</mi>	<mi>b</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&rarr;</mo>	<mi>n</mi>	<mo>&le;</mo>	<mfrac linethickness="1">		<mrow>			<msup>				<mi>&Phi;</mi>				<mi>k</mi>			</msup>		</mrow>		<mrow>			<msqrt>				<mn>5</mn>			</msqrt>		</mrow>	</mfrac>	<mo>&rarr;</mo>	<mi>l</mi>	<mi>o</mi>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&ge;</mo>	<mi>k</mi>	<mspace width="0.278em" />	<mi>l</mi>	<mi>o</mi>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>&Phi;</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>-</mo>	<mi>l</mi>	<mi>o</mi>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<msqrt>			<mn>5</mn>		</msqrt>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>&le;</mo>	<mi>F</mi>	<mi>i</mi>	<mi>b</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&rarr;</mo>	<mi>n</mi>	<mo>&le;</mo>	<mfrac linethickness="1">		<mrow>			<msup>				<mi>k</mi>				<mi>&Phi;</mi>			</msup>		</mrow>		<mrow>			<msqrt>				<mn>5</mn>			</msqrt>		</mrow>	</mfrac>	<mo>&rarr;</mo>	<mi>l</mi>	<mi>o</mi>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&le;</mo>	<mi>&Phi;</mi>	<mspace width="0.278em" />	<mi>l</mi>	<mi>o</mi>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>-</mo>	<mi>l</mi>	<mi>o</mi>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<msqrt>			<mn>5</mn>		</msqrt>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>n</mi>	<mo>&ge;</mo>	<mi>F</mi>	<mi>i</mi>	<mi>b</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>k</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&rarr;</mo>	<mi>n</mi>	<mo>&ge;</mo>	<mfrac linethickness="1">		<mrow>			<msup>				<mi>&Phi;</mi>				<mi>k</mi>			</msup>		</mrow>		<mrow>			<msqrt>				<mn>5</mn>			</msqrt>		</mrow>	</mfrac>	<mo>&rarr;</mo>	<mi>l</mi>	<mi>o</mi>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>n</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&ge;</mo>	<mi>k</mi>	<mspace width="0.278em" />	<mi>l</mi>	<mi>o</mi>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<mi>&Phi;</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>-</mo>	<mi>l</mi>	<mi>o</mi>	<mi>g</mi>	<mrow>		<mo form="prefix">(</mo>		<msqrt>			<mn>5</mn>		</msqrt>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="40">
+<li>
+ This recurrence:
+
+<pre>
+    gcd(a,b) = a if b is zero
+    gcd(a,b) = gcd(b,a%b) otherwise
+</pre>
+
+if implemented directly, takes:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> exponential space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> log linear space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> log space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li>constant space
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> quadratic space
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="41">
+<li>
+ Consider this recurrence:
+
+<pre>
+    gcd(a,b) = a if b is zero
+    gcd(a,b) = gcd(b,a%b) otherwise
+</pre>
+
+The number of remainder operations performed by 
+<code>gcd(412,60)</code> using applicative order evaluation is:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>4
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- QA -->
+<ol type="1" start="42">
+<li>
+ Consider this recurrence:
+
+<pre>
+    gcd(a,b) = a if b is zero
+    gcd(a,b) = gcd(b,a%b) otherwise
+</pre>
+
+Assuming a knowledge of when to stop,
+what is the number of remainder operations
+performed by 
+<code>gcd(412,60)</code> using normal order evaluation?
+There are four recursive calls which involve
+remainder operations. 
+<code>gcd(a,b)</code> is 
+<code>gcd(b,a%b)</code> is the first of these.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 19
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 6
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>11
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2>
+ <b>Concept:</b> <i>testing for primality</i>
+<br/>
+</h2><!-- section ENDED -->
+<!-- selection -->
+
+<!-- 7 questions in this selection -->
+<!-- 1 items needed -->
+<!-- selection array: 0 0 0 1 0 0 0 -->
+<!-- QA -->
+<ol type="1" start="43">
+<li>
+ What is the distinguishing characteristic of probabilistic algorithms?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> the chance of success drops the more times the algorithm is run
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the chance of failure cannot be made arbitrarily small
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> they use random numbers
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>the chance of failure can be made arbitrarily small
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="44">
+<li>
+ What is Fermat's little theorem? Assume <i>n</i> is prime and <i>a</i>
+positive.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>a</mi>		<mi>n</mi>	</msup>	<mo>&percnt;</mo>	<mi>n</mi>	<mo>=</mo>	<mi>a</mi>	<mo>&percnt;</mo>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>a</mi>		<mrow>			<mi>n</mi>			<mo>&percnt;</mo>			<mi>a</mi>		</mrow>	</msup>	<mo>=</mo>	<mi>a</mi>	<mo>&percnt;</mo>	<mi>n</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>a</mi>		<mi>n</mi>	</msup>	<mo>&percnt;</mo>	<mi>a</mi>	<mo>=</mo>	<mi>n</mi>	<mo>&percnt;</mo>	<mi>a</mi></mrow></math>
+<br/>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<msup>		<mi>a</mi>		<mi>n</mi>	</msup>	<mo>&percnt;</mo>	<mi>n</mi>	<mo>=</mo>	<mi>a</mi></mrow></math>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="45">
+<li>
+ What is a Charmichael number?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> prime numbers undetected by straight Fermat-based primality predicates
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>numbers that fool straight Fermat-based primality predicates
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> prime numbers undetected by Miller-Rabin-based primality predicates
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> numbers that fool Miller-Rabin-based primality predicates
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="46">
+<li>
+ What is the drawback of the following implementation with respect to
+primality testing:
+
+<pre>
+    (define (expmod base exp m)
+        (% (fast-expt base exp) m))
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li><i>fast-expt</i> may overflow in systems with fixed-sized integers
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>fast-expt</i> is slow for systems with fixed-sized integers
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the mod operation should happen before the call to <i>fast-expt</i>
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> <i>fast-expt</i> already performs the mod operation
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="47">
+<li>
+ Consider the following implementation:
+
+<pre>
+(define (expmod base exp m)
+    (cond ((= exp 0) 1)
+        ((even? exp)
+            (% (square
+                  (expmod base
+                      (/ exp 2) m)) m))
+        (else
+            (% (* base
+                  (expmod base
+                      (- exp 1) m)) m))))
+</pre>
+
+What is the recurrence that describes the even case?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>T(n) = T(n/2) + O(1)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> T(n) = T(n-1) + O(log n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> T(n) = T(n-1) + O(1)
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> T(n) = T(n/2) + O(log n)
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="48">
+<li>
+ Consider the following implementation:
+
+<pre>
+(define (expmod base exp m)
+    (cond ((= exp 0) 1)
+        ((even? exp)
+            (% (square
+                (expmod base (/ exp 2) m)) m))
+        (else
+            (% (* base
+                (expmod base (- exp 1) m)) m))))
+</pre>
+
+What is the recurrence that describes the default case?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> T(n) = T(n/2) + O(1)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> T(n) = T(n/2) + O(log n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> T(n) = T(n-1) + O(log n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>T(n) = T(n-1) + O(1)
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="49">
+<li>
+ Consider the following implementation:
+
+<pre>
+(define (expmod base exp m)
+    (cond ((= exp 0) 1)
+        ((even? exp)
+            (% (* (expmod base (/ exp 2) m)
+                  (expmod base (/ exp 2) m))
+                  m))
+        (else
+            (% (* base (expmod base (- exp 1) m))
+               m))))
+</pre>
+
+What is the recurrence that describes the even case?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> T(n) = T(n/2) + O(1)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> T(n) = 2T(n/2) + O(log n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>T(n) = 2T(n/2) + O(1)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> T(n) = T(n/2) + O(log n)
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- selection -->
+
+<!-- 6 questions in this selection -->
+<!-- 2 items needed -->
+<!-- selection array: 0 0 0 0 1 1 -->
+<!-- QA -->
+<ol type="1" start="50">
+<li>
+ The recurrence: T(n) = T(n/2) + O(1) reduces to:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>O(log n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(1)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(n log n)
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="51">
+<li>
+ The recurrence: T(n) = T(n/2) + O(log n) reduces to:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(log n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(n log n)
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>O((log n)*(log n))
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="52">
+<li>
+ The recurrence: T(n) = 2T(n/2) + O(log n) reduces to:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> O((log n)*(log n))
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(log n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>O(n log n)
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="53">
+<li>
+ The recurrence: T(n) = 2T(n/2) + O(1) reduces to:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>O(n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(n log n)
+<br/>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(log n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> O((log n)*(log n))
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="54">
+<li>
+ The recurrence: T(n) = T(n-1) + O(1) reduces to:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> O((log n)*(log n))
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>O(n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(log n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(n log n)
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="55">
+<li>
+ The recurrence: T(n) = T(n-1) + O(log n) reduces to:
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>O(n log n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> O(log n)
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> O((log n)*(log n))
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- selection ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

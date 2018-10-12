@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>delete-rb</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">Data Structures and Algorithms</span>
+<br/>
+<br/>
+Red-Black Tree Deletion
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="delete-rb.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+
+Start out by swapping the value to be deleted to the appropriate
+leaf (unlike most red-black code, leaves in this implementation are
+normal binary search tree leaves).
+Call this
+node <i>p</i>.
+Pass a pointer to <i>p</i> to <i>deletionFixUp</i>.
+After <i>deletionFixUp</i> returns, prune <i>p</i> from the tree.
+<br/>
+
+<pre>
+    function deletionFixUp(x)
+        {
+        loop
+            {
+            if (x is root) exit the loop
+            if (x is red) exit the loop
+            if (sibling is red)
+                {
+                color parent red
+                color sibling black
+                rotate sibling to parent
+                // should have black sibling now
+                }
+            else if (nephew is red)
+                {
+                color sibling the same as parent
+                color parent black
+                color nephew black
+                rotate sibling to parent
+                // subtree and tree is BH balanced
+                exit the loop
+                }
+            else if (niece is red)
+                {
+                // nephew must be black
+                color niece black
+                color sibling red
+                rotate niece to sibling
+                // should have red nephew now
+                }
+            else // sibling, niece, and nephew must be black
+                {
+                color sibling red
+                x = parent
+                // this subtree is BH balanced, but tree is not
+                }
+            }
+        color x black
+        }
+</pre>
+
+Like the <i>uncle</i> function, the <i>nephew</i>, <i>niece</i>,
+and <i>sibling</i> functions handle
+leftness and rightness issues.
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

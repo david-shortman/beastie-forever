@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>assign-rbt</title>
+<link rel=stylesheet
+    href="201.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+An RBT Tree Class
+<br/>
+<span class="smaller">Rough Draft</span>
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller"><a href="assign-rbt.pdf">Printable Version</a></span></span>
+
+
+
+<br/>
+<div class="ldraw">
+<image src="img-break-0-0.png">
+</div>
+
+
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- subsection -->
+<h3> The RBT tree module
+<br/>
+</h3><!-- subsection ENDED -->
+
+Here is a conforming <i>rbt.h</i> file:
+<br/>
+
+<pre>
+    /*** RBT binary search tree class ***/
+
+    #ifndef __RBT_INCLUDED__
+    #define __RBT_INCLUDED__
+
+    #include &lt;stdio.h&gt;
+    #include &quot;tnode.h&quot;
+
+    typedef struct rbt RBT;
+
+    extern RBT   *newRBT(int (*c)(void *,void *));
+    extern void   setRBTdisplay(void (*d)(void *,FILE *));
+    extern void   setRBTswapper(void (*s)(TNODE *,TNODE *));
+    extern void   setRBTfree(void (*)(void *));
+    extern TNODE *getRBTroot(RBT *t);
+    extern void   setRBTroot(RBT *t,TNODE *replacement);
+    extern void   setRBTsize(RBT *t,int s);
+    extern TNODE *insertRBT(RBT *t,void *value);
+    extern void  *findRBT(RBT *t,void *key);
+    extern TNODE *locateRBT(RBT *t,void *key);
+    extern int    deleteRBT(RBT *t,void *key);
+    extern TNODE *swapToLeafRBT(RBT *t,TNODE *node);
+    extern void   pruneLeafRBT(RBT *t,TNODE *leaf);
+    extern int    sizeRBT(RBT *t);
+    extern void   statisticsRBT(RBT *t,FILE *fp);
+    extern void   displayRBT(RBT *t,FILE *fp);
+    extern int    debugRBT(RBT *t,int level);
+    extern void   freeRBT(RBT *t);
+    extern void   *getRBTvalue(TNODE *n);
+    extern int    freqRBT(RBT *g,void *key);
+    extern int    duplicatesRBT(RBT *g);
+
+    #endif
+</pre>
+
+The methods of the <i>RBT</i> class are similar to those of the
+<i>GST</i> class. As always, your implementations should equal
+that of a professional computer scientist.
+<br/>
+<br/>
+You will store <i>RBT</i> values into a <i>GST</i> object.
+These values will store the generic values to be inserted into
+the red-black tree
+and the colors of the tree nodes.
+<br/>
+<br/>
+To swap RBT values, a swapper function is needed:
+<br/>
+
+<pre>
+    function swapper(TNODE *a,TNODE *b)
+        {
+        void *va = getTNODEvalue(a);
+        void *vb = getTNODEvalue(b);
+        // swap the GST values
+        setTNODEvalue(a,vb);
+        setTNODEvalue(b,va);
+        // the above swap swapped the colors,
+        // but the colors should stay with the nodes,
+        // so swap the colors back to the original nodes
+        RBTVALUE *x = getGSTvalue(a);
+        RBTVALUE *y = getGSTvalue(b);
+        int color = x-&gt;color;
+        x-&gt;color = y-&gt;color;
+        y-&gt;color = color;
+        }
+</pre>
+
+The <i>swapper</i> function is passed to the <i>BST</i> via the
+<i>setBSTswapper</i> method.
+<br/>
+<br/>
+The only local includes a <i>RBT</i> module should have are <i>rbt.h</i>,
+<i>bst.h</i>,
+and <i>tnode.h</i>.
+<br/>
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

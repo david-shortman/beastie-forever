@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!-- start: printthread -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> another displaySTACK and debugSTACK - Printable Version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 13px; }
+.largetext { font-family: Verdana, Arial, sans-serif; font-size: medium; font-weight: bold; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<table width="98%" align="center">
+<tr>
+<td valign="top"><a href="index.php"><img src="http://beastie.cs.ua.edu/forum/images/worm-logo.jpg" alt="Forums" title="Forums" border="0" /></a></td>
+</tr>
+<tr>
+<td>
+<span class="largetext"> <a href="showthread.php?tid=67">another displaySTACK and debugSTACK</a> - Printable Version</span><br />
+<br />
++- Forums (<em>http://beastie.cs.ua.edu/forum</em>)<br />
+<!-- start: printthread_nav -->
++-- Forum: CS201 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=1</i>)<br />
+<!-- end: printthread_nav --><!-- start: printthread_nav -->
++--- Forum: Project 0 (<i>http://beastie.cs.ua.edu/forum/forumdisplay.php?fid=6</i>)<br />
+<!-- end: printthread_nav -->
++--- Thread:  another displaySTACK and debugSTACK (<em>/showthread.php?tid=67</em>)<br />
+<br />
+</td>
+</tr>
+<tr>
+<td><br /><hr size="1" /><!-- start: printthread_post -->
+<strong>another displaySTACK and debugSTACK</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=79">jvteel</a> -  <strong>09-13-2018</strong>
+<br />
+<br />
+I'm still confused about what displaySTACK is supposed to. I know Dr. Lusth mentioned previously on here that if debugSTACK level = 1 to call displayDA with level = 0, and if debugSTACK level = 2 to call displayDA with level = 1 (right?), but it seems that this is at odds with the spec if I'm reading correctly. Any version of displayDA uses [] and not ||, so I'm not sure when to display || vs when to display [] in relation to the debugSTACK level.<br />
+<br />
+<br />
+And to double-check, both debug methods for DA and STACK simply set the debug level (and return the old one), but they do not print anything?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: another displaySTACK and debugSTACK</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-14-2018</strong>
+<br />
+<br />
+<blockquote class="mycode_quote"><cite><span> (09-13-2018, 12:32 PM)</span>jvteel Wrote:  <a href="http://beastie.cs.ua.edu/forum/showthread.php?pid=304#pid304" class="quick_jump"></a></cite>I'm still confused about what displaySTACK is supposed to. I know Dr. Lusth mentioned previously on here that if debugSTACK level = 1 to call displayDA with level = 0, and if debugSTACK level = 2 to call displayDA with level = 1 (right?), but it seems that this is at odds with the spec if I'm reading correctly. Any version of displayDA uses [] and not ||, so I'm not sure when to display || vs when to display [] in relation to the debugSTACK level.<br />
+<br />
+<br />
+And to double-check, both debug methods for DA and STACK simply set the debug level (and return the old one), but they do not print anything?</blockquote><br />
+The pipes || are displayed only for debug level 0. The brackets [] will be displayed by DA for stack debug levels 1 and 2.<br />
+<br />
+yes. The debug methods just cache the debug level and do not print anything.
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: another displaySTACK and debugSTACK</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=37">magarwal</a> -  <strong>09-14-2018</strong>
+<br />
+<br />
+For the stack class, will we be tested about anything related to the underlying DA? Or more specifically, does it matter what debugDA is, as long as debugSTACK returns the right value?
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --><!-- start: printthread_post -->
+<strong>RE: another displaySTACK and debugSTACK</strong> - <a href="http://beastie.cs.ua.edu/forum/member.php?action=profile&amp;uid=1">lusth</a> -  <strong>09-14-2018</strong>
+<br />
+<br />
+debugStack should return the previous stack debug level, so from a user's point of view, a stack debug level of 1 or 2 prints things strangely (since the user does not know how the stack is implemented).
+<br />
+<br />
+<hr size="1" />
+<!-- end: printthread_post --></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end: printthread -->

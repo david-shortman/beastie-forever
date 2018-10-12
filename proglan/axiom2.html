@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>axiom2</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+<span class="smaller">CS403: Programming Languages</span>
+<br/>
+<br/>
+Axiomatic Semantics (part 2)
+<br/>
+
+<br/>
+<span class="smaller"><span class="smaller">
+<a href="axiom2.pdf">Printable Version</a>
+</span></span>
+
+
+
+
+<br/>
+<div class="ldraw">
+<image src="break-img-0-0.png">
+</div>
+
+
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Loops
+<br/>
+</h2><!-- section ENDED -->
+
+Previously, we've seen example proofs for assignment
+and conditionals. We continue in this vein by looking at proofs concerning
+loops.
+The proof rule for while loops, assuming that the
+loop terminates, is:
+<br/>
+<center>
+
+<table>
+<tr>
+<td style="text-align:left";> 
+<code>&lt;&lt;requires: P&gt;&gt; while E do S &lt;&lt;ensures: Q&gt;&gt;</code> </td><td style="text-align:center";> : </td><td style="text-align:left";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>P</mi>	<mo>&rarr;</mo>	<mi>I</mi></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:left";> &nbsp; </td><td style="text-align:center";> &nbsp; </td><td style="text-align:left";> <i>and</i> 
+<code>&lt;&lt;requires: I&gt;&gt; E &lt;&lt;ensures: I&gt;&gt;</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> &nbsp; </td><td style="text-align:center";> &nbsp; </td><td style="text-align:left";> <i>and</i> 
+<code>&lt;&lt;requires: (I AND E)&gt;&gt; S &lt;&lt;ensures: I&gt;&gt;</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> &nbsp; </td><td style="text-align:center";> &nbsp; </td><td style="text-align:left";> <i>and</i> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>I</mi>		<mo>&and;</mo>		<mo>&not;</mo>		<mi>E</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&rarr;</mo>	<mi>Q</mi></mrow></math> </td>
+</tr>
+</table>
+
+
+</center>
+
+<br/>
+The process for proving a while loop correct is to tackle each
+part of the proof rule in turn. There are four steps, once the proper
+loop invariant <i>I</i> has been found:
+<br/>
+<ol type="i">
+
+<li>
+
+ show <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>P</mi>	<mo>&rarr;</mo>	<mi>I</mi></mrow></math>, meaning the invariant follows from the precondition
+</li>
+
+<li>
+
+ show 
+<code>&lt;&lt;requires: I&gt;&gt; E &lt;&lt;ensures: I&gt;&gt;</code>,
+meaning the invariant survives the loop test
+</li>
+
+<li>
+
+ show 
+<code>&lt;&lt;requires: I</code> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo>&and;</mo></mrow></math> 
+<code>E&gt;&gt; S &lt;&lt;ensures: I&gt;&gt;</code>,
+meaning the invariant survives the loop body
+</li>
+
+<li>
+
+ show <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>I</mi>		<mo>&and;</mo>		<mo>&not;</mo>		<mi>E</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&rarr;</mo>	<mi>Q</mi></mrow></math>,
+meaning the postcondition follows from the loop exiting and the invariant
+</li>
+
+</ol>
+
+
+Let's prove the correctness of the following program:
+<br/>
+
+<pre>
+    &lt;&lt;requires: x &gt;= 0 AND y == 0&gt;&gt;
+    while (x &gt; 0)
+        {
+        x = x - 1;
+        y = y + 1;
+        }
+    &lt;&lt;ensures: x == 0 AND y == #x&gt;&gt;
+</pre>
+
+The notation
+
+<code>#x</code> in the code
+denotes the original
+value of <i>x</i>.
+To prepare for the proof, we identify all the variables
+in the proof rule (plus the invariant):
+<br/>
+<center>
+
+<table>
+<tr>
+<td style="text-align:left";> <i>P</i>: </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<mn>0</mn>	<mo>&and;</mo>	<mi>y</mi>	<mo>&equiv;</mo>	<mn>0</mn></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:left";> <i>E</i>: </td><td style="text-align:center";> 
+<code>x &gt; 0</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> <i>S</i>: </td><td style="text-align:center";> 
+<code>{x = x - 1, y = y + 1}</code> </td>
+</tr>
+<tr>
+<td style="text-align:left";> <i>Q</i>: </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>0</mn>	<mo>&and;</mo>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>&num;</mo>	<mi>x</mi></mrow></math> </td>
+</tr>
+<tr>
+<td style="text-align:left";> <i>I</i>: </td><td style="text-align:center";> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<mn>0</mn>	<mo>&and;</mo>	<mi>x</mi>	<mo>+</mo>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>&num;</mo>	<mi>x</mi></mrow></math> </td>
+</tr>
+</table>
+
+
+</center>
+
+<br/>
+Note that for the invariant, the sum of <i>x</i> and
+<i>y</i> is a constant.
+For the <i>first</i> step in the proof, we need to
+show that the implication <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>P</mi>	<mo>&rarr;</mo>	<mi>I</mi></mrow></math>
+is true.
+This is because, at the point of the precondition,
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mo>&num;</mo>	<mi>x</mi></mrow></math>
+and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mn>0</mn></mrow></math>. Therefore,
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>+</mo>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>&num;</mo>	<mi>x</mi></mrow></math>.
+For the <i>second</i> step, we need to show that
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>I</mi>	<mo>&rarr;</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>I</mi>		<mo>&otimes;</mo>		<mi>E</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>.
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mi>I</mi>	<mo>&otimes;</mo>	<mi>E</mi></mrow></math>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>x</mi>		<mo>&ge;</mo>		<mn>0</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>+</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mo>&num;</mo>		<mi>x</mi>		<mo form="postfix">)</mo>	</mrow>	<mspace width="0.278em" />	<mo>&otimes;</mo></mrow></math> 
+<code>{x &gt; 0}</code>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>x</mi>		<mo>&ge;</mo>		<mn>0</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>+</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mo>&num;</mo>		<mi>x</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+<br/>
+Does <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>I</mi>	<mo>&rarr;</mo>	<mi>Z</mi></mrow></math>? Yes. Generally, if the loop
+condition does not cause a change of state, it is sufficient
+to say &ldquo;loop condition has no side-effects&rdquo;
+for this part of the proof.
+<br/>
+<br/>
+For the <i>third</i> step, we push <i>I</i> back through
+<i>S</i> to see if <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo form="prefix">(</mo>	<mi>I</mi>	<mo>&and;</mo>	<mi>E</mi>	<mo form="postfix">)</mo></mrow></math> implies the result:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mi>I</mi>	<mo>&otimes;</mo>	<mi>S</mi></mrow></math>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>x</mi>		<mo>&ge;</mo>		<mn>0</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>+</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mo>&num;</mo>		<mi>x</mi>		<mo form="postfix">)</mo>	</mrow>	<mspace width="0.278em" />	<mo>&otimes;</mo></mrow></math> 
+<code>{x = x - 1; y = y + 1;}</code>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mo form="prefix">(</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>x</mi>		<mo>&ge;</mo>		<mn>0</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>+</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mo>&num;</mo>		<mi>x</mi>		<mo form="postfix">)</mo>	</mrow>	<mspace width="0.278em" />	<mo>&otimes;</mo></mrow></math> 
+<code>{y = y + 1}</code><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mo form="postfix">)</mo>	<mspace width="0.278em" />	<mo>&otimes;</mo></mrow></math> 
+<code>{x = x - 1}</code>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>x</mi>		<mo>&ge;</mo>		<mn>0</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>+</mo>		<mi>y</mi>		<mo>+</mo>		<mn>1</mn>		<mo>&equiv;</mo>		<mo>&num;</mo>		<mi>x</mi>		<mo form="postfix">)</mo>	</mrow>	<mspace width="0.278em" />	<mo>&otimes;</mo></mrow></math> 
+<code>{x = x - 1}</code>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mi>x</mi>	<mo>-</mo>	<mn>1</mn>	<mo>&ge;</mo>	<mn>0</mn>	<mo>&and;</mo>	<mi>x</mi>	<mo>-</mo>	<mn>1</mn>	<mo>+</mo>	<mi>y</mi>	<mo>+</mo>	<mn>1</mn>	<mo>&equiv;</mo>	<mo>&num;</mo>	<mi>x</mi></mrow></math>
+<br/>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>Z</mi>	<mo>=</mo>	<mi>x</mi>	<mo>&ge;</mo>	<mn>1</mn>	<mo>&and;</mo>	<mi>x</mi>	<mo>+</mo>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>&num;</mo>	<mi>x</mi></mrow></math>
+</span>
+
+<br/>
+Given that <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>I</mi>	<mo>&and;</mo>	<mi>E</mi></mrow></math> is:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<mn>0</mn>	<mo>&and;</mo>	<mi>x</mi>	<mo>+</mo>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>&num;</mo>	<mi>x</mi>	<mo>&and;</mo>	<mi>x</mi>	<mo>&gt;</mo>	<mn>0</mn></mrow></math>
+</span>
+
+<br/>
+which is equivalent to:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&gt;</mo>	<mn>0</mn>	<mo>&and;</mo>	<mi>x</mi>	<mo>+</mo>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>&num;</mo>	<mi>x</mi></mrow></math>
+</span>
+
+<br/>
+is it true that <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>I</mi>		<mo>&and;</mo>		<mi>E</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&rarr;</mo>	<mi>Z</mi></mrow></math>, or:
+<br/>
+<span class="indent">
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mrow>		<mo form="prefix">(</mo>		<mi>x</mi>		<mo>&gt;</mo>		<mn>0</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>+</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mo>&num;</mo>		<mi>x</mi>		<mo form="postfix">)</mo>	</mrow>	<mo>&rarr;</mo>	<mrow>		<mo form="prefix">(</mo>		<mi>x</mi>		<mo>&ge;</mo>		<mn>1</mn>		<mo>&and;</mo>		<mi>x</mi>		<mo>+</mo>		<mi>y</mi>		<mo>&equiv;</mo>		<mo>&num;</mo>		<mi>x</mi>		<mo form="postfix">)</mo>	</mrow></mrow></math>
+</span>
+
+<br/>
+Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&gt;</mo>	<mn>0</mn></mrow></math> is equivalent to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<mn>1</mn></mrow></math>,
+we see that it is.
+For the <i>fourth</i> and final step, we need to show that
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>I</mi>	<mo>&and;</mo>	<mo>&not;</mo>	<mi>E</mi>	<mo>&rarr;</mo>	<mi>Q</mi></mrow></math>. We have <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&ge;</mo>	<mn>0</mn></mrow></math>
+(from <i>I</i>)
+and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&le;</mo>	<mn>0</mn></mrow></math> (from the negation of <i>E</i>), so it must be the
+case that <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>&equiv;</mo>	<mn>0</mn></mrow></math>. That, with <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>x</mi>	<mo>+</mo>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>&num;</mo>	<mi>x</mi></mrow></math>
+(also from <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>I</mi></mrow></math>), we deduce that <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>y</mi>	<mo>&equiv;</mo>	<mo>&num;</mo>	<mi>x</mi></mrow></math>,
+which is indeed <i>Q</i>.
+The proof is complete (even more whew!).
+<br/>
+<br/>
+The above proof is known as a <i>partial</i> <i>correctness</i> proof, because
+we assumed the loop terminated. For a full
+correctness proof, one would need to prove that the loop terminates.
+<br/>
+<!-- section -->
+<h2> Finding invariants in loops
+<br/>
+</h2><!-- section ENDED -->
+
+Every proper loop has an invariant. Consider this loop,
+which halves even numbers:
+<br/>
+
+<pre>
+    &lt;&lt;requires: x % 2 == 0 AND y == 0 AND x &gt;= 0&gt;&gt;
+
+    //invariant is true here
+    while (x &gt; 0)
+        {
+        //and here
+        x = x - 2;
+        y = y + 1;
+        //and here
+        }
+    //and finally here
+
+    &lt;&lt;ensures: x == 0 AND y = #x / 2&gt;&gt;
+</pre>
+
+The comments indicate where the invariant must be true.
+This implies that the invariant need not be true in the middle of
+the loop body.
+<br/>
+A loop invariant describes some computational value that
+is begin preserved at certain points in the loop.
+Here are some of the invariants for this particular loop:
+<br/>
+
+<pre>
+    x % 2 == 0
+    x + 2 * y == #x
+    x &gt;= 0
+    y &gt;= 0
+</pre>
+
+Which particular invariants are necessary for proving partial
+correctness of this loop? One could use the conjunction of
+all of these:
+<br/>
+
+<pre>
+    x % 2 == 0 AND x + 2 * y == #x AND x &gt;= 0 AND y &gt;= 0
+</pre>
+
+This should always work, although some clauses are likely
+irrelevant or redundant. The art of invariant finding is
+determining minimal invariants for the task.
+<br/>
+Here is another example:
+<br/>
+
+<pre>
+    &lt;&lt;requires: a &gt;= 0 AND b &gt; 0 AND t == 1&gt;&gt;
+    while (b &gt; 0)
+        {
+        if (b % 2 == 0)
+            {
+            a = a * a;
+            b = b / 2;
+            }
+        else
+            {
+            t = t * a;
+            b = b - 1;
+            }
+        }
+    &lt;&lt;ensures: b == 0 AND t == #a ^ #b&gt;&gt;
+</pre>
+
+The invariants for this loop include:
+<br/>
+
+<pre>
+     t * a ^ b = a# ^ b#
+     a &gt;= 0
+     b &gt;= 0
+     t &gt;= 0
+</pre>
+
+It takes some calculation, but it can be shown that these invariants
+hold at all the right places. The trickiest of these is the first.
+Obviously it holds just before the loop is entered since <i>t</i> is 1
+and <i>a</i> and <i>b</i> are <i>a#</i> and <i>b<sharp/></i>, respectively.
+Since the loop test does not cause a change of state, the invariant
+is true at the top of the loop body as well. To show that the invariant
+is true at the bottom of the loop, one must look at the two cases,
+when <i>b</i> is even and when <i>b</i> is odd.
+<br/>
+<br/>
+For the first case,
+we can see that <i>t</i> remains unchanged, but <i>a</i> is squared
+and <i>b</i> is halved. So is it true that:
+<br/>
+
+<pre>
+    t * a ^ b == t * (a * a) ^ (b / 2) ?
+</pre>
+
+We can rewrite the right-hand side as:
+<br/>
+
+<pre>
+     t * (a ^ 2) ^ (b / 2)
+</pre>
+
+By the one of the laws of exponents, this simplifies to:
+<br/>
+
+<pre>
+    t * a ^ (2 * b / 2)
+</pre>
+
+Canceling the twos yields are original invariant:
+<br/>
+
+<pre>
+    t * a ^ b
+</pre>
+
+For the second case, when <i>b</i> is odd, we ask:
+<br/>
+
+<pre>
+    t * a ^ b == (t * a) * a ^ (b - 1) ?
+</pre>
+
+We can rewrite the right-hand side as:
+<br/>
+
+<pre>
+    t * a ^ 1 * a ^ (b - 1)
+</pre>
+
+By another law of exponents, this simplifies to:
+<br/>
+
+<pre>
+    t * a ^ (1 + b - 1)
+</pre>
+
+Canceling the ones yields:
+<br/>
+
+<pre>
+    t * a ^ b
+</pre>
+
+as desired. Finally, the invariant must be true immediately after the
+loop exits since, as before, the loop condition does not cause a change
+of state.
+<br/>
+Invariant quantities need not be mathematical in nature; they can be logical as well.
+For example, consider this loop:
+<br/>
+
+<pre>
+    &lt;&lt;requires: length(a) &gt; 0 AND i == 1 AND max == a[0]&gt;&gt;
+
+    while (i &lt; n)
+        {
+        if (a[i] &gt; max)
+            max = a[i];
+        else
+            max = max;
+        i = i + 1;
+        }
+
+    &lt;&lt;ensures: i == n AND max == MAX(a,0,n)&gt;&gt;
+</pre>
+
+where 
+<code>MAX</code> is a mythical function that returns the true maximum in array <i>a</i>
+in the range 0 to <i>n</i> (exclusive).
+<br/>
+Invariant expressions for this loop include:
+<br/>
+
+<pre>
+    max == MAX(a,0,i)
+    i &lt;= n
+    i &gt; 0
+</pre>
+
+As before, let's investigate the most complicated invariant expression,
+the first one listed. We see that
+it is true just before the loop is entered since <i>max</i> is equal to the only value in
+the range 0..<i>i</i> as <i>i</i> is equal to 1.
+Because the loop test causes no change of state, the invariant is true at the
+top of the loop.
+Note that the loop body extends the range by one and that the newly allowed value
+in the range (located at 
+<code>a[i-1]</code> when at the bottom of the loop) has been checked
+to see if it the new maximum value. If it is, <i>max</i> is updated;
+if not, <i>max</i> stays the
+same. Therefore, <i>max</i> remains equal to 
+<code>MAX(a,0,i)</code> when at the bottom of the loop.
+Finally, the invariant is true when the loop exits since the loop condition does
+not cause a change of state.
+<br/>
+<br/>
+
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: index.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Apr 22 10:19:16 2015 -->
+<head>
+<title>The Art and Craft of Programming -- Conditionals</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+</p>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_12.html">
+  <img border="0" alt="More about Functions" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_14.html">
+  <img border="0" alt="Input and Output" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Conditionals</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table>
+<h1>Conditionals</h1>
+<p>Conditionals implement decision points in a computer program.
+Suppose you have a program that performs some task on an
+image. You may well have a point in the program where you
+do one thing if the image is a JPEG and quite another
+thing if the image is a GIF file. Likely, at this point,
+your program will include a conditional expression to make
+this decision.
+</p>
+<p>Before learning about conditionals, it is important to
+learn about logical expressions. Such expressions are the
+core of conditionals and loops.<sup><a href="index_26.html#footnote-24">24</a></sup>
+</p>
+
+<h2><a name="id1">Logical expressions</a></h2><p>
+A logical expression evaluates to a truth value, in essence true or
+false. For example, the expression <i>x &gt; 0</i>
+resolves to true if <i>x</i> is positive
+and false if <i>x</i> is negative or zero. In C, falsehood is represented by
+the integer 0 and truth
+by any other integer, usually 1.
+Recall that, together,
+these two values are known as B<font size="-1">OOLEAN</font>&#32;values.
+</p>
+<p>One can assign truth values to integer variables:
+</p>
+<pre>
+      //test
+      int c = -1;
+      int z = (c &gt; 0);
+      printf("z is %d\n",z);     //should print z is 0
+</pre>
+<p>If <i>c</i> were positive,
+the variable <i>z</i> would be assigned a value of 1, which is
+interpreted as true.
+Since <i>c</i> is negative, however, it is assigned a value of zero, which
+is interpreted as false.
+The parentheses are added to the comparison to improve readability.
+</p>
+
+<h2><a name="id2">Logical operators</a></h2><p>
+Let's review C's logical operators:
+</p>
+<font color="#0000ff">
+<div align="center">
+<p><table><tbody><tr><td colspan="1" align="center">
+<code>==</code>    </td><td colspan="1" align="left"> equal to </td></tr>
+<tr><td colspan="1" align="center">
+<code>!=</code>    </td><td colspan="1" align="left"> not equal to </td></tr>
+<tr><td colspan="1" align="center">
+<code>&gt;=</code>    </td><td colspan="1" align="left"> greater than or equal to </td></tr>
+<tr><td colspan="1" align="center">
+<code>&gt;</code>     </td><td colspan="1" align="left"> greater than </td></tr>
+<tr><td colspan="1" align="center">
+<code>&lt;</code>     </td><td colspan="1" align="left"> less than </td></tr>
+<tr><td colspan="1" align="center">
+<code>&lt;=</code>    </td><td colspan="1" align="left"> less than or equal to </td></tr>
+<tr><td colspan="1" align="center">
+<code>&amp;&amp;</code>    </td><td colspan="1" align="left"> <font size="-1"><b>AND</b></font>, both must be true </td></tr>
+<tr><td colspan="1" align="center">
+<code>||</code>    </td><td colspan="1" align="left"> <font size="-1"><b>OR</b></font>, one or both must be true </td></tr>
+<tr><td colspan="1" align="center">
+<code>!</code>     </td><td colspan="1" align="left"> a unary operator that reverses a truth value </td></tr>
+<tr><td colspan="1" align="center">
+</td></tr></tbody></table>
+</p>
+</div>
+<font color="#000000">
+<p>The first six operators are used for comparing two things,
+while the next two operators are the glue that joins up simpler
+logical expressions into more complex ones.
+The last operator is used to reverse a logical value from true to false
+and vice versa.
+</p>
+<p>Beginning programmers often confuse the <code>=</code> operator,
+which is the assignment
+operator, with the <code>==</code> operator, which is the equality operator.
+Remember, assignment is used to change the value of a variable while
+equality can be used to test the value of a variable (without 
+changing its value).
+Fortunately, the GNU C compiler detects many attempts to use assignment
+when equality is intended and will complain appropriately.
+</p>
+
+<h2><a name="id3">Short circuiting</a></h2><p>
+When evaluating a logical expression,
+C evaluates the subexpressions from left to right and
+stops evaluating as soon as it finds out that the entire expression
+is definitely true or definitely false.
+For example, when encountering the expression:
+</p>
+<pre>
+      x != 0 &amp;&amp; y / x &gt; 2
+</pre>
+<p>if <i>x</i> has a value of 0, the subexpression on the left side of the
+<font size="-1"><b>AND</b></font>
+connective resolves to false. At this point, there is no way for the
+entire expression to be true (since both the left hand side and the right
+hand side must be true for an
+<font size="-1"><b>AND</b></font>
+expression to be true), so the right
+hand side of the expression is not evaluated. Note that this particular 
+expression
+protects against a divide-by-zero error.
+</p>
+<p>Likewise, if the first subexpression in an
+<font size="-1"><b>OR</b></font>
+expression is true, then the
+entire
+<font size="-1"><b>OR</b></font>
+expression is true and there is no need to evaluate the second expression
+in the disjunction.
+For example, if the call to function <i>f</i> returns
+true, then the call to function <i>g</i> is never made:
+</p>
+<pre>
+    f(x) || g(x,y)
+</pre>
+
+<h2><a name="id4">If expressions</a></h2><p>
+C's <i>if</i> expressions are used to conditionally execute code,
+depending on the truth value of what is known as the
+<i>test</i> expression. One version of <i>if</i> has a single statement
+following the test expression:
+</p>
+<p>Here is an example:
+</p>
+<pre>
+    if (strcmp(name,"John") == 0)               //0 means the same
+        printf("I like that name!");
+</pre>
+<p>In this version, when the test expression is true (<i>i.e.</i>, 
+the statement following it is executed,
+causing the compliment.
+If the test expression is false, however the
+following statement is not evaluated.
+You can also use blocks. The following code is equivalent to the previous:
+</p>
+<pre>
+    if (strcmp(name,"John") == 0)               //0 means the same
+        {
+        printf("I like that name!");
+        }
+</pre>
+<p>The advantage of blocks is that you can have more the one statement evaluated
+when the test expression is true. Novice programmers sometimes think that
+indentation is sufficient, as in:
+</p>
+<pre>
+    if (strcmp(name,"John") == 0)               //0 means the same
+        printf("I like that name!");
+        goodName = 1;
+</pre>
+<p>Since C doesn't care about indentation<sup><a href="index_26.html#footnote-25">25</a></sup>,
+it assumes the assignment statement does not belong to the <i>if</i> at all
+and <i>goodName</i> is set to 1 regardless of whether
+<i>name</i> is <code>"John"</code> or not.
+Some programmers always use blocks even if there is a single
+statement to be executed. We will use that convention in this text,
+unless we are trying to save space.
+</p>
+<p>Here is another form of <i>if</i>:
+</p>
+<pre>
+    if (strcmp(major,"Computer Science") == 0)
+        {
+        print("Smart choice!")
+        }
+    else
+        {
+        print("Ever think about changing your major?")
+        }
+</pre>
+<p>In this version, <i>if</i> has two blocks, one following the
+test expression and one following the <i>else</i> keyword.
+As before, the first block is evaluated if the test expression
+is true. If the test expression is false, however,
+the second block is evaluated instead.
+Also as before, if the blocks have a single statement, the
+braces can be omitted.
+</p>
+
+<h2><a name="id5">if-elseif-else chains</a></h2><p>
+You can chain <i>if</i> statements together using the <i>else</i> keyword,
+followed by an <i>if</i> statement,
+as in:
+</p>
+<pre>
+    if (bases == 4)
+        {
+        printf("HOME RUN!!!\n");
+        }
+    else if (bases == 3)
+        {
+        printf("TrIpLe!!\n");
+        }
+    else if (bases == 2)
+        {
+        printf("Double!\n");
+        }
+    else if (bases == 1) 
+        {
+        printf("single\n");
+        }
+    else
+        {
+        printf("out\n");
+        }
+</pre>
+<p>The block that is eventually evaluated is
+directly underneath the first test expression
+that is true, reading from top to bottom.
+If no test expression is true, the block associated
+with the <i>else</i> is evaluated.
+Note that the <i>else</i> is not required; if no test expressions
+evaluate to true, then no blocks are executed.
+</p>
+<p>What is the difference between <i>if-elseif-else</i>
+chains and a sequence of
+unchained <i>if</i>s? Consider this rewrite of the
+above code:
+</p>
+<pre>
+    if (bases == 4)
+        {
+        printf("HOME RUN!!!\n");
+        }
+    if (bases == 3)
+        {
+        printf("TrIpLe!!\n");
+        }
+    if (bases == 2)
+        {
+        printf("double!\n");
+        }
+    if (bases == 1) 
+        {
+        printf("single\n");
+        }
+    else
+        {
+        printf("out\n");
+        }
+</pre>
+<p>In the second version, there are four <i>if</i> statements and
+the <i>else</i> belongs to the last <i>if</i>. Does this behave exactly
+the same? The answer is, it depends. Suppose the value
+of the variable <i>bases</i> is 0. Then both versions print:
+</p>
+<pre>
+    out
+</pre>
+<p>However, if the value of <i>bases</i> is 3, for example, the first
+version prints:
+</p>
+<pre>
+    TrIpLe!!
+</pre>
+<p>while the second version prints:
+</p>
+<pre>
+    TrIpLe!!
+    out
+</pre>
+<p>Why the difference? In the first version, a subsequent test
+expression is evaluated <i>only</i> if all previous test expressions
+evaluated to false. Once a test expression evaluates to true in
+an <i>if-elseif-else</i> chain, the associated block is evaluated and
+no more processing of the chain is performed. Like the <font size="-1"><b>AND</b></font> and
+<font size="-1"><b>OR</b></font> B<font size="-1">OOLEAN</font>&#32;connectives,
+an <i>if-elseif-else</i> chain short-circuits.
+</p>
+<p>In contrast, the sequences of <i>if</i>s in the rewrite 
+are independent; there is no
+short-circuiting. When the test expression of the first <i>if</i>
+fails, the test expression of the second <i>if</i> succeeds
+and <tt>TrIpLe!!</tt> is
+printed. Now the test expression of the third <i>if</i> is tested and
+fails as well as the test expression of the fourth <i>if</i>. But since
+the fourth <i>if</i> has an else, the <i>else</i> block is evaluated and
+<tt>out</tt>
+is printed.
+</p>
+<p>It is important to know when to use an <i>if-elseif-else</i> chain and
+when to use a sequence of independent <i>if</i>s.
+If there should be only
+one outcome, then use an <i>if-elseif-else</i> chain. Otherwise,
+use a sequence of <i>if</i>s.
+</p>
+
+<h2><a name="id6">Explore further</a></h2><p>
+Other constructs in the same vein as the <i>if</i> statement are
+<i>switch</i> or <i>case</i> statement and the embedded <i>if</i> expression
+(sometimes known as the <i>ternary operator</i>).
+Search the web to find out more.
+</p>
+
+<h2><a name="id7">Practice with B<font size="-1">OOLEAN</font>&#32;expressions</a></h2><p>
+Here is some practice on writing complex B<font size="-1">OOLEAN</font>&#32;expressions.
+Your task is to convert the English description into a C
+B<font size="-1">OOLEAN</font>&#32;expression.
+The variables to be used in the expressions are:
+</p>
+<ul><li><i>animal</i> with string values <code>"dog"</code> and <code>"cat"</code><br /></li><li><i>size</i> with string values <code>"small"</code>, <code>"medium"</code>, and <code>"large"</code><br /></li><li><i>hasSpots</i> with B<font size="-1">OOLEAN</font>&#32;values 1 or 0<br /></li><li><i>age</i> with positive integer values<br /></li><li><i>coatColor</i> with string values <code>"white"</code>, <code>"black"</code>, <code>"red"</code>, and <code>"brown"</code><br /></li><li><i>eyeColor</i> with string values <code>"green"</code>, <code>"brown"</code>, <code>"blue"</code><br /></li></ul>
+<p>An old dog is one with an age greater than seven years while an old cat has
+an age greater than or equal to nine years. A cat and a dog are young if
+they are younger than three years old.
+</p>
+<p>Write a boolean expression that captures:
+</p>
+<p><i>Dogs that are large and have spots or cats that are white but do not
+have blue eyes.</i>
+</p>
+<p>Highlight the following line to see the answer:
+</p>
+<div class="quote">
+Answer: 
+<font color="#ffffff">(animal == "dog" &#38;&#38; size == "large" &#38;&#38; hasSpots) || (animal == "cat" &#38;&#38; coatColor == "white" &#38;&#38; eyeColor != "blue")<font color="#000000">
+</font></font></div>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+<table width="100%" cellpadding=0 cellspacing=2><tr><td bgcolor="#b2b2b2" ><a href="index_12.html">
+  <img border="0" alt="More about Functions" src="previous.png"></a></td><td bgcolor="#b2b2b2" ><a href="index.html">
+  <img border="0" alt="Top" src="up.png"></a></td><td bgcolor="#b2b2b2" ><a href="index_14.html">
+  <img border="0" alt="Input and Output" src="next.png"></a></td><td bgcolor="#b2b2b2" align="center" width="100%"><font color="#000000"><b>Conditionals</b></font>
+    </td><td bgcolor="#b2b2b2" align="center"><a href="index_1.html">Contents</a></td></td></tr></table></body></html>

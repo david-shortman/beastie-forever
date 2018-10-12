@@ -1,0 +1,175 @@
+include("basics");
+
+var tyro =
+    {
+    var maxIndent = 32;
+    var indentStep = 4;
+
+    function changeMaxIndent(x){maxIndent = x;}
+    function changeIndentStep(x){indentStep = x;}
+
+    function styleViolation(spot,info)
+        {
+        var e = catch(throw(:styleViolation,"\n" + info));
+        setFile(e,file(spot));
+        setLine(e,line(spot));
+        throw(e);
+        }
+        
+    function niceExprIndent?(expr,in)
+        {
+        inspect(expr);
+        inspect(indent(expr));
+        if (indent(expr) != -1 && indent(expr) <= in) { return :false; }
+        if (type(expr) == :BINARY)
+            {
+            return niceExprIndent?(head(expr),in)
+                && niceExprIndent?(head(tail(expr)),in)
+                && niceExprIndent?(head(tail(tail(expr))),in);
+            }
+        return :true;
+        }
+
+    function noviceCheckSequence(body,indention)
+        {
+        if (body != :null)
+            {
+            //println("novice check sequence: indention is ",indention);
+            noviceCheck(body,indention);
+            noviceCheckSequence(tail(body),indention);
+            }
+        }
+
+    function noviceCheck(body,indention)
+        {       
+        var current = head(body);
+
+        if(indent(current) != -1 && indent(current) != indention)
+            {
+            //pp(current);
+            //println("indent is ",indent(current));
+            styleViolation(current,"indentation is not properly aligned" +
+                ", should be " + indention + " spaces, not "  +
+                indent(current));
+            }
+        else if(indent(current) >= maxIndent)
+            {
+            styleViolation(current,"maximum indent allowed has been exceeded");
+            }   
+        else if (type(current) == :CALL)
+            {
+            noviceCheckArgs(current,indention);
+            }
+        else if (type(current) == :STATEMENT)
+            {
+            noviceCheckStatement(head(current),indention);
+            }
+        }
+
+    function noviceCheckArgs(items,indention)
+        {
+        if (items == :null) { return :done; }
+
+        if (type(head(items)) == :SIMPLE_BLOCK
+        || type(head(items)) == :BLOCK)
+            {
+            noviceCheckSequence(head(head(items)),indention + indentStep);
+            noviceCheckArgs(tail(items),indention);
+            }
+        else
+            {
+            noviceCheckArgs(tail(items),indention);
+            }
+        }
+
+    function noviceCheckStatement(current,indention)
+        {
+        if (type(current) == :BINARY)
+            {
+            var op = head(current);
+            var left = head(tail(current));
+            var right = head(tail(tail(current)));
+
+            if (not(niceExprIndent?(op,indention))
+            || not(niceExprIndent?(right,indention)))
+                {
+                styleViolation(current,
+                    "next line continues this line, " +
+                    "perhaps a missing semicolon?");
+                }
+
+            if (op == :== && tail(current) != :null)
+                {
+                styleViolation(current,
+                    "== unexpected, " + 
+                    "perhaps = was meant instead of equality?");
+                }
+            }
+        else if(type(current) == :XCALL)
+            {
+            var f = head(current);
+            
+            if (f == :while || f == :if)
+                {
+                var test = head(tail(current));
+                if(type(test) == :BINARY && head(test) == :=)
+                    {
+                    styleViolation(test,
+                        "= unexpected, " + 
+                        "perhaps == was meant instead of assignment?");
+                    }
+                }
+
+            noviceCheckArgs(current,indention);
+            }
+        }
+    var check = :true;
+    this;
+    };
+
+function function($name,$params,$body)
+    {
+    var func = shadowed(:function);
+    var f = func($name,$params,$body);
+    var in = indent($name . code);
+    var c = $name . context;
+    var level = 0;
+
+
+    if (tyro . check == :false) { return f; }
+    if (context != $name . context) { return f; }
+
+    //println("checking " + $name . code + "...");
+    //pause();
+
+    // find nesting level
+    while (c != :null)
+        {
+        level = level + 1;
+        c = c . context;
+        }
+
+    //check for header indentation on top-level functions
+    if (in != (level - 2) * 4)
+       {
+       tyro . styleViolation($name . code,
+           "header of function " + $name . code + " should not be indented");
+       }
+
+    //check the indentation of the body of functions
+    tyro . noviceCheckSequence(head($body . code),
+        (level - 1) * tyro . indentStep);
+
+    //all tests passed
+    f;
+    }
+
+
+function test(x)
+{
+    var y;
+        y = 5;
+                println(x);
+println(y);
+}
+test(x);

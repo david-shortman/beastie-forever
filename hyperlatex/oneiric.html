@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- XML file produced from file: oneiric.tex
+     using Hyperlatex v 2.9-in-waiting-rk (oct06) (c) Otfried Cheong
+     on Emacs 22.2.1, Wed Aug  8 21:43:49 2012 -->
+<head>
+<title>How To Install Hyperlatex On Oneiric</title>
+
+<style type="text/css">
+.maketitle { align : center }
+div.abstract { margin-left: 20%; margin-right: 10%; }
+h3.abstract  { align : center }
+div.verse, div.quote, div.quotation {
+  margin-left : 10%; 
+  margin-right : 10%;
+}
+dt {font-weight: bold}
+</style>
+<link rel=stylesheet
+        href="lusth.css" type="text/css" />
+</head>
+<body>
+<p><h1 class="maketitle">How To Install Hyperlatex on<br />Oneiric Ocelot (Ubuntu 11.10)<br /></h1>
+<h2 class="maketitle">written by: John C. Lusth</h2>
+<h3 class="maketitle">Revision Date: August 8, 2012</h3>
+</p>
+
+<h3><a name="id1"><a href="index.pdf">Printable Version</a></a></h3><hr />
+<h1><a name="id2">Installation Notes</a></h1><p>
+Follow these steps:
+</p>
+<ul><li>Remove <i>emacs23</i>, if present:
+<pre>
+    sudo apt-get remove emacs23
+</pre>
+</li><li>Install <i>xaw3dg</i>:
+<pre>
+    sudo apt-get install xaw3dg
+</pre>
+</li><li>Download these packages:
+<ul><li><a href="emacs22-common&#95;22.2-0ubuntu9&#95;all.deb">emacs22-common&#95;22.2-0ubuntu9&#95;all.deb</a>
+</li><li><a href="emacs22-bin-common&#95;22.2-0ubuntu9&#95;i386.deb">emacs22-bin-common&#95;22.2-0ubuntu9&#95;i386.deb</a>
+</li><li><a href="emacs22&#95;22.2-0ubuntu9&#95;i386.deb">emacs22&#95;22.2-0ubuntu9&#95;i386.deb</a>
+</li><li><a href="hyperlatex&#95;2.9a-4&#95;all.deb">hyperlatex&#95;2.9a-4&#95;all.deb</a>
+</li></ul>
+</li><li>Run these commands:
+<ul><li><code>sudo dpkg -i emacs22-common_22.2-0ubuntu9_all.deb</code>
+</li><li><code>sudo dpkg -i emacs22-bin-common_22.2-0ubuntu9_i386.deb</code>
+</li><li><code>sudo dpkg -i emacs22_22.2-0ubuntu9_i386.deb</code>
+</li><li><code>sudo dpkg -i hyperlatex_2.9a-4_all.deb</code>
+</li></ul>
+</li></ul>
+<p>Happy! Happy! Joy! Joy!
+</p>
+
+<h1><a name="id3">About this website</a></h1><p>
+This website is rendered in the <em>Old School</em> style.
+<em>Old School</em> is known for its somewhat spartan,
+but clean and crisp, no-nonsense, get-down-to-brass-tacks
+appearance. <em>Old School</em> was invented by
+Tim Berners-Lee during the latter part of the last 
+century. It is made a bit more flashy by incorporating a
+style sheet.
+</p>
+
+<h1><a name="id4">Acknowledgements</a></h1><p>
+Any opinions, findings, and conclusions or recommendations
+expressed in this material are those of the author and
+do not necessarily reflect the views of the sane.
+</p>
+<address><a href="mailto:lusth@cs.ua.edu"><p>lusth@cs.ua.edu</a></address><br />
+</body></html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>2-1</title>
+<link rel=stylesheet
+    href="/concepts/concepts.css" type="text/css" />
+</head>
+<body>
+<font size="-1">
+<div id="title">
+<center>
+
+<br/>
+Sample Questions: SICP Section 2.1
+<br/>
+<br/>
+Data Abstraction
+<br/>
+<br/>
+
+</center>
+</div>
+<!-- UNIT_SEQUENCE -->
+<!-- section -->
+<h2> Rational numbers
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="1">
+<li>
+ Suppose the rational constructor <i>make-rat</i> could be passed
+both integers <i>and</i> rational numbers. How could the constructor
+identify the type of its arguments in order to simply its
+result?
+Choose the most complete answer.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>use <i>integer?</i> or <i>pair?</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> use <i>pair?</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> use <i>integer?</i>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> neither
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="2">
+<li>
+ Suppose the rational constructor <i>make-rat</i> could be passed
+both integers <i>and</i> rational numbers. How many cases must
+the constructor handle in order to simply its
+result?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 3
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li>4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 6
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 4 -->
+<!-- answer -->
+<!-- answer -->
+<li> 2
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 5 -->
+<!-- answer -->
+<!-- answer -->
+<li> 7
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 6 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 7 -->
+<!-- answer -->
+<!-- answer -->
+<li> 8
+<br/>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="3">
+<li>
+ Suppose the rational constructor <i>make-rat</i> could be passed
+both integers <i>and</i> rational numbers. Define an expression
+that the constuctor could use to
+simpify the resultion numerator in
+the <i>rational-rational</i> case.
+Use the variables <i>nn</i> and <i>dn</i> to refer to the numerator of the numerator
+and the denominator of the numerator, respectively. Likewise for
+<i>nd</i> and <i>dd</i>.
+
+<!-- ANSWER_SEQUENCE -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- section -->
+<h2> Implementing fundamental types
+<br/>
+</h2><!-- section ENDED -->
+<!-- QA -->
+<ol type="1" start="4">
+<li>
+ With this implementation for <i>cons</i>:
+
+<pre>
+    (define (cons a b) (lambda (w) (w a b)))
+</pre>
+
+which of the following would be a valid implementation of <i>car</i>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (car c) (lambda (x y) x))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (car c) (lambda (c) (c (lambda (x y) x))))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>(define (car c) (c (lambda (x y) x)))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (car c) (c c))</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="5">
+<li>
+ With this implementation for <i>cons</i>, which only works for integers:
+
+<pre>
+    (define (cons a b) (* (^ 2 a) (^ 3 b)))
+</pre>
+
+which of the following would is a valid implementation of <i>car</i>?
+Assume 
+<code>^</code> is the exponentiation function and that when given two integers,
+returns an integer.
+Assume 
+<code>(ilog b d)</code> returns the closest integer to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>	<mi>l</mi>	<mi>o</mi>	<msub>		<mi>g</mi>		<mi>b</mi>	</msub>	<mi>d</mi></mrow></math>.
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (car x) (ilog x 2))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (car x) (if (= (% x 2) 0) 0 (+ 1 (car (/ x 2)))))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(define (car x) (if (= (% x 2) 0) (ilog 3 x) (car (/ x 2))))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li>
+<code>(define (car x) (if (!= (% x 3) 0) (ilog 2 x) (car (/ x 3))))</code>
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="6">
+<li>
+ Given the following incrementer and base:
+
+<pre>
+    (define (inc x) 1)
+    (define base (lambda (y) (+ 1 y)))
+</pre>
+
+and the evaluation of the Church numbers <i>four</i>:
+
+<pre>
+    (define x ((four inc) base))
+</pre>
+
+What is the value of <i>x</i>?
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li> 
+<code>(lambda (y) (+ 1 y))</code>
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> 4
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> 5
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> 1
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- QA -->
+<ol type="1" start="7">
+<li>
+ Which are valid functions for adding two Church numerals?
+
+<pre>
+    (define (add a b)
+        (lambda (f)
+           (lambda (x)
+               ((((a add-1) b) f) x)
+               )
+            )
+        )
+
+    (define (add a b)
+        (lambda (f)
+            (lambda (x)
+                ((a f) ((b f) x))
+                )
+            )
+        )
+</pre>
+
+
+<!-- ANSWER_SEQUENCE -->
+<ol type="A">
+<!--ItemCount: 0 -->
+<!-- answer -->
+<!-- answer -->
+<li>both
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 1 -->
+<!-- answer -->
+<!-- answer -->
+<li> the second
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 2 -->
+<!-- answer -->
+<!-- answer -->
+<li> the first
+</li>
+<!-- answer ENDED -->
+<!--ItemCount: 3 -->
+<!-- answer -->
+<!-- answer -->
+<li> neither
+</li>
+<!-- answer ENDED -->
+</ol>
+<!-- ANSWER_SEQUENCE ENDED -->
+</li>
+</ol>
+<!-- QA ENDED -->
+<!-- UNIT_SEQUENCE ENDED -->
+</body>
+</html>
